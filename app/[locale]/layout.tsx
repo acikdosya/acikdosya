@@ -53,7 +53,7 @@ export default async function LocaleLayout({children, params}: Props) {
       <body>
         <NextIntlClientProvider>
           <SkipLink />
-          <div className="relative mx-auto max-w-[1080px] pr-6 pl-[calc(24px+var(--measure))]">
+          <div className="relative mx-auto max-w-[1180px] pr-6 pl-[calc(24px+var(--measure))]">
             <MeasureRail />
             <main id="content">{children}</main>
             <SiteFooter />

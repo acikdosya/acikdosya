@@ -135,12 +135,17 @@ export default async function SystemPage({params}: Props) {
 
   return (
     <article>
-      <section className="pt-14 pb-16">
-        <div className="mb-1.5 flex flex-wrap items-baseline gap-3.5">
-          <h1 className="text-[clamp(52px,10vw,104px)] leading-[0.9] font-extrabold tracking-[-0.035em]">
+      <section className="pt-14 pb-[calc(var(--gap-section)/2)]">
+        <div className="mb-2 flex flex-wrap items-baseline gap-4">
+          <h1 className="text-[clamp(52px,10vw,104px)] leading-[0.9] font-semibold tracking-[-0.035em]">
             {system.name[lang]}
           </h1>
-          <span className="rounded-[2px] border border-signal px-[7px] py-[3px] font-display text-[13px] font-semibold text-signal">
+          {/*
+            Sayfa etiketi, guven rozeti degil. Kirmizi cerceve + kirmizi metin
+            'tahmin' rozetinin dilidir; onu burada kullanmak uc durumlu gorsel
+            dili bozar — CLAUDE.md §4. Duz ikincil metin olarak duruyor.
+          */}
+          <span className="font-display text-[13px] font-semibold text-ink-2">
             {t('badge')}
           </span>
         </div>
@@ -151,7 +156,7 @@ export default async function SystemPage({params}: Props) {
         </p>
 
         {system.summary ? (
-          <p className="mt-3.5 mb-10 max-w-[52ch] text-[19px] text-ink-2">
+          <p className="mt-4 mb-10 max-w-[52ch] text-ink-2">
             {system.summary[lang]}
           </p>
         ) : (
@@ -161,23 +166,23 @@ export default async function SystemPage({params}: Props) {
         <ScaleSilhouette system={system} locale={lang} />
       </section>
 
-      <section className="border-t border-rule py-16">
-        <h2 className="mb-7 font-display text-[15px] font-extrabold tracking-[0.02em] text-ink-2">
+      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
+        <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
           {t('specs')}
         </h2>
         <SpecTable system={system} locale={lang} />
       </section>
 
-      <section className="border-t border-rule py-16">
-        <h2 className="mb-7 font-display text-[15px] font-extrabold tracking-[0.02em] text-ink-2">
+      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
+        <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
           {t('timeline')}
         </h2>
         <Timeline system={system} locale={lang} />
       </section>
 
       {rings.length > 0 ? (
-        <section className="border-t border-rule py-16">
-          <h2 className="mb-7 font-display text-[15px] font-extrabold tracking-[0.02em] text-ink-2">
+        <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
+          <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
             {t('range')}
           </h2>
           <p className="mb-6 max-w-[62ch] text-ink-2">{tRange('intro')}</p>
@@ -186,8 +191,8 @@ export default async function SystemPage({params}: Props) {
       ) : null}
 
       {modelVariants.length > 0 ? (
-        <section className="border-t border-rule py-16">
-          <h2 className="mb-7 font-display text-[15px] font-extrabold tracking-[0.02em] text-ink-2">
+        <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
+          <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
             {t('model')}
           </h2>
           <ModelSection
@@ -208,7 +213,7 @@ export default async function SystemPage({params}: Props) {
         </section>
       ) : null}
 
-      <section className="border-t border-rule py-10">
+      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
         <p className="max-w-[62ch] text-sm text-ink-2">
           {system.disclaimer[lang]}
         </p>

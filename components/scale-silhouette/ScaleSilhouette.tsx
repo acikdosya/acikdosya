@@ -11,8 +11,12 @@ type Props = {
 };
 
 /**
- * Varyantlarin olcekli siluetleri. Client JS yok: cizim animasyonu CSS,
- * geometri sunucuda veriden uretiliyor.
+ * Varyantlarin olcekli siluetleri. Client JS yok, geometri sunucuda veriden
+ * uretiliyor.
+ *
+ * Hareket yok — CLAUDE.md §4. Eskiden her siluet artan gecikmeyle ciziliyordu;
+ * bu bir kaskad ve §4 kaskadi hem scroll'da hem yuklemede yasakliyor. Sayfanin
+ * tek orkestre edilmis ani hero'daki celisen veri satirinin rozetleridir.
  */
 export function ScaleSilhouette({system, locale}: Props) {
   const t = useTranslations('ScaleSilhouette');
@@ -98,8 +102,8 @@ export function ScaleSilhouette({system, locale}: Props) {
         {layout.rows.map((row, index) => {
           const alt = index > 0;
           const bodyClass = alt
-            ? `${styles.body} ${styles.bodyAlt} ${styles.draw}`
-            : `${styles.body} ${styles.draw}`;
+            ? `${styles.body} ${styles.bodyAlt}`
+            : styles.body;
 
           return (
             <g key={row.id}>
@@ -114,18 +118,8 @@ export function ScaleSilhouette({system, locale}: Props) {
               >
                 {row.label}
               </text>
-              <path
-                className={bodyClass}
-                pathLength={1}
-                d={row.body}
-                style={{animationDelay: `${0.15 + index * 0.3}s`}}
-              />
-              <path
-                className={bodyClass}
-                pathLength={1}
-                d={row.fins}
-                style={{animationDelay: `${0.45 + index * 0.3}s`}}
-              />
+              <path className={bodyClass} d={row.body} />
+              <path className={bodyClass} d={row.fins} />
               <line
                 className={styles.dimension}
                 x1={row.dimension.x1}

@@ -11,7 +11,7 @@ export function SiteFooter() {
     <footer className="mt-4 border-t border-rule pt-9 pb-16 text-ink-2">
       <div className="flex flex-wrap items-start justify-between gap-6">
         <div>
-          <strong className="mb-1.5 block text-xs font-semibold text-ink">
+          <strong className="mb-2 block text-xs font-semibold text-ink">
             {t('heading')}
           </strong>
           <p className="max-w-[62ch] text-sm">{t('body')}</p>

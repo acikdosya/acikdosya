@@ -16,7 +16,7 @@ export default async function HomePage({params}: Props) {
 
   return (
     <div className="py-14">
-      <h1 className="mb-8 text-4xl font-extrabold tracking-tight">
+      <h1 className="mb-8 text-4xl font-semibold tracking-tight">
         {t('heading')}
       </h1>
       <ul className="border-t border-rule">
@@ -26,7 +26,7 @@ export default async function HomePage({params}: Props) {
               href={{pathname: '/sistemler/[slug]', params: {slug: system.slug}}}
               className="flex flex-wrap items-baseline gap-x-4 py-5 hover:text-signal"
             >
-              <span className="font-display text-2xl font-bold">
+              <span className="font-display text-2xl font-semibold">
                 {system.name[locale as Locale]}
               </span>
               <span className="text-sm text-ink-2">

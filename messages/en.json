@@ -21,7 +21,8 @@
   },
   "SpecTable": {
     "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
-    "field": "Field"
+    "field": "Field",
+    "absent": "no data"
   },
   "Specs": {
     "length_m": "Length",

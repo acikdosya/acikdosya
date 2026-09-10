@@ -69,10 +69,13 @@ function MeasurementCell({
   unit: string;
   locale: Locale;
 }) {
+  const t = useTranslations('SpecTable');
+
   if (!list || list.length === 0) {
     return (
       <td>
-        <span className={styles.empty}>—</span>
+        <span data-state="absent">{'—'}</span>
+        <span className={styles.srOnly}>{t('absent')}</span>
       </td>
     );
   }
@@ -105,10 +108,13 @@ function AttributeCell({
   attribute: Attribute | undefined;
   locale: Locale;
 }) {
+  const t = useTranslations('SpecTable');
+
   if (!attribute) {
     return (
       <td>
-        <span className={styles.empty}>—</span>
+        <span data-state="absent">{'—'}</span>
+        <span className={styles.srOnly}>{t('absent')}</span>
       </td>
     );
   }

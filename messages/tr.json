@@ -21,7 +21,8 @@
   },
   "SpecTable": {
     "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
-    "field": "Alan"
+    "field": "Alan",
+    "absent": "veri yok"
   },
   "Specs": {
     "length_m": "Uzunluk",
