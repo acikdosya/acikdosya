@@ -39,10 +39,10 @@ sayının nereye gittiğini sorabilmeli.
 ```bash
 pnpm install
 pnpm dev
-pnpm typecheck && pnpm lint && pnpm validate:content
+pnpm typecheck && pnpm lint && pnpm validate:content && pnpm test
 ```
 
-Üçü de geçmeden PR açmayın. `validate:content` build'e `prebuild` olarak
+Dördü de geçmeden PR açmayın. `validate:content` build'e `prebuild` olarak
 bağlıdır; şemadan geçmeyen içerik deploy'a gidemez.
 
 Değişiklik büyükse önce issue açın. Yönü konuşulmadan yazılmış büyük PR

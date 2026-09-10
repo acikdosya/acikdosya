@@ -23,6 +23,7 @@ pnpm dev          # http://localhost:3000
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm lint` | ESLint |
 | `pnpm validate:content` | `content/` altındaki JSON'ları şemaya sokar |
+| `pnpm test` | `lib/` altındaki birim testleri (`node --test`) |
 | `./scripts/deploy.sh` | Yerelde derler, sunucuya aktarır, yeniler |
 
 `pnpm validate:content` build'e `prebuild` olarak bağlıdır. Şemadan geçmeyen içerik
@@ -52,6 +53,7 @@ i18n/                    next-intl rota ve istek yapılandırması
 lib/schema.ts            zod şeması — veri sözleşmesi
 lib/geo.ts               jeodezik daire ve mesafe
 lib/format.ts            sayı, tarih ve ölçüm biçimlendirme
+lib/measurement/         iki ölçüm ıraksıyor mu — aralık hesabı ve testleri
 messages/                arayüz çevirileri
 scripts/                 içerik doğrulayıcı
 reference/               çalışan tek dosya prototip, davranış referansı

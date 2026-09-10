@@ -1,13 +1,15 @@
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ConfidenceLevels} from '@/components/confidence-levels/ConfidenceLevels';
-import {ConflictHighlight} from '@/components/conflict-highlight/ConflictHighlight';
+import {DivergenceHighlight} from '@/components/divergence-highlight/DivergenceHighlight';
+import {HeroProvenance} from '@/components/hero-provenance/HeroProvenance';
+import {HeroRevision} from '@/components/hero-revision/HeroRevision';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
 import {SystemCard} from '@/components/system-card/SystemCard';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {getSystem, getSystemSlugs} from '@/lib/content';
-import {findConflict} from '@/lib/stats';
+import {heroFocus} from '@/lib/hero';
 import {alternates, ogImage} from '@/lib/urls';
 import styles from './page.module.css';
 
@@ -47,12 +49,12 @@ export default async function HomePage({params}: Props) {
     .filter((system) => system !== undefined);
 
   /*
-   * Hero'daki celiski gercek dosyadan geliyor. Hicbir sistemde celisen alan
-   * yoksa panel cizilmez — uydurma bir ornek satir konmaz (CLAUDE.md §5.7).
+   * Hero paneli veri kosuluna rehin degil: sirali geri cekilme var —
+   * iraksama, yoksa son duzeltme, yoksa tek bir degerin koken zinciri
+   * (lib/hero.ts). Ucu de gercek dosyadan okunur, farazi ornek uretilmez
+   * (CLAUDE.md §5.7).
    */
-  const conflict = systems
-    .map((system) => findConflict(system))
-    .find((item) => item !== undefined);
+  const focus = heroFocus(systems);
 
   return (
     <div className={styles.page}>
@@ -60,12 +62,14 @@ export default async function HomePage({params}: Props) {
         <div className={styles.heroText}>
           <p className={styles.eyebrow}>{t('eyebrow')}</p>
           <h1 className={styles.title}>
-            {conflict
+            {focus?.tier === 'divergence'
               ? t('heading', {
-                  sources: conflict.sources,
-                  values: conflict.distinct
+                  sources: focus.divergence.sources,
+                  values: focus.divergence.distinct
                 })
-              : t('headingPlain')}
+              : focus?.tier === 'revision'
+                ? t('headingRevision')
+                : t('headingPlain')}
           </h1>
           <p className={styles.lead}>{t('lead')}</p>
           <p className={styles.leadSecondary}>{t('leadSecondary')}</p>
@@ -74,9 +78,32 @@ export default async function HomePage({params}: Props) {
           </a>
         </div>
 
-        {conflict ? (
+        {focus ? (
           <div className={styles.heroPanel}>
-            <ConflictHighlight conflict={conflict} locale={lang} />
+            {focus.tier === 'divergence' ? (
+              <DivergenceHighlight
+                divergence={focus.divergence}
+                variants={focus.system.variants}
+                locale={lang}
+              />
+            ) : null}
+            {focus.tier === 'revision' ? (
+              <HeroRevision
+                revision={focus.revision}
+                systemName={focus.system.name[lang]}
+                locale={lang}
+              />
+            ) : null}
+            {focus.tier === 'provenance' ? (
+              <HeroProvenance
+                measurement={focus.measurement}
+                specKey={focus.key}
+                variant={focus.variant}
+                variants={focus.system.variants}
+                systemName={focus.system.name[lang]}
+                locale={lang}
+              />
+            ) : null}
           </div>
         ) : null}
       </section>

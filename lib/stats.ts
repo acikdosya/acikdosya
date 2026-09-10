@@ -1,9 +1,16 @@
+import {SPEC_UNITS} from './format';
+import {
+  fieldDivergence,
+  PAIR_ORDER,
+  type FieldDivergence
+} from './measurement/divergence';
 import {
   specKeys,
   type Confidence,
   type Measurement,
   type SpecKey,
-  type System
+  type System,
+  type Variant
 } from './schema';
 
 /**
@@ -12,12 +19,12 @@ import {
  * uretilmez, o yuzden "34 deger, 12 kaynak" gibi bir vitrin metni yok.
  */
 
-export type Conflict = {
+export type Divergence = FieldDivergence & {
   key: SpecKey;
   variantId: string;
   variantLabel: string;
   measurements: readonly Measurement[];
-  /** Farkli deger adedi. Ayni sayiyi iki kaynak veriyorsa celiski yoktur. */
+  /** Farkli deger adedi. Ayni sayiyi iki kaynak veriyorsa iraksama yoktur. */
   distinct: number;
   /** Farkli kaynak adedi. */
   sources: number;
@@ -32,24 +39,67 @@ function distinctCount<T>(items: readonly T[], key: (item: T) => string): number
   return new Set(items.map(key)).size;
 }
 
-/**
- * Hero'da gosterilecek celiski: en cok farkli degere sahip alan.
- * Esitlikte specKeys sirasi ve varyant sirasi karar verir, boylece ayni
- * icerik her build'de ayni satiri secer.
+/*
+ * Siralama tek yerde: lib/measurement/divergence.ts PAIR_ORDER. Burada
+ * ikinci bir kopya tutmak, iki dosyanin ayri ayri degismesine izin verirdi.
  */
-export function findConflict(system: System): Conflict | undefined {
-  let best: Conflict | undefined;
+
+/** Tek bir varyantin tek bir alanindaki iraksama. */
+export function variantDivergence(
+  variant: Variant,
+  key: SpecKey
+): FieldDivergence | undefined {
+  return fieldDivergence(variant.specs[key], SPEC_UNITS[key]);
+}
+
+/**
+ * Tablo satirinin iraksamasi. Satir varyantlari yan yana dizdigi icin
+ * en agir durum satiri temsil eder.
+ */
+export function specDivergence(
+  system: System,
+  key: SpecKey
+): FieldDivergence | undefined {
+  let best: FieldDivergence | undefined;
+
+  for (const variant of system.variants) {
+    const found = variantDivergence(variant, key);
+    if (!found) continue;
+    if (!best || PAIR_ORDER[found.kind] < PAIR_ORDER[best.kind]) best = found;
+  }
+
+  return best;
+}
+
+/**
+ * Hero'da gosterilecek satir. Once durumun agirligi, sonra farkli deger
+ * adedi karar verir; esitlikte specKeys ve varyant sirasi. Boylece ayni
+ * icerik her build'de ayni satiri secer.
+ *
+ * Iraksama yoksa undefined doner ve ana sayfa paneli hic cizmez. Uydurma
+ * bir ornek satir konmaz — CLAUDE.md §5.7.
+ */
+export function findDivergence(system: System): Divergence | undefined {
+  let best: Divergence | undefined;
 
   for (const key of specKeys) {
     for (const variant of system.variants) {
       const list = variant.specs[key];
       if (!list) continue;
 
+      const divergence = variantDivergence(variant, key);
+      if (!divergence) continue;
+
       const distinct = distinctCount(list, valueKey);
-      if (distinct < 2) continue;
-      if (best && distinct <= best.distinct) continue;
+
+      if (best) {
+        const order = PAIR_ORDER[divergence.kind] - PAIR_ORDER[best.kind];
+        if (order > 0) continue;
+        if (order === 0 && distinct <= best.distinct) continue;
+      }
 
       best = {
+        ...divergence,
         key,
         variantId: variant.id,
         variantLabel: variant.label,

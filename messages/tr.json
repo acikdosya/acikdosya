@@ -21,9 +21,10 @@
     "methodHeading": "Nasıl çalışıyoruz",
     "methodMeta": "Üç güven seviyesi",
     "methodIntro": "Her değer üç durumdan birini taşır. Durum, değerin doğru olduğunu değil, kaynağının niteliğini anlatır. Aynı üç durum tabloda, harita lejantında, 3B etiketlerde ve zaman tünelinde birebir aynı görünür.",
-    "conflictLabel": "Çelişki",
-    "conflictBody": "Bir değer için birden çok kaynak varsa hepsi listelenir. Çelişki bir hata değil, kaydın parçasıdır.",
-    "methodLink": "Yöntemin tamamı"
+    "conflictLabel": "Iraksama",
+    "conflictBody": "Bir değer için birden çok kaynak varsa hepsi listelenir. Ama birden çok değer çelişki demek değildir: “> 280 km” ile “> 500 km” ikisi de alt sınırdır, ikisi de aynı anda doğru olabilir. Hangi durumun geçerli olduğu operatörlerden hesaplanır, elle işaretlenmez.",
+    "methodLink": "Yöntemin tamamı",
+    "headingRevision": "Değişen her sayının nedeni yazılı."
   },
   "A11y": {
     "skipToContent": "İçeriğe geç"
@@ -33,6 +34,10 @@
     "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
     "humanLabel": "{height} m",
     "lengthLabel": "{value} m"
+  },
+  "MeasureGap": {
+    "absent": "doğrulanmış ölçü verisi yok",
+    "invite": "Bu varyantın uzunluk veya çap verisi için kaynağı gösterilebilir bir ölçü bilmiyorsak siluet ve model üretilmiyor. Elinizde yayın adı, tarih ve bağlantı taşıyan bir kaynak varsa <link>bize gönderin</link>."
   },
   "SpecTable": {
     "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
@@ -56,7 +61,30 @@
     "official": "resmî",
     "press": "basın",
     "estimate": "tahmin",
-    "conflict": "çelişki"
+    "officialCaveat": "Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez."
+  },
+  "Divergence": {
+    "kind_celiski": "çelişki",
+    "kind_farkliAciklama": "farklı açıklamalar",
+    "kind_farkliKapsam": "farklı kapsam",
+    "kind_belirsiz": "karşılaştırılamadı",
+    "scope_beyan": "beyan",
+    "scope_test": "testte ölçüldü",
+    "scope_olcum": "dışarıdan ölçüm",
+    "scope_tahmin": "çıkarım",
+    "statedAt": "{year} açıklaması",
+    "unknownScope": "kapsam belirtilmemiş",
+    "onRecord": "kayıtta {count} değer",
+    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
+  },
+  "Hero": {
+    "revisionNote": "Bu kayıt düzeltme defterinden alınmıştır. Yayımlanmış her değer değişikliği buraya yazılır.",
+    "provenanceNote": "Bu satır dosyanın kendisinden alınmıştır, örnek değildir.",
+    "chain_value": "Değer",
+    "chain_confidence": "Güven",
+    "chain_scope": "Kapsam",
+    "chain_source": "Kaynak",
+    "chain_verified": "Doğrulama tarihi"
   },
   "SystemPage": {
     "specs": "Teknik veriler ve kaynakları",
@@ -108,10 +136,6 @@
     "tr": "Türkçe",
     "en": "English"
   },
-  "Conflict": {
-    "onRecord": "kayıtta {count} değer",
-    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
-  },
   "SystemCard": {
     "counts": "{values} değer, {sources} kaynak",
     "updated": "son doğrulama {date}",
@@ -119,7 +143,7 @@
     "open": "Dosyayı aç"
   },
   "ConfidenceLevels": {
-    "official": "Üreticinin veya kurumun kendi açıklaması. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır.",
+    "official": "Üreticinin veya kurumun kendi açıklaması. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır. Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez.",
     "press": "İkincil kaynak: haber, dergi, fuar veya konferans notu. Doğrulanmadı, ama kayda geçti ve gizlenmiyor.",
     "estimate": "Bağımsız değerlendirme, resmî teyidi yok. Rozeti kırmızı, çünkü bu bir beyan değil bir çıkarım."
   },
@@ -143,8 +167,19 @@
     "recordUnits": "Birim alan adının içinde taşınır, ayrı bir alan değildir. Metre ile milimetreyi karıştırmak bu yüzden mümkün değil.",
     "recordMissing": "Veri yoksa tire konur ve ekran okuyucuya \"veri yok\" denir. Eksik veri dördüncü bir güven durumu değildir; kaydın orada boş olduğunu söyler.",
     "conflictHeading": "Çelişkiyi neden gizlemiyoruz",
-    "conflictIntro": "Açık kaynak veriler birbiriyle çelişir. Tek bir değeri seçip diğerini silmek, okuyucunun göremediği bir editoryal karar vermek demektir. Bunun yerine hepsi aynı hücrede alt alta durur ve her biri kendi kaynağını taşır.",
+    "conflictIntro": "Açık kaynak veriler birbiriyle ayrışır. Tek bir değeri seçip diğerini silmek, okuyucunun göremediği bir editoryal karar vermek demektir. Bunun yerine hepsi aynı hücrede alt alta durur ve her biri kendi kaynağını taşır.",
     "conflictPick": "Ölçekli siluet ve 3B model gibi tek bir sayı alabilen yerlerde en güvenilir değer kullanılır: resmî, yoksa basın, o da yoksa tahmin. Bu seçim görüntüyü etkiler, kaydı değil — tablo hepsini göstermeye devam eder.",
+    "divergenceHeading": "Üç ıraksama durumu",
+    "divergenceIntro": "Aynı alanda birden fazla değer olması tek başına çelişki değildir. Hangi durumun geçerli olduğu operatörlerden ve kapsam alanlarından hesaplanır, elle işaretlenmez. Üç sonuç vardır.",
+    "divergence_celiski": "Değerlerin aralıkları kesişmiyor: hiçbir sayı ikisini birden doğrulayamaz. Ya kaynaklardan biri yanılıyor ya da aslında farklı şeylerden söz ediyorlar. Nadir bir durumdur; satır bu yüzden işaretlenir.",
+    "divergence_farkliAciklama": "Aralıklar kesişiyor, yani ikisi de aynı anda doğru olabilir. Alt sınırlar böyledir: “> 280” ile “> 500” çelişmez, ikincisi birincisini zaten sağlar. Bu normal bir durumdur, uyarı değildir.",
+    "divergence_farkliKapsam": "Değerler aynı şeyi ölçmüyor: farklı yöntemle elde edilmişler, farklı varyanta aitler ya da farklı tarihlerde açıklanmışlar. Bu durumda aralık hesabı hiç yapılmaz, çünkü kıyaslanabilir değiller. Hangi alanın farklı olduğu değerin altında yazar.",
+    "divergenceExampleIntro": "Aşağıdaki üç satır FARAZİDİR. Hiçbir sisteme ait değildir ve dosyalardan alınmamıştır; yalnızca hesabın nasıl çalıştığını gösterir.",
+    "divergenceExample_celiski": "“< 6 m” ve “> 9 m” — çelişki. 6’dan küçük ve aynı anda 9’dan büyük bir uzunluk yok.",
+    "divergenceExample_farkliAciklama": "“> 6 m” ve “> 9 m” — farklı açıklamalar. 9 metreden uzun her gövde iki beyanı da doğrular.",
+    "divergenceExample_farkliKapsam": "“9 m” (dışarıdan ölçüm) ve “> 6 m” (beyan) — farklı kapsam. Biri nesneyi ölçmüş, diğeri sayıyı açıklamış.",
+    "divergenceScope": "Kapsam üç alanda taşınır: değerin nasıl elde edildiği (beyan, testte ölçüldü, dışarıdan ölçüm, çıkarım), hangi varyanta ait olduğu ve açıklamanın hangi tarihte yapıldığı. Bu alanlar bilinmiyorsa boş bırakılır ve değerin altında “kapsam belirtilmemiş” yazar. Tahminle doldurulmazlar.",
+    "divergenceBadgeNote": "Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez. Bir sayının resmî olması, onu ölçtüğümüz ya da bir başkasının doğruladığı anlamına gelmez.",
     "limitsHeading": "Neyi yayımlamıyoruz",
     "limitsIntro": "Bazı bilgiler açık kaynakta bulunabilir olsa da bu dosyalara girmez. Sınır teknik değil editoryal.",
     "limit_targets": "Hedef dili yok. Menzil halkası çizilir; hedef şehir veya ülke etiketlenmez, vurgulanmaz. Kullanılan terim \"menzil zarfı\" ve \"referans nokta\".",

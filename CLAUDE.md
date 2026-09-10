@@ -93,7 +93,9 @@ sayının nereye gittiğini sorabilmeli.
 - Program takvimi (`timeline`) sistemin tarihidir, `revisions` dosyanın
   tarihi. İkisi birbirinin yerine kullanılmaz.
 
-Referans şema ve doldurulmuş örnek: `reference/tayfun.json`.
+Şemanın tek kaynağı `lib/schema.ts`, doldurulmuş örneği
+`content/systems/tayfun.json`. İkinci bir şema kopyası tutulmaz —
+iki kaynak drift üretir.
 
 ---
 
@@ -140,10 +142,14 @@ Prototipte oturmuş palet — koru:
   ürün token'larına uymak zorunda değildir. Bunlar shipped sayfa değil.
 
 **Hareket:**
-- Sayfa başına TEK orkestre edilmiş hareket anı. Ana sayfada bu an,
-  hero'daki çelişen veri satırının rozetleriyle belirmesidir — yöntemi
-  gösteren hareket odur. Kademeli giriş kaskadları (n öğe, artan gecikme)
-  scroll'da da sayfa yüklemesinde de kullanılmaz.
+- Sayfa başına TEK orkestre edilmiş hareket anı. Ana sayfada bu an, hero
+  panelinin rozetiyle belirmesidir — yöntemi gösteren hareket odur. Panel
+  üç katmanlı (ıraksama, son düzeltme kaydı, köken zinciri; `lib/hero.ts`)
+  ve hangisi çizilirse hareket ona bağlanır. Kareler `globals.css` içinde
+  tek yerde (`hero-panel`, `hero-reveal`, `hero-lead`); panel başına
+  animasyon yazılmaz, yoksa kural sessizce ikiye çıkar. Kademeli giriş
+  kaskadları (n öğe, artan gecikme) scroll'da da sayfa yüklemesinde de
+  kullanılmaz.
 - prefers-reduced-motion globals.css'te küresel ağ olarak uygulanır,
   dosya başına değil. Hareketin anlam taşıdığı yerlerde (3D autoRotate)
   ayrıca JS kontrolü bulunur.
@@ -194,6 +200,7 @@ Prototipte oturmuş palet — koru:
 app/[locale]/             # sayfalar
 components/
   scale-silhouette/       # veriden türeyen SVG siluet
+  measure-gap/            # ölçü verisi olmayan varyantın açık kaydı
   spec-table/             # kaynaklı veri tablosu + güven rozetleri
   range-envelope/         # MapLibre menzil zarfı
   timeline/
@@ -204,6 +211,10 @@ content/
   assets.json             # görsel lisans kaydı
 lib/
   geo.ts                  # jeodezik daire, mesafe
+  hero.ts                 # ana sayfa panelinin konusu — sıralı geri çekilme
+  measurement/
+    divergence.ts         # iki ölçüm ıraksıyor mu — aralık hesabı, §3
+    divergence.test.ts    # birim testleri; pnpm test
   schema.ts               # zod şemaları — build'de içeriği doğrula
   brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
   tokens.ts               # paletin JS kopyası — CSS değişkeni okuyamayanlar için
@@ -214,10 +225,10 @@ deploy/
   nginx/acikdosya.org.conf  # vhost, kurulum adımları başında — bkz. §11
 scripts/
   deploy.sh               # yerelde derle, sunucuya aktar, yenile
-reference/
+reference/                # dondurulmuş prototipler — shipped kod değil
   prototype.html          # çalışan tek dosya prototip, davranış referansı
+  model-prototype.html    # 3D davranış referansı
   design/                 # Claude Design çıktısı — yerleşim referansı, kod değil
-  tayfun.json
 ```
 
 ---

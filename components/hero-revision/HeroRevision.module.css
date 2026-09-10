@@ -1,0 +1,122 @@
+/*
+ * Hero'nun ikinci katmani. Hareket globals.css'ten aliniyor — uc hero
+ * panelinin ucu de ayni kareleri kullanir, CLAUDE.md §4.
+ *
+ * Duzeltme kaydinin gorsel dili iraksama panelinden daha sade: burada
+ * karsilastirilan iki kaynak degil, ayni degerin iki hali var.
+ */
+.panel {
+  composes: hero-panel from global;
+
+  margin: 0;
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: var(--border-w) solid var(--rule);
+  font-family: var(--font-display);
+}
+
+.field {
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+}
+
+.date {
+  font-size: var(--size-label);
+  color: var(--ink-2);
+  font-variant-numeric: var(--num);
+  white-space: nowrap;
+}
+
+.change {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  padding: var(--pad-row-y) 0;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  min-width: 0;
+}
+
+.slotLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+}
+
+/*
+ * <del> ve <ins> ekran okuyucuya "silindi / eklendi" der. Gorsel tarafta
+ * ustu cizili eski deger ve isaretsiz yeni deger; renk tek basina fark
+ * tasimiyor, ustu cizgi deseni tasiyor.
+ */
+.from {
+  font-family: var(--font-display);
+  font-size: var(--size-value-s);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: var(--num);
+  color: var(--ink-2);
+  text-decoration-thickness: 1px;
+}
+
+.to {
+  composes: hero-reveal from global;
+
+  font-family: var(--font-display);
+  font-size: var(--size-value-s);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: var(--num);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+/* Eski degeri yenisine baglayan kilavuz cizgi. */
+.lead {
+  composes: hero-lead from global;
+
+  flex: 1 1 var(--s-5);
+  height: 1px;
+  background: var(--rule);
+}
+
+.reason {
+  margin: 0;
+  border-top: var(--border-w) solid var(--rule);
+  padding-top: var(--s-3);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}
+
+.source {
+  margin: var(--s-2) 0 0;
+  font-size: var(--size-micro);
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.source a {
+  color: inherit;
+}
+
+/* Kaydin gercek dosyadan geldigini soyleyen not — iraksama paneliyle ayni is. */
+.note {
+  margin: var(--s-3) 0 0;
+  border-top: var(--border-w) solid var(--ink);
+  padding-top: var(--s-3);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}

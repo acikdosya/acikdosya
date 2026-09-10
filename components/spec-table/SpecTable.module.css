@@ -57,20 +57,34 @@
 }
 
 /*
- * Celisen alan gizlenmez, isaretlenir — CLAUDE.md §3.
+ * Yalnizca GERCEK celiski satiri isaretlenir — CLAUDE.md §3.
  *
- * Isaret sol kenardaki serit. Satirin tamamini --signal-soft ile boyamak
- * daha once yapiliyordu ama o dolgu 'tahmin' rozetinin dili: celiskiyi
- * tahminle ayni renge boyamak iki farkli durumu tek gorunume indiriyordu.
+ * Onceden coklu deger tasiyan her satir isaretleniyordu. Yanlisti:
+ * "> 280" ile "> 500" celismez, ikisi de alt sinirdir. Artik satiri
+ * lib/measurement/divergence.ts'in karari boyar ve celiski nadir bir
+ * durumdur — bu yuzden dikkat cekmesi dogru.
  *
- * Serit payini her satirin ilk hucresi seffaf cerceve olarak tasir, boylece
- * celiski isaretlenince sutunlar yer degistirmez.
+ * Zemin tek basina renk demek olurdu; §4 bilgi tasiyan ayrimin desenle
+ * de gorunmesini istiyor. Serit o desen: zemin + sol serit birlikte,
+ * siyah-beyaz ciktida ve renk korlugunde de okunur.
+ *
+ * Serit payini her satirin ilk hucresi seffaf cerceve olarak tasir,
+ * boylece satir isaretlenince sutunlar yer degistirmez.
+ *
+ * Diger iki durum ("farkli aciklamalar", "farkli kapsam") zemin ALMAZ.
+ * Ikisi de normal ve sik gorulen durumlar; alarm dili onlarin degil.
+ * Onlari satir basligindaki kucuk metin ve degerlerin altina inen kapsam
+ * notu anlatir — components/divergence-note.
  */
 .table tbody tr > *:first-child {
   border-left: var(--border-accent-w) solid transparent;
 }
 
-.conflictRow > *:first-child {
+.contradictionRow > * {
+  background: var(--signal-soft);
+}
+
+.contradictionRow > *:first-child {
   border-left-color: var(--signal);
 }
 

@@ -60,19 +60,10 @@
             "value": 280,
             "operator": ">",
             "confidence": "official",
+            "scope": "beyan",
             "source": {
               "tr": "MSB resmî açıklaması",
               "en": "Turkish MoND official statement"
-            },
-            "verified_at": "2026-09-10"
-          },
-          {
-            "value": 500,
-            "operator": ">",
-            "confidence": "press",
-            "source": {
-              "tr": "Basın derlemesi (2026)",
-              "en": "Press compilation (2026)"
             },
             "verified_at": "2026-09-10"
           }
@@ -146,6 +137,10 @@
         }
       ],
       "_todo": [
+        "range_km > 280 KAYNAK ATFI YANLIS: birden fazla ikincil kaynak degerin MSB aciklamasi degil ROKETSAN urun karti/brosuru oldugunu soyluyor. Birincil belge roketsan.com.tr'den indirilip source ve source_url ile duzeltilecek. Duzeltilene kadar mevcut atif yayinda kaliyor.",
+        "range_km > 280 icin stated_at bilinmiyor — aciklamanin yapildigi tarih bulunup girilecek",
+        "range_km 561 km, scope 'test', Ekim 2022 ilk atis: tek somut kaynak (yayin adi + tarih + URL) bulununca girilecek. Kaynak bulunmadan eklenmez.",
+        "range_km > 500 (basin) kayittan cikarildi: yayin adi, tarih ve baglanti yoktu. Tek bir somut kaynak bulununca geri eklenecek, bulunamazsa kalici olarak disarida kalir.",
         "attributes alanlarina source ve verified_at eklenecek",
         "spec kaynaklarina source_url eklenecek"
       ]
@@ -160,33 +155,10 @@
             "value": 10,
             "operator": "~",
             "confidence": "press",
+            "scope": "olcum",
             "source": {
               "tr": "IDEF 2025 sergilemesi, basın ölçümü",
               "en": "IDEF 2025 display, press measurement"
-            },
-            "verified_at": "2026-09-10"
-          }
-        ],
-        "diameter_mm": [
-          {
-            "value": 938,
-            "operator": "~",
-            "confidence": "press",
-            "source": {
-              "tr": "Basın derlemesi",
-              "en": "Press compilation"
-            },
-            "verified_at": "2026-09-10"
-          }
-        ],
-        "mass_kg": [
-          {
-            "value": 7200,
-            "operator": "~",
-            "confidence": "press",
-            "source": {
-              "tr": "Basın derlemesi",
-              "en": "Press compilation"
             },
             "verified_at": "2026-09-10"
           }
@@ -196,6 +168,7 @@
             "value": 1000,
             "operator": "≤",
             "confidence": "estimate",
+            "scope": "tahmin",
             "source": {
               "tr": "Bağımsız değerlendirme — resmî teyit yok",
               "en": "Independent assessment — no official confirmation"
@@ -260,6 +233,9 @@
         }
       ],
       "_todo": [
+        "diameter_mm ~ 938 kayittan cikarildi: kaynagi 'Basin derlemesi' idi, yayin adi/tarih/baglanti yok. Ayni IDEF 2025 olcumunden geldigine dair kayit da yok. Somut kaynak bulununca geri eklenecek.",
+        "mass_kg ~ 7200 kayittan cikarildi: ayni gerekce. Kutle zaten fuarda olculemez, kaynagi ayrica gerekiyor.",
+        "diameter_mm olmadan BLOK-4 geometrisi uretilemiyor — siluet ve 3B disinda kaliyor.",
         "cep_m icin acik kaynak bulunamadi — alan bos birakildi",
         "attributes alanlarina source ve verified_at eklenecek",
         "spec kaynaklarina source_url eklenecek"
@@ -316,11 +292,44 @@
       "confidence": "press"
     }
   ],
+  "revisions": [
+    {
+      "date": "2026-09-10",
+      "field": "range_km",
+      "from": "> 280 km (resmî) ve > 500 km (basın)",
+      "to": "> 280 km (resmî)",
+      "reason": {
+        "tr": "“> 500 km” değeri tek bir yayın adı, tarih ve bağlantı taşımıyordu; “basın derlemesi” bir kaynak değil, kaynağın yokluğudur. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
+        "en": "The “> 500 km” figure carried no publication name, date or link; a “press compilation” is the absence of a source, not a source. Removed from the record until a concrete source is found."
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "field": "diameter_mm",
+      "from": "~ 938 mm (TAYFUN BLOK-4, basın)",
+      "to": "kayıt yok",
+      "reason": {
+        "tr": "Kaynak “basın derlemesi” idi: yayın adı, tarih ve bağlantı yok. Değerin uzunluk ölçüsüyle aynı IDEF 2025 ölçümünden geldiğine dair bir kaydımız da yok, bu yüzden kaynaklar birleştirilmedi. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
+        "en": "The source was a “press compilation”: no publication name, date or link. We also have no record that the figure came from the same IDEF 2025 measurement as the length, so the sources were not merged. Removed from the record until a concrete source is found."
+      }
+    },
+    {
+      "date": "2026-09-10",
+      "field": "mass_kg",
+      "from": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
+      "to": "kayıt yok",
+      "reason": {
+        "tr": "Kaynak “basın derlemesi” idi: yayın adı, tarih ve bağlantı yok. Kütle bir fuar sergilemesinde ölçülemez, dolayısıyla ölçüme dayandığı da varsayılamaz. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
+        "en": "The source was a “press compilation”: no publication name, date or link. Mass cannot be measured from a trade show display, so it cannot be assumed to rest on a measurement either. Removed from the record until a concrete source is found."
+      }
+    }
+  ],
   "disclaimer": {
     "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
     "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
   },
   "_todo": [
+    "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
     "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
     "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",
     "ikinci sistem eklenene kadar kategori enumu tek degerli"

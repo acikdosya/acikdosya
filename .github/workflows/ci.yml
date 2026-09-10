@@ -1,6 +1,6 @@
 # Gelen katkinin cogu content/ altina veri duzeltmesi olarak gelecek.
 # Semayi bozan bir PR'i deploy'da degil burada yakalamak icin: her push ve
-# her PR ayni dort adimdan geciyor.
+# her PR ayni bes adimdan geciyor.
 #
 # HARITA PAKETI BURADA URETILMEZ. public/tiles ~66 MB ve git'te durmuyor
 # (scripts/build-tiles.mjs, ag gerektirir). Derleme onsuz gecer: stil dosyasi
@@ -47,6 +47,11 @@ jobs:
       # prebuild bunu zaten calistiriyor; ayri adim duruyor ki icerik hatasi
       # "build basarisiz" olarak degil kendi adiminda gorunsun.
       - run: pnpm validate:content
+
+      # Iraksama hesabinin birim testleri (lib/measurement). Icerikte su an
+      # coklu deger yok, yani bu kural yalnizca burada sinaniyor: testler
+      # duserse hata sessizce yayina gider.
+      - run: pnpm test
 
       - run: pnpm build
         env:
