@@ -7,6 +7,7 @@ import {
   type ModelVariant
 } from '@/components/model-viewer/ModelSection';
 import {RangeEnvelope} from '@/components/range-envelope/RangeEnvelope';
+import {RevisionLog} from '@/components/revision-log/RevisionLog';
 import {buildRings} from '@/components/range-envelope/rings';
 import {ScaleSilhouette} from '@/components/scale-silhouette/ScaleSilhouette';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
@@ -177,6 +178,20 @@ export default async function SystemPage({params}: Props) {
       body: <Timeline system={system} locale={lang} />
     }
   );
+
+  /*
+   * Duzeltme gecmisi yalnizca kayit varsa. Bos bir "Duzeltme gecmisi"
+   * basligi, kaydin tutulmadigi izlenimi verir — kaydi hic gostermemekten
+   * kotu. Bolum numaralari dizinin sirasindan geldigi icin eksilen bolum
+   * numaralandirmayi bozmaz.
+   */
+  if ((system.revisions ?? []).length > 0) {
+    sections.push({
+      id: 'revisions',
+      title: t('revisions'),
+      body: <RevisionLog system={system} locale={lang} />
+    });
+  }
 
   if (rings.length > 0) {
     sections.push({

@@ -65,7 +65,8 @@
     "badge": "açık kaynak dosya",
     "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya.",
     "model": "Şematik model",
-    "scale": "Ölçekli karşılaştırma"
+    "scale": "Ölçekli karşılaştırma",
+    "revisions": "Düzeltme geçmişi"
   },
   "RangeEnvelope": {
     "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
@@ -170,5 +171,9 @@
     "title": "Bu adreste bir dosya yok",
     "body": "Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir.",
     "home": "Dosyalara dön"
+  },
+  "RevisionLog": {
+    "from": "eski değer",
+    "to": "yeni değer"
   }
 }

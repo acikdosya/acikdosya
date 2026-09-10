@@ -79,6 +79,20 @@ Kurallar:
 - Ürün kartındaki siluet/çizimler bu veriden **türetilir**, elle çizilmez. Veri
   değişince görsel değişmeli.
 
+### Düzeltme kaydı
+
+Yayımlanmış bir değer değişince `revisions` dizisine kayıt düşülür:
+`{date, field, from, to, reason, source?, source_url?}`. Sessiz düzeltme
+bu projede veri hatasıyla aynı ağırlıkta bir hatadır — okuyucu dün gördüğü
+sayının nereye gittiğini sorabilmeli.
+
+- Kayıt uydurulmaz. Gerçekten yapılmış bir düzeltme yoksa dizi de yoktur.
+- Kayıt yoksa sayfada bölüm hiç çizilmez. Boş bölüm, defterin tutulmadığı
+  izlenimini verir.
+- Düzeltme kaydı bir ölçüm değildir: güven rozeti taşımaz.
+- Program takvimi (`timeline`) sistemin tarihidir, `revisions` dosyanın
+  tarihi. İkisi birbirinin yerine kullanılmaz.
+
 Referans şema ve doldurulmuş örnek: `reference/tayfun.json`.
 
 ---
@@ -179,6 +193,7 @@ components/
   spec-table/             # kaynaklı veri tablosu + güven rozetleri
   range-envelope/         # MapLibre menzil zarfı
   timeline/
+  revision-log/           # duzeltme defteri — timeline'dan ayri ve daha sade
   model-viewer/           # R3F, dinamik import
 content/
   systems/tayfun.json
@@ -444,7 +459,10 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 
 ### Yayındaki eksikler
 
-1. **Harita kapsaması bölgesel.** Referans nokta paketin dışına taşınamaz
+1. **Düzeltme kaydı boş.** Şema ve bölüm hazır, `content/systems/*.json`
+   içinde henüz kayıt yok — çünkü uydurulmuş kayıt yazılmaz. İlk gerçek
+   düzeltmede dolar ve bölüm o gün görünür olur.
+2. **Harita kapsaması bölgesel.** Referans nokta paketin dışına taşınamaz
    (bbox 22,30 – 50,47). Dünyanın herhangi bir yerinden halka çizmek
    isteyen okuyucu bunu yapamaz. Bedel bilinerek kabul edildi: alternatifi
    66 MB yerine gigabaytlarca tile taşımaktı.

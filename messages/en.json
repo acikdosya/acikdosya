@@ -65,7 +65,8 @@
     "badge": "open source file",
     "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
     "model": "Schematic model",
-    "scale": "Scale comparison"
+    "scale": "Scale comparison",
+    "revisions": "Correction log"
   },
   "RangeEnvelope": {
     "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
@@ -170,5 +171,9 @@
     "title": "There is no file at this address",
     "body": "The link may be old, or the address may be mistyped.",
     "home": "Back to the files"
+  },
+  "RevisionLog": {
+    "from": "previous value",
+    "to": "new value"
   }
 }

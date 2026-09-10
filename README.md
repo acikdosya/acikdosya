@@ -89,6 +89,30 @@ projedeki en tehlikeli hatadır. Eksik alanı `_todo` dizisine yaz:
 
 Doğrulayıcı bu maddeleri her çalıştığında listeler.
 
+### Düzeltme kaydı
+
+Yayımlanmış bir değeri değiştirince kayıt tutulur. Sessizce düzeltilen bir sayı,
+"sayı verilir, kaynağı gösterilir" iddiasını bozar.
+
+```jsonc
+"revisions": [
+  {
+    "date": "2026-09-05",
+    "field": "range_km",              // bilinen anahtar ya da serbest metin
+    "from": "> 500 km",
+    "to": "> 280 km",
+    "reason": {"tr": "...", "en": "..."},
+    "source": {"tr": "...", "en": "..."},   // opsiyonel
+    "source_url": "https://..."             // opsiyonel
+  }
+]
+```
+
+Sistem sayfasında ayrı bir bölüm olarak çıkar (`components/revision-log/`).
+Program takvimiyle karıştırılmamalı: takvim sistemin tarihini, düzeltme kaydı
+bizim dosyamızın tarihini anlatır. Kayıt yoksa bölüm hiç çizilmez — boş bir
+"Düzeltme geçmişi" başlığı, kaydın tutulmadığı izlenimi verir.
+
 ## Yeni sistem eklemek
 
 1. `content/systems/<slug>.json` oluştur. Dosya adı `slug` alanıyla birebir aynı olmalı.

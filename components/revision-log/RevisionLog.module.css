@@ -1,0 +1,111 @@
+/*
+ * Duzeltme defteri Timeline'dan daha sade duruyor: numara yok, rozet yok,
+ * ince cizgiler. Bir duzeltme haber degil, kayit — sayfada program
+ * takvimiyle ayni agirlikta gorunmemeli.
+ */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border-w) solid var(--rule);
+}
+
+.item {
+  display: grid;
+  /* Tarih sutunu sabit: satirlar arasi hiza tarih uzunluguna gore kaymasin. */
+  grid-template-columns: 108px 1fr;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-bottom: var(--border-w) solid var(--rule);
+}
+
+.date {
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  color: var(--ink-2);
+  font-variant-numeric: var(--num);
+  padding-top: 2px;
+}
+
+.change {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+}
+
+.field {
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-weight: var(--weight-semibold);
+}
+
+.values {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-variant-numeric: var(--num);
+}
+
+/*
+ * Eski deger ustu cizili ve soluk, yeni deger normal. Alt cizgi yok:
+ * <ins> varsayilani altini cizer ve bag gibi gorunurdu.
+ */
+.from {
+  color: var(--ink-2);
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.to {
+  text-decoration: none;
+}
+
+.arrow {
+  color: var(--ink-2);
+}
+
+.reason {
+  margin: 3px 0 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.source {
+  display: block;
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  margin-top: 5px;
+}
+
+.source a {
+  color: inherit;
+}
+
+/* Ekran okuyucuya "eski deger / yeni deger"; gorsel tarafta ok yeter. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Tek sutuna gecis — rayin kalktigi kirilma noktasiyla ayni. */
+@media (max-width: 639px) {
+  .item {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
+  }
+}

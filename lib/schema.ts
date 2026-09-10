@@ -148,6 +148,37 @@ export const timelineEventSchema = z.strictObject({
 });
 export type TimelineEvent = z.infer<typeof timelineEventSchema>;
 
+/**
+ * Duzeltme kaydi — yayimlanmis bir degeri neden ve neye dayanarak
+ * degistirdigimizin defteri.
+ *
+ * Neden ayri bir alan: bu proje "sayi verilir, kaynagi gosterilir" diye
+ * kuruldu. Sessizce duzeltilen bir sayi o iddiayi bozar; okuyucu dun
+ * gordugu degerin nereye gittigini soramaz hale gelir.
+ *
+ * Takvim (timeline) ile karistirilmamali: orada sistemin kendi tarihi
+ * anlatilir, burada BIZIM dosyamizin tarihi.
+ */
+export const revisionSchema = z.strictObject({
+  /** Duzeltmenin yapildigi gun. */
+  date: isoDateSchema,
+  /**
+   * Degisen alan. Bilinen bir olcum ya da ozellik anahtari olabilir
+   * (range_km, guidance) ya da serbest metin — sayfa basligi, ozet gibi
+   * sema disinda kalan yerler de duzeltilir.
+   */
+  field: z.string().min(1),
+  /** Eski ve yeni deger, okunabilir bicimde. Bos birakilamaz: */
+  from: z.string().min(1),
+  to: z.string().min(1),
+  /** Neden degisti. Tek cumle yeter, ama zorunlu. */
+  reason: localizedTextSchema,
+  /** Duzeltmenin dayandigi kaynak. Kaynaksiz duzeltme de olur (hesap hatasi). */
+  source: localizedTextSchema.optional(),
+  source_url: z.url().optional()
+});
+export type Revision = z.infer<typeof revisionSchema>;
+
 /** Yeni kategori eklerken bilincli karar olsun diye enum. */
 export const categorySchema = z.enum(['balistik-fuze']);
 
@@ -174,6 +205,13 @@ export const systemSchema = z
     summary: localizedTextSchema.optional(),
     variants: z.array(variantSchema).min(1),
     timeline: z.array(timelineEventSchema),
+    /**
+     * Duzeltme gecmisi. Alan yoksa da olur; bos dizi de gecerlidir ve
+     * ikisi de ayni anlama gelir: henuz duzeltme yapilmadi. Sayfa o
+     * durumda bolumu hic cizmez — bos bir "Duzeltme gecmisi" basligi,
+     * kaydin tutulmadigi izlenimi verir.
+     */
+    revisions: z.array(revisionSchema).optional(),
     disclaimer: localizedTextSchema,
     _todo: todoSchema.optional()
   })
