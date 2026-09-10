@@ -56,3 +56,6 @@ next-env.d.ts
 
 # sunucu defteri — port, dizin ve makine baglami; ornegi RUNBOOK.example.md
 /deploy/RUNBOOK.md
+
+# kisisel Claude Code izinleri — depo public, ekiple paylasilmaz
+/.claude/settings.local.json
