@@ -31,7 +31,7 @@ jobs:
 
       # pnpm surumu package.json'daki packageManager alanindan okunur;
       # burada ikinci kez yazilmaz.
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - uses: actions/setup-node@v4
         with:
