@@ -1,0 +1,53 @@
+name: Veri düzeltme
+description: Bir değerin yanlış veya eksik olduğunu bildirin
+title: "[Düzeltme] "
+labels: ["veri", "inceleme bekliyor"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Kaynak göstermeyen bildirimler değerlendirilmez. Bu, projenin
+        temel kuralıdır — bize de aynısı uygulanır.
+  - type: input
+    id: sistem
+    attributes:
+      label: Sistem
+      placeholder: "TAYFUN"
+    validations:
+      required: true
+  - type: input
+    id: alan
+    attributes:
+      label: Alan
+      placeholder: "range_km"
+    validations:
+      required: true
+  - type: input
+    id: mevcut
+    attributes:
+      label: Sitedeki mevcut değer
+    validations:
+      required: true
+  - type: input
+    id: onerilen
+    attributes:
+      label: Önerilen değer
+    validations:
+      required: true
+  - type: input
+    id: kaynak
+    attributes:
+      label: Kaynak URL
+      description: Doğrudan link. Ekran görüntüsü veya "duydum" kabul edilmez.
+    validations:
+      required: true
+  - type: dropdown
+    id: guven
+    attributes:
+      label: Kaynak türü
+      options:
+        - "Resmî kurum açıklaması"
+        - "Basın"
+        - "Bağımsız değerlendirme"
+    validations:
+      required: true

@@ -337,3 +337,52 @@ Tam listesi CLAUDE.md §5'te. Kısaca:
 - Çatışma veya patlama görseli yok.
 - Üretici logoları kullanılmaz, hiçbir yerde resmî izlenimi verilmez. Bağımsızlık
   ibaresi her sayfanın altında bulunur.
+
+Bu proje yayımlanmış açık kaynaklardan derlenir ve **resmî bir yayın değildir**.
+Yukarıdaki kurallar projenin bir parçasıdır; onları kaldıran türevler bu
+projeyle ilişkili değildir.
+
+## Kim yazıyor
+
+Muhammed Said Çakır — [@muhammedsaidckr](https://github.com/muhammedsaidckr).
+
+Proje bağımsızdır: hiçbir kurum, üretici ya da kamu kuruluşuyla ilişkisi,
+onlardan aldığı destek yoktur. Ad burada açıkça duruyor çünkü bu alanda
+anonim yayın kaynağı sorgulanamaz hale getirir; kaynağını gösteren bir
+dosyanın yazarını gizlemesi tutarsız olurdu.
+
+Düzeltme ve iletişim: info@acikdosya.org
+
+## Katkı
+
+En değerli katkı yeni özellik değil, yanlış bir sayının düzeltilmesidir.
+Kaynağı olmayan bildirim değerlendirilmez — bu kural bize de uygulanıyor.
+
+Yol: [CONTRIBUTING.md](./CONTRIBUTING.md).
+Güvenlik açığı issue olarak açılmaz: [SECURITY.md](./SECURITY.md).
+
+## Lisans
+
+Üç ayrı şey var ve aynı lisansla yönetilemezler.
+
+| Katman | Lisans |
+|---|---|
+| Kod | AGPL-3.0 — [LICENSE](./LICENSE) |
+| İçerik ve veri (`content/`, `messages/`, belgeler) | CC BY 4.0 — [LICENSE-CONTENT](./LICENSE-CONTENT) |
+| Marka | Lisans kapsamı **dışında** |
+
+**Kod neden AGPL:** siteyi çalıştıran türevleri de kaynağını açmaya zorlar.
+Bu projede asıl kopyalanma riski ikili dağıtım değil, kodu alıp kapalı bir
+site kurmaktır.
+
+**Marka:** "Açık Dosya" adı ve `public/brand/` altındaki logo varlıkları
+hiçbir lisansla verilmez. Türev çalışmalar bu adı ve logoyu kullanamaz.
+
+Bunun sebebi telif değil. Kodu ve veriyi açmak, birinin fork'layıp editoryal
+kuralları — hedef dili yasağını, sorumluluk ibaresini — kaldırıp yayınlamasını
+engellemez. Onu engelleyen şey marka hakkıdır: fork edebilirler, "Açık Dosya"
+adıyla yayınlayamazlar.
+
+Depoya giren görseller bu lisansların dışındadır; her birinin kendi lisansı
+`content/assets.json` içinde kayıtlıdır. Harita altlığı OpenStreetMap
+verisidir, ODbL.

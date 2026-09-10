@@ -50,3 +50,6 @@ next-env.d.ts
 
 # uretilen harita paketi — scripts/build-tiles.mjs (agdan uretilir, 69 MB)
 /public/tiles/
+
+# GitHub yayin plani — ic not, depoya girmez
+/GITHUB.md

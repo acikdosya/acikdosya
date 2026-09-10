@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Güvenlik açığı
+    url: https://github.com/acikdosya/acikdosya/blob/main/SECURITY.md
+    about: Güvenlik açıkları issue olarak açılmaz, e-posta ile bildirilir.
+  - name: Editoryal kurallar
+    url: https://github.com/acikdosya/acikdosya/blob/main/CONTRIBUTING.md
+    about: Hedef listesi, üretim detayı ve benzeri konulardaki istekler kapsam dışıdır.
