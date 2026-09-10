@@ -16,15 +16,15 @@
 # sitenin onundeki yapilandirma elle ve bir kereliktir (CLAUDE.md §11).
 #
 # KURULUM (bir kez):
-#   ssh root@46.62.206.100 'docker network create acikdosya-net'   # deploy.sh de yapar
-#   ssh root@46.62.206.100 'mkdir -p /opt/acikdosya/analytics'
-#   scp deploy/analytics/compose.yaml root@46.62.206.100:/opt/acikdosya/analytics/
-#   scp deploy/analytics/.env.example  root@46.62.206.100:/opt/acikdosya/analytics/.env
-#   ssh root@46.62.206.100 'cd /opt/acikdosya/analytics && vi .env'   # iki sir doldurulur
-#   ssh root@46.62.206.100 'cd /opt/acikdosya/analytics && docker compose up -d'
+#   ssh $DEPLOY_HOST 'docker network create acikdosya-net'   # deploy.sh de yapar
+#   ssh $DEPLOY_HOST 'mkdir -p /opt/acikdosya/analytics'
+#   scp deploy/analytics/compose.yaml $DEPLOY_HOST:/opt/acikdosya/analytics/
+#   scp deploy/analytics/.env.example  $DEPLOY_HOST:/opt/acikdosya/analytics/.env
+#   ssh $DEPLOY_HOST 'cd /opt/acikdosya/analytics && vi .env'   # iki sir doldurulur
+#   ssh $DEPLOY_HOST 'cd /opt/acikdosya/analytics && docker compose up -d'
 #
 # YONETIM ARAYUZU internete kapali, ssh tuneliyle acilir:
-#   ssh -L 3004:127.0.0.1:3004 root@46.62.206.100
+#   ssh -L 3004:127.0.0.1:3004 $DEPLOY_HOST
 #   tarayicida http://localhost:3004  (ilk giris admin / umami — HEMEN degistir)
 #
 # Panelde site eklendikten sonra cikan website id, imaja derleme zamaninda

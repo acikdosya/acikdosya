@@ -346,7 +346,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 | | |
 |---|---|
-| Sunucu | Hetzner, 46.62.206.100, Ubuntu 24.04, 2 vCPU / 3,7 GB |
+| Sunucu | Hetzner, Ubuntu 24.04, 2 vCPU / 3,7 GB — adres `.env.deploy` içinde |
 | Konteyner | `acikdosya-app`, `127.0.0.1:3003`, bellek sınırı 512 MB |
 | Dizin | `/opt/acikdosya` |
 | Sertifika | Let's Encrypt, `acikdosya.org` + `www`, certbot otomatik yeniler |

@@ -289,8 +289,8 @@ Değiştirmek konteyneri yeniden başlatmakla olmaz, `deploy.sh` yeniden
 Geri dönüş sunucudaki sürüm etiketleriyle:
 
 ```bash
-ssh root@46.62.206.100 'docker image ls acikdosya'
-ssh root@46.62.206.100 'docker tag acikdosya:<eski-sürüm> acikdosya:latest \
+ssh "$DEPLOY_HOST" 'docker image ls acikdosya'
+ssh "$DEPLOY_HOST" 'docker tag acikdosya:<eski-sürüm> acikdosya:latest \
                         && cd /opt/acikdosya && docker compose up -d'
 ```
 
