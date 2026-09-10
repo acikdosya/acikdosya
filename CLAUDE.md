@@ -215,6 +215,8 @@ lib/
   measurement/
     divergence.ts         # iki ölçüm ıraksıyor mu — aralık hesabı, §3
     divergence.test.ts    # birim testleri; pnpm test
+    labels.ts             # durum adı ↔ mesaj anahtarı, tek kaynak
+  messages.test.ts        # mesaj paketi ile kod arasındaki sözleşme
   schema.ts               # zod şemaları — build'de içeriği doğrula
   brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
   tokens.ts               # paletin JS kopyası — CSS değişkeni okuyamayanlar için
