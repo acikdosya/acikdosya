@@ -1,0 +1,36 @@
+/*
+ * Iraksama, guven rozetinden daha SESSIZ bir dildir — CLAUDE.md §4.
+ *
+ * Rozet cercevesi kaynagin niteligini tasiyor; iraksama ise kaydin
+ * kendisi hakkinda bir not. Ikisine ayni gorsel agirligi vermek satiri
+ * iki kez bagirtirdi. Bu yuzden burada cerceve, dolgu ve yaricap yok.
+ *
+ * "farkli aciklamalar" normal bir durumdur ve alarm gibi gorunmez:
+ * notr renk, notr agirlik. Yalnizca "celiski" nadir ve dikkat ceker;
+ * onun satiri SpecTable icinde ayrica isaretlenir.
+ */
+.label {
+  font-family: var(--font-display);
+  font-size: var(--size-badge-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.label[data-divergence='celiski'] {
+  color: var(--signal);
+  font-weight: var(--weight-semibold);
+}
+
+/*
+ * Degerin kapsami. Kaynak satiriyla ayni olcude ve renkte duruyor:
+ * ikisi de "bu sayi nereden geliyor" sorusunun parcasi.
+ */
+.scope {
+  display: block;
+  font-size: var(--size-micro);
+  line-height: 1.45;
+  color: var(--ink-2);
+  margin-top: var(--s-1);
+}

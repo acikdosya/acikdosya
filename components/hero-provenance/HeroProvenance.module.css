@@ -1,0 +1,106 @@
+/*
+ * Hero'nun ucuncu katmani. Hareket globals.css'ten aliniyor.
+ *
+ * Zincir bir tablo degil, tanim listesi: her halkanin adi ve degeri var,
+ * satirlar arasinda kiyas yok. Bu yuzden hucre cizgileri de yok — yalnizca
+ * halkalari ayiran ince kural cizgisi.
+ */
+.panel {
+  composes: hero-panel from global;
+
+  margin: 0;
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  padding-bottom: var(--s-3);
+  font-family: var(--font-display);
+}
+
+.field {
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+}
+
+.variant {
+  font-size: var(--size-label);
+  color: var(--ink-2);
+}
+
+.chain {
+  margin: 0;
+}
+
+/*
+ * Etiket solda, deger sagda. Dar ekranda alt alta gecer: iki sutunu
+ * zorlamak 400px'te etiketi kirardi.
+ */
+.link {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  border-top: var(--border-w) solid var(--rule);
+  padding: var(--pad-row-y) 0;
+}
+
+.link dt {
+  flex: 0 0 auto;
+  min-width: 9rem;
+  font-family: var(--font-display);
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+}
+
+.link dd {
+  flex: 1 1 12rem;
+  margin: 0;
+  min-width: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}
+
+.link dd a {
+  color: inherit;
+}
+
+/*
+ * Zincirin ilk halkasi sayinin kendisi; hero'da en buyuk oge o.
+ * Birim sayiyla ayni olcude ve agirlikta dizilir — desen sayfasi §03.
+ */
+.value {
+  font-family: var(--font-display);
+  font-size: var(--size-value-l);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: var(--num);
+  letter-spacing: var(--track-value-l);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.value small {
+  font-size: inherit;
+  font-weight: inherit;
+  margin-left: 0.28em;
+}
+
+/* Hareket ani: guven rozeti belirir — iraksama panelindeki anla ayni. */
+.badge {
+  composes: hero-reveal from global;
+}
+
+.note {
+  margin: 0;
+  border-top: var(--border-w) solid var(--ink);
+  padding-top: var(--s-3);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}

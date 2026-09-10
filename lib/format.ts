@@ -1,3 +1,4 @@
+import type {SpecUnit} from './measurement/divergence';
 import type {
   Confidence,
   LocalizedText,
@@ -11,7 +12,7 @@ import type {Locale} from '@/i18n/routing';
  * ve tek yerde duruyor. Tabloda, hero'daki celiski satirinda ve paylasim
  * gorselinde ayni birim yazar.
  */
-export const SPEC_UNITS: Record<SpecKey, string> = {
+export const SPEC_UNITS: Record<SpecKey, SpecUnit> = {
   length_m: 'm',
   diameter_mm: 'mm',
   mass_kg: 'kg',
@@ -35,10 +36,6 @@ export function primary(list: readonly Measurement[]): Measurement {
   return [...list].sort(
     (a, b) => CONFIDENCE_ORDER[a.confidence] - CONFIDENCE_ORDER[b.confidence]
   )[0];
-}
-
-export function hasConflict(list: readonly Measurement[] | undefined): boolean {
-  return (list?.length ?? 0) > 1;
 }
 
 export function text(value: LocalizedText, locale: Locale): string {

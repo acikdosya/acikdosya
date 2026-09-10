@@ -21,9 +21,10 @@
     "methodHeading": "How we work",
     "methodMeta": "Three confidence levels",
     "methodIntro": "Every value carries one of three states. The state does not say the value is correct; it describes the quality of its source. The same three states look identical in the table, the map legend, the 3D labels and the timeline.",
-    "conflictLabel": "Conflict",
-    "conflictBody": "When several sources publish a value, all of them are listed. A conflict is not an error; it is part of the record.",
-    "methodLink": "The full method"
+    "conflictLabel": "Divergence",
+    "conflictBody": "When several sources publish a value, all of them are listed. But more than one value does not mean a contradiction: “> 280 km” and “> 500 km” are both lower bounds, and both can be true at once. Which case applies is computed from the operators, not flagged by hand.",
+    "methodLink": "The full method",
+    "headingRevision": "Every figure that changed says why."
   },
   "A11y": {
     "skipToContent": "Skip to content"
@@ -33,6 +34,10 @@
     "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
     "humanLabel": "{height} m",
     "lengthLabel": "{value} m"
+  },
+  "MeasureGap": {
+    "absent": "no verified dimensional data",
+    "invite": "When we have no sourceable figure for a variant's length or diameter, no silhouette and no model are produced. If you have a source that carries a publication name, a date and a link, <link>send it to us</link>."
   },
   "SpecTable": {
     "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
@@ -56,7 +61,30 @@
     "official": "official",
     "press": "press",
     "estimate": "estimate",
-    "conflict": "conflict"
+    "officialCaveat": "The official badge shows who the statement came from; it does not show that the information has been independently verified."
+  },
+  "Divergence": {
+    "kind_celiski": "contradiction",
+    "kind_farkliAciklama": "different statements",
+    "kind_farkliKapsam": "different scope",
+    "kind_belirsiz": "not comparable",
+    "scope_beyan": "declared",
+    "scope_test": "measured in a test",
+    "scope_olcum": "third-party measurement",
+    "scope_tahmin": "inference",
+    "statedAt": "{year} statement",
+    "unknownScope": "scope not stated",
+    "onRecord": "{count} values on record",
+    "note": "These rows come from the file itself, not from a sample."
+  },
+  "Hero": {
+    "revisionNote": "This entry comes from the correction log. Every change to a published value is written there.",
+    "provenanceNote": "This row comes from the file itself, not from a sample.",
+    "chain_value": "Value",
+    "chain_confidence": "Confidence",
+    "chain_scope": "Scope",
+    "chain_source": "Source",
+    "chain_verified": "Verified on"
   },
   "SystemPage": {
     "specs": "Technical data and sources",
@@ -108,10 +136,6 @@
     "tr": "Türkçe",
     "en": "English"
   },
-  "Conflict": {
-    "onRecord": "{count} values on record",
-    "note": "These rows come from the file itself, not from a sample."
-  },
   "SystemCard": {
     "counts": "{values} values, {sources} sources",
     "updated": "last verified {date}",
@@ -119,7 +143,7 @@
     "open": "Open the file"
   },
   "ConfidenceLevels": {
-    "official": "The manufacturer's or the institution's own statement. A link is given; if the link dies, an archive copy replaces it and the date is recorded.",
+    "official": "The manufacturer's or the institution's own statement. A link is given; if the link dies, an archive copy replaces it and the date is recorded. The official badge shows who the statement came from; it does not show that the information has been independently verified.",
     "press": "Secondary source: news report, magazine, trade show or conference note. Unverified, but on record and not hidden.",
     "estimate": "Independent assessment with no official confirmation. Its badge is red, because this is an inference rather than a statement."
   },
@@ -143,8 +167,19 @@
     "recordUnits": "The unit lives inside the field name rather than in a field of its own. Confusing metres with millimetres is therefore impossible.",
     "recordMissing": "Where there is no data, a dash is shown and screen readers hear \"no data\". Missing data is not a fourth confidence state; it says the record is empty there.",
     "conflictHeading": "Why we do not hide conflicts",
-    "conflictIntro": "Open-source figures contradict each other. Picking one and deleting the rest means making an editorial decision the reader cannot see. Instead they all sit stacked in the same cell, each carrying its own source.",
+    "conflictIntro": "Open-source figures diverge from each other. Picking one and deleting the rest means making an editorial decision the reader cannot see. Instead they all sit stacked in the same cell, each carrying its own source.",
     "conflictPick": "Where only one figure fits, such as the scaled silhouette and the 3D model, the most reliable value is used: official, then press, then estimate. That choice affects the drawing, not the record — the table keeps showing all of them.",
+    "divergenceHeading": "Three kinds of divergence",
+    "divergenceIntro": "More than one value in the same field is not a contradiction on its own. Which case applies is computed from the operators and the scope fields, not flagged by hand. There are three outcomes.",
+    "divergence_celiski": "The intervals do not overlap: no number can satisfy both. Either one source is wrong, or the two are in fact talking about different things. This is rare, which is why the row is marked.",
+    "divergence_farkliAciklama": "The intervals overlap, so both can be true at once. Lower bounds work this way: “> 280” and “> 500” do not contradict each other, the second already satisfies the first. This is a normal state, not a warning.",
+    "divergence_farkliKapsam": "The values are not measuring the same thing: they were obtained by different methods, belong to different variants, or were stated on different dates. No interval arithmetic is done here, because the values are not comparable. Which field differs is written under the value.",
+    "divergenceExampleIntro": "The three rows below are HYPOTHETICAL. They belong to no system and are not taken from the files; they only show how the calculation works.",
+    "divergenceExample_celiski": "“< 6 m” and “> 9 m” — contradiction. No length is both under 6 and over 9.",
+    "divergenceExample_farkliAciklama": "“> 6 m” and “> 9 m” — different statements. Any body longer than 9 metres satisfies both.",
+    "divergenceExample_farkliKapsam": "“9 m” (third-party measurement) and “> 6 m” (declared) — different scope. One measured the object, the other stated a figure.",
+    "divergenceScope": "Scope is carried in three fields: how the value was obtained (declared, measured in a test, third-party measurement, inference), which variant it belongs to, and the date the statement was made. When these are unknown they are left empty and the value reads “scope not stated”. They are never filled in by guesswork.",
+    "divergenceBadgeNote": "The official badge shows who the statement came from; it does not show that the information has been independently verified. A figure being official does not mean we measured it, or that anyone else confirmed it.",
     "limitsHeading": "What we do not publish",
     "limitsIntro": "Some material is findable in open sources and still stays out of these files. The limit is editorial rather than technical.",
     "limit_targets": "No target language. A range ring is drawn; no target city or country is labelled or highlighted. The terms used are \"range envelope\" and \"reference point\".",

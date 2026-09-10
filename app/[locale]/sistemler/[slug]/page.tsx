@@ -6,6 +6,7 @@ import {
   ModelSection,
   type ModelVariant
 } from '@/components/model-viewer/ModelSection';
+import {MeasureGap} from '@/components/measure-gap/MeasureGap';
 import {RangeEnvelope} from '@/components/range-envelope/RangeEnvelope';
 import {RevisionLog} from '@/components/revision-log/RevisionLog';
 import {buildRings} from '@/components/range-envelope/rings';
@@ -156,7 +157,18 @@ export default async function SystemPage({params}: Props) {
     {
       id: 'scale',
       title: t('scale'),
-      body: <ScaleSilhouette system={system} locale={lang} />
+      /*
+       * Olcu verisi olmayan varyant siluetten dusuyor. Dustugu tek yerde
+       * soyleniyor: MeasureGap onu adiyla yazar ve neden cizilmedigini
+       * belirtir. Model bolumunde tekrarlanmaz — ayni bosluk, iki kez
+       * anlatilmaz.
+       */
+      body: (
+        <>
+          <ScaleSilhouette system={system} locale={lang} />
+          <MeasureGap system={system} />
+        </>
+      )
     }
   ];
 

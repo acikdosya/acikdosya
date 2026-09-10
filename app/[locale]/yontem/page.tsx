@@ -2,7 +2,9 @@ import type {Metadata} from 'next';
 import {Fragment} from 'react';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ConfidenceLevels} from '@/components/confidence-levels/ConfidenceLevels';
+import {DivergenceLabel} from '@/components/divergence-note/DivergenceNote';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
+import type {DivergenceKind} from '@/lib/measurement/divergence';
 import {alternates} from '@/lib/urls';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
@@ -23,6 +25,17 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
 const LIMITS = ['targets', 'classes', 'internals', 'imagery'] as const;
 const TERMS = ['value', 'confidence', 'source', 'verified'] as const;
+
+/**
+ * Uc iraksama durumu, hesabin dondurdugu sirayla — CLAUDE.md §3.
+ * Mesaj anahtari kebab-case durum adindan turemez; tabloda acikca duruyor
+ * ki iki isimlendirme birbirinden bagimsiz degissin.
+ */
+const KINDS = [
+  {kind: 'celiski', key: 'celiski'},
+  {kind: 'farkli-aciklama', key: 'farkliAciklama'},
+  {kind: 'farkli-kapsam', key: 'farkliKapsam'}
+] as const satisfies readonly {kind: DivergenceKind; key: string}[];
 
 /**
  * Yontem sayfasi. Uc guven seviyesinin ne anlama geldigi, verinin nasil
@@ -85,8 +98,46 @@ export default async function MethodPage({params}: Props) {
         </div>
       </section>
 
+      <section className={styles.section} aria-labelledby="divergence-heading">
+        <SectionHeading
+          index={4}
+          title={t('divergenceHeading')}
+          id="divergence-heading"
+        />
+        <div className={styles.body}>
+          <p>{t('divergenceIntro')}</p>
+        </div>
+        <dl className={styles.terms}>
+          {KINDS.map(({kind, key}) => (
+            <Fragment key={kind}>
+              <dt>
+                <DivergenceLabel kind={kind} />
+              </dt>
+              <dd>{t(`divergence_${key}`)}</dd>
+            </Fragment>
+          ))}
+        </dl>
+        <div className={styles.body}>
+          <p>{t('divergenceScope')}</p>
+          {/*
+            Ornek FARAZI. Gercek bir dosya satiri kullanilmiyor: acik
+            kaynakta karsiligi olmayan bir sayi, ornek diye yazilsa bile
+            alintilanabilir hale gelir — CLAUDE.md §5.7.
+          */}
+          <p>{t('divergenceExampleIntro')}</p>
+        </div>
+        <ul className={styles.limits}>
+          {KINDS.map(({kind, key}) => (
+            <li key={kind}>{t(`divergenceExample_${key}`)}</li>
+          ))}
+        </ul>
+        <div className={styles.body}>
+          <p>{t('divergenceBadgeNote')}</p>
+        </div>
+      </section>
+
       <section className={styles.section} aria-labelledby="limits-heading">
-        <SectionHeading index={4} title={t('limitsHeading')} id="limits-heading" />
+        <SectionHeading index={5} title={t('limitsHeading')} id="limits-heading" />
         <div className={styles.body}>
           <p>{t('limitsIntro')}</p>
         </div>
@@ -99,7 +150,7 @@ export default async function MethodPage({params}: Props) {
 
       <section className={styles.section} aria-labelledby="corrections-heading">
         <SectionHeading
-          index={5}
+          index={6}
           title={t('correctionsHeading')}
           id="corrections-heading"
         />

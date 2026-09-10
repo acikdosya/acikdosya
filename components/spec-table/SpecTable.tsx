@@ -1,17 +1,13 @@
 import {useTranslations} from 'next-intl';
+import {ConfidenceBadge} from '@/components/confidence-badge/ConfidenceBadge';
 import {
-  ConfidenceBadge,
-  ConflictBadge
-} from '@/components/confidence-badge/ConfidenceBadge';
+  DivergenceLabel,
+  ScopeNote
+} from '@/components/divergence-note/DivergenceNote';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, sourceHost} from '@/lib/analytics';
-import {
-  formatDate,
-  formatValue,
-  hasConflict,
-  SPEC_UNITS
-} from '@/lib/format';
+import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
 import {
   attributeKeys,
   specKeys,
@@ -19,8 +15,10 @@ import {
   type AttributeKey,
   type Measurement,
   type SpecKey,
-  type System
+  type System,
+  type Variant
 } from '@/lib/schema';
+import {specDivergence} from '@/lib/stats';
 import styles from './SpecTable.module.css';
 
 type Props = {
@@ -69,14 +67,23 @@ function SourceLine({
   );
 }
 
+/**
+ * Kapsam notu yalnizca alan iraksadiginda cizilir. Tek degerli bir satirda
+ * "beyan" yazmak bilgi tasimaz, gurultu yapar; iraksayan satirda ise
+ * degerlerin neden kiyaslanmadigini tam orada soyler.
+ */
 function MeasurementCell({
   list,
   unit,
-  locale
+  locale,
+  variants,
+  showScope
 }: {
   list: readonly Measurement[] | undefined;
   unit: string;
   locale: Locale;
+  variants: readonly Variant[];
+  showScope: boolean;
 }) {
   const t = useTranslations('SpecTable');
 
@@ -104,6 +111,9 @@ function MeasurementCell({
             verifiedAt={measurement.verified_at}
             locale={locale}
           />
+          {showScope ? (
+            <ScopeNote measurement={measurement} variants={variants} />
+          ) : null}
         </span>
       ))}
     </td>
@@ -179,15 +189,27 @@ export function SpecTable({system, locale}: Props) {
         </thead>
         <tbody>
           {usedSpecs.map((key) => {
-            const conflict = system.variants.some((variant) =>
-              hasConflict(variant.specs[key])
-            );
+            /*
+             * Iraksama hesaplanir, elle bayraklanmaz. Ayni alandaki iki
+             * deger celismek zorunda degil: iki alt sinir (> 280 ve > 500)
+             * ayni anda dogru olabilir — lib/measurement/divergence.ts.
+             */
+            const divergence = specDivergence(system, key);
 
             return (
-              <tr key={key} className={conflict ? styles.conflictRow : undefined}>
+              <tr
+                key={key}
+                className={
+                  divergence?.kind === 'celiski'
+                    ? styles.contradictionRow
+                    : undefined
+                }
+              >
                 <th scope="row" className={styles.field}>
                   {tSpec(key)}{' '}
-                  {conflict ? <ConflictBadge /> : null}
+                  {divergence ? (
+                    <DivergenceLabel kind={divergence.kind} />
+                  ) : null}
                 </th>
                 {system.variants.map((variant) => (
                   <MeasurementCell
@@ -195,6 +217,8 @@ export function SpecTable({system, locale}: Props) {
                     list={variant.specs[key]}
                     unit={SPEC_UNITS[key]}
                     locale={locale}
+                    variants={system.variants}
+                    showScope={divergence !== undefined}
                   />
                 ))}
               </tr>

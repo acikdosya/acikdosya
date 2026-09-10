@@ -40,8 +40,3 @@
 .estimate {
   composes: conf-estimate from global;
 }
-
-/* Ayni alanda birden fazla deger oldugunu isaretler — tahminle ayni uyari dili. */
-.conflict {
-  composes: conf-estimate from global;
-}

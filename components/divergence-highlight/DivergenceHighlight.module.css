@@ -1,16 +1,13 @@
 /*
- * Hero'daki celisen veri satiri. Sayfanin TEK orkestre edilmis hareket ani
- * burasi — CLAUDE.md §4.
+ * Hero'nun birinci katmani: iraksayan veri satiri.
  *
- * Rozetler ve kilavuz cizgileri AYNI ANDA belirir, artan gecikmeyle degil:
- * kademeli giris kaskadi (n oge, artan gecikme) yasak. Gecikme tek bir
- * degiskende (--conflict-delay) duruyor ki iki animasyon ayrisamasin.
- *
- * Hareketi azaltma tercihinde sure ve gecikme globals.css'te sifirlanir;
- * "both" doldurma sayesinde satir dogrudan son halinde gorunur.
+ * Hareket burada TANIMLANMAZ, globals.css'ten aliniyor (.hero-panel,
+ * .hero-reveal, .hero-lead). Uc hero panelinin ucu de ayni kareleri
+ * kullanir; boylece "sayfa basina tek an" kurali hangi panel cizilirse
+ * cizilsin gecerli kalir — CLAUDE.md §4.
  */
 .panel {
-  --conflict-delay: 320ms;
+  composes: hero-panel from global;
 
   margin: 0;
   background: var(--paper);
@@ -88,16 +85,15 @@
 
 /* Sayiyi rozetine baglayan kilavuz cizgi. */
 .lead {
+  composes: hero-lead from global;
+
   flex: 1 1 var(--s-5);
   height: 1px;
   background: var(--rule);
-  transform-origin: left;
-  animation: conflict-lead var(--dur-base) var(--ease) var(--conflict-delay)
-    both;
 }
 
 .badge {
-  animation: conflict-in var(--dur-base) var(--ease) var(--conflict-delay) both;
+  composes: hero-reveal from global;
 }
 
 .source {
@@ -113,6 +109,15 @@
 }
 
 /*
+ * Degerin kapsami. Kaynak satirinin altinda, ayni sessizlikte: ikisi de
+ * "bu sayi nereden geliyor" sorusunun parcasi.
+ */
+.scope {
+  flex: 1 1 100%;
+  margin: 0;
+}
+
+/*
  * Satirlarin gercek dosyadan geldigini soyleyen not. Ust cizgisi ink:
  * ornek ile kaydin arasindaki sinir bilgi tasiyor.
  */
@@ -123,24 +128,4 @@
   font-size: var(--size-body-s);
   line-height: var(--lh-body-s);
   color: var(--ink-2);
-}
-
-@keyframes conflict-in {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes conflict-lead {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
 }

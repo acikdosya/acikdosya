@@ -409,6 +409,56 @@
 }
 
 /*
+ * ANA SAYFANIN TEK ORKESTRE EDILMIS HAREKET ANI — CLAUDE.md §4.
+ *
+ * Hareket bir panele degil, hero'nun kendisine ait. Hero uc katmanli:
+ * once iraksayan veri satiri, o yoksa son duzeltme kaydi, o da yoksa tek
+ * bir degerin koken zinciri (lib/hero.ts). Hangisi cizilirse hareket ona
+ * baglanir; bu yuzden kareler burada, tek yerde duruyor.
+ *
+ * Uc panele ayri ayri animasyon yazmak, dosyalar ayri ayri degistikce
+ * "sayfa basina tek an" kuralinin sessizce ikiye cikmasi demekti.
+ *
+ * Gecikme tek degiskende: iki animasyon ayrisamaz, kademeli giris kaskadi
+ * (n oge, artan gecikme) olusamaz.
+ *
+ * prefers-reduced-motion asagidaki kuresel ag tarafindan kesiliyor; "both"
+ * doldurma sayesinde oge dogrudan son halinde gorunur.
+ */
+.hero-panel {
+  --hero-delay: 320ms;
+}
+
+.hero-reveal {
+  animation: hero-reveal var(--dur-base) var(--ease) var(--hero-delay) both;
+}
+
+.hero-lead {
+  transform-origin: left;
+  animation: hero-lead var(--dur-base) var(--ease) var(--hero-delay) both;
+}
+
+@keyframes hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-lead {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/*
  * Hareketi azaltma tercihi kuresel ag olarak burada uygulanir, dosya basina
  * degil — CLAUDE.md §4. Sure tokenlari sifirlanir, boylece token okuyan her
  * bilesen otomatik uyar; asagidaki blok token okumayan uctan kacan

@@ -20,6 +20,12 @@ const slugSchema = z
   .string()
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'kucuk harf, rakam ve tire');
 
+/**
+ * Bugun, UTC. Sunucu ve gelistirici makinesi ayni gunu gormeli — yerel
+ * saat dilimi kullanan bir kontrol, tarih sinirinda derlemeyi kirardi.
+ */
+const today = () => new Date().toISOString().slice(0, 10);
+
 /** Tam ISO tarihi: YYYY-MM-DD, gecerli ve gelecekte degil. */
 const isoDateSchema = z
   .string()
@@ -45,16 +51,70 @@ export type LocalizedText = z.infer<typeof localizedTextSchema>;
 /** Doldurulmayi bekleyen alanlarin acik kaydi — uydurma deger yerine bu. */
 const todoSchema = z.array(z.string().min(3)).min(1);
 
+/**
+ * Deger nasil elde edildi — CLAUDE.md §3.
+ *
+ * confidence ile scope DIK EKSENLERDIR ve birbirinin yerine gecmez:
+ *   confidence  KIM soyledi (resmi merci / basin / bagimsiz degerlendirme)
+ *   scope       NASIL elde edildi (beyan / test / olcum / tahmin)
+ * Bir deger ayni anda confidence 'press' (haber aktardi) ve scope 'olcum'
+ * (fuar fotografindan olculdu) olabilir. scope 'tahmin' ile confidence
+ * 'estimate' de ayni sey degildir: basinin baskasinin tahminini aktarmasi
+ * scope 'tahmin' + confidence 'press' olur.
+ *
+ * Mekan bildiren bir deger ('sergi' gibi) yok: gecit toreni fotografindan
+ * fotogrametriyle cikarilan olcu ile fuarda serilen govdeden alinan olcu
+ * epistemik olarak ayni kategoridir.
+ */
+export const scopeSchema = z.enum(['beyan', 'test', 'olcum', 'tahmin']);
+export type Scope = z.infer<typeof scopeSchema>;
+
 export const measurementSchema = z.strictObject({
   value: z.number().finite(),
   operator: operatorSchema.optional(),
   confidence: confidenceSchema,
+  /**
+   * Deger neyi olcuyor. Iki sayi kiyaslanmadan once bu sorulur: test
+   * atisinda kat edilen mesafe ile beyan edilen azami menzil ayni alan
+   * adini tasisa bile ayni seyi olcmez, dolayisiyla celisemezler.
+   */
+  scope: scopeSchema.optional(),
+  /**
+   * Deger hangi varyanta ait. Olcum zaten bir varyantin icinde durur;
+   * bu alan kaydin BASKA bir varyanti tarif ettigi durumu isaretler
+   * (kaynak "TAYFUN" dedi ama sayi BLOK-4'e ait gibi).
+   */
+  variant_id: slugSchema.optional(),
+  /**
+   * Aciklamanin yapildigi tarih. verified_at ile karistirilmamali:
+   * o bizim kontrol tarihimiz, bu kaynagin konusma tarihi. 2022'de
+   * yapilmis bir aciklama ile 2025'te yapilmis olani ayni anda dogru
+   * olabilir; kiyaslanmalari icin once bu ayrim gorunur olmali.
+   */
+  stated_at: partialIsoDateSchema.optional(),
   /** Insan okuyabilir kaynak adi. Ikincil hedef kitle yabanci okuyucu, bu yuzden cift dilli. */
   source: localizedTextSchema,
   source_url: z.url().optional(),
   /** "Bu sayi 6 ay sonra nereden geldi" sorusunun cevabi. */
   verified_at: isoDateSchema
-});
+})
+  .refine((measurement) => !measurement.stated_at || measurement.stated_at <= today(), {
+    error: 'gelecek tarih — stated_at aciklamanin yapildigi gundur',
+    path: ['stated_at']
+  })
+  /*
+   * Aciklama bizim kontrolumuzden sonra yapilmis olamaz. Kismi tarih
+   * (YYYY / YYYY-MM) ISO'da bastan siralanir, bu yuzden dize kiyasi
+   * dogru cevabi verir: "2026" <= "2026-09-10".
+   */
+  .refine(
+    (measurement) =>
+      !measurement.stated_at || measurement.stated_at <= measurement.verified_at,
+    {
+      error: 'stated_at verified_at\'ten sonra olamaz — kaynak biz baktiktan sonra konusmus gorunuyor',
+      path: ['stated_at']
+    }
+  );
 export type Measurement = z.infer<typeof measurementSchema>;
 
 /** Bir alanda birden fazla deger olabilir; bos dizi olamaz. */
@@ -229,6 +289,29 @@ export const systemSchema = z
       return new Set(ids).size === ids.length;
     },
     {error: 'varyant idleri benzersiz olmali', path: ['variants']}
+  )
+  /*
+   * variant_id yazim hatasi sessizce "farkli kapsam" uretirdi: iki deger
+   * kiyaslanabilir olduklari halde kiyaslanmaz, celiski gorunmez olurdu.
+   * Bu yuzden isaret edilen varyant gercekten var olmali.
+   */
+  .refine(
+    (system) => {
+      const ids = new Set(system.variants.map((variant) => variant.id));
+      return system.variants.every((variant) =>
+        specKeys.every((key) =>
+          (variant.specs[key] ?? []).every(
+            (measurement) =>
+              measurement.variant_id === undefined ||
+              ids.has(measurement.variant_id)
+          )
+        )
+      );
+    },
+    {
+      error: 'olcumdeki variant_id sistemde tanimli bir varyanti gostermeli',
+      path: ['variants']
+    }
   );
 export type System = z.infer<typeof systemSchema>;
 

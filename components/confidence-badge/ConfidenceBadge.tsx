@@ -14,6 +14,13 @@ function classes(variant: string, size: Size): string {
     .join(' ');
 }
 
+/*
+ * Iraksama rozeti burada YOK. Guven deger duzeyinde, iraksama satir
+ * duzeyinde durur ve cercevesizdir — components/divergence-note.
+ * Ikisini ayni gorsel dile sokmak, hangi cercevenin neyi soyledigini
+ * belirsizlestirirdi.
+ */
+
 /**
  * Sunum katmani: metni disaridan alir, ceviri baglamina bagli degildir.
  * Istemci bilesenleri (harita) bunu kullanir, boylece next-intl'in mesaj
@@ -22,16 +29,30 @@ function classes(variant: string, size: Size): string {
 export function Badge({
   confidence,
   label,
+  hint,
   size = 'sm'
 }: {
-  confidence: Confidence | 'conflict';
+  confidence: Confidence;
   label: string;
+  /** Rozetin ne soyleyip ne soylemedigi — ustune gelince gorunur. */
+  hint?: string;
   size?: Size;
 }) {
-  return <span className={classes(confidence, size)}>{label}</span>;
+  return (
+    <span className={classes(confidence, size)} title={hint}>
+      {label}
+    </span>
+  );
 }
 
-/** Ceviriyi sunucuda cozer. */
+/**
+ * Ceviriyi sunucuda cozer.
+ *
+ * Resmi rozet bir uyari tasir: rozet aciklamanin KIMDEN geldigini soyler,
+ * bilginin bagimsiz olarak dogrulandigini soylemez. Ayni cumle yontem
+ * sayfasinda ve guven seviyeleri kartinda da yazili — ipucu goremeyen
+ * okuyucu icin.
+ */
 export function ConfidenceBadge({
   confidence,
   size = 'sm'
@@ -41,12 +62,12 @@ export function ConfidenceBadge({
 }) {
   const t = useTranslations('Confidence');
 
-  return <Badge confidence={confidence} label={t(confidence)} size={size} />;
-}
-
-/** Ayni alanda celisen degerler oldugunu soyler. */
-export function ConflictBadge({size = 'sm'}: {size?: Size}) {
-  const t = useTranslations('Confidence');
-
-  return <Badge confidence="conflict" label={t('conflict')} size={size} />;
+  return (
+    <Badge
+      confidence={confidence}
+      label={t(confidence)}
+      hint={confidence === 'official' ? t('officialCaveat') : undefined}
+      size={size}
+    />
+  );
 }
