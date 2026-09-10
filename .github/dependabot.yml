@@ -1,0 +1,33 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "bagimlilik"
+    ignore:
+      # maplibre-gl 5.x'te SABITLI, major yukseltme PR'i acilmiyor.
+      #
+      # SEBEP: 6.9 surumunde harita nesnesi kuruluyor ama hicbir kaynak
+      # yuklenmiyor, `load` olayi hic gelmiyor ve konsola hata dusmuyor.
+      # Yani CI yesil kalirken menzil zarfi bos bir kutu olarak yayina
+      # gider — testin yakalayamadigi, ancak gozle gorulen bir kirilma.
+      #
+      # BU KURALI KALDIRMADAN ONCE: surumu elle yukselt, menzil zarfini
+      # tarayicida ac ve altligin gercekten cizildigini dogrula. Dogrulama
+      # yapilmadan kural kaldirilirsa her hafta ayni bozuk PR geri gelir.
+      # Ayrintisi README "Surum kisiti" basliginda.
+      - dependency-name: "maplibre-gl"
+        update-types: ["version-update:semver-major"]
+
+  # CI adimlarindaki action surumleri de eskir; bakimsiz birakilirsa
+  # workflow bir gun uyari, sonra hata verir.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: "ci"
