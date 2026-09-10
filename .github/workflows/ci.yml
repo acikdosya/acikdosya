@@ -1,0 +1,57 @@
+# Gelen katkinin cogu content/ altina veri duzeltmesi olarak gelecek.
+# Semayi bozan bir PR'i deploy'da degil burada yakalamak icin: her push ve
+# her PR ayni dort adimdan geciyor.
+#
+# HARITA PAKETI BURADA URETILMEZ. public/tiles ~66 MB ve git'te durmuyor
+# (scripts/build-tiles.mjs, ag gerektirir). Derleme onsuz gecer: stil dosyasi
+# istemcide cekiliyor (lib/config.ts) ve icerik dogrulayicisi 'generated'
+# kayitlari varlik kontrolunden muaf tutuyor (scripts/validate-content.ts).
+# Sahte tile uretmiyoruz — uretseydik CI gercekte olmayan bir durumu test
+# ederdi.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Ayni dala arka arkaya push gelirse eski kosu iptal olsun.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  dogrula:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # pnpm surumu package.json'daki packageManager alanindan okunur;
+      # burada ikinci kez yazilmaz.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+
+      - run: pnpm lint
+
+      # prebuild bunu zaten calistiriyor; ayri adim duruyor ki icerik hatasi
+      # "build basarisiz" olarak degil kendi adiminda gorunsun.
+      - run: pnpm validate:content
+
+      - run: pnpm build
+        env:
+          # Kanonik adres, hreflang ve OG adresleri derleme zamaninda gomulur.
+          NEXT_PUBLIC_SITE_URL: https://acikdosya.org
+          # Olcum kimligi VERILMIYOR: bos oldugunda tarayici script'i hic
+          # basilmaz, yani CI olcum kapali bir derleme dogruluyor.
+          NEXT_TELEMETRY_DISABLED: '1'
