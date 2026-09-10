@@ -1,5 +1,7 @@
 # Savunma Sanayii İnteraktif Dosya
 
+[![CI](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml/badge.svg)](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml)
+
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
 dijital dosya. Yayında: https://acikdosya.org — şimdilik tek sistem, TAYFUN.
 
