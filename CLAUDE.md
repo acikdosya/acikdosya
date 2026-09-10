@@ -85,6 +85,9 @@ Referans şema ve doldurulmuş örnek: `reference/tayfun.json`.
 
 ## 4. Tasarım tokenları
 
+Ana sayfa ve bileşen tasarımları: reference/design/*.html
+Layout ve etkileşim için oraya bak. Kopyalama, yeniden yapılandır.
+
 Prototipte oturmuş palet — koru:
 
 ```css
@@ -95,18 +98,45 @@ Prototipte oturmuş palet — koru:
 
 - Tipografi: **Archivo** (başlık, sayı, UI — tabular figürler açık),
   **Source Serif 4** (gövde metni, 18px, satır yüksekliği 1.62).
-- Güven rozetleri: `official` düz çerçeve / `press` kesikli çerçeve, soluk /
-  `estimate` kırmızı çerçeve + soft dolgu. Aynı stil haritadaki halkalarda da
-  kullanılır — dil tutarlı olmalı.
+- Archivo ve Source Serif 4, VARIABLE sürüm, next/font/local ile self-host.
+  Statik ağırlık dosyası seçilmez. Google Fonts CDN kullanılmaz — her
+  ziyaretçinin IP'sini üçüncü tarafa gönderir (KVKK/GDPR).
+- Subset latin + latin-ext. Sadece latin YETERSİZDİR: ğ ş ı İ ç ö ü
+  latin-ext'te. Özellikle İ (U+0130) ve ı (U+0131) kontrol edilir.
+- Güven rozetleri üç durum: resmî (düz çerçeve), basın (kesikli çerçeve),
+  tahmin (kırmızı çerçeve + soft dolgu). Çerçeve rengi en az 3:1 kontrast
+  taşır (--ink-2 veya --signal) çünkü çerçeve bilgi taşıyan bir öğedir
+  (WCAG 1.4.11).
+  Üç durum yalnızca renkle değil DESENLE ayrışır: düz / kesikli / düz+dolgu.
+  Renk körlüğü ve siyah-beyaz çıktı için bu zorunlu; sadeleştirme adına
+  kaldırılamaz.
+- "Veri yok" bir güven durumu DEĞİLDİR. Dördüncü rozet varyantı yoktur.
+  Eksik veri `data-state="absent"` ile gösterilir: çerçevesiz, tire, soluk.
 - Sol kenardaki ölçü cetveli motifi projenin imzası. Dekorasyon değil; sayfa
   ölçüm hakkında olduğu için var.
 
+**Ölçek:**
+- Çakışan iki değer arasında 4'ün katı olan kazanır. Tek sayı minimum
+  değerleri (31px, 18px) kullanılmaz.
+- Bileşen içi optik boşluklar (buton, rozet dolgusu) genel boşluk
+  ölçeğinden türemez. Bileşen tokeni olarak literal tanımlanır ve
+  "düzeltilmez". Çerçeve payı içeren değerler calc() ile yazılır ki
+  gerekçesi görünür kalsın: --btn-py: calc(12px - 1px).
+- Referans belgeleri (reference/ altındaki tasarım ve kimlik sayfaları)
+  ürün token'larına uymak zorunda değildir. Bunlar shipped sayfa değil.
+
+**Hareket:**
+- Sayfa başına TEK orkestre edilmiş hareket anı. Ana sayfada bu an,
+  hero'daki çelişen veri satırının rozetleriyle belirmesidir — yöntemi
+  gösteren hareket odur. Kademeli giriş kaskadları (n öğe, artan gecikme)
+  scroll'da da sayfa yüklemesinde de kullanılmaz.
+- prefers-reduced-motion globals.css'te küresel ağ olarak uygulanır,
+  dosya başına değil. Hareketin anlam taşıdığı yerlerde (3D autoRotate)
+  ayrıca JS kontrolü bulunur.
+
 **Yapma:**
-- Her bölüme scroll'da fade-up animasyonu ekleme. Tek orkestre edilmiş an
-  (hero siluet çizimi) yeterli; gerisi kullanıcı hareketine cevap versin.
 - Her şeyi eşit köşe yarıçaplı karta bölme.
 - Etiketleri ALL CAPS yapma.
-- `prefers-reduced-motion` her animasyonda desteklenecek.
 
 ---
 
@@ -226,6 +256,48 @@ Konum mutlak koordinat değil, orandır — ölçüler güncellenince etiket yer
 
 Model dekoratiftir; hiçbir bilgi yalnızca 3D içinde bulunmaz. Ekran okuyucu
 kullanıcısı aynı bilgiye spec tablosundan erişir.
+
+---
+
+## 10. Marka
+
+Marka adı: **Açık Dosya**. Varlıklar `public/brand/` altında, lisans kayıtları
+`content/assets.json` içinde.
+
+§4 ürünün içindeki tasarım sistemidir. §10 markanın ürün dışında da geçerli
+kurallarıdır: uygulama mağazası, sosyal medya, basılı materyal, üçüncü taraf
+kullanımı.
+
+### Kilit (sembol + kelime markası)
+
+| Kural | Değer |
+|---|---|
+| Boşluk payı | Sembol gövde eni × 1, dört yönde |
+| Sembol–yazı aralığı | Sembol eni × 1,3 |
+| En küçük kilit | 96 px ekran / 26 mm basılı |
+| En küçük sembol | 16 px ekran / 5 mm basılı |
+
+### Uygulama ikonu
+
+| Hedef | Kural |
+|---|---|
+| Play Store 512 px | Sembol tuvalin %60'ı, ortalanmış |
+| Android adaptive | 108 dp tuval, 66 dp güvenli alan, sembol 46 dp |
+| Favicon | 16 ve 32 px, tek renk, ince detay yok |
+
+### Renk
+
+Marka yalnızca palet içindeki renkleri kullanır (§4). Sembolün tek renk siyah
+ve tek renk beyaz varyantları vardır; gradyan, gölge, kontur eklenmez.
+
+### Yasaklar
+
+- Sembolü döndürme, esnetme, yeniden renklendirme
+- Kilidin parçalarını ayrı ayrı yeniden düzenleme
+- Boşluk payının içine başka öğe sokma
+- Fotoğraf veya desenli zemin üzerine tek renk varyant dışında yerleştirme
+- Markayı bir kurum, üretici veya kamu kuruluşunun logosuyla yan yana,
+  ortaklık ima edecek şekilde kullanma
 
 <!-- BEGIN:nextjs-agent-rules -->
 

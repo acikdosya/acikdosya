@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E4E5E1; }
+  a { color: #1C2124; text-decoration: none; border-bottom: 1px solid #C6C9C3; }
+  a:hover { color: #B3131B; border-bottom-color: #B3131B; }
+  a:focus-visible, button:focus-visible { outline: 2px solid #B3131B; outline-offset: 2px; }
+  @keyframes ad-pulse { 0% { opacity: .45 } 50% { opacity: .95 } 100% { opacity: .45 } }
+  @keyframes ad-sweep { from { transform: translateX(-100%) } to { transform: translateX(100%) } }
+</style>
+</helmet>
+
+<div style="background:#E4E5E1;color:#1C2124;font-family:'Source Serif 4',Georgia,serif;min-height:100%;display:flex;gap:clamp(14px,3vw,40px);padding:clamp(18px,3vw,32px) clamp(18px,4vw,56px) 0;box-sizing:border-box">
+
+  <div style="flex:none;width:clamp(16px,2.2vw,26px);align-self:stretch;background-image:repeating-linear-gradient(to bottom,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to bottom,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:9px 100%,100% 100%;background-repeat:repeat-y;background-position:right top,right top"></div>
+
+  <div style="flex:1;min-width:0;max-width:1180px;display:flex;flex-direction:column;gap:clamp(48px,6vw,80px);padding-bottom:clamp(48px,6vw,96px)">
+
+    <header style="display:flex;flex-direction:column;gap:16px;padding-top:8px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true">
+          <rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect>
+          <rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect>
+        </svg>
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:16px;letter-spacing:-0.03em">AÇIK DOSYA</span>
+        <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;border-left:1px solid #C6C9C3;padding-left:12px">Desen sayfası</span>
+      </div>
+      <h1 style="font-family:Archivo,sans-serif;font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1.05;letter-spacing:-0.035em;margin:0;text-wrap:pretty">Bileşenler, durumlar ve ölçekler</h1>
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:60ch;text-wrap:pretty">Tek sayfa, tüm durumlar aynı anda görünür. Her bileşenin normal, üzerine gelme, klavye odağı ve devre dışı hâli yan yana dizilidir; canlı örnekler gerçekten tıklanır. Sayfanın sonunda tokenların CSS karşılığı hazır durur.</p>
+      <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">Pattern page · v1 · 10.09.2026 — <a href="#css" style="color:#5C6367">CSS bloğuna git</a></p>
+    </header>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">01</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Renk ve kontrast</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Colour · WCAG AA</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:4px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0 0 12px">Token</p>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#E4E5E1;border:1px solid #C6C9C3;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">ground</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#E4E5E1</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#F3F4F1;border:1px solid #C6C9C3;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">paper</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#F3F4F1</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#1C2124;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">ink</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#1C2124</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#5C6367;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">ink-2</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#5C6367</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#C6C9C3;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">rule</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#C6C9C3</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid #C6C9C3"><span style="width:30px;height:30px;background:#B3131B;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">signal</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">#B3131B</span></div>
+          <div style="display:flex;align-items:center;gap:14px;padding:9px 0"><span style="width:30px;height:30px;background:rgba(179,19,27,.09);border:1px solid #B3131B;flex:none"></span><span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500">signal-soft</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">rgba(179,19,27,.09)</span></div>
+        </div>
+
+        <div style="grid-column:span 2;min-width:0;background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Ölçülen kontrast oranları — hedef AA (normal metin 4,5:1 / 24px üstü başlık 3:1 / arayüz sınırı 3:1)</p>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;gap:12px;padding-bottom:8px;border-bottom:1px solid #1C2124;font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367"><span style="flex:1 1 200px">Ön / arka</span><span style="flex:none;width:62px;text-align:right">oran</span><span style="flex:none;width:52px;text-align:right">AA</span><span style="flex:2 1 220px">not</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">ink / ground</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">12,8:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AAA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">gövde metninin varsayılanı</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">ink / paper</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">14,5:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AAA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">panel içi metin ve sayısal değerler</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">ink-2 / ground</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">4,8:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">12px altına inmez; AAA sağlamaz</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">ink-2 / paper</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">5,5:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">kaynak notları</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">signal / ground</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">5,5:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">tahmin değeri ve odak halkası</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">signal / paper</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">6,2:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">signal-soft dolgu üstünde de geçerli</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">paper / ink</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">14,5:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AAA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">birincil buton</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #C6C9C3;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px">paper / signal</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums">6,5:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">AA</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">buton üzerine gelme hâli</span></div>
+            <div style="display:flex;gap:12px;padding:10px 0;align-items:baseline"><span style="flex:1 1 200px;font-family:Archivo,sans-serif;font-size:14px;color:#B3131B">rule / ground</span><span style="flex:none;width:62px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">1,3:1</span><span style="flex:none;width:52px;text-align:right;font-family:Archivo,sans-serif;font-size:13px;color:#B3131B">—</span><span style="flex:2 1 220px;font-size:15px;line-height:1.45;color:#5C6367">yalnızca dekoratif çizgi ve cetvel işareti. Anlam taşıyan sınır (rozet çerçevesi, girdi kenarı) 3:1 için <strong style="font-weight:600;color:#1C2124">rule-strong = #5C6367</strong> kullanır.</span></div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:14px">Devre dışı bileşenlerde metin #9AA09B (2,4:1). WCAG 1.4.3 devre dışı denetimleri kapsamaz; buna karşın devre dışı olma bilgisi renkten bağımsız olarak imleç ve <span style="font-family:Archivo,sans-serif;font-size:14px">aria-disabled</span> ile de verilir. Koyu zeminde kırmızı yerine #E4535A kullanılır (ink zemininde 5,1:1).</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">02</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Boşluk ölçeği</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">4px tabanlı</span>
+      </div>
+
+      <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:16px;padding-bottom:8px;border-bottom:1px solid #1C2124;font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367"><span style="flex:none;width:52px">token</span><span style="flex:none;width:56px;text-align:right">px</span><span style="flex:1 1 160px">kullanım</span><span style="flex:none;width:120px">ölçek</span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-1</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">4</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">rozet iç boşluğu, satır içi mikro aralık</span><span style="flex:none;width:120px;display:flex"><span style="width:4px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-2</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">8</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">etiket–değer aralığı</span><span style="flex:none;width:120px;display:flex"><span style="width:8px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-3</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">12</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">buton yatay iç boşluğu, ikon–yazı</span><span style="flex:none;width:120px;display:flex"><span style="width:12px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-4</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">16</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">veri satırı dikey iç boşluğu</span><span style="flex:none;width:120px;display:flex"><span style="width:16px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-5</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">24</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">panel iç boşluğu, ızgara aralığı</span><span style="flex:none;width:120px;display:flex"><span style="width:24px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-6</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">32</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">geniş panel iç boşluğu</span><span style="flex:none;width:120px;display:flex"><span style="width:32px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-7</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">48</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">bölüm içi blok aralığı</span><span style="flex:none;width:120px;display:flex"><span style="width:48px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0;border-bottom:1px solid #C6C9C3"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-8</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">64</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">bölümler arası (mobil)</span><span style="flex:none;width:120px;display:flex"><span style="width:64px;height:14px;background:#1C2124"></span></span></div>
+        <div style="display:flex;gap:16px;align-items:center;padding:8px 0"><span style="flex:none;width:52px;font-family:Archivo,sans-serif;font-size:14px;font-weight:500">s-9</span><span style="flex:none;width:56px;text-align:right;font-family:Archivo,sans-serif;font-size:14px;font-variant-numeric:tabular-nums">96</span><span style="flex:1 1 160px;font-size:16px;line-height:1.4;color:#5C6367">bölümler arası (masaüstü)</span><span style="flex:none;width:120px;display:flex"><span style="width:96px;height:14px;background:#1C2124"></span></span></div>
+      </div>
+      <p style="font-size:17px;line-height:1.55;margin:0;max-width:66ch;color:#5C6367">Ölçek 4 katlarıdır ve 24'ten sonra ikiye katlanarak gider. Mevcut sayfalardaki 22 ve 26 piksellik boşluklar s-5'e (24) yuvarlanır. Köşe yarıçapı yoktur: <span style="font-family:Archivo,sans-serif;font-size:15px;color:#1C2124">--radius: 0</span> tek değerdir ve bileşen bazında değişmez.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">03</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Tip ölçeği</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Archivo · Source Serif 4</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px">
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:20px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Sayısal değerler — Archivo, tabular figürler açık</p>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><span style="font-family:Archivo,sans-serif;font-size:40px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1">561 km</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">value-xl · 40 / 600 / -0,03em</span></div>
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1">561 km</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">value-l · 34 / 600 / -0,025em</span></div>
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1">561 km</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">value-m · 26 / 600 / -0,02em</span></div>
+            <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.015em;line-height:1">561 km</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">value-s · 20 / 600 / -0,015em</span></div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:16px">Sayı ve birim aynı ölçüde dizilir; birim ayrı ağırlık almaz. Ondalık ayırıcı virgül, binlik ayırıcı nokta (TR) / virgül (EN). Sütun hâlinde dizilen değerlerde tabular figürler zorunludur.</p>
+        </div>
+
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:20px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Başlık, gövde, arayüz</p>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-family:Archivo,sans-serif;font-size:44px;font-weight:600;letter-spacing:-0.035em;line-height:1.05">Menzil kaydı</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">h1 · clamp(30–44) / 600 / 1,05</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.02em;line-height:1.15">Sistem dosyaları</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">h2 · clamp(20–24) / 600 / 1,15</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em;line-height:1.3">Atalet güdüm birimi</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">h3 · 17 / 600 / 1,3</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><p style="font-size:18px;line-height:1.62;margin:0">Gövde metni bu ölçüde dizilir. Kaynak açıklamaları, yöntem notları ve dosya girişleri dâhil; ölçü sabittir.</p><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">body · 18 / 400 / 1,62 — Source Serif 4</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">İkincil metin: kaynak notu, tarih, uyarı. Panel içinde 16 pikselde kalır.</p><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">body-s · 16 / 400 / 1,5 — ink-2</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500">Dosyayı aç — arayüz metni</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">ui · 15 / 500</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500">alan adı · rozet · sekme</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">label · 13 / 500</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #C6C9C3;padding-top:16px"><span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;font-variant-numeric:tabular-nums">08.09.2026 · 34 değer</span><span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">micro · 12 / 500 — en küçük ölçü</span></div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:16px">Küçük veri etiketlerinde monospace kullanılmaz; tabular figürlü Archivo aynı hizalamayı verir. Yalnızca ham kod blokları monospace dizilir.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">04</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Kırılma noktaları</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Breakpoints</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1px">
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.015em">s</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">&lt; 640</span></div>
+          <div style="height:6px;background:#1C2124;width:26%"></div>
+          <p style="font-size:16px;line-height:1.5;margin:0">Tek sütun. <strong style="font-weight:600">Cetvel rayı gizlenir</strong>, sayfa kenar boşluğu 16px. Veri satırı iki kata sarar: değer + rozet üstte, kaynak notu altta.</p>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.015em">m</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">640–1023</span></div>
+          <div style="height:6px;background:#1C2124;width:48%"></div>
+          <p style="font-size:16px;line-height:1.5;margin:0">Ray 16px genişlikte görünür. Kart ızgarası iki sütun; kenar boşluğu 24px, bölüm aralığı 64px.</p>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.015em">l</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">1024–1439</span></div>
+          <div style="height:6px;background:#1C2124;width:74%"></div>
+          <p style="font-size:16px;line-height:1.5;margin:0">Ray 22px. Üç sütun ızgara, kenar boşluğu 40px, bölüm aralığı 80px. Harita ve 3B bölümü yan panelle birlikte.</p>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.015em">xl</span><span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">≥ 1440</span></div>
+          <div style="height:6px;background:#1C2124;width:100%"></div>
+          <p style="font-size:16px;line-height:1.5;margin:0">Ray 26px, ölçü işaretleri tam ölçekte. İçerik 1180px'te durur, kenar boşluğu 56px, bölüm aralığı 96px.</p>
+        </div>
+      </div>
+      <p style="font-size:17px;line-height:1.55;margin:0;max-width:66ch;color:#5C6367">Aradaki geçişler medya sorgusu yerine <span style="font-family:Archivo,sans-serif;font-size:15px;color:#1C2124">clamp()</span> ile akar; medya sorgusu yalnızca yapının değiştiği yerde kullanılır — rayın gizlenmesi ve sütun sayısı.</p>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">05</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Güven rozeti</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Confidence badge</span>
+      </div>
+
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:66ch;text-wrap:pretty">Üç durum: <strong style="font-weight:600">resmî</strong> düz çerçeve, <strong style="font-weight:600">basın</strong> kesikli çerçeve ve soluk metin, <strong style="font-weight:600">tahmin</strong> kırmızı çerçeve ve soft dolgu. Durum tıklanabilir olduğunda (kaynağa gider) buton semantiği alır; salt bilgi verirken düz metindir.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px">
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">normal · 13px</span>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:4px 10px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px">tahmin</span>
+          </div>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">üzerine gelme</span>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;background:#1C2124;color:#F3F4F1;padding:4px 10px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #1C2124;color:#1C2124;padding:4px 10px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:#B3131B;color:#F3F4F1;padding:4px 10px">tahmin</span>
+          </div>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">klavye odağı</span>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;outline:2px solid #B3131B;outline-offset:2px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:4px 10px;outline:2px solid #B3131B;outline-offset:2px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px;outline:2px solid #B3131B;outline-offset:2px">tahmin</span>
+          </div>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">devre dışı</span>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #C6C9C3;color:#9AA09B;padding:4px 10px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#9AA09B;padding:4px 10px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #C6C9C3;color:#9AA09B;padding:4px 10px">tahmin</span>
+          </div>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:16px">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">küçük boy · 11px</span>
+          <div style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+            <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #1C2124;padding:2px 7px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:2px 7px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:2px 7px">tahmin</span>
+          </div>
+          <p style="font-size:15px;line-height:1.45;margin:0;color:#5C6367">Yalnızca harita etiketi, 3B etiketi ve tablo hücresi içinde. Gövde metninde kullanılmaz.</p>
+        </div>
+      </div>
+
+      <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-wrap:wrap;gap:20px 32px;align-items:center">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;flex:1 1 100%">Canlı — sekme ile gezin, odak halkasını gör</span>
+        <a href="#" style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;color:#1C2124" style-hover="background:#1C2124;color:#F3F4F1">resmî</a>
+        <a href="#" style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #5C6367;padding:4px 10px;color:#5C6367" style-hover="border-color:#1C2124;color:#1C2124">basın</a>
+        <a href="#" style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:4px 10px;color:#B3131B" style-hover="background:#B3131B;color:#F3F4F1;border-color:#B3131B">tahmin</a>
+        <p style="flex:1 1 240px;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Rozet asla tek başına renkle anlatılmaz: çerçeve stili ve yazı birlikte taşır, böylece renk körlüğünde ve tek renk baskıda da okunur.</p>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">06</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Veri satırı</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Data row · conflict</span>
+      </div>
+
+      <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid #1C2124">
+          <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">TAYFUN — teknik kayıt</span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">normal · üzerine gelme · odak · devre dışı · çelişki · boş</span>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:16px 0;border-bottom:1px solid #C6C9C3">
+          <span style="flex:0 1 180px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Fırlatma kütlesi</span>
+          <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1">7.200 kg</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;white-space:nowrap">resmî</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Üretici teknik föyü, s. 2 — Ekim 2022. <a href="#" style="color:#5C6367">kaynağı gör</a></p>
+        </div>
+
+        <a href="#" style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:16px 0;border:0;border-bottom:1px solid #C6C9C3;background:#F7F8F5;box-shadow:inset 3px 0 0 #1C2124;color:#1C2124" style-hover="background:#F7F8F5">
+          <span style="flex:0 1 180px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;padding-left:14px">Faydalı yük</span>
+          <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1">470 kg</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;background:#1C2124;color:#F3F4F1;padding:4px 10px;white-space:nowrap">resmî</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367;padding-left:14px">Üzerine gelme: zemin paper-hover, sol kenarda 3px ink şeridi. Satır tıklanabilir olduğunda kaynak kaydını açar.</p>
+        </a>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:16px 0;border-bottom:1px solid #C6C9C3;outline:2px solid #B3131B;outline-offset:-2px">
+          <span style="flex:0 1 180px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;padding-left:10px">Güdüm</span>
+          <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em;line-height:1">Atalet + GNSS</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:4px 10px;white-space:nowrap">basın</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367;padding-left:10px">Klavye odağı: satırın kendi çerçevesi içine 2px signal halkası. Halka satırı büyütmez, layout kaymaz.</p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding:16px 0;border-bottom:1px solid #C6C9C3">
+          <span style="flex:0 1 180px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#9AA09B">Seri üretim adedi</span>
+          <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1;color:#9AA09B">—</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #C6C9C3;color:#9AA09B;padding:4px 10px;white-space:nowrap">kilitli</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#9AA09B">Devre dışı satır: kayıt açık ama bu sürümde yayınlanmıyor. Tıklanamaz, imleç not-allowed, aria-disabled.</p>
+        </div>
+
+        <div style="padding:16px 0;border-bottom:1px solid #C6C9C3;border-left:3px solid #B3131B;padding-left:14px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Azami menzil</span>
+            <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#B3131B;border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:2px 7px">çelişki · kayıtta 2 değer</span>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px">
+            <span style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1">561 km</span>
+            <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;white-space:nowrap">resmî</span>
+            <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Üretici açıklaması, test uçuşu — Ekim 2022. Dosyanın öne aldığı değer. <a href="#" style="color:#5C6367">kaynağı gör</a></p>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding-top:12px;border-top:1px dashed #C6C9C3">
+            <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em;line-height:1;color:#5C6367">800 km</span>
+            <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:4px 10px;white-space:nowrap">basın</span>
+            <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Ulusal gazete, üreticiye atfen — Mayıs 2022. Doğrulanmadı; silinmedi. <a href="#" style="color:#5C6367">kaynağı gör</a></p>
+          </div>
+          <p style="font-size:15px;line-height:1.45;margin:0;color:#5C6367">Vurgulanan değer büyük ölçüde ve ink renginde; diğerleri bir kademe küçük ve ink-2. Hiçbiri gizlenmez, hiçbiri üstü çizilmez. Vurgu kararı gerekçesiyle birlikte satırın altında yazılır.</p>
+        </div>
+
+        <div style="padding:16px 0;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px">
+          <span style="flex:0 1 180px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Dairesel hata olasılığı</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;min-width:96px;height:38px;border-bottom:1px dashed #5C6367;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">kayıt yok</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;align-self:center"></span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Yayınlanmış bir değer bulunamadı. Tahmin de üretilmedi: girdiler yetersiz. <a href="#" style="color:#5C6367">kaynak biliyorsanız gönderin</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">07</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Veri yok durumu</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Absent by design</span>
+      </div>
+
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:66ch;text-wrap:pretty">Boşluk hata gibi görünmemeli. Bu yüzden veri yok durumu gri bir kutu ya da "yükleniyor" görünümü almaz: kesikli alt çizgi, sabit yükseklik ve <strong style="font-weight:600">nedenini söyleyen bir satır</strong> taşır. Üç neden ayrı ayrı yazılır.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px">
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Kaynak yok</span>
+          <span style="display:inline-flex;align-items:center;min-width:110px;height:40px;border-bottom:1px dashed #5C6367;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;align-self:flex-start;padding:0 4px">kayıt yok</span>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Hiçbir kaynak bu değeri yayınlamadı. Uydurulmuş bir sayı konmadı; alan kasıtlı boş.</p>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Hesaplanamıyor</span>
+          <span style="display:inline-flex;align-items:center;min-width:110px;height:40px;border-bottom:1px dashed #B3131B;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#B3131B;align-self:flex-start;padding:0 4px">girdi eksik</span>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Tahmin yöntemi var, girdisi yok. Hangi girdinin eksik olduğu yazılır: itki süresi bilinmiyor.</p>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Yayınlanmıyor</span>
+          <span style="display:inline-flex;align-items:center;min-width:110px;height:40px;border-bottom:1px dashed #C6C9C3;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#9AA09B;align-self:flex-start;padding:0 4px">kilitli</span>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Kayıt var ama bu sürümde yayınlanmıyor. Sebep açıkça belirtilir; tarih verilmez.</p>
+        </div>
+      </div>
+
+      <div style="background:#F3F4F1;border:1px dashed #C6C9C3;padding:24px;display:flex;flex-wrap:wrap;gap:16px 32px;align-items:baseline">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500">Bölüm boyu boşluk</span>
+        <p style="flex:1 1 320px;font-size:17px;line-height:1.55;margin:0;color:#5C6367">Bir bölümün tamamı boşsa bölüm gizlenmez: başlığı kalır, altına tek satır neden yazılır. Okur neyin eksik olduğunu görmeden dosyayı değerlendiremez.</p>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">08</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Bölüm başlığı ve cetvel rayı</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Section head · rail</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Masaüstü — ray görünür (l / xl)</span>
+          <div style="display:flex;gap:24px;background:#E4E5E1;padding:20px;border:1px solid #C6C9C3">
+            <div style="flex:none;width:22px;align-self:stretch;min-height:180px;background-image:repeating-linear-gradient(to bottom,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to bottom,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:9px 100%,100% 100%;background-repeat:repeat-y;background-position:right top,right top"></div>
+            <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:baseline;gap:14px;border-top:1px solid #1C2124;padding-top:12px">
+                <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">04</span>
+                <h3 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Test kayıtları</h3>
+                <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Test record</span>
+              </div>
+              <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Ray içerik kolonunun soluna hizalanır, sayfa boyunca kesilmeden akar. İşaretler 20px'te küçük, 100px'te tam boy. Ray <span style="font-family:Archivo,sans-serif;font-size:14px;color:#1C2124">aria-hidden</span>, ekran okuyucuya girmez.</p>
+              <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Başlık üç parçadan oluşur: iki haneli sıra numarası (signal), Türkçe başlık, sağa yaslı İngilizce karşılık. Numara ve İngilizce karşılık zorunlu değil, ama biri varsa ikisi de olur.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Mobil — ray gizli (&lt; 640)</span>
+          <div style="background:#E4E5E1;padding:16px;border:1px solid #C6C9C3;max-width:330px">
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:baseline;gap:12px;border-top:1px solid #1C2124;padding-top:12px;flex-wrap:wrap">
+                <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">04</span>
+                <h3 style="font-family:Archivo,sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.02em;margin:0">Test kayıtları</h3>
+                <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;flex:1 1 100%">Test record</span>
+              </div>
+              <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Rayın yeri boş bırakılmaz; içerik sola dayanır ve kenar boşluğu 16px'e iner. İngilizce karşılık başlığın altına düşer.</p>
+            </div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:16px">Ray dekorasyon olmadığı için mobilde küçültülmez, tamamen kaldırılır: 16px genişlikte ölçü işareti okunmaz, okunmayan bir ölçek yanlış bilgi verir.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">09</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Butonlar</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Primary · secondary · toggle</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1px">
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">normal</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;padding:12px 20px">Dosyayı aç</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#1C2124;background:transparent;border:1px solid #1C2124;padding:11px 19px">Kaynakları gör</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;border-bottom:1px solid #C6C9C3;padding-bottom:2px">Yöntem</span>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">üzerine gelme</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#B3131B;padding:12px 20px">Dosyayı aç</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#B3131B;background:rgba(179,19,27,.09);border:1px solid #B3131B;padding:11px 19px">Kaynakları gör</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;color:#1C2124;border-bottom:1px solid #1C2124;padding-bottom:2px">Yöntem</span>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">klavye odağı</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;padding:12px 20px;outline:2px solid #B3131B;outline-offset:2px">Dosyayı aç</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#1C2124;border:1px solid #1C2124;padding:11px 19px;outline:2px solid #B3131B;outline-offset:2px">Kaynakları gör</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;border-bottom:1px solid #C6C9C3;padding-bottom:2px;outline:2px solid #B3131B;outline-offset:3px">Yöntem</span>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">basılı</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#8E0F16;padding:12px 20px">Dosyayı aç</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;border:1px solid #1C2124;padding:11px 19px">Kaynakları gör</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;color:#B3131B;border-bottom:1px solid #B3131B;padding-bottom:2px">Yöntem</span>
+        </div>
+        <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:20px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367">devre dışı</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#9AA09B;background:#E4E5E1;border:1px solid #C6C9C3;padding:11px 19px">Dosyayı aç</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#9AA09B;border:1px solid #C6C9C3;padding:11px 19px">Kaynakları gör</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;color:#9AA09B;border-bottom:1px solid #C6C9C3;padding-bottom:2px">Yöntem</span>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Canlı — birincil, ikincil, sessiz</span>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center">
+            <button onClick="{{ noop }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;border:1px solid #1C2124;padding:11px 19px;cursor:pointer" style-hover="background:#B3131B;border-color:#B3131B" style-active="background:#8E0F16;border-color:#8E0F16" style-focus="outline:2px solid #B3131B;outline-offset:2px">Dosyayı aç</button>
+            <button onClick="{{ noop }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#1C2124;background:transparent;border:1px solid #1C2124;padding:11px 19px;cursor:pointer" style-hover="background:rgba(179,19,27,.09);border-color:#B3131B;color:#B3131B" style-focus="outline:2px solid #B3131B;outline-offset:2px">Kaynakları gör</button>
+            <button disabled="{{ true }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#9AA09B;background:#E4E5E1;border:1px solid #C6C9C3;padding:11px 19px;cursor:not-allowed">Devre dışı</button>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Buton metnine ok eklenmez. Dokunma hedefi en az 44×44px: 15px metin + 12px dikey iç boşluk bunu sağlar.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:18px;align-items:flex-start">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Aç/kapat toggle — canlı, basınca durum değişir</span>
+          <button onClick="{{ toggleEstimates }}" aria-pressed="{{ estimatesOn }}" style="display:flex;align-items:center;gap:12px;font-family:Archivo,sans-serif;font-size:15px;font-weight:500;background:transparent;border:1px solid #1C2124;padding:9px 14px 9px 10px;cursor:pointer;color:#1C2124" style-hover="border-color:#B3131B;color:#B3131B" style-focus="outline:2px solid #B3131B;outline-offset:2px">
+            <span style="width:34px;height:18px;border:1px solid #1C2124;display:flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:{{ toggleJustify }}"><span style="width:12px;height:12px;background:{{ toggleFill }};display:block"></span></span>
+            <span>Tahminleri göster</span>
+            <span style="font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">{{ toggleLabel }}</span>
+          </button>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;border-top:1px solid #C6C9C3;padding-top:16px">
+            <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367;flex:1 1 100%">durumlar: kapalı · açık · odak · devre dışı</span>
+            <span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px;border:1px solid #1C2124;padding:8px 12px"><span style="width:34px;height:18px;border:1px solid #1C2124;display:flex;align-items:center;padding:2px;box-sizing:border-box"><span style="width:12px;height:12px;background:#C6C9C3;display:block"></span></span>kapalı</span>
+            <span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px;border:1px solid #1C2124;padding:8px 12px"><span style="width:34px;height:18px;border:1px solid #1C2124;display:flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:flex-end"><span style="width:12px;height:12px;background:#B3131B;display:block"></span></span>açık</span>
+            <span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px;border:1px solid #1C2124;padding:8px 12px;outline:2px solid #B3131B;outline-offset:2px"><span style="width:34px;height:18px;border:1px solid #1C2124;display:flex;align-items:center;padding:2px;box-sizing:border-box;justify-content:flex-end"><span style="width:12px;height:12px;background:#B3131B;display:block"></span></span>odak</span>
+            <span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px;border:1px solid #C6C9C3;color:#9AA09B;padding:8px 12px"><span style="width:34px;height:18px;border:1px solid #C6C9C3;display:flex;align-items:center;padding:2px;box-sizing:border-box"><span style="width:12px;height:12px;background:#C6C9C3;display:block"></span></span>devre dışı</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">10</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Harita lejantı</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Map legend</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:20px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Menzil halkası — üç güven, üç çizgi stili</span>
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #C6C9C3">
+              <span style="flex:none;width:64px;height:2px;background:#1C2124"></span>
+              <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;flex:1 1 auto">561 km</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #1C2124;padding:2px 7px">resmî</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #C6C9C3">
+              <span style="flex:none;width:64px;height:2px;background-image:repeating-linear-gradient(to right,#5C6367 0,#5C6367 6px,transparent 6px,transparent 11px)"></span>
+              <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#5C6367;flex:1 1 auto">800 km</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:2px 7px">basın</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px;padding:14px 0">
+              <span style="flex:none;width:64px;height:12px;background:rgba(179,19,27,.09);border-top:2px solid #B3131B;border-bottom:0;box-sizing:border-box;position:relative"><span style="position:absolute;left:0;right:0;bottom:0;height:2px;background-image:repeating-linear-gradient(to right,#B3131B 0,#B3131B 3px,transparent 3px,transparent 7px)"></span></span>
+              <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#B3131B;flex:1 1 auto">~1.000 km</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:2px 7px">tahmin</span>
+            </div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:16px">Tahmin bir çizgi değil bant: alt ve üst sınır arasındaki belirsizlik soft dolguyla gösterilir. Bandın kalınlığı hata payıdır, dekoratif değildir.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Lejant öğesi durumları — filtre olarak tıklanabilir</span>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px">
+            <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:14px;display:flex;flex-direction:column;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">normal</span><span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px"><span style="width:28px;height:2px;background:#1C2124"></span>resmî</span></div>
+            <div style="background:#F7F8F5;box-shadow:0 0 0 1px #C6C9C3;padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 -2px 0 #1C2124"><span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">üzerine gelme</span><span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px"><span style="width:28px;height:2px;background:#1C2124"></span>resmî</span></div>
+            <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:14px;display:flex;flex-direction:column;gap:10px;outline:2px solid #B3131B;outline-offset:-2px"><span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">odak</span><span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px"><span style="width:28px;height:2px;background:#1C2124"></span>resmî</span></div>
+            <div style="background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:14px;display:flex;flex-direction:column;gap:10px"><span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">kapalı (filtre dışı)</span><span style="display:flex;align-items:center;gap:10px;font-family:Archivo,sans-serif;font-size:14px;color:#9AA09B"><span style="width:28px;height:2px;background:#C6C9C3"></span>resmî</span></div>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Filtre dışı bırakılan katman gizlenmez, soluklaşır: lejant hangi katmanların var olduğunu her zaman söyler. Katman adları haritada da aynı çizgi stiliyle görünür.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">11</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Zaman tüneli öğesi</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Timeline entry</span>
+      </div>
+
+      <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(20px,2.4vw,32px);display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:20px;align-items:flex-start;padding-bottom:24px">
+          <div style="flex:none;width:82px;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+            <span style="font-family:Archivo,sans-serif;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.01em">10.2022</span>
+            <span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">kesin tarih</span>
+          </div>
+          <div style="flex:none;width:11px;align-self:stretch;display:flex;flex-direction:column;align-items:center;padding-top:5px"><span style="width:11px;height:11px;background:#1C2124;flex:none"></span><span style="width:1px;flex:1;background:#C6C9C3;min-height:40px"></span></div>
+          <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="font-family:Archivo,sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em;margin:0">561 km'lik test uçuşu</h3><span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #1C2124;padding:2px 7px">resmî</span></div>
+            <p style="font-size:17px;line-height:1.55;margin:0">Üretici, atışın menzilini ve hedef sapmasını yayınladı. Dosyadaki menzil değerinin birincil kaynağı bu açıklamadır.</p>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">Üretici basın açıklaması — <a href="#" style="color:#5C6367">kaynağı gör</a></span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:flex-start;padding-bottom:24px">
+          <div style="flex:none;width:82px;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+            <span style="font-family:Archivo,sans-serif;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;color:#5C6367">2023</span>
+            <span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">yıl belirsiz</span>
+          </div>
+          <div style="flex:none;width:11px;align-self:stretch;display:flex;flex-direction:column;align-items:center;padding-top:5px"><span style="width:11px;height:11px;border:1px dashed #5C6367;box-sizing:border-box;flex:none"></span><span style="width:1px;flex:1;background:#C6C9C3;min-height:40px"></span></div>
+          <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="font-family:Archivo,sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em;margin:0;color:#5C6367">Seri üretime geçiş</h3><span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:2px 7px">basın</span></div>
+            <p style="font-size:17px;line-height:1.55;margin:0;color:#5C6367">Haber, tarihi ay vermeden aktardı. Zaman tünelinde yıl hizasına konur ve kesikli nokta belirsizliği gösterir.</p>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">Sektör dergisi — <a href="#" style="color:#5C6367">kaynağı gör</a></span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:flex-start;padding-bottom:24px;border-left:3px solid #B3131B;margin-left:-14px;padding-left:11px">
+          <div style="flex:none;width:82px;display:flex;flex-direction:column;gap:4px;padding-top:2px">
+            <span style="font-family:Archivo,sans-serif;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;color:#B3131B">~2024</span>
+            <span style="font-family:Archivo,sans-serif;font-size:12px;color:#B3131B">çıkarım</span>
+          </div>
+          <div style="flex:none;width:11px;align-self:stretch;display:flex;flex-direction:column;align-items:center;padding-top:5px"><span style="width:11px;height:11px;border:1px solid #B3131B;background:rgba(179,19,27,.09);box-sizing:border-box;flex:none"></span><span style="width:1px;flex:1;background:#C6C9C3;min-height:40px"></span></div>
+          <div style="flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h3 style="font-family:Archivo,sans-serif;font-size:17px;font-weight:600;letter-spacing:-0.01em;margin:0">Envantere giriş</h3><span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:2px 7px">tahmin</span></div>
+            <p style="font-size:17px;line-height:1.55;margin:0">Açık Dosya çıkarımı: tören görüntüleri ve tedarik takvimi. Tarih aralık olarak verilir, tek gün olarak verilmez.</p>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">Yöntem notu — <a href="#" style="color:#5C6367">hesabı gör</a></span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:20px;align-items:flex-start;border-top:1px dashed #C6C9C3;padding-top:20px">
+          <div style="flex:none;width:82px;font-family:Archivo,sans-serif;font-size:16px;font-weight:600;color:#9AA09B;font-variant-numeric:tabular-nums">—</div>
+          <div style="flex:none;width:11px;display:flex;justify-content:center;padding-top:5px"><span style="width:11px;height:11px;border:1px dashed #C6C9C3;box-sizing:border-box"></span></div>
+          <p style="flex:1 1 auto;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Tarihi bilinmeyen olay tünelin dışına, en alta konur. Uydurma bir yıla yerleştirilmez.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">12</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Varyant seçici ve dil geçişi</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Tabs · language</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:20px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Varyant sekmesi — canlı</span>
+          <div role="tablist" style="display:flex;border-bottom:1px solid #C6C9C3">
+            <button onClick="{{ pickTayfun }}" role="tab" aria-selected="{{ isTayfun }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;background:transparent;border:0;border-bottom:2px solid {{ tayfunLine }};color:{{ tayfunInk }};padding:10px 16px;margin-bottom:-1px;cursor:pointer" style-hover="color:#1C2124" style-focus="outline:2px solid #B3131B;outline-offset:2px">TAYFUN</button>
+            <button onClick="{{ pickBlok4 }}" role="tab" aria-selected="{{ isBlok4 }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;background:transparent;border:0;border-bottom:2px solid {{ blokLine }};color:{{ blokInk }};padding:10px 16px;margin-bottom:-1px;cursor:pointer" style-hover="color:#1C2124" style-focus="outline:2px solid #B3131B;outline-offset:2px">BLOK-4</button>
+            <button disabled="{{ true }}" role="tab" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;background:transparent;border:0;border-bottom:2px solid transparent;color:#9AA09B;padding:10px 16px;margin-bottom:-1px;cursor:not-allowed">BLOK-5</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px">
+            <span style="flex:0 1 150px;font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Azami menzil</span>
+            <span style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1">{{ variantValue }}</span>
+            <span style="flex:1 1 20px;height:1px;background:#C6C9C3;align-self:center"></span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;white-space:nowrap">resmî</span>
+            <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">{{ variantNote }}</p>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #C6C9C3;padding-top:16px">Seçili sekme 2px ink alt çizgi taşır; ölçüsü ve ağırlığı değişmez, böylece geçişte satır kaymaz. Kaydı olmayan varyant listeden çıkarılmaz, devre dışı görünür.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:20px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Dil geçişi — canlı</span>
+          <div style="display:flex;align-items:center;gap:10px">
+            <button onClick="{{ pickTr }}" aria-current="{{ isTr }}" lang="tr" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:{{ trWeight }};background:transparent;border:0;padding:6px 2px;color:{{ trInk }};border-bottom:1px solid {{ trLine }};cursor:pointer" style-hover="color:#1C2124" style-focus="outline:2px solid #B3131B;outline-offset:3px">TR</button>
+            <span style="width:1px;height:16px;background:#C6C9C3"></span>
+            <button onClick="{{ pickEn }}" aria-current="{{ isEn }}" lang="en" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:{{ enWeight }};background:transparent;border:0;padding:6px 2px;color:{{ enInk }};border-bottom:1px solid {{ enLine }};cursor:pointer" style-hover="color:#1C2124" style-focus="outline:2px solid #B3131B;outline-offset:3px">EN</button>
+          </div>
+          <div style="border-top:1px solid #C6C9C3;padding-top:18px;display:flex;flex-direction:column;gap:10px">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">{{ langFieldLabel }}</span>
+            <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.02em">{{ langValue }}</span>
+            <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">{{ langNote }}</p>
+          </div>
+          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;border-top:1px solid #C6C9C3;padding-top:16px">
+            <span style="font-family:Archivo,sans-serif;font-size:12px;font-weight:500;color:#5C6367;flex:1 1 100%">durumlar: seçili · seçili değil · odak · devre dışı</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:600;border-bottom:1px solid #1C2124;padding-bottom:2px">TR</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367">EN</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;outline:2px solid #B3131B;outline-offset:3px">EN</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;color:#9AA09B">AR</span>
+          </div>
+          <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">Dil değişince sayı biçimi de değişir: 7.200 kg → 7,200 kg. Değerin kendisi ve kaynağı değişmez, yalnızca biçim ve dil etiketi değişir.</p>
+        </div>
+      </div>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">13</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Yükleme iskeleti</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Skeleton · no layout shift</span>
+      </div>
+
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:66ch;text-wrap:pretty">Harita ve 3B bölümleri yüklenirken kutunun ölçüsü baştan bellidir: iskelet, gelecek içerikle birebir aynı yüksekliği ve iç bölmeleri tutar. Yükleme bitince hiçbir şey yer değiştirmez.</p>
+
+      <div style="display:flex;justify-content:flex-start">
+        <button onClick="{{ toggleSkeleton }}" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;background:transparent;border:1px solid #1C2124;padding:10px 16px;cursor:pointer;color:#1C2124" style-hover="border-color:#B3131B;color:#B3131B" style-focus="outline:2px solid #B3131B;outline-offset:2px">{{ skeletonBtn }}</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">Menzil haritası</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">{{ skeletonState }}</span>
+          </div>
+          <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+            <div style="height:230px;background:#E4E5E1;border:1px solid #C6C9C3;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;box-sizing:border-box;gap:10px">
+              <span style="position:absolute;left:0;top:0;bottom:0;width:60%;background:linear-gradient(to right,transparent,rgba(243,244,241,.75),transparent);animation:ad-sweep 1600ms linear infinite"></span>
+              <span style="width:52%;height:10px;background:#C6C9C3;animation:ad-pulse 1600ms ease-in-out infinite"></span>
+              <span style="width:34%;height:10px;background:#C6C9C3;animation:ad-pulse 1600ms ease-in-out infinite 120ms"></span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ loaded }}" hint-placeholder-val="{{ false }}">
+            <div style="height:230px;background:#E4E5E1;border:1px solid #C6C9C3;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;box-sizing:border-box;gap:10px;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 26px),repeating-linear-gradient(to bottom,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 26px)">
+              <span style="position:absolute;left:24px;top:24px;right:24px;height:2px;background:#1C2124"></span>
+              <span style="position:absolute;left:24px;top:70px;right:64px;height:2px;background-image:repeating-linear-gradient(to right,#5C6367 0,#5C6367 6px,transparent 6px,transparent 11px)"></span>
+              <span style="position:absolute;left:24px;top:116px;right:40px;height:12px;background:rgba(179,19,27,.09);border-top:2px solid #B3131B"></span>
+              <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#1C2124">561 / 800 / ~1.000 km</span>
+              <span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">yer tutucu — gerçek harita katmanı buraya gelir</span>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="height:1px;background:#C6C9C3"></span>
+            <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">İskelet ve gerçek içerik aynı 230px yüksekliği paylaşır. Nabız 1600ms, tek yön; hareketi azaltma tercihinde nabız kapanır, sabit ton kalır.</p>
+          </div>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:24px;display:flex;flex-direction:column;gap:16px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">3B model ve etiketler</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">{{ skeletonState }}</span>
+          </div>
+          <sc-if value="{{ loading }}" hint-placeholder-val="{{ true }}">
+            <div style="height:230px;background:#E4E5E1;border:1px solid #C6C9C3;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center">
+              <span style="position:absolute;left:0;top:0;bottom:0;width:60%;background:linear-gradient(to right,transparent,rgba(243,244,241,.75),transparent);animation:ad-sweep 1600ms linear infinite"></span>
+              <span style="width:58%;height:26px;background:#C6C9C3;animation:ad-pulse 1600ms ease-in-out infinite"></span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ loaded }}" hint-placeholder-val="{{ false }}">
+            <div style="height:230px;background:#E4E5E1;border:1px solid #C6C9C3;position:relative;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box">
+              <span style="width:58%;height:26px;background:#C6C9C3"></span>
+              <span style="position:absolute;left:16px;top:16px;font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #1C2124;background:#F3F4F1;box-shadow:0 0 0 1px #C6C9C3;padding:2px 7px">gövde çapı · resmî</span>
+              <span style="position:absolute;right:16px;bottom:16px;font-family:Archivo,sans-serif;font-size:11px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:2px 7px">burun uzunluğu · tahmin</span>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="height:1px;background:#C6C9C3"></span>
+            <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367">3B etiketleri yükleme sırasında hiç görünmez; yarım etiket yanlış okumaya yol açar. Etiketler modelle birlikte tek adımda belirir ve küçük boy rozet taşır.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="css" style="display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">14</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">globals.css</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Custom properties</span>
+      </div>
+
+      <p style="font-size:17px;line-height:1.55;margin:0;max-width:66ch;color:#5C6367">Olduğu gibi kopyalanabilir. Mevcut altı token değişmedi; eklenenler türetilmiş değerlerdir (rule-strong, ink-disabled, signal-press, koyu zemin kırmızısı) ve gerekçeleri yorum satırında yazılıdır.</p>
+
+      <pre style="background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(18px,2vw,28px);margin:0;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:#1C2124;-webkit-text-size-adjust:100%">:root {
+  /* ---- zemin ve metin (değişmez) ---- */
+  --ground: #E4E5E1;              /* sayfa zemini            */
+  --paper: #F3F4F1;               /* kart / panel zemini     */
+  --paper-hover: #F7F8F5;         /* satır ve kart hover     */
+  --ink: #1C2124;                 /* metin — ground 12,8:1   */
+  --ink-2: #5C6367;               /* ikincil — ground 4,8:1  */
+  --rule: #C6C9C3;                /* dekoratif çizgi, 1,3:1  */
+  --signal: #B3131B;              /* tek vurgu — ground 5,5:1 */
+  --signal-soft: rgba(179, 19, 27, .09);
+
+  /* ---- türetilmiş ---- */
+  --rule-strong: #5C6367;         /* anlam taşıyan sınır, 3:1 gerekli yerlerde */
+  --signal-press: #8E0F16;        /* butonun basılı hâli    */
+  --ink-disabled: #9AA09B;        /* devre dışı metin (WCAG 1.4.3 kapsam dışı) */
+  --signal-on-dark: #E4535A;      /* koyu zeminde kırmızı, ink üstünde 5,1:1  */
+
+  /* ---- tipografi ---- */
+  --font-ui: "Archivo", system-ui, sans-serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --num: tabular-nums;            /* font-variant-numeric   */
+
+  --size-value-xl: 40px;  --weight-value: 600;  --track-value-xl: -.03em;
+  --size-value-l: 34px;                         --track-value-l: -.025em;
+  --size-value-m: 26px;                         --track-value-m: -.02em;
+  --size-value-s: 20px;                         --track-value-s: -.015em;
+
+  --size-h1: clamp(30px, 4vw, 44px);  --weight-h1: 600;  --track-h1: -.035em;  --lh-h1: 1.05;
+  --size-h2: clamp(20px, 2vw, 24px);  --weight-h2: 600;  --track-h2: -.02em;   --lh-h2: 1.15;
+  --size-h3: 17px;                    --weight-h3: 600;  --track-h3: -.01em;   --lh-h3: 1.3;
+
+  --size-body: 18px;      --weight-body: 400;  --lh-body: 1.62;
+  --size-body-s: 16px;                         --lh-body-s: 1.5;
+  --size-ui: 15px;        --weight-ui: 500;
+  --size-label: 13px;     --weight-label: 500;
+  --size-micro: 12px;
+  --size-badge-sm: 11px;
+
+  /* ---- boşluk (4px tabanlı) ---- */
+  --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;  --s-5: 24px;
+  --s-6: 32px;  --s-7: 48px;  --s-8: 64px;  --s-9: 96px;
+
+  --pad-panel: var(--s-5);
+  --pad-row-y: var(--s-4);
+  --gap-grid: var(--s-5);
+  --gap-section: clamp(48px, 6vw, 96px);
+  --page-x: clamp(16px, 4vw, 56px);
+  --content-max: 1180px;
+
+  /* ---- çizgi, çerçeve, odak ---- */
+  --radius: 0;                    /* tek değer, bileşen bazında değişmez */
+  --border-w: 1px;
+  --border-accent-w: 3px;         /* çelişki satırının sol şeridi */
+  --focus-w: 2px;
+  --focus-offset: 2px;
+  --focus-ring: var(--focus-w) solid var(--signal);
+  --touch-min: 44px;
+
+  /* ---- ölçü cetveli rayı ---- */
+  --rail-w: 26px;                 /* xl */
+  --rail-tick: 20px;              /* küçük işaret aralığı */
+  --rail-major: 100px;            /* tam boy işaret aralığı */
+
+  /* ---- hareket ---- */
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-skeleton: 1600ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* ---- kırılma noktaları (yalnızca belge amaçlı) ---- */
+  --bp-m: 640px;
+  --bp-l: 1024px;
+  --bp-xl: 1440px;
+}
+
+@media (max-width: 1439px) { :root { --rail-w: 22px } }
+@media (max-width: 1023px) { :root { --rail-w: 16px } }
+@media (max-width: 639px)  { :root { --rail-w: 0 } }   /* ray tamamen kalkar */
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-base: 0ms }
+  [data-skeleton] { animation: none }
+}
+
+/* ---- her yerde görünür odak halkası ---- */
+:where(a, button, [tabindex], summary, input, select):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+/* ---- güven rozeti: üç durum ---- */
+.badge {
+  font: var(--weight-label) var(--size-label) / 1 var(--font-ui);
+  padding: var(--s-1) 10px;
+  border: var(--border-w) solid transparent;
+  border-radius: var(--radius);
+  white-space: nowrap;
+}
+.badge--sm { font-size: var(--size-badge-sm); padding: 2px 7px }
+.badge--official { border-color: var(--ink); color: var(--ink) }
+.badge--press    { border-style: dashed; border-color: var(--rule-strong); color: var(--ink-2) }
+.badge--estimate { border-color: var(--signal); background: var(--signal-soft); color: var(--signal) }
+.badge--disabled { border-color: var(--rule); color: var(--ink-disabled) }
+
+/* ---- veri satırı ---- */
+.row { padding: var(--pad-row-y) 0; border-bottom: var(--border-w) solid var(--rule) }
+.row__value { font: var(--weight-value) var(--size-value-m) / 1 var(--font-ui);
+              font-variant-numeric: var(--num); letter-spacing: var(--track-value-m) }
+.row--link:hover { background: var(--paper-hover); box-shadow: inset var(--border-accent-w) 0 0 var(--ink) }
+.row--conflict { border-left: var(--border-accent-w) solid var(--signal); padding-left: 14px }
+.row--empty .row__value { color: var(--ink-disabled) }
+.row__empty-slot { min-width: 110px; height: 40px; border-bottom: 1px dashed var(--rule-strong);
+                   font: var(--weight-label) var(--size-label) / 40px var(--font-ui); color: var(--ink-2) }
+
+/* ---- buton ---- */
+.btn { font: var(--weight-ui) var(--size-ui) / 1 var(--font-ui); border-radius: var(--radius);
+       border: var(--border-w) solid transparent; padding: 11px 19px; cursor: pointer;
+       min-height: var(--touch-min); transition: background var(--dur-fast) var(--ease) }
+.btn--primary { background: var(--ink); border-color: var(--ink); color: var(--paper) }
+.btn--primary:hover { background: var(--signal); border-color: var(--signal) }
+.btn--primary:active { background: var(--signal-press); border-color: var(--signal-press) }
+.btn--secondary { background: transparent; border-color: var(--ink); color: var(--ink) }
+.btn--secondary:hover { background: var(--signal-soft); border-color: var(--signal); color: var(--signal) }
+.btn:disabled { background: var(--ground); border-color: var(--rule);
+                color: var(--ink-disabled); cursor: not-allowed }
+
+/* ---- harita lejantı: üç çizgi stili ---- */
+.legend__line--official { height: 2px; background: var(--ink) }
+.legend__line--press    { height: 2px; background-image:
+  repeating-linear-gradient(to right, var(--ink-2) 0 6px, transparent 6px 11px) }
+.legend__line--estimate { height: 12px; background: var(--signal-soft);
+                          border-top: 2px solid var(--signal) }   /* bant = hata payı */
+.legend__item--off { color: var(--ink-disabled) }                 /* filtre dışı: soluk, gizli değil */</pre>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px 32px;align-items:baseline;border-top:1px solid #C6C9C3;padding-top:16px">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500">Sınıf adları öneri</span>
+        <p style="flex:1 1 320px;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Tokenlar bağlayıcı, sınıf adları değil. Kendi adlandırmanızı kullanacaksanız yalnızca custom property bloğunu alın; alttaki bileşen tarifleri her durumun hangi tokenı çağırdığını gösteren referanstır.</p>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid #1C2124;padding-top:18px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">Açık Dosya · desen sayfası</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">v1 · 10.09.2026</span>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;estimatesOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Durumlar&quot;},&quot;skeletonLoading&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Durumlar&quot;}}">
+class Component extends DCLogic {
+  state = { estimates: null, variant: "tayfun", lang: "tr", loading: null };
+
+  renderVals() {
+    const est = this.state.estimates ?? this.props.estimatesOn ?? true;
+    const loading = this.state.loading ?? this.props.skeletonLoading ?? true;
+    const v = this.state.variant;
+    const lang = this.state.lang;
+    const isTr = lang === "tr";
+
+    return {
+      noop: (e) => e.preventDefault(),
+
+      estimatesOn: est,
+      toggleEstimates: () => this.setState({ estimates: !est }),
+      toggleJustify: est ? "flex-end" : "flex-start",
+      toggleFill: est ? "#B3131B" : "#C6C9C3",
+      toggleLabel: est ? "açık" : "kapalı",
+
+      isTayfun: v === "tayfun",
+      isBlok4: v === "blok4",
+      pickTayfun: () => this.setState({ variant: "tayfun" }),
+      pickBlok4: () => this.setState({ variant: "blok4" }),
+      tayfunLine: v === "tayfun" ? "#1C2124" : "transparent",
+      blokLine: v === "blok4" ? "#1C2124" : "transparent",
+      tayfunInk: v === "tayfun" ? "#1C2124" : "#5C6367",
+      blokInk: v === "blok4" ? "#1C2124" : "#5C6367",
+      variantValue: v === "tayfun" ? "561 km" : "280 km",
+      variantNote: v === "tayfun"
+        ? "Üretici açıklaması, test uçuşu — Ekim 2022. Varyantlar arası fark kaynakla birlikte verilir."
+        : "İhale belgesi eki, menzil sınıfı — Mart 2021. Aynı alan, farklı varyant, ayrı kaynak.",
+
+      isTr: isTr,
+      isEn: !isTr,
+      pickTr: () => this.setState({ lang: "tr" }),
+      pickEn: () => this.setState({ lang: "en" }),
+      trWeight: isTr ? 600 : 400,
+      enWeight: isTr ? 400 : 600,
+      trInk: isTr ? "#1C2124" : "#5C6367",
+      enInk: isTr ? "#5C6367" : "#1C2124",
+      trLine: isTr ? "#1C2124" : "transparent",
+      enLine: isTr ? "transparent" : "#1C2124",
+      langFieldLabel: isTr ? "Fırlatma kütlesi" : "Launch mass",
+      langValue: isTr ? "7.200 kg" : "7,200 kg",
+      langNote: isTr
+        ? "Türkçe birincil: ondalık virgül, binlik nokta. Alan adları Türkçe, sistem adı çevrilmez."
+        : "English secondary: decimal point, thousands comma. Field names translated, system names never.",
+
+      loading: loading,
+      loaded: !loading,
+      toggleSkeleton: () => this.setState({ loading: !loading }),
+      skeletonBtn: loading ? "Yükleme bitti" : "Yeniden yükle",
+      skeletonState: loading ? "yükleniyor" : "yüklendi"
+    };
+  }
+}
+</script>
+</body>
+</html>

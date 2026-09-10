@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E4E5E1; }
+  a { color: #1C2124; text-decoration: none; }
+  a:hover { color: #B3131B; }
+  @keyframes ad-rail { from { transform: scaleY(0) } to { transform: scaleY(1) } }
+  @keyframes ad-rise { from { opacity: 0; transform: translateY(9px) } to { opacity: 1; transform: none } }
+  @keyframes ad-lead { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+</style>
+</helmet>
+
+<div style="background:#E4E5E1;color:#1C2124;font-family:'Source Serif 4',Georgia,serif;min-height:100%;display:flex;gap:clamp(14px,3vw,40px);padding:clamp(18px,3vw,32px) clamp(18px,4vw,56px) 0;box-sizing:border-box">
+
+  <div style="flex:none;width:clamp(16px,2.2vw,26px);align-self:stretch;transform-origin:top center;animation:ad-rail 1100ms cubic-bezier(.2,.7,.2,1) both;background-image:repeating-linear-gradient(to bottom,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to bottom,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:9px 100%,100% 100%;background-repeat:repeat-y;background-position:right top,right top"></div>
+
+  <div style="flex:1;min-width:0;max-width:1180px;display:flex;flex-direction:column">
+
+  <sc-if value="{{ tr }}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;gap:clamp(52px,7vw,96px)">
+
+    <header style="display:flex;align-items:center;gap:20px 28px;flex-wrap:wrap;animation:ad-rise 600ms cubic-bezier(.2,.7,.2,1) both">
+      <a href="#" style="display:flex;align-items:center;gap:12px">
+        <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+          <rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect>
+          <rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect>
+        </svg>
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.035em">AÇIK DOSYA</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:22px;margin-left:auto;font-family:Archivo,sans-serif;font-size:15px">
+        <a href="#dosyalar" style="color:#5C6367" style-hover="color:#1C2124">Dosyalar</a>
+        <a href="#yontem" style="color:#5C6367" style-hover="color:#1C2124">Yöntem</a>
+        <div style="display:flex;align-items:center;gap:8px;border-left:1px solid #C6C9C3;padding-left:22px">
+          <span style="font-weight:600;border-bottom:1px solid #1C2124;padding-bottom:1px">TR</span>
+          <button onClick="{{ toEn }}" style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;background:none;border:0;padding:0;cursor:pointer" style-hover="color:#1C2124">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <section style="display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,64px);align-items:flex-start">
+
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:22px">
+        <p style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500;color:#5C6367;margin:0;animation:ad-rise 600ms cubic-bezier(.2,.7,.2,1) 60ms both">Bağımsız teknik dosya</p>
+        <h1 style="font-family:Archivo,sans-serif;font-weight:600;font-size:clamp(31px,4.6vw,56px);line-height:1.05;letter-spacing:-0.035em;margin:0;text-wrap:pretty;animation:ad-rise 640ms cubic-bezier(.2,.7,.2,1) 110ms both">Menzil 561 km mi,<br>800 km mi?</h1>
+        <p style="font-size:18px;line-height:1.62;margin:0;max-width:52ch;text-wrap:pretty;animation:ad-rise 640ms cubic-bezier(.2,.7,.2,1) 180ms both">Kaynağa göre değişir. Açık Dosya, Türk savunma sanayii sistemlerinin teknik dosyalarını tutar ve her değerin yanına onu yayınlayan kaynağı, yayın tarihini ve güven seviyesini koyar.</p>
+        <p style="font-size:18px;line-height:1.62;margin:0;max-width:52ch;color:#5C6367;text-wrap:pretty;animation:ad-rise 640ms cubic-bezier(.2,.7,.2,1) 230ms both">Çelişen değerler ayıklanmıyor. Üçü de dosyada duruyor, hangisini kullanacağınıza siz karar veriyorsunuz.</p>
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap;animation:ad-rise 640ms cubic-bezier(.2,.7,.2,1) 280ms both">
+          <a href="#dosyalar" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;padding:12px 20px" style-hover="background:#B3131B;color:#F3F4F1">TAYFUN dosyasını aç</a>
+          <a href="#yontem" style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;border-bottom:1px solid #C6C9C3;padding-bottom:2px" style-hover="color:#1C2124;border-bottom-color:#1C2124">Yöntem</a>
+        </div>
+      </div>
+
+      <div style="flex:1 1 420px;min-width:0;background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;gap:6px;animation:ad-rise 700ms cubic-bezier(.2,.7,.2,1) 320ms both">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">TAYFUN — azami menzil</span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">kayıttaki üç değer</span>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0;animation:ad-rise 620ms cubic-bezier(.2,.7,.2,1) 400ms both">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1">561 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;transform-origin:left;animation:ad-lead 600ms cubic-bezier(.2,.7,.2,1) 620ms both"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;white-space:nowrap">resmî</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Üretici açıklaması, test uçuşu — Ekim 2022. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">kaynağı gör</a></p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0;animation:ad-rise 620ms cubic-bezier(.2,.7,.2,1) 470ms both">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1;color:#5C6367">800 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;transform-origin:left;animation:ad-lead 600ms cubic-bezier(.2,.7,.2,1) 690ms both"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:4px 10px;white-space:nowrap">basın</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Ulusal gazete haberi, üreticiye atfen — Mayıs 2022. Doğrulanmadı. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">kaynağı gör</a></p>
+        </div>
+
+        <sc-if value="{{ showEstimate }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0;animation:ad-rise 620ms cubic-bezier(.2,.7,.2,1) 540ms both">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1;color:#B3131B">~1.000 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3;transform-origin:left;animation:ad-lead 600ms cubic-bezier(.2,.7,.2,1) 760ms both"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px;white-space:nowrap">tahmin</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Açık Dosya hesabı: itki süresi ve fırlatma kütlesinden çıkarım. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">hesabı gör</a></p>
+        </div>
+        </sc-if>
+
+        <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #1C2124;padding-top:14px">Bu satır dosyanın kendisinden alınmıştır, örnek değildir.</p>
+      </div>
+    </section>
+
+    <section id="dosyalar" style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Sistem dosyaları</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">1 dosya yayında</span>
+      </div>
+
+      <a href="#" style="background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(22px,2.6vw,32px);display:flex;flex-wrap:wrap;gap:26px clamp(24px,3vw,48px);align-items:flex-start" style-hover="border-color:#1C2124;background:#F7F8F5">
+        <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-0.03em;line-height:1">TAYFUN</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367">balistik füze</span>
+          </div>
+          <p style="font-size:17px;line-height:1.55;margin:0;color:#1C2124;max-width:48ch">Kısa menzilli balistik füze. Menzil, faydalı yük, atalet güdüm ve test kayıtları; her değer kaynağıyla birlikte.</p>
+          <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">34 değer, 12 kaynak — son güncelleme 08.09.2026</span>
+        </div>
+        <div style="flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Kayıttaki güven dağılımı</span>
+          <div style="display:flex;height:10px;gap:2px">
+            <span style="width:62%;background:#1C2124"></span>
+            <span style="width:26%;background-image:repeating-linear-gradient(135deg,#C6C9C3 0,#C6C9C3 3px,#F3F4F1 3px,#F3F4F1 6px);border:1px solid #C6C9C3;box-sizing:border-box"></span>
+            <span style="width:12%;background:rgba(179,19,27,.09);border:1px solid #B3131B;box-sizing:border-box"></span>
+          </div>
+          <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">21 resmî / 9 basın / 4 tahmin</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;margin-top:6px;border-bottom:1px solid #1C2124;align-self:flex-start;padding-bottom:2px">Dosyayı aç</span>
+        </div>
+      </a>
+
+      <sc-if value="{{ showUpcoming }}" hint-placeholder-val="{{ true }}">
+      <div style="border-top:1px dashed #C6C9C3;padding-top:16px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#5C6367">Sırada</span>
+        <p style="flex:1 1 320px;font-size:17px;line-height:1.55;margin:0;color:#5C6367">HİSAR-O+ hava savunma sistemi. Kayıt tamamlanmadan yayınlanmıyor; tarih ilan edilmiyor.</p>
+      </div>
+      </sc-if>
+    </section>
+
+    <section id="yontem" style="display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">Nasıl çalışıyoruz</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto">Üç güven seviyesi</span>
+      </div>
+
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:64ch;text-wrap:pretty">Her değer üç durumdan birini taşır. Durum, değerin doğru olduğunu değil, kaynağının niteliğini anlatır. Aynı üç durum tabloda, harita lejantında, 3B etiketlerde ve zaman tünelinde birebir aynı görünür.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;align-self:flex-start">resmî</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">Üretici yayını, kurum açıklaması veya ihale belgesi. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır.</p>
+        </div>
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:4px 10px;align-self:flex-start">basın</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">İkincil kaynak: haber, dergi, fuar veya konferans notu. Doğrulanmadı, ama kayda geçti ve gizlenmiyor.</p>
+        </div>
+        <div style="background:#F3F4F1;border:1px solid #B3131B;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px;align-self:flex-start">tahmin</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">Açık Dosya hesabı. Yöntem, girdiler ve hata payı her tahminin altında yazılıdır; itiraz edip düzeltme gönderebilirsiniz.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:baseline;border-top:1px solid #C6C9C3;padding-top:16px">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500">Çelişki</span>
+        <p style="flex:1 1 320px;font-size:17px;line-height:1.55;margin:0;color:#5C6367">Bir değer için birden çok kaynak varsa hepsi listelenir. Çelişki bir hata değil, kaydın parçasıdır.</p>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid #1C2124;padding:20px 0 clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;gap:24px clamp(24px,4vw,56px);align-items:flex-start">
+      <p style="flex:1 1 380px;font-size:15px;line-height:1.6;margin:0;color:#5C6367;max-width:74ch">Açık Dosya bağımsız bir yayındır. Hiçbir kurum, üretici veya kamu kuruluşuyla bağı yoktur ve hiçbirinden destek almaz. Bu sayfa resmî bir yayın değildir. Marka, sistem ve kurum adları yalnızca tanımlama amacıyla kullanılır ve sahiplerine aittir.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;font-family:Archivo,sans-serif;font-size:15px">
+        <a href="#" style="color:#5C6367" style-hover="color:#1C2124">Düzeltme gönder</a>
+        <a href="#yontem" style="color:#5C6367" style-hover="color:#1C2124">Yöntem ve kaynak politikası</a>
+        <span style="color:#5C6367;font-size:14px;font-variant-numeric:tabular-nums">Kayıt sürümü 2026.09</span>
+      </div>
+    </footer>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{ en }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:clamp(52px,7vw,96px)">
+
+    <header style="display:flex;align-items:center;gap:20px 28px;flex-wrap:wrap">
+      <a href="#" style="display:flex;align-items:center;gap:12px">
+        <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+          <rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect>
+          <rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect>
+        </svg>
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.035em">AÇIK DOSYA</span>
+      </a>
+      <div style="display:flex;align-items:center;gap:22px;margin-left:auto;font-family:Archivo,sans-serif;font-size:15px">
+        <a href="#files" style="color:#5C6367" style-hover="color:#1C2124">Files</a>
+        <a href="#method" style="color:#5C6367" style-hover="color:#1C2124">Method</a>
+        <div style="display:flex;align-items:center;gap:8px;border-left:1px solid #C6C9C3;padding-left:22px">
+          <button onClick="{{ toTr }}" style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;background:none;border:0;padding:0;cursor:pointer" style-hover="color:#1C2124">TR</button>
+          <span style="font-weight:600;border-bottom:1px solid #1C2124;padding-bottom:1px">EN</span>
+        </div>
+      </div>
+    </header>
+
+    <section style="display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,64px);align-items:flex-start">
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:22px">
+        <p style="font-family:Archivo,sans-serif;font-size:14px;font-weight:500;color:#5C6367;margin:0">Independent technical file</p>
+        <h1 style="font-family:Archivo,sans-serif;font-weight:600;font-size:clamp(31px,4.6vw,56px);line-height:1.05;letter-spacing:-0.035em;margin:0;text-wrap:pretty">Is the range 561 km,<br>or 800 km?</h1>
+        <p style="font-size:18px;line-height:1.62;margin:0;max-width:52ch;text-wrap:pretty">It depends on the source. Açık Dosya keeps technical files on Turkish defence industry systems, and puts the publishing source, the publication date and a confidence level next to every value.</p>
+        <p style="font-size:18px;line-height:1.62;margin:0;max-width:52ch;color:#5C6367;text-wrap:pretty">Conflicting figures are not filtered out. All three stay in the file, and you decide which one to use.</p>
+        <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+          <a href="#files" style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#F3F4F1;background:#1C2124;padding:12px 20px" style-hover="background:#B3131B;color:#F3F4F1">Open the TAYFUN file</a>
+          <a href="#method" style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367;border-bottom:1px solid #C6C9C3;padding-bottom:2px" style-hover="color:#1C2124;border-bottom-color:#1C2124">Method</a>
+        </div>
+      </div>
+
+      <div style="flex:1 1 420px;min-width:0;background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:14px;flex-wrap:wrap;padding-bottom:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">TAYFUN — maximum range</span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">three values on record</span>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1">561 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;white-space:nowrap">official</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Manufacturer statement, test flight — October 2022. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">view source</a></p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1;color:#5C6367">800 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:4px 10px;white-space:nowrap">press</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">National newspaper report citing the manufacturer — May 2022. Unverified. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">view source</a></p>
+        </div>
+
+        <sc-if value="{{ showEstimate }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;border-top:1px solid #C6C9C3;padding:16px 0">
+          <span style="font-family:Archivo,sans-serif;font-size:clamp(26px,3vw,34px);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.025em;line-height:1;color:#B3131B">~1,000 km</span>
+          <span style="flex:1 1 24px;height:1px;background:#C6C9C3"></span>
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px;white-space:nowrap">estimate</span>
+          <p style="flex:1 1 100%;font-size:16px;line-height:1.5;margin:0;color:#5C6367">Açık Dosya calculation, derived from burn time and launch mass. <a href="#" style="color:#5C6367;border-bottom:1px solid #C6C9C3" style-hover="color:#B3131B;border-bottom-color:#B3131B">view the working</a></p>
+        </div>
+        </sc-if>
+
+        <p style="font-size:16px;line-height:1.5;margin:0;color:#5C6367;border-top:1px solid #1C2124;padding-top:14px">These rows are taken from the file itself, not a sample.</p>
+      </div>
+    </section>
+
+    <section id="files" style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">System files</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto;font-variant-numeric:tabular-nums">1 file published</span>
+      </div>
+
+      <a href="#" style="background:#F3F4F1;border:1px solid #C6C9C3;padding:clamp(22px,2.6vw,32px);display:flex;flex-wrap:wrap;gap:26px clamp(24px,3vw,48px);align-items:flex-start" style-hover="border-color:#1C2124;background:#F7F8F5">
+        <div style="flex:1 1 260px;min-width:0;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-0.03em;line-height:1">TAYFUN</span>
+            <span style="font-family:Archivo,sans-serif;font-size:15px;color:#5C6367">ballistic missile</span>
+          </div>
+          <p style="font-size:17px;line-height:1.55;margin:0;max-width:48ch">Short-range ballistic missile. Range, payload, inertial guidance and test records — every value with its source.</p>
+          <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">34 values, 12 sources — last updated 08.09.2026</span>
+        </div>
+        <div style="flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:12px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367">Confidence spread on record</span>
+          <div style="display:flex;height:10px;gap:2px">
+            <span style="width:62%;background:#1C2124"></span>
+            <span style="width:26%;background-image:repeating-linear-gradient(135deg,#C6C9C3 0,#C6C9C3 3px,#F3F4F1 3px,#F3F4F1 6px);border:1px solid #C6C9C3;box-sizing:border-box"></span>
+            <span style="width:12%;background:rgba(179,19,27,.09);border:1px solid #B3131B;box-sizing:border-box"></span>
+          </div>
+          <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;font-variant-numeric:tabular-nums">21 official / 9 press / 4 estimate</span>
+          <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;margin-top:6px;border-bottom:1px solid #1C2124;align-self:flex-start;padding-bottom:2px">Open the file</span>
+        </div>
+      </a>
+
+      <sc-if value="{{ showUpcoming }}" hint-placeholder-val="{{ true }}">
+      <div style="border-top:1px dashed #C6C9C3;padding-top:16px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500;color:#5C6367">Next</span>
+        <p style="flex:1 1 320px;font-size:17px;line-height:1.55;margin:0;color:#5C6367">HİSAR-O+ air defence system. It is not published until the record is complete; no date is announced.</p>
+      </div>
+      </sc-if>
+    </section>
+
+    <section id="method" style="display:flex;flex-direction:column;gap:26px">
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #1C2124;padding-top:14px">
+        <h2 style="font-family:Archivo,sans-serif;font-size:clamp(20px,2vw,24px);font-weight:600;letter-spacing:-0.02em;margin:0">How we work</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:14px;color:#5C6367;margin-left:auto">Three confidence levels</span>
+      </div>
+
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:64ch;text-wrap:pretty">Every value carries one of three states. The state does not say the value is correct — it says what kind of source it came from. The same three states look identical in tables, map legends, 3D labels and the timeline.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px;align-self:flex-start">official</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">Manufacturer publication, institutional statement or procurement document. A link is given; if the link dies, an archived copy and its date replace it.</p>
+        </div>
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:4px 10px;align-self:flex-start">press</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">Secondary source: news report, magazine, trade show or conference note. Unverified, but on record and not hidden.</p>
+        </div>
+        <div style="background:#F3F4F1;border:1px solid #B3131B;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px;align-self:flex-start">estimate</span>
+          <p style="font-size:17px;line-height:1.55;margin:0">Açık Dosya calculation. Method, inputs and margin of error are printed under every estimate; you can dispute it and send a correction.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px 24px;align-items:baseline;border-top:1px solid #C6C9C3;padding-top:16px">
+        <span style="font-family:Archivo,sans-serif;font-size:15px;font-weight:500">Conflict</span>
+        <p style="flex:1 1 320px;font-size:17px;line-height:1.55;margin:0;color:#5C6367">When a value has more than one source, all of them are listed. A conflict is not an error — it is part of the record.</p>
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid #1C2124;padding:20px 0 clamp(28px,4vw,48px);display:flex;flex-wrap:wrap;gap:24px clamp(24px,4vw,56px);align-items:flex-start">
+      <p style="flex:1 1 380px;font-size:15px;line-height:1.6;margin:0;color:#5C6367;max-width:74ch">Açık Dosya is an independent publication. It has no affiliation with any institution, manufacturer or public body, and receives no support from any of them. This page is not an official publication. Brand, system and institution names are used for identification only and belong to their owners.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;font-family:Archivo,sans-serif;font-size:15px">
+        <a href="#" style="color:#5C6367" style-hover="color:#1C2124">Send a correction</a>
+        <a href="#method" style="color:#5C6367" style-hover="color:#1C2124">Method and source policy</a>
+        <span style="color:#5C6367;font-size:14px;font-variant-numeric:tabular-nums">Record version 2026.09</span>
+      </div>
+    </footer>
+  </div>
+  </sc-if>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;lang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;tr&quot;,&quot;en&quot;],&quot;default&quot;:&quot;tr&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Dil&quot;},&quot;showEstimate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;showUpcoming&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Dosyalar&quot;}}">
+class Component extends DCLogic {
+  state = { lang: null };
+  renderVals() {
+    const lang = this.state.lang ?? this.props.lang ?? "tr";
+    return {
+      tr: lang === "tr",
+      en: lang === "en",
+      toTr: () => this.setState({ lang: "tr" }),
+      toEn: () => this.setState({ lang: "en" }),
+      showEstimate: this.props.showEstimate ?? true,
+      showUpcoming: this.props.showUpcoming ?? true
+    };
+  }
+}
+
+</script>
+</body>
+</html>
