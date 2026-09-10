@@ -4,14 +4,14 @@ import type {
   GeoJSONSource,
   LineLayerSpecification,
   Map as MapLibreMap,
-  Marker
+  Marker,
+  StyleSpecification
 } from 'maplibre-gl';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Badge} from '@/components/confidence-badge/ConfidenceBadge';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, track} from '@/lib/analytics';
 import {
-  MAP_ATTRIBUTION,
   MAP_DEFAULT_CENTER,
   MAP_DEFAULT_ZOOM,
   MAP_STYLE_URL
@@ -46,6 +46,75 @@ function ringStyles(): Record<Confidence, RingStyle> {
     press: {color: token('--ink-2'), dash: [3, 3]},
     estimate: {color: token('--signal'), dash: [1, 2]}
   };
+}
+
+/**
+ * PMTiles protokolu bir kez kaydedilir. Ornek modul duzeyinde duruyor
+ * cunku ic onbellegi (arsiv basligi, dizin sayfalari) sayfalar arasi
+ * gezinmede korunuyor: ayni haritaya donen okuyucu basligi yeniden
+ * indirmez.
+ */
+let pmtilesReady = false;
+
+async function registerPmtiles(maplibre: typeof import('maplibre-gl')) {
+  if (pmtilesReady) return;
+  const {Protocol} = await import('pmtiles');
+  maplibre.addProtocol('pmtiles', new Protocol().tile);
+  pmtilesReady = true;
+}
+
+/** [minLon, minLat, maxLon, maxLat] — stil metadata'siyla ayni sira. */
+type Bbox = [number, number, number, number];
+
+/**
+ * Stili cozer.
+ *
+ * MapLibre glif adresini goreli kabul ediyor ama sprite adresini etmiyor:
+ * "Invalid sprite URL, must be absolute" diye reddediyor. Stil dosyasi
+ * statik uretiliyor ve hangi origin'de servis edilecegini bilemez (yerelde
+ * localhost, yayinda acikdosya.org), bu yuzden mutlaklastirma burada,
+ * calisma aninda yapiliyor.
+ *
+ * Ek istek maliyeti yok: stili nesne olarak veriyoruz, MapLibre ayni
+ * dosyayi bir daha indirmiyor.
+ */
+async function loadStyle(
+  url: string,
+  locale: Locale
+): Promise<StyleSpecification | string> {
+  if (/^https?:/i.test(url)) return url;
+
+  const style = (await fetch(url).then((response) =>
+    response.json()
+  )) as StyleSpecification;
+
+  if (typeof style.sprite === 'string' && style.sprite.startsWith('/')) {
+    style.sprite = new URL(style.sprite, window.location.origin).toString();
+  }
+
+  /*
+   * Etiket dili okuyucunun dili. Paket tek: ad alanlarinin hepsi tile'in
+   * icinde duruyor, degisen yalnizca hangisinin once denendigi. Iki ayri
+   * paket uretmek 66 MB'i ikiye katlardi.
+   *
+   * Stil dosyasi TR sirasiyla uretiliyor (scripts/build-tiles.mjs), burada
+   * yalnizca diger diller icin sira degistiriliyor.
+   */
+  if (locale !== 'tr') {
+    for (const layer of style.layers) {
+      if (!('layout' in layer) || !layer.layout) continue;
+      const field = (layer.layout as {'text-field'?: unknown})['text-field'];
+      if (!Array.isArray(field) || field[0] !== 'coalesce') continue;
+
+      (layer.layout as {'text-field'?: unknown})['text-field'] = [
+        'coalesce',
+        ['get', `name:${locale}`],
+        ['get', 'name:tr']
+      ];
+    }
+  }
+
+  return style;
 }
 
 const REF_PARAM = 'ref';
@@ -127,9 +196,27 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
     track(EVENTS.map, {tur: kind});
   }, []);
 
+  /*
+   * Paketin kapsadigi alan. Stil dosyasinin metadata'sindan okunuyor,
+   * burada tekrar yazilmiyor: kapsama scripts/build-tiles.mjs icindeki
+   * bbox'tan gelir ve iki yerde tutulursa er ya da gec ayrisirlar.
+   */
+  const [coverage, setCoverage] = useState<Bbox | null>(null);
+
   // Harita geri cagrilari render disinda calisir, guncel degeri buradan alir.
   const originRef = useRef(origin);
   const visibleRef = useRef(visible);
+  const coverageRef = useRef<Bbox | null>(null);
+
+  /** Referans nokta paketin disina cikamaz; disarisi bos harita demek. */
+  const clampToCoverage = useCallback((point: LngLat): LngLat => {
+    const box = coverageRef.current;
+    if (!box) return clampLngLat(point);
+    return [
+      Math.max(box[0], Math.min(box[2], point[0])),
+      Math.max(box[1], Math.min(box[3], point[1]))
+    ];
+  }, []);
 
   /** Halkalari mevcut merkeze gore yeniden cizer. */
   const redraw = useCallback(
@@ -157,14 +244,21 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
      */
     void (async () => {
       const maplibre = await import('maplibre-gl');
+      await registerPmtiles(maplibre);
+      const style = await loadStyle(MAP_STYLE_URL, locale);
       if (disposed || !container.current || map.current) return;
 
       const instance = new maplibre.Map({
         container: container.current,
-        style: MAP_STYLE_URL,
+        style,
         center: start,
         zoom: MAP_DEFAULT_ZOOM,
-        attributionControl: {compact: true, customAttribution: MAP_ATTRIBUTION}
+        /*
+         * Atif stil dosyasindaki kaynak tanimindan geliyor, burada
+         * customAttribution ile tekrarlanmiyor. Kontrol kapatilmaz:
+         * OSM verisi ODbL geregi atif ister ve bu ekranda gorunur kalir.
+         */
+        attributionControl: {compact: true}
       });
       map.current = instance;
 
@@ -192,10 +286,31 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
       });
       pin.on('dragend', () => {
         interacted('isaretci');
-        setState((current) => ({...current, origin: originRef.current}));
+        const next = clampToCoverage(originRef.current);
+        originRef.current = next;
+        setState((current) => ({...current, origin: next}));
       });
 
       instance.on('load', () => {
+        /*
+         * Kapsama disina pan yapilmaz. Paket Turkiye ve cevresini iceriyor;
+         * disarisi bos zemin olarak gorunurdu ve okuyucu haritanin
+         * bozuldugunu sanardi.
+         */
+        const metadata = instance.getStyle().metadata as
+          | {'acikdosya:bbox'?: number[]}
+          | undefined;
+        const box = metadata?.['acikdosya:bbox'];
+        if (box?.length === 4) {
+          const bbox = box as Bbox;
+          instance.setMaxBounds([
+            [bbox[0], bbox[1]],
+            [bbox[2], bbox[3]]
+          ]);
+          coverageRef.current = bbox;
+          setCoverage(bbox);
+        }
+
         const palette = ringStyles();
 
         for (const ring of rings) {
@@ -231,7 +346,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
       map.current = null;
       marker.current = null;
     };
-  }, [copy.markerHint, interacted, redraw, rings]);
+  }, [clampToCoverage, copy.markerHint, interacted, locale, redraw, rings]);
 
   // Merkez veya secim degisince halkalar, isaretci ve URL esitlenir.
   useEffect(() => {
@@ -273,7 +388,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
         axis === 0
           ? [value, current.origin[1]]
           : [current.origin[0], value];
-      return {...current, origin: clampLngLat(next)};
+      return {...current, origin: clampToCoverage(next)};
     });
   };
 
@@ -316,8 +431,9 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
             type="number"
             inputMode="decimal"
             step="0.1"
-            min="-85"
-            max="85"
+            /* Sinirlar paketin kapsamasindan; paket yuklenmeden once dunya. */
+            min={coverage ? coverage[1] : -85}
+            max={coverage ? coverage[3] : 85}
             value={Number(origin[1].toFixed(4))}
             onChange={(event) => moveTo(1, event.target.valueAsNumber)}
           />
@@ -328,8 +444,8 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
             type="number"
             inputMode="decimal"
             step="0.1"
-            min="-180"
-            max="180"
+            min={coverage ? coverage[0] : -180}
+            max={coverage ? coverage[2] : 180}
             value={Number(origin[0].toFixed(4))}
             onChange={(event) => moveTo(0, event.target.valueAsNumber)}
           />

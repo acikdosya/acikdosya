@@ -19,3 +19,8 @@ reference
 
 # Uretilen modeller derleme sirasinda yeniden pisiriliyor.
 public/models
+
+# Harita paketi imaja girmez: 66 MB'lik arsiv sunucuda duruyor ve konteynere
+# salt okunur baglaniyor (compose.yaml). Imaja kopyalansaydi hem imaj sisecek
+# hem de baglama noktasini golgeleyecekti.
+public/tiles

@@ -394,6 +394,26 @@ gösteriyor. Varsayılan `lib/config.ts` içinde duruyor ki derleme argümanı
 geçilmemiş bir imajda da adres kaybolmasın; `NEXT_PUBLIC_CONTACT_EMAIL`
 ile ezilir.
 
+### Harita paketi
+
+Altlık kendi sunucumuzdan geliyor (10.09.2026'dan beri). `pnpm build:tiles`
+Protomaps günlük planet yapısından Türkiye ve çevresini çıkarır; çıktı
+`public/tiles/` altında ~66 MB ve git'te durmaz.
+
+Paket **imaja girmez**: sunucuda `/opt/acikdosya/tiles` içinde durur ve
+konteynere salt okunur bağlanır (`compose.yaml`). `scripts/deploy.sh`
+`build.json` özetini karşılaştırır, yalnızca değiştiyse gönderir.
+
+**Yapma:**
+- Üçüncü taraf tile servisine dönme. Ziyaretçinin IP adresi dışarı gitmez.
+- `attributionControl`'ü kapatma veya atfı stilden çıkarma. OSM verisi ODbL
+  gereği atıf ister; atıf stil dosyasının kaynak tanımında durur ki paketle
+  birlikte taşınsın.
+- Kapsama alanını (`maxBounds`) ikinci bir yerde tanımlama. Tek kaynak
+  `scripts/build-tiles.mjs` içindeki bbox; harita onu stilin metadata
+  alanından okur.
+- Paketi imaja koyma. 66 MB her dağıtımda ssh üzerinden yeniden giderdi.
+
 ### Ölçüm
 
 Kendi sunucumuzda Umami + Postgres, `deploy/analytics/compose.yaml`.
@@ -424,8 +444,7 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 
 ### Yayındaki eksikler
 
-1. **Harita üçüncü taraftan.** Menzil zarfı `demotiles.maplibre.org`
-   üzerinden çalışıyor; o bölüme inen her ziyaretçinin IP adresi dışarı
-   gidiyor. §6 kendi origin'imizi şart koşuyor, aykırılık bilerek kabul
-   edildi ve `content/assets.json` içinde gerekçesiyle kayıtlı. PMTiles
-   paketi üretilince tek değişecek yer `lib/config.ts`.
+1. **Harita kapsaması bölgesel.** Referans nokta paketin dışına taşınamaz
+   (bbox 22,30 – 50,47). Dünyanın herhangi bir yerinden halka çizmek
+   isteyen okuyucu bunu yapamaz. Bedel bilinerek kabul edildi: alternatifi
+   66 MB yerine gigabaytlarca tile taşımaktı.

@@ -31,6 +31,11 @@ services:
     # olusturuyor. Olcum yigini hic kurulmamis olsa da uygulama ayakta
     # kalir — o durumda /veri altina istek de gitmez, cunku website id
     # gomulu degilse script hic basilmaz.
+    # Harita paketi imajin icinde DEGIL. 66 MB'lik arsiv her dagitimda ssh
+    # uzerinden yeniden gitmesin diye sunucuda duruyor ve buraya baglaniyor;
+    # scripts/deploy.sh yalnizca degistiginde gonderiyor. Salt okunur.
+    volumes:
+      - ./tiles:/app/public/tiles:ro
     networks:
       - acikdosya-net
     logging:

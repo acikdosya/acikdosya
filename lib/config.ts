@@ -20,38 +20,34 @@ export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@acikdosya.org';
 
 /**
- * Harita yapilandirmasi tek noktada. Simdilik MapLibre demo tile'lari;
- * kendi PMTiles'imiza gecerken sadece burasi degisecek.
+ * Harita yapilandirmasi tek noktada.
+ *
+ * Stil kendi paketimizden geliyor: scripts/build-tiles.mjs public/tiles
+ * altina PMTiles arsivini, stili, glifleri ve sprite'i yaziyor. Ziyaretcinin
+ * tarayicisi harita icin disariya tek istek yapmaz — CLAUDE.md §6.
+ *
+ * Env degiskeni yerelde kacis yolu olarak duruyor: paketi henuz uretmemis
+ * bir gelistirici NEXT_PUBLIC_MAP_STYLE_URL ile baska bir stile bakabilir.
+ * Yayinda bos birakilir.
  */
 export const MAP_STYLE_URL =
-  process.env.NEXT_PUBLIC_MAP_STYLE_URL ??
-  'https://demotiles.maplibre.org/style.json';
+  process.env.NEXT_PUBLIC_MAP_STYLE_URL ?? '/tiles/style.json';
 
 /**
- * Altlik harita kaynaklari. MapLibre demo tile'lari kendi TileJSON'unda bos
- * attribution gonderiyor, oysa veri Natural Earth ve OpenStreetMap kaynakli;
- * OSM verisi ODbL geregi atif ister. Bu yuzden atfi biz veriyoruz.
+ * Altlik harita kaynaklari — altbilgide gorunen liste.
  *
- * Dizi olarak duruyor cunku atif iki yerde gorunuyor: haritanin kendi
- * kontrolunde ve sayfa altbilgisinde. Altbilgi gercek <a> ogeleri
- * uretebilsin diye HTML dizesi degil veri tutuluyor; dize asagida bu
- * diziden turetiliyor. Kendi PMTiles'imiza gecerken yalnizca burasi degisir.
+ * Haritanin kendi kontrolundeki atif buradan GELMEZ: o, stil dosyasindaki
+ * kaynak tanimindan gelir (scripts/build-tiles.mjs). Atif boylece paketle
+ * birlikte tasinir; stil nereye giderse ODbL yukumlulugu de oraya gider.
+ * Buradaki liste ayni bilgiyi sayfanin altinda, gercek bag ogeleriyle verir.
  */
 export const MAP_SOURCES: readonly {label: string; url?: string}[] = [
-  {label: 'MapLibre demo tiles', url: 'https://github.com/maplibre/demotiles'},
-  {label: 'Natural Earth'},
+  {label: 'Protomaps', url: 'https://protomaps.com'},
   {
-    label: '© OpenStreetMap',
+    label: '© OpenStreetMap katkıcıları',
     url: 'https://www.openstreetmap.org/copyright'
   }
 ];
-
-/** MapLibre attributionControl HTML bekliyor. */
-export const MAP_ATTRIBUTION = MAP_SOURCES.map((source) =>
-  source.url
-    ? `<a href="${source.url}" rel="nofollow noopener">${source.label}</a>`
-    : source.label
-).join(' · ');
 
 /** Referans noktanin baslangic konumu — Anadolu'nun cografi ortasi. */
 export const MAP_DEFAULT_CENTER: [number, number] = [35.2, 39.0];

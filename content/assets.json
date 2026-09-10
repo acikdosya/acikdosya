@@ -220,18 +220,15 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": [
-        "lib/config.ts",
-        "components/site-footer/SiteFooter.tsx"
-      ],
-      "notes": "YAYINDAKI KAYNAK BU ve uzak origin'den cekiliyor (demotiles.maplibre.org). CLAUDE.md §6 'harita tile'lari kendi origin'imizden' kuralina aykiri. Aykirilik bilinerek kabul edildi: acikdosya.org yayina alinirken menzil zarfini calisir tutmak, PMTiles paketini beklemeye tercih edildi (10.09.2026). Bedeli acik: haritaya inen her ziyaretcinin IP adresi ucuncu tarafa gidiyor — fontlari tam bu gerekceyle self-host etmistik. basemap-tiles uretilince buradan cikilacak. Atif lib/config.ts icinde MAP_SOURCES olarak tanimli, hem harita kontrolunde hem altbilgide gorunuyor."
+      "used_in": [],
+      "notes": "ARTIK KULLANILMIYOR. Yayin 10.09.2026'ya kadar bu kaynaktan besleniyordu ve haritaya inen her ziyaretcinin IP adresi demotiles.maplibre.org'a gidiyordu — CLAUDE.md §6'ya aykiriydi, aykirilik bilerek kabul edilmisti. scripts/build-tiles.mjs kendi paketimizi uretince cikildi (bkz. basemap-tiles). Kayit silinmiyor: bir sure yayinda duran bir kaynagin izi kalmali."
     },
     {
       "id": "basemap-tiles",
-      "file": "public/tiles/turkiye.pmtiles",
+      "file": "public/tiles/",
       "kind": "map-data",
       "origin": "cc",
-      "presence": "absent",
+      "presence": "generated",
       "license": "ODbL 1.0",
       "author": "OpenStreetMap katkıcıları",
       "source_url": "https://www.openstreetmap.org/copyright",
@@ -240,8 +237,50 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": [],
-      "notes": "HENÜZ ÜRETİLMEDİ. Protomaps ile pişirilecek self-host tile paketi; dosya yolu şimdiden ayrıldı. ODbL atıf ZORUNLU ve haritanın üzerinde görünür olmalı. Protomaps ile üretilen paket türev veri sayılır."
+      "used_in": [
+        "lib/config.ts",
+        "components/range-envelope/RangeEnvelopeMap.tsx",
+        "components/site-footer/SiteFooter.tsx"
+      ],
+      "notes": "Dizin kaydi. scripts/build-tiles.mjs Protomaps gunluk planet yapisindan Turkiye ve cevresini (bbox 22,30,50,47 · z0-9) cikarir; cikti ~66 MB ve git'te durmaz (.gitignore). Hangi gunun verisi oldugu public/tiles/build.json icinde yazar. ODbL atif ZORUNLU: atif stil dosyasindaki kaynak tanimindan gelir, MapLibre attributionControl'unde gorunur ve kapatilmaz; ayrica altbilgide de durur. Turev veri sayilir. Dizindeki glif ve sprite dosyalarinin kendi kayitlari var (basemap-glyphs, basemap-sprites)."
+    },
+    {
+      "id": "basemap-glyphs",
+      "file": "public/tiles/fonts/",
+      "kind": "font",
+      "origin": "public-domain",
+      "presence": "generated",
+      "license": "SIL OFL 1.1",
+      "author": "Google (Noto Sans) · glifleri üreten: protomaps/basemaps-assets",
+      "source_url": "https://github.com/protomaps/basemaps-assets",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-10",
+      "used_in": [
+        "scripts/build-tiles.mjs"
+      ],
+      "notes": "Harita etiketlerinin PBF glifleri: Noto Sans Regular, Medium, Italic. scripts/build-tiles.mjs sabit bir commit'ten (028c18f) indirir, git'te durmaz. Lisans metni pakete birlikte kopyalanir: public/tiles/fonts/OFL.txt. Kendi origin'imizden servis edilir — stil protomaps.github.io'yu gosterseydi yazi tipi istegi ucuncu tarafa cikardi."
+    },
+    {
+      "id": "basemap-sprites",
+      "file": "public/tiles/sprites/",
+      "kind": "image",
+      "origin": "cc",
+      "presence": "generated",
+      "license": "BSD-3-Clause (kod) · CC0 1.0 (görsel tasarım) · MIT (Mapzen türevi ikonlar)",
+      "author": "Protomaps LLC · Geraldine Sarmiento · Mapzen",
+      "source_url": "https://github.com/protomaps/basemaps/blob/main/LICENSE.md",
+      "attribution_required": true,
+      "attribution_text": "Copyright 2019-2023 Protomaps LLC, Kelso Cartography — BSD-3-Clause",
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-10",
+      "used_in": [
+        "scripts/build-tiles.mjs"
+      ],
+      "notes": "Yerlesim noktalari (baskent ve sehir isaretleri) bu sprite'tan ciziliyor, yani dusuk zoom'da gorunuyor. BSD ve MIT telif bildiriminin dagitimla tasinmasini istiyor: script LICENSE.md dosyasini pakete kopyalar (public/tiles/sprites/LICENSE.md)."
     },
     {
       "id": "tayfun-fin-profile-ref",

@@ -42,6 +42,42 @@ const nextConfig: NextConfig = {
         destination: `${ANALYTICS_ORIGIN}/:path*`
       }
     ];
+  },
+
+  /*
+   * Harita paketinin onbellek omru.
+   *
+   * Arsiv adi yapi tarihini tasiyor (turkiye-20260910.pmtiles), yani
+   * icerik degisince adres de degisiyor — immutable burada dogru bir
+   * iddia. Stil dosyasinin adi sabit ve arsiv adini o gosteriyor, bu
+   * yuzden kisa omurlu: yeni paket bir sonraki ziyarette devreye girsin.
+   * Glif ve sprite commit'e sabitli ama adlari sabit, ortada bir hafta.
+   *
+   * Basliklar burada duruyor ki kenar vekile dokunmak gerekmesin
+   * (CLAUDE.md §11). nginx veya Caddy onune ayni degerleri koymak
+   * isteyen icin ornekler deploy/nginx/acikdosya.org.conf sonunda.
+   */
+  async headers() {
+    return [
+      {
+        source: '/tiles/:file*.pmtiles',
+        headers: [
+          {key: 'Cache-Control', value: 'public, max-age=31536000, immutable'}
+        ]
+      },
+      {
+        source: '/tiles/style.json',
+        headers: [{key: 'Cache-Control', value: 'public, max-age=300'}]
+      },
+      {
+        source: '/tiles/fonts/:path*',
+        headers: [{key: 'Cache-Control', value: 'public, max-age=604800'}]
+      },
+      {
+        source: '/tiles/sprites/:path*',
+        headers: [{key: 'Cache-Control', value: 'public, max-age=604800'}]
+      }
+    ];
   }
 };
 

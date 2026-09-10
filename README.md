@@ -130,39 +130,67 @@ Tek dosyayla yetinilirse ş ve ğ sistem fontuna düşer.
 
 ## Harita
 
-Şu an MapLibre demo tile'ları kullanılıyor. Tek yapılandırma noktası `lib/config.ts`;
-kendi PMTiles sunucumuza geçerken sadece orası değişir.
+Altlık kendi sunucumuzdan geliyor. Üçüncü taraf tile servisi yok: PMTiles arşivi,
+stil dosyası, glifler ve sprite `public/tiles/` altında durur ve uygulama onları
+kendi origin'inden sunar.
+
+```bash
+pnpm build:tiles     # ağ gerektirir, ~1 dakika, çıktı 66 MB
+```
+
+Script `scripts/build-tiles.mjs`:
+
+| | |
+|---|---|
+| Kaynak | Protomaps günlük planet yapısı (OpenStreetMap, ODbL) |
+| Kapsama | bbox 22,30 – 50,47 — Türkiye ve çevresi |
+| Zoom | 0–9 (daha yakını MapLibre büyüterek gösterir) |
+| Çıktı | `turkiye-<yapı-tarihi>.pmtiles`, `style.json`, `fonts/`, `sprites/`, `build.json` |
+| Araç | go-pmtiles 1.31.2, SHA-256 sabitli |
+
+Çıktı git'te **durmaz** (`.gitignore`). Hangi günün OSM verisi olduğu
+`public/tiles/build.json` içinde yazar; lisans kaydı `content/assets.json` içinde
+üç ayrı satırdır (`basemap-tiles`, `basemap-glyphs`, `basemap-sprites`).
+
+Paketi üretmeden çalışan bir kopyada harita boş kalır. O durumda başka bir stile
+bakmak için:
 
 ```bash
 NEXT_PUBLIC_MAP_STYLE_URL=https://ornek/style.json
-NEXT_PUBLIC_SITE_URL=https://ornek.com
 ```
+
+### Atıf ve kapsama
+
+OSM verisi ODbL gereği atıf ister. Atıf **stil dosyasının kaynak tanımında** durur,
+haritanın kurulumunda değil: paket nereye giderse yükümlülük onunla gider. MapLibre
+bunu kendi atıf kutusunda gösterir, kontrol kapatılmaz. Aynı bilgi sayfa altbilgisinde
+gerçek bağ öğeleriyle bir kez daha görünür (`MAP_SOURCES`).
+
+Harita kapsama alanının dışına kaydırılamaz: sınırlar stilin `metadata` alanından
+okunur ve `maxBounds` olarak uygulanır, koordinat alanları da aynı aralığa kapanır.
+Kapsama iki yerde tanımlı değildir — tek kaynak script'teki bbox.
+
+Etiketler okuyucunun dilini izler. Paket tek: adların hepsi tile içinde, değişen
+yalnızca hangi ad alanının önce denendiği (`name:tr` / `name:en`). Türkçe veya
+İngilizce adı olmayan küçük yerleşim etiketsiz kalır — karşılığında ilk harita
+görünümü sekiz yerine dört glif aralığı indirir.
+
+### Önbellek
+
+Arşivin adı yapı tarihini taşır, yani içeriği değişince adresi de değişir. Başlıklar
+`next.config.ts` içindeki `headers()` ile gönderilir, kenar vekile dokunmak gerekmez:
+
+| Yol | Cache-Control |
+|---|---|
+| `/tiles/*.pmtiles` | `public, max-age=31536000, immutable` |
+| `/tiles/style.json` | `public, max-age=300` |
+| `/tiles/fonts/*`, `/tiles/sprites/*` | `public, max-age=604800` |
+
+nginx ve Caddy karşılıkları `deploy/nginx/acikdosya.org.conf` sonunda örnek olarak
+duruyor — kurulu değil.
 
 Menzil halkaları `range_km` verisinden türer, kodda sabit değer yoktur. Halkalar
 büyük daire yöntemiyle çizilir; Turf eklenmez.
-
-### Harita lisansı — yayında bilerek kabul edilen aykırılık
-
-`demotiles.maplibre.org` **demo ve test amaçlıdır**. GitHub Pages üzerinde barındırılır,
-üretim altyapısı olarak tasarlanmamıştır ve servis garantisi yoktur.
-
-- MapLibre demotiles deposunun kendi lisansı BSD-3-Clause.
-- Kullandığımız vektör kaynağın verisi Natural Earth (kamu malı) ve OpenStreetMap
-  (ODbL) kaynaklıdır. ODbL **atıf zorunluluğu** getirir.
-- Servisin TileJSON'u boş `attribution` alanı gönderir. Atfı bu yüzden biz veriyoruz:
-  `lib/config.ts` içindeki `MAP_ATTRIBUTION`, haritanın atıf kutusunda görünür.
-- Demo stilindeki uydu ve arazi katmanları CC BY-NC-SA (ticari kullanım yasak).
-  Bu proje onları kullanmaz, sadece vektör altlığı kullanır. Stil değiştirilirken
-  bu kontrol tekrarlanmalı.
-
-**Site bu kaynakla yayına çıktı (10.09.2026).** Menzil bölümüne inen her ziyaretçinin
-IP adresi üçüncü tarafa gidiyor; fontları tam bu gerekçeyle self-host etmiştik.
-CLAUDE.md §6 tile'ları kendi origin'imizden şart koşuyor, aykırılık bilerek kabul
-edildi ve `content/assets.json` içinde `maplibre-demotiles` kaydında gerekçesiyle
-duruyor.
-
-Kendi PMTiles altlığımıza geçilince tek değişecek yer `lib/config.ts`: `MAP_STYLE_URL`
-ve `MAP_SOURCES`. Atıf metni de o kaynağa göre güncellenmeli.
 
 **Sürüm kısıtı:** `maplibre-gl` 5.x'te sabitlenmiştir. 6.9 sürümünde harita kuruluyor
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.

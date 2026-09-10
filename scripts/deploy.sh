@@ -67,6 +67,28 @@ scp deploy/analytics/compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/analytics/"
 # oraya yazmak elle ve bilerek yapilir.
 scp deploy/nginx/acikdosya.org.conf "${DEPLOY_HOST}:${DEPLOY_DIR}/"
 
+# Harita paketi imajin disinda: 66 MB'lik arsiv her dagitimda yeniden
+# gitmezse deploy uc dakika surer, giderse on dakika. Sunucuda duruyor,
+# konteynere salt okunur baglaniyor (compose.yaml) ve yalnizca icerigi
+# degisince gonderiliyor. Damga olarak build.json'un ozeti kullaniliyor.
+echo "==> Harita paketi"
+if [ ! -f public/tiles/build.json ]; then
+	echo "UYARI: public/tiles yok. Menzil zarfi bos harita gosterir." >&2
+	echo "       Uretmek icin: pnpm build:tiles" >&2
+else
+	LOCAL_TILES="$(sha256sum public/tiles/build.json | cut -d' ' -f1)"
+	REMOTE_TILES="$(ssh "$DEPLOY_HOST" "sha256sum '${DEPLOY_DIR}/tiles/build.json' 2>/dev/null | cut -d' ' -f1" || true)"
+
+	if [ "$LOCAL_TILES" = "$REMOTE_TILES" ]; then
+		echo "    sunucudaki paket guncel, gonderilmiyor"
+	else
+		echo "    paket gonderiliyor ($(du -sh public/tiles | cut -f1))"
+		# Arsiv zaten sikistirilmis veri tasiyor; tar ikinci kez sikistirmaz.
+		ssh "$DEPLOY_HOST" "mkdir -p '${DEPLOY_DIR}'"
+		tar cf - -C public tiles | ssh "$DEPLOY_HOST" "tar xf - -C '${DEPLOY_DIR}'"
+	fi
+fi
+
 echo "==> Imaj aktariliyor"
 # Iki etiket de gonderiliyor. Katmanlar ortak, tek kopya gidiyor; kazanc
 # sunucuda surumlu bir etiketin kalmasi. Geri donus bunun uzerine kurulu:

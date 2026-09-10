@@ -23,6 +23,9 @@ importers:
       next-intl:
         specifier: ^4.4.0
         version: 4.14.2(@swc/helpers@0.5.23)(next@16.3.4(@babel/core@7.29.7)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)
+      pmtiles:
+        specifier: ^4.5.0
+        version: 4.5.0
       react:
         specifier: 19.2.8
         version: 19.2.8
@@ -45,6 +48,9 @@ importers:
       '@gltf-transform/functions':
         specifier: 4.5.0
         version: 4.5.0(@types/node@20.19.43)
+      '@protomaps/basemaps':
+        specifier: ^5.7.2
+        version: 5.7.2
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.3.3
@@ -805,6 +811,10 @@ packages:
   '@parcel/watcher@2.6.0':
     resolution: {integrity: sha512-7FNeNl8NCE7aINx7WXiKQrPYZWC/hvrTsmk6zmxbI7LTXE7hVek/n8AfVgpe2y82zl3w0HvCHN0bVKMBoJcC0w==}
     engines: {node: '>= 10.0.0'}
+
+  '@protomaps/basemaps@5.7.2':
+    resolution: {integrity: sha512-K1Yk6bWdULulYg+R2QRVXx4NzJZan5YQhpejEG0c1/sXruJrfPIPZuakpf3jwAgVmjIRVQwAv+yRafDeN0aaUQ==}
+    hasBin: true
 
   '@react-three/drei@10.7.8':
     resolution: {integrity: sha512-rJXyuzLm2Xq0kafHuR47ajDGbOe/pEhzIr4m8E8zwzQs0iNjloFDqBwRhrXmP/w+onLeYyN3EYPFW/cwWK/4yA==}
@@ -2375,6 +2385,9 @@ packages:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
     engines: {node: '>=12'}
 
+  pmtiles@4.5.0:
+    resolution: {integrity: sha512-CBeD4SoUluFziGdy/8k7FOjQxQy486n+929W/tWophauvMICpkZ26vGBWhDt/6b1FZQWNaf4jFdT/5+q0Wii5w==}
+
   po-parser@2.2.0:
     resolution: {integrity: sha512-NdTrKgh0oO7+y+RFX8KKhOB438x/j94UGXEFzl/7pHH0JjWSn42iJ9tgmPksIO6n1JKDHmNDcejPJfKspljB9g==}
 
@@ -3434,6 +3447,8 @@ snapshots:
       '@parcel/watcher-linux-x64-musl': 2.6.0
       '@parcel/watcher-win32-arm64': 2.6.0
       '@parcel/watcher-win32-x64': 2.6.0
+
+  '@protomaps/basemaps@5.7.2': {}
 
   '@react-three/drei@10.7.8(@react-three/fiber@9.7.0(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(three@0.185.0))(@types/react@19.3.0)(@types/three@0.185.4)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(three@0.185.0)':
     dependencies:
@@ -5146,6 +5161,10 @@ snapshots:
   picomatch@2.3.2: {}
 
   picomatch@4.0.7: {}
+
+  pmtiles@4.5.0:
+    dependencies:
+      fflate: 0.8.3
 
   po-parser@2.2.0: {}
 

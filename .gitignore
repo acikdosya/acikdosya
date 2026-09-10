@@ -47,3 +47,6 @@ next-env.d.ts
 
 # dagitim ayarlari — .env.production.example kopyalanir
 .env.deploy
+
+# uretilen harita paketi — scripts/build-tiles.mjs (agdan uretilir, 69 MB)
+/public/tiles/
