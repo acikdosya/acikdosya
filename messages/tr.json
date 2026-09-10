@@ -164,6 +164,9 @@
     "scopeHeading": "Kapsam",
     "scopeBody": "Az sayıda sistemi derinlemesine anlatıyoruz. Bu bir katalog veya ansiklopedi değil: her dosya kaynaklı veri, ölçekli çizim, program takvimi ve menzil zarfı içerir. Haber akışı yok, kullanıcı içeriği yok.",
     "scopeMethod": "Bir sayının nasıl kayda girdiğini <link>yöntem sayfasında</link> anlattık.",
+    "privacyHeading": "Gizlilik",
+    "privacyBody": "Ziyaret sayısını kendi sunucumuzda tuttuğumuz bir sayaçla ölçüyoruz. Çerez kullanılmıyor ve isteklerle çerez gönderilmiyor; bu yüzden onay bandı da yok. Tarayıcınız izlenmek istemediğini bildiriyorsa (Do Not Track) hiçbir kayıt tutulmuyor.",
+    "privacyRequests": "Sayfa üçüncü taraf sunucuya istek yapmaz: yazı tipleri, harita altlığı ve ölçüm dosyası bu adres üzerinden gelir. Adres çubuğundaki sorgu dizesi kaydedilmez — menzil zarfında seçtiğiniz referans noktası bize ulaşmaz.",
     "contactHeading": "İletişim ve düzeltme",
     "contactBody": "Düzeltme, eksik kaynak bildirimi ve sorular için yazabilirsiniz.",
     "contactWhat": "Düzeltme gönderirken hangi sistemi, hangi alanı ve hangi kaynağı kastettiğinizi yazın. Kaynağı olmayan bildirimler kayda giremiyor."

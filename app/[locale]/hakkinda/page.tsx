@@ -76,9 +76,26 @@ export default async function AboutPage({params}: Props) {
         </div>
       </section>
 
-      <section className={styles.section} aria-labelledby="contact-heading">
+      {/*
+        Gizlilik bolumu: olcumun ne topladigi sayfada yaziyor. Fontlari,
+        haritayi ve olcumu kendi sunucumuzdan servis etmenin gerekcesi bu;
+        gerekce yalnizca depoda kalirsa okuyucu icin hicbir sey degismez.
+      */}
+      <section className={styles.section} aria-labelledby="privacy-heading">
         <SectionHeading
           index={3}
+          title={t('privacyHeading')}
+          id="privacy-heading"
+        />
+        <div className={styles.body}>
+          <p>{t('privacyBody')}</p>
+          <p>{t('privacyRequests')}</p>
+        </div>
+      </section>
+
+      <section className={styles.section} aria-labelledby="contact-heading">
+        <SectionHeading
+          index={4}
           title={t('contactHeading')}
           id="contact-heading"
         />

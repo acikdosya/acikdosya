@@ -164,6 +164,9 @@
     "scopeHeading": "Scope",
     "scopeBody": "We cover a small number of systems in depth. This is not a catalogue or an encyclopaedia: each file holds sourced data, a scaled drawing, a programme timeline and a range envelope. There is no news feed and no user-contributed content.",
     "scopeMethod": "How a figure enters the record is described <link>on the method page</link>.",
+    "privacyHeading": "Privacy",
+    "privacyBody": "Visits are counted by a meter running on our own server. No cookies are used and none are sent with requests, so there is no consent banner. If your browser says it does not want to be tracked (Do Not Track), nothing is recorded.",
+    "privacyRequests": "The page makes no request to a third-party server: fonts, the map base layer and the analytics file are all served from this address. Query strings are not recorded — the reference point you choose on the range envelope never reaches us.",
     "contactHeading": "Contact and corrections",
     "contactBody": "Write for corrections, missing sources and questions.",
     "contactWhat": "When sending a correction, say which system, which field and which source you mean. Reports without a source cannot enter the record."
