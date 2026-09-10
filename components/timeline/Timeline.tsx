@@ -28,7 +28,7 @@ export function Timeline({system, locale}: Props) {
           <time className={styles.date} dateTime={event.date}>
             {formatEventDate(event.date, locale)}
           </time>
-          <div>
+          <div className={styles.content}>
             <h3 className={styles.title}>
               {event.title[locale]}
               <ConfidenceBadge confidence={event.confidence} />

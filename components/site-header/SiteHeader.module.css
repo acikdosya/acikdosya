@@ -44,3 +44,22 @@
   color: var(--ink);
   border-bottom-color: var(--ink);
 }
+
+/*
+ * Dar ekranda gezinme kendi satirina duser. Sagda asili kalirsa 360px'lik
+ * telefonda bagli genislik (3 baglanti + 24px bosluklar + dil grubu) satira
+ * sigmiyor ve yatay tasma yapiyor. Satirin tamamini alir, sola yaslanir,
+ * bosluk 16px'e iner; dil grubu tek basina sag kenara oturur.
+ */
+@media (max-width: 639px) {
+  .nav {
+    width: 100%;
+    margin-left: 0;
+    gap: var(--s-4);
+  }
+
+  /* Dil gecisi — nav'in son ogesi — karsi kenara itilir. */
+  .nav > :last-child {
+    margin-left: auto;
+  }
+}
