@@ -93,15 +93,52 @@ for (const name of systemFiles) {
   });
 }
 
-// --- gorsel lisans kaydi ---------------------------------------------------
+// --- varlik lisans kaydi ---------------------------------------------------
+/**
+ * Kontrol iki yonlu — CLAUDE.md §5.6.
+ *  kayit -> disk : kayitli dosya gercekten duruyor mu (bayat kayit yakalanir)
+ *  disk -> kayit : public/ altindaki her dosyanin kaydi var mi (lisanssiz
+ *                  dosya sizmasin). assets.json'daki _rule bunu vaat ediyor.
+ */
+function walkFiles(dir: string, out: string[] = []): string[] {
+  for (const entry of readdirSync(dir, {withFileTypes: true})) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) walkFiles(full, out);
+    else out.push(relative(ROOT, full));
+  }
+  return out;
+}
+
 const assetsPath = join(CONTENT_DIR, 'assets.json');
 if (!existsSync(assetsPath)) {
   errors.push('content/assets.json\n  dosya yok — bos kayit bile olsa bulunmali');
 } else {
   validate(assetsPath, assetsFileSchema, (data: z.infer<typeof assetsFileSchema>) => {
+    // Yollar repo kokune gore yazilir; public/ disindaki varliklar da kayitli
+    // (fontlar app/_fonts altinda duruyor).
     for (const asset of data.assets) {
-      if (!existsSync(join(PUBLIC_DIR, asset.file))) {
-        fail('content/assets.json', `kayitli gorsel diskte yok: public/${asset.file}`);
+      if (asset.presence !== 'committed' || asset.file === null) continue;
+      if (!existsSync(join(ROOT, asset.file))) {
+        fail('content/assets.json', `kayitli varlik diskte yok: ${asset.file}`);
+      }
+    }
+
+    if (existsSync(PUBLIC_DIR)) {
+      // 'generated' kayitlar dizin yolu tasiyabilir; altindaki her sey dahil.
+      const covered = data.assets
+        .map((asset) => asset.file)
+        .filter((file): file is string => file !== null);
+
+      for (const file of walkFiles(PUBLIC_DIR)) {
+        const registered = covered.some(
+          (entry) => entry === file || (entry.endsWith('/') && file.startsWith(entry))
+        );
+        if (!registered) {
+          fail(
+            'content/assets.json',
+            `kaydi olmayan dosya: ${file}\n  lisansi bilinmeyen dosya yayina gitmez`
+          );
+        }
       }
     }
   });

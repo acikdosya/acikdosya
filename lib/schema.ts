@@ -195,18 +195,93 @@ export const systemSchema = z
 export type System = z.infer<typeof systemSchema>;
 
 /**
- * Gorsel lisans kaydi — CLAUDE.md §5.6.
- * Lisansi bilinmeyen gorsel commit edilmez, bu yuzden hicbir alan optional degil.
+ * Varlik lisans kaydi — CLAUDE.md §5.6 ve §10.
+ * Lisansi bilinmeyen varlik commit edilmez, bu yuzden hicbir alan optional degil.
+ * Bilinmeyen deger null ile yazilir; alanin kendisi silinmez, cunku "sorulmadi"
+ * ile "bakildi ve yok" ayri seylerdir.
  */
-export const assetSchema = z.strictObject({
-  file: z.string().min(1),
-  license: z.string().min(1),
-  source_url: z.url(),
-  attribution: z.string().min(1)
-});
+export const assetKindSchema = z.enum([
+  'logo',
+  'font',
+  'image',
+  '3d',
+  'map-data',
+  'reference'
+]);
+
+export const assetOriginSchema = z.enum([
+  'own',
+  'public-domain',
+  'cc',
+  'press-kit'
+]);
+
+/**
+ * Dosya repoda duruyor mu:
+ *  committed — diskte, git'te. Kaydi varsa dosyasi da olmali.
+ *  generated — build uretiyor (bake-glb), git'te yok. Varlik kontrolu yapilmaz;
+ *              file bir dizin yolu olabilir, altindaki her sey kayda dahildir.
+ *  absent    — repoya girmedi ya da henuz uretilmedi. Gerekcesi notes'ta yazar.
+ */
+export const assetPresenceSchema = z.enum(['committed', 'generated', 'absent']);
+
+export const assetSchema = z
+  .strictObject({
+    id: slugSchema,
+    file: z.string().min(1).nullable(),
+    kind: assetKindSchema,
+    origin: assetOriginSchema,
+    presence: assetPresenceSchema,
+    license: z.string().min(1),
+    author: z.string().min(1).nullable(),
+    source_url: z.url().nullable(),
+    attribution_required: z.boolean(),
+    attribution_text: z.string().min(1).nullable(),
+    commercial_use: z.boolean(),
+    modifications_allowed: z.boolean(),
+    acquired_at: isoDateSchema,
+    used_in: z.array(z.string().min(1)),
+    notes: z.string().min(1).nullable()
+  })
+  .refine((asset) => !asset.attribution_required || asset.attribution_text, {
+    error: 'attribution_required true ise attribution_text yazilmali',
+    path: ['attribution_text']
+  })
+  .refine((asset) => asset.origin === 'own' || asset.source_url !== null, {
+    error: 'kendi urettigimiz disindaki her varlik nereden geldigini gostermeli',
+    path: ['source_url']
+  })
+  .refine((asset) => asset.presence !== 'absent' || asset.notes, {
+    error: 'repoda olmayan varlik neden olmadigini notes icinde soylemeli',
+    path: ['notes']
+  })
+  .refine((asset) => asset.presence === 'absent' || asset.file !== null, {
+    error: 'diskte ya da build ciktisinda duran varligin dosya yolu olmali',
+    path: ['file']
+  });
 export type Asset = z.infer<typeof assetSchema>;
 
-export const assetsFileSchema = z.strictObject({
-  assets: z.array(assetSchema)
+/** Bakildi ve alinmadi. Neden alinmadigi kayitta kalir — §5.6. */
+export const rejectedAssetSchema = z.strictObject({
+  id: slugSchema,
+  source_url: z.string().min(1),
+  reason: z.string().min(1),
+  date: isoDateSchema
 });
+export type RejectedAsset = z.infer<typeof rejectedAssetSchema>;
+
+export const assetsFileSchema = z
+  .strictObject({
+    $schema_version: z.string().min(1),
+    _rule: z.string().min(1),
+    assets: z.array(assetSchema),
+    rejected: z.array(rejectedAssetSchema)
+  })
+  .refine(
+    (file) => {
+      const ids = file.assets.map((asset) => asset.id);
+      return new Set(ids).size === ids.length;
+    },
+    {error: 'varlik idleri benzersiz olmali', path: ['assets']}
+  );
 export type AssetsFile = z.infer<typeof assetsFileSchema>;

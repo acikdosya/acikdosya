@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Tasarim ve kimlik referanslari — CLAUDE.md §4: bunlar shipped sayfa
+    // degil, urun kurallarina uymak zorunda degiller.
+    "reference/**",
   ]),
 ]);
 
