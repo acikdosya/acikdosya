@@ -46,7 +46,8 @@
     "timeline": "Program takvimi",
     "range": "Menzil zarfı",
     "badge": "açık kaynak dosya",
-    "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya."
+    "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya.",
+    "model": "Şematik model"
   },
   "RangeEnvelope": {
     "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
@@ -65,5 +66,15 @@
     "test": "Test aşaması",
     "seri-uretim": "Seri üretim",
     "envanterde": "Envanterde"
+  },
+  "ModelViewer": {
+    "loading": "Model yükleniyor…",
+    "hint": "sürükle: döndür · tekerlek: yakınlaş",
+    "ar": "Kendi ortamında gör",
+    "ariaLabel": "{name} — döndürülebilir şematik model",
+    "note": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Etiketler yalnızca dış bölümleri adlandırır ve kendi güven seviyelerini taşır. Gövde, yayımlanmış uzunluk ve çap değerlerinden türetilmiştir; teknik çizim değildir.",
+    "overview": "Genel görünüm",
+    "fullscreen": "Tam ekran",
+    "exitFullscreen": "Tam ekrandan çık"
   }
 }

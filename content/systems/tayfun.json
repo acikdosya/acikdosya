@@ -113,6 +113,38 @@
           "confidence": "official"
         }
       },
+      "annotations": [
+        {
+          "id": "nose",
+          "t": 0.1,
+          "angle": 90,
+          "label": {
+            "tr": "Burun bölümü",
+            "en": "Nose section"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "body",
+          "t": 0.52,
+          "angle": 90,
+          "label": {
+            "tr": "Gövde",
+            "en": "Body"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "tail-fin",
+          "t": 0.93,
+          "angle": 200,
+          "label": {
+            "tr": "Kuyruk kanatçığı",
+            "en": "Tail fin"
+          },
+          "confidence": "press"
+        }
+      ],
       "_todo": [
         "attributes alanlarina source ve verified_at eklenecek",
         "spec kaynaklarina source_url eklenecek"
@@ -195,6 +227,38 @@
           "confidence": "estimate"
         }
       },
+      "annotations": [
+        {
+          "id": "nose",
+          "t": 0.1,
+          "angle": 90,
+          "label": {
+            "tr": "Burun bölümü",
+            "en": "Nose section"
+          },
+          "confidence": "press"
+        },
+        {
+          "id": "body",
+          "t": 0.52,
+          "angle": 90,
+          "label": {
+            "tr": "Gövde",
+            "en": "Body"
+          },
+          "confidence": "press"
+        },
+        {
+          "id": "tail-fin",
+          "t": 0.93,
+          "angle": 200,
+          "label": {
+            "tr": "Kuyruk kanatçığı",
+            "en": "Tail fin"
+          },
+          "confidence": "estimate"
+        }
+      ],
       "_todo": [
         "cep_m icin acik kaynak bulunamadi — alan bos birakildi",
         "attributes alanlarina source ve verified_at eklenecek",

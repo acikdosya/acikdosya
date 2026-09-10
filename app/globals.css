@@ -82,6 +82,90 @@
   }
 }
 
+/*
+ * Guven rozeti cerceveleri — tek kaynak. CLAUDE.md §4.
+ * Spec tablosundaki rozet (ConfidenceBadge.module.css) ve 3D modeldeki
+ * hotspot chip'i ayni kurallari kullanir; ikisi ayrisirsa gorsel dil bozulur.
+ * Duz cizgi resmi, kesikli basin, kirmizi tahmin.
+ */
+.conf-official {
+  border: 1px solid var(--ink);
+  color: var(--ink);
+}
+
+.conf-press {
+  border: 1px dashed var(--ink-2);
+  color: var(--ink-2);
+}
+
+.conf-estimate {
+  border: 1px solid var(--signal);
+  color: var(--signal);
+  background: var(--signal-soft);
+}
+
+/*
+ * 3D model goruntuleyici — CLAUDE.md §9.
+ * Iskelet ve sahne ayni yukseklikte: chunk inerken sayfa kaymaz.
+ * Model dekoratif; ayni bilgi spec tablosunda oldugu icin hotspot'lar
+ * isaret alamaz, yalnizca adlandirir.
+ */
+.viewer,
+.viewer-skeleton {
+  position: relative;
+  height: 520px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.viewer {
+  overflow: hidden;
+  touch-action: none;
+}
+
+.viewer-skeleton {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+@media (max-width: 820px) {
+  .viewer,
+  .viewer-skeleton {
+    height: 380px;
+  }
+}
+
+.hotspot {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 7px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  /* Etiket fare hedefi degil — surukleyerek dondurmeyi engellemesin. */
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Hotspot ve varyant butonundaki kucuk guven isareti. Cerceve conf-* sinifindan. */
+.chip {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
 /* Genel guvenlik agi. Bilesenler ayrica kendi reduced-motion davranisini tanimlar. */
 @media (prefers-reduced-motion: reduce) {
   *,

@@ -9,21 +9,30 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "validate:content": "tsx scripts/validate-content.ts",
-    "prebuild": "pnpm validate:content"
+    "bake:models": "node --import tsx scripts/bake-glb.mjs",
+    "prebuild": "pnpm validate:content && pnpm bake:models"
   },
   "dependencies": {
+    "@react-three/drei": "10.7.8",
+    "@react-three/fiber": "9.7.0",
     "maplibre-gl": "^5.24.0",
     "next": "16.3.4",
     "next-intl": "^4.4.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "three": "0.185.0",
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/extensions": "4.5.0",
+    "@gltf-transform/functions": "4.5.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "0.185.4",
+    "draco3dgltf": "1.5.7",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",

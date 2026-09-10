@@ -46,7 +46,8 @@
     "timeline": "Programme timeline",
     "range": "Range envelope",
     "badge": "open source file",
-    "metaFallback": "A {manufacturer} system — technical file compiled from public sources."
+    "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
+    "model": "Schematic model"
   },
   "RangeEnvelope": {
     "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
@@ -65,5 +66,15 @@
     "test": "In testing",
     "seri-uretim": "Serial production",
     "envanterde": "In service"
+  },
+  "ModelViewer": {
+    "loading": "Loading model…",
+    "hint": "drag: rotate · wheel: zoom",
+    "ar": "View in your space",
+    "ariaLabel": "{name} — rotatable schematic model",
+    "note": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cross-section, exploded view or internal component layout — we hold no sourced data on internal geometry. Labels name external sections only and each carries its own confidence level. The body is derived from published length and diameter values; it is not a technical drawing.",
+    "overview": "Overview",
+    "fullscreen": "Fullscreen",
+    "exitFullscreen": "Exit fullscreen"
   }
 }

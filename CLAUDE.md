@@ -171,6 +171,62 @@ reference/
 - Türkçe karakterler her yerde test edilsin (İ/ı/ğ/ş sıralama ve font desteği).
 - Emin olmadığın yerde tahmin etme, sor.
 
+## 9. 3D katmanı
+
+### Model kaynağı: parametrik, satın alınmış değil
+
+Hazır model kullanılmaz. Sketchfab/TurboSquid/CGTrader dahil hiçbir pazar yerinden
+model satın alınmaz veya indirilmez. Gerekçe: bu sitelerdeki savunma modellerinin
+lisans zinciri ve doğruluğu doğrulanamaz; kaynak takibi üzerine kurulmuş bir projede
+kaynağı bilinmeyen geometri tüm iddiayı çürütür.
+
+Gövde geometrisi `lib/geometry/missile.ts` içinde, içerik dosyasındaki `length_m` ve
+`diameter_mm` alanlarından üretilir. Ölçü verisi değişirse mesh değişir. Ölçü verisi
+yoksa model üretilmez — varsayılan bir değerle doldurulmaz.
+
+Blender yalnızca yayımlanmış fotoğraflardan çıkarılabilen dış detaylar için kullanılır
+(kanatçık profili, taşıyıcı araç). Bu tür varlıklar `content/assets.json`'a kaydedilir.
+
+### Şematik, fotogerçekçi değil
+
+Mat gri yüzey, ince kontur çizgileri, ölçü çizgileri. Fotogerçekçi doku ve render
+yapılmaz — sahip olmadığımız bir doğruluk iddiası anlamına gelir.
+
+### Kesit ve iç görünüm yasak
+
+Patlatılmış görünüm, kesit, iç bileşen yerleşimi üretilmez. İç geometriye dair
+kaynaklı verimiz yok. Etiketleme yalnızca dış bölümler üzerinde yapılır
+(burun bölümü, gövde, kuyruk, kanatçık) ve her etiket kendi `confidence` değerini
+taşır.
+
+### Annotation şeması
+
+Konum mutlak koordinat değil, orandır — ölçüler güncellenince etiket yerinde kalır.
+
+    interface Annotation {
+      id: string;
+      t: number;          // gövde boyunca oran, 0 = burun ucu, 1 = kuyruk
+      angle: number;      // radyal açı, derece
+      label: { tr: string; en: string };
+      confidence: Confidence;
+    }
+
+### Teknik
+
+| Konu | Karar |
+|---|---|
+| Runtime | three.js + @react-three/fiber + @react-three/drei |
+| Yükleme | `next/dynamic` + `ssr:false` + IntersectionObserver; bölüme gelmeden yüklenmez |
+| Hotspot | drei `<Html occlude>` — DOM elemanı, yani çevrilebilir ve erişilebilir |
+| Segment | mobil 48, masaüstü 72 |
+| Fallback | WebGL yoksa mevcut `ScaleSilhouette` bileşenine düşülür |
+| Bellek | R3F unmount'ta `dispose()` çağrılır — geometri ve materyal sızdırmaz |
+| Hareket | `prefers-reduced-motion` ise autoRotate kapalı, `frameloop="demand"` |
+| AR | `scripts/bake-glb.mjs` build'de GLB pişirir, ARCore Scene Viewer intent'i onu kullanır |
+
+Model dekoratiftir; hiçbir bilgi yalnızca 3D içinde bulunmaz. Ekran okuyucu
+kullanıcısı aynı bilgiye spec tablosundan erişir.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

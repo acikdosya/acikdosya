@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parametrik model önizleme — TAYFUN</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#E4E5E1; --paper:#F3F4F1;
+  --ink:#1C2124; --ink-2:#5C6367; --rule:#C6C9C3;
+  --signal:#B3131B; --signal-soft:rgba(179,19,27,.09);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif}
+header{max-width:1080px;margin:0 auto;padding:36px 24px 20px}
+h1{font-family:Archivo;font-size:30px;font-weight:800;letter-spacing:-.02em;margin:0 0 8px}
+header p{font-size:17px;color:var(--ink-2);max-width:60ch;margin:0}
+.stage{max-width:1080px;margin:0 auto;padding:0 24px 48px}
+#scene{position:relative;height:520px;border:1px solid var(--rule);background:var(--paper);
+  overflow:hidden;touch-action:none}
+#labels{position:absolute;inset:0;pointer-events:none}
+.hot{font-family:Archivo;font-size:12px;transform:translate(-50%,-50%);white-space:nowrap;
+  pointer-events:auto;cursor:default}
+.hot b{display:inline-block;background:#fff;border:1px solid var(--ink);border-radius:2px;
+  padding:3px 7px;font-weight:600}
+.hot .chip{display:inline-block;font-size:9px;font-weight:600;letter-spacing:.05em;
+  padding:1px 5px;border-radius:2px;margin-left:4px;background:#fff}
+.chip.official{border:1px solid var(--ink);color:var(--ink)}
+.chip.press{border:1px dashed var(--ink-2);color:var(--ink-2)}
+.chip.estimate{border:1px solid var(--signal);color:var(--signal);background:var(--signal-soft)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:16px 0 0}
+button{font-family:Archivo;font-size:12px;font-weight:600;padding:8px 12px;
+  border:1px solid var(--rule);background:var(--paper);color:var(--ink-2);
+  border-radius:2px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:#fff}
+button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.note{font-size:14px;color:var(--ink-2);margin-top:18px;max-width:70ch}
+.fallback{display:none;padding:40px;text-align:center;color:var(--ink-2);font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Parametrik gövde — önizleme</h1>
+  <p>Bu geometri hiçbir hazır modelden gelmiyor. Yalnızca <code>length_m</code> ve
+  <code>diameter_mm</code> alanlarından üretiliyor: teğet ogive burun, silindirik gövde,
+  hafif konik kuyruk, dört kanatçık. Veri değişirse mesh değişir.</p>
+</header>
+
+<div class="stage">
+  <div id="scene"><div id="labels"></div>
+    <div class="fallback" id="fallback">Tarayıcınız WebGL desteklemiyor.
+      Ölçekli siluet görünümüne düşülecek.</div>
+  </div>
+
+  <div class="bar" id="bar"></div>
+
+  <p class="note">Şematik kasıtlı. Fotogerçekçi doku, sahip olmadığımız bir doğruluk
+  iddiası anlamına gelirdi. İç yapı, kesit ve patlatılmış görünüm yok — iç geometriye
+  dair kaynaklı verimiz yok, uydurmuyoruz. Etiketler yalnızca dış bölümleri adlandırır
+  ve kendi güven seviyelerini taşır.</p>
+</div>
+
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+/* ---------------------------------------------------------------- veri ---- */
+/* Uretimde content/systems/tayfun.json'dan gelir. */
+const VARIANTS = [
+  { id:'tayfun', label:'TAYFUN',
+    lengthM:6.5, diameterMm:610, confidence:'official',
+    annotations:[
+      {id:'nose', t:0.10, angle:90,  label:'Burun bölümü',   confidence:'official'},
+      {id:'body', t:0.52, angle:90,  label:'Gövde',          confidence:'official'},
+      {id:'fin',  t:0.93, angle:200, label:'Kuyruk kanatçığı',confidence:'press'}
+    ]},
+  { id:'blok4', label:'BLOK-4',
+    lengthM:10, diameterMm:938, confidence:'press',
+    annotations:[
+      {id:'nose', t:0.10, angle:90,  label:'Burun bölümü', confidence:'press'},
+      {id:'body', t:0.52, angle:90,  label:'Gövde',        confidence:'press'},
+      {id:'fin',  t:0.93, angle:200, label:'Kuyruk kanatçığı', confidence:'estimate'}
+    ]}
+];
+const CHIP = { official:'resmî', press:'basın', estimate:'tahmin' };
+
+/* ------------------------------------------------- parametrik geometri ---- */
+/* Tegen ogive: rho = (R^2 + Ln^2) / 2R ; y(x) = sqrt(rho^2-(Ln-x)^2) + R - rho */
+function missileProfile({ lengthM, diameterMm, noseRatio=0.22, boattail=0.94, steps=28 }){
+  const L = lengthM, R = diameterMm/2000, Ln = L*noseRatio;
+  const rho = (R*R + Ln*Ln) / (2*R);
+  const pts = [];
+  for (let i=0; i<=steps; i++){
+    const x = (i/steps)*Ln;
+    const y = Math.sqrt(Math.max(0, rho*rho - (Ln-x)**2)) + R - rho;
+    pts.push(new THREE.Vector2(Math.max(y, 0.0005), x));
+  }
+  pts.push(new THREE.Vector2(R, L*0.88));
+  pts.push(new THREE.Vector2(R*boattail, L));
+  return { points: pts, L, R };
+}
+
+function buildMissile(spec){
+  const { points, L, R } = missileProfile(spec);
+  const g = new THREE.Group();
+
+  const body = new THREE.LatheGeometry(points, 72);
+  const mat  = new THREE.MeshStandardMaterial({
+    color:0x9BA1A4, roughness:0.86, metalness:0.06, flatShading:false });
+  const mesh = new THREE.Mesh(body, mat);
+  g.add(mesh);
+
+  /* konturlar — sematik dil */
+  const edges = new THREE.LineSegments(
+    new THREE.EdgesGeometry(body, 24),
+    new THREE.LineBasicMaterial({ color:0x1C2124, transparent:true, opacity:0.34 }));
+  g.add(edges);
+
+  /* kanatciklar */
+  const span = R*1.9, root = L*0.14, tip = root*0.42;
+  const shape = new THREE.Shape();
+  shape.moveTo(0,0); shape.lineTo(root,0); shape.lineTo(root, span);
+  shape.lineTo(root-tip, span); shape.closePath();
+  const finGeo = new THREE.ExtrudeGeometry(shape,
+    { depth:R*0.09, bevelEnabled:false });
+  finGeo.translate(0,0,-R*0.045);
+  for (let i=0;i<4;i++){
+    const fin = new THREE.Mesh(finGeo, mat);
+    fin.rotation.set(-Math.PI/2, 0, 0);
+    fin.position.y = L - root;
+    const pivot = new THREE.Group();
+    pivot.rotation.y = i*Math.PI/2;
+    fin.position.z = 0;
+    pivot.add(fin);
+    g.add(pivot);
+    const fe = new THREE.LineSegments(new THREE.EdgesGeometry(finGeo, 20),
+      new THREE.LineBasicMaterial({ color:0x1C2124, transparent:true, opacity:0.34 }));
+    fe.rotation.copy(fin.rotation); fe.position.copy(fin.position);
+    pivot.add(fe);
+  }
+
+  /* olcu cizgisi — sayfanin cetvel motifiyle ayni dil */
+  const yOff = -R*2.4;
+  const dim = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(yOff,0,0), new THREE.Vector3(yOff,L,0),
+    new THREE.Vector3(yOff-R*0.25,0,0), new THREE.Vector3(yOff+R*0.25,0,0),
+    new THREE.Vector3(yOff-R*0.25,L,0), new THREE.Vector3(yOff+R*0.25,L,0)
+  ]);
+  g.add(new THREE.LineSegments(dim,
+    new THREE.LineBasicMaterial({ color:0x5C6367, transparent:true, opacity:.6 })));
+
+  g.userData = { L, R };
+  return g;
+}
+
+/* -------------------------------------------------------------- sahne ---- */
+const host = document.getElementById('scene');
+const labelHost = document.getElementById('labels');
+
+if (!(() => { try { return !!document.createElement('canvas').getContext('webgl2'); }
+              catch(e){ return false; } })()) {
+  document.getElementById('fallback').style.display = 'block';
+} else {
+  const W = () => host.clientWidth, H = () => host.clientHeight;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, W()/H(), 0.1, 200);
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(W(), H());
+  host.insertBefore(renderer.domElement, labelHost);
+
+  const labelRenderer = new CSS2DRenderer({ element: labelHost });
+  labelRenderer.setSize(W(), H());
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xB9BDB8, 1.5));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5);
+  key.position.set(3, 6, 5); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.5);
+  rim.position.set(-4, -2, -3); scene.add(rim);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.enablePan = false;
+  controls.minDistance = 3; controls.maxDistance = 40;
+
+  let current = null;
+
+  function show(spec){
+    if (current) { scene.remove(current); labelHost.innerHTML = ''; }
+    current = buildMissile(spec);
+    /* uzun eksen ekranda yatay dursun */
+    current.rotation.z = Math.PI/2;
+    current.position.x = spec.lengthM/2;
+    scene.add(current);
+
+    const { L, R } = current.userData;
+    spec.annotations.forEach(a => {
+      const el = document.createElement('div');
+      el.className = 'hot';
+      el.innerHTML = `<b>${a.label}<span class="chip ${a.confidence}">${CHIP[a.confidence]}</span></b>`;
+      const obj = new CSS2DObject(el);
+      const rad = a.angle * Math.PI/180;
+      /* pozisyon veriden turuyor: t = govde boyunca oran, angle = radyal aci */
+      obj.position.set(0, a.t*L, 0);
+      obj.position.x = Math.cos(rad)*R*1.6;
+      obj.position.z = Math.sin(rad)*R*1.6;
+      current.add(obj);
+    });
+
+    const d = L * 1.35;
+    camera.position.set(0, L*0.18, d);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+
+  document.getElementById('bar').innerHTML = VARIANTS.map((v,i)=>
+    `<button data-i="${i}" aria-pressed="${i===0}">${v.label}
+      <span class="chip ${v.confidence}">${CHIP[v.confidence]}</span></button>`).join('')
+    + `<span style="font-family:Archivo;font-size:12px;color:var(--ink-2)">
+        sürükle: döndür · tekerlek: yakınlaş</span>`;
+
+  document.getElementById('bar').addEventListener('click', e => {
+    const b = e.target.closest('button[data-i]'); if(!b) return;
+    document.querySelectorAll('#bar button[data-i]')
+      .forEach(x => x.setAttribute('aria-pressed', x === b));
+    show(VARIANTS[+b.dataset.i]);
+  });
+
+  addEventListener('resize', () => {
+    camera.aspect = W()/H(); camera.updateProjectionMatrix();
+    renderer.setSize(W(), H()); labelRenderer.setSize(W(), H());
+  });
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  controls.autoRotate = !reduce;
+  controls.autoRotateSpeed = 0.5;
+  renderer.domElement.addEventListener('pointerdown', () => controls.autoRotate = false);
+
+  show(VARIANTS[0]);
+  (function loop(){
+    requestAnimationFrame(loop);
+    controls.update();
+    renderer.render(scene, camera);
+    labelRenderer.render(scene, camera);
+  })();
+}
+</script>
+</body>
+</html>

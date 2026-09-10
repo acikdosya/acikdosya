@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# uretilen 3D modeller — prebuild pisiriyor (scripts/bake-glb.mjs)
+/public/models/

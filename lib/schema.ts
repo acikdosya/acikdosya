@@ -102,12 +102,38 @@ export const attributesSchema = z.strictObject({
   stages: attributeSchema.optional()
 });
 
+/**
+ * 3D modelin dis bolum etiketi — CLAUDE.md §9.
+ * Konum mutlak koordinat degil orandir: olcu verisi guncellenince
+ * etiket kendiliginden dogru yerde kalir. Kesit ve ic bilesen yok,
+ * bu yuzden yalnizca dis bolumler etiketlenir.
+ */
+export const annotationSchema = z.strictObject({
+  id: slugSchema,
+  /** Govde boyunca oran, 0 = burun ucu, 1 = kuyruk. */
+  t: z.number().min(0).max(1),
+  /** Radyal aci, derece. */
+  angle: z.number().finite(),
+  label: localizedTextSchema,
+  /** Etiketin kendi guven seviyesi — gorsel dil tabloyla ayni. */
+  confidence: confidenceSchema
+});
+export type Annotation = z.infer<typeof annotationSchema>;
+
 export const variantSchema = z.strictObject({
   id: slugSchema,
   label: z.string().min(1),
   introduced: z.number().int().min(1900).max(2100).optional(),
   specs: specsSchema,
   attributes: attributesSchema,
+  /** Model etiketleri. Olcu verisi olmayan varyantta model uretilmez, dizi de bos kalir. */
+  annotations: z
+    .array(annotationSchema)
+    .refine(
+      (list) => new Set(list.map((item) => item.id)).size === list.length,
+      {error: 'etiket idleri varyant icinde benzersiz olmali'}
+    )
+    .optional(),
   _todo: todoSchema.optional()
 });
 export type Variant = z.infer<typeof variantSchema>;

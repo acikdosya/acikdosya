@@ -1,0 +1,64 @@
+/*
+ * Model altindaki kontrol seridi — reference/model-prototype.html ile ayni dil.
+ * Butonlar ALL CAPS degil, kart degil; sayfanin geri kalaniyla ayni cerceve mantigi.
+ */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button[aria-pressed='true'] {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.hint {
+  font-family: var(--font-display);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+/* Gorunum on ayarlari ikinci sirada: varyant secimi ile karismasin. */
+.views {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/*
+ * Tam ekranda sahne bosalan alani doldurur, kontroller altta kalir.
+ * Yukseklik globals.css'te sabit; burada esnetiliyor.
+ */
+.wrapper:fullscreen {
+  display: flex;
+  flex-direction: column;
+  background: var(--ground);
+  padding: 16px;
+}
+
+.wrapper:fullscreen :global(.viewer),
+.wrapper:fullscreen :global(.viewer-skeleton) {
+  flex: 1;
+  height: auto;
+}

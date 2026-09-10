@@ -1,6 +1,9 @@
 /*
  * Guven rozetleri — CLAUDE.md §4.
- * Ayni gorsel dil haritadaki halkalarda da kullanilir:
+ * Cerceve kurallari app/globals.css icinde tek kaynakta duruyor; buradaki
+ * siniflar onlari composes ile alir. 3D modeldeki hotspot chip'i ayni
+ * kurallari kullanir, boylece tablo ile model ayrisamaz.
+ * Ayni gorsel dil haritadaki halkalarda da gecerli:
  * duz cizgi resmi, kesikli basin, kirmizi tahmin.
  */
 .badge {
@@ -16,24 +19,18 @@
 }
 
 .official {
-  border: 1px solid var(--ink);
-  color: var(--ink);
+  composes: conf-official from global;
 }
 
 .press {
-  border: 1px dashed var(--ink-2);
-  color: var(--ink-2);
+  composes: conf-press from global;
 }
 
 .estimate {
-  border: 1px solid var(--signal);
-  color: var(--signal);
-  background: var(--signal-soft);
+  composes: conf-estimate from global;
 }
 
-/* Ayni alanda birden fazla deger oldugunu isaretler. */
+/* Ayni alanda birden fazla deger oldugunu isaretler — tahminle ayni uyari dili. */
 .conflict {
-  border: 1px solid var(--signal);
-  color: var(--signal);
-  background: var(--signal-soft);
+  composes: conf-estimate from global;
 }
