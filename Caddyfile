@@ -1,0 +1,25 @@
+# TLS otomatik: Caddy sertifikayi Let's Encrypt'ten alir ve yeniler.
+# 80 ve 443 portlarinin acik ve bos olmasi sart.
+
+acikdosya.org {
+	encode zstd gzip
+
+	header {
+		# Bir yil boyunca yalnizca HTTPS. preload YOK: preload listesine
+		# girmek geri alinmasi aylar suren bir taahhut, bilincli bir karar
+		# olmadan yazilmaz.
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		# Sunucu yazilimini duyurma.
+		-Server
+	}
+
+	reverse_proxy app:3000
+}
+
+# Tek kanonik adres. www da sertifika alir, sonra koke birakir.
+www.acikdosya.org {
+	redir https://acikdosya.org{uri} permanent
+}

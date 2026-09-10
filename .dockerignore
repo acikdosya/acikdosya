@@ -1,0 +1,21 @@
+node_modules
+.next
+.git
+.github
+out
+build
+coverage
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+npm-debug.log*
+pnpm-debug.log*
+
+# Referans belgeler imaja girmez: Claude Design ciktisi ve prototipler
+# urunun parcasi degil, yalnizca tasarim referansi.
+reference
+
+# Uretilen modeller derleme sirasinda yeniden pisiriliyor.
+public/models

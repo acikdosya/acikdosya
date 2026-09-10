@@ -1,0 +1,44 @@
+# Sunucudaki calisma duzeni: uygulama ve onunde Caddy.
+# Imaj burada derlenmiyor — scripts/deploy.sh yerelde derleyip aktariyor.
+
+services:
+  app:
+    image: acikdosya:latest
+    container_name: acikdosya-app
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    # Port disari acilmiyor: yalnizca Caddy erisiyor.
+    expose:
+      - "3000"
+    networks:
+      - web
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: acikdosya-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      # HTTP/3 icin UDP.
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      # Sertifikalar burada durur. Silinirse Let's Encrypt'ten yeniden
+      # alinir ve oran siniri riske girer, bu yuzden adlandirilmis birim.
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+    networks:
+      - web
+
+networks:
+  web:
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -221,9 +221,10 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
       "used_in": [
-        "lib/config.ts"
+        "lib/config.ts",
+        "components/site-footer/SiteFooter.tsx"
       ],
-      "notes": "ŞU AN YAYINDA OLAN KAYNAK BU. Uzak origin'den çekiliyor (demotiles.maplibre.org), CLAUDE.md §6 'harita tile'ları kendi origin'imizden' kuralına aykırı. basemap-tiles üretilince buradan çıkılacak. Atıf lib/config.ts içinde tanımlı ve MapLibre attributionControl kapatılmıyor."
+      "notes": "YAYINDAKI KAYNAK BU ve uzak origin'den cekiliyor (demotiles.maplibre.org). CLAUDE.md §6 'harita tile'lari kendi origin'imizden' kuralina aykiri. Aykirilik bilinerek kabul edildi: acikdosya.org yayina alinirken menzil zarfini calisir tutmak, PMTiles paketini beklemeye tercih edildi (10.09.2026). Bedeli acik: haritaya inen her ziyaretcinin IP adresi ucuncu tarafa gidiyor — fontlari tam bu gerekceyle self-host etmistik. basemap-tiles uretilince buradan cikilacak. Atif lib/config.ts icinde MAP_SOURCES olarak tanimli, hem harita kontrolunde hem altbilgide gorunuyor."
     },
     {
       "id": "basemap-tiles",
