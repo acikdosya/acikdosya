@@ -273,14 +273,20 @@ cp .env.production.example .env.deploy   # bir kez, sonra doldur
 Betik yerelde Docker imajı derler, sunucuya aktarır, konteyneri yeniler ve
 sağlık kontrolü yapar. Yaklaşık üç dakika.
 
-**Sunucu paylaşımlı.** Aynı makinede 15 nginx sitesi ve başka üretim
-servisleri çalışıyor. 80 ve 443 system-nginx'te; bizim konteynerimiz
-`127.0.0.1:3003`'e yayın yapıyor ve nginx ona vekillik ediyor. Bu yüzden:
+**Sunucu paylaşımlı.** 80 ve 443 bize ait olmayan bir system-nginx'te.
+Konteyner yalnızca loopback'e yayın yapar, nginx vhost'u ona vekillik eder,
+sertifikayı certbot alır. Bu yüzden:
 
-- Betik nginx'e dokunmaz. Vhost kurulumu bir kereliktir ve elle yapılır,
-  adımları `deploy/nginx/acikdosya.org.conf` dosyasının başında.
+- Betik nginx'e dokunmaz. Vhost kurulumu bir kereliktir ve elle yapılır.
 - Sunucuda genel `docker system prune` çalıştırma, bizim olmayan imajları
   siler.
+
+Port, kurulum dizini ve kurulum adımları `deploy/RUNBOOK.md` içinde; o dosya
+git'te durmaz, iskeleti [deploy/RUNBOOK.example.md](./deploy/RUNBOOK.example.md).
+Depoda yapının şekli var, sayıları yok: tek tek zafiyet değiller ama bir arada
+bedava keşif bilgisi ve aynı makinedeki komşu servisleri de işaret ediyorlar.
+Değerler `.env.deploy` üzerinden geçer; vhost dosyası `__APP_PORT__` yer
+tutucusu taşır.
 
 **Sitenin adresi ve iletişim adresi derleme zamanında imaja gömülür.**
 Değiştirmek konteyneri yeniden başlatmakla olmaz, `deploy.sh` yeniden
@@ -291,7 +297,7 @@ Geri dönüş sunucudaki sürüm etiketleriyle:
 ```bash
 ssh "$DEPLOY_HOST" 'docker image ls acikdosya'
 ssh "$DEPLOY_HOST" 'docker tag acikdosya:<eski-sürüm> acikdosya:latest \
-                        && cd /opt/acikdosya && docker compose up -d'
+                        && cd "$DEPLOY_DIR" && docker compose up -d'
 ```
 
 ## Ölçüm
@@ -301,11 +307,11 @@ yok: script `acikdosya.org/veri/script.js` adresinden servis edilir, olay ucu
 da aynı origin'dedir. Ziyaretçinin IP adresi başka bir sunucuya gitmez —
 fontları da tam bu gerekçeyle self-host ediyoruz.
 
-Yığın `deploy/analytics/compose.yaml` içinde; kurulum adımları dosyanın
-başında. Umami loopback'te (`127.0.0.1:3004`) durur, yönetim arayüzü ssh
-tüneliyle açılır, internete kapalıdır. Uygulama konteyneri ona paylaşılan
-docker ağı üzerinden ulaşır; `next.config.ts` içindeki `/veri` yeniden yazımı
-tek bağlantı noktasıdır.
+Yığın `deploy/analytics/compose.yaml` içinde; kurulum adımları runbook'ta.
+Umami loopback'te durur, yönetim arayüzü ssh tüneliyle açılır, internete
+kapalıdır. Uygulama konteyneri ona paylaşılan docker ağı üzerinden ulaşır;
+`next.config.ts` içindeki `/veri` yeniden yazımı tek bağlantı noktasıdır —
+ziyaretçi ölçümü aynı origin altında, `acikdosya.org/veri` yolundan görür.
 
 Site kimliği derleme zamanında gömülür (`UMAMI_WEBSITE_ID`). Boşsa tarayıcı
 script'i hiç basılmaz — yerelde ölçüm kapalıdır, kapatmak için ayrı bayrak yok.

@@ -39,7 +39,7 @@ sunulabilir ve yabancı basında bağlamından koparılamaz.
 | Animasyon | GSAP + ScrollTrigger; Rive (ileride) | |
 | İçerik | `content/**.json` (+ MDX uzun metin) | git'te versiyonlu, CMS sonra |
 | i18n | `next-intl`, TR varsayılan, EN zorunlu | AR ileride, RTL'i baştan kırma |
-| Deploy | Hetzner, Docker, nginx + certbot | sunucu paylaşımlı, bkz. §11 |
+| Deploy | Docker, nginx + certbot | sunucu paylaşımlı, bkz. §11 |
 
 **Yapma:**
 - Mapbox GL JS kullanma (lisans).
@@ -346,15 +346,30 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 | | |
 |---|---|
-| Sunucu | Hetzner, Ubuntu 24.04, 2 vCPU / 3,7 GB — adres `.env.deploy` içinde |
-| Konteyner | `acikdosya-app`, `127.0.0.1:3003`, bellek sınırı 512 MB |
-| Dizin | `/opt/acikdosya` |
+| Sunucu | Adres, dizin ve portlar `.env.deploy` içinde; bağlam `deploy/RUNBOOK.md` defterinde |
+| Konteyner | `acikdosya-app`, yalnızca loopback, bellek sınırı 512 MB |
 | Sertifika | Let's Encrypt, `acikdosya.org` + `www`, certbot otomatik yeniler |
+
+### Defter ayrı dosyada — depo public
+
+Port numarası, kurulum dizini ve makinenin kimlerle paylaşıldığı depoda
+yazmaz. Tek tek zafiyet değiller ama bir arada bedava keşif bilgisi ve
+komşu üretim servislerini de işaret ediyorlar.
+
+Depoda yapının **şekli** durur: konteyner loopback'e yayın yapar,
+system-nginx vekillik eder, ölçüm aynı origin altında `/veri` yolundan
+servis edilir. Sayılar `deploy/RUNBOOK.md` içinde (git'te yok, iskeleti
+`deploy/RUNBOOK.example.md`) ve `.env.deploy` üzerinden geçer. Vhost dosyası
+`__APP_PORT__` yer tutucusu taşır; `compose.yaml` portu sunucudaki `.env`
+dosyasından okur.
+
+Bu bir sır rotasyonu değil, bilgi azaltma. Yeni sır üretilmedi, eskisi
+iptal edilmedi.
 
 ### Sunucu paylaşımlı — en önemli kısıt
 
-Makine bize ait değil, üzerinde 15 nginx sitesi ve iki aydır ayakta duran
-üretim konteynerleri var. 80 ve 443 system-nginx'te.
+Makine bize ait değil; 80 ve 443 bize ait olmayan bir system-nginx'te,
+arkasında başka siteler duruyor.
 
 Bu yüzden §2'deki Caddy kararı burada uygulanmadı. Caddy o portları
 isteyecekti; koymak bütün sitelerin önündeki vekili devirmek olurdu.
@@ -366,9 +381,10 @@ Yeni ve tek başına bir sunucuya taşınırsa §2'deki Caddy kararı yeniden
 geçerlidir.
 
 **Yapma:**
-- `scripts/deploy.sh` içinden nginx'e dokunma. Kenar vekil 15 siteyi
-  taşıyor; yapılandırması bir kereliktir ve elle yapılır.
-- nginx'i `nginx -t` geçmeden yeniden yükleme. Düşerse 15 site birden düşer.
+- `scripts/deploy.sh` içinden nginx'e dokunma. Kenar vekil bize ait olmayan
+  siteleri de taşıyor; yapılandırması bir kereliktir ve elle yapılır.
+- nginx'i `nginx -t` geçmeden yeniden yükleme. Düşerse makinedeki bütün
+  siteler birden düşer.
 - Sunucuda genel `docker image prune -a` veya `docker system prune`
   çalıştırma. Bizim olmayan imajları siler.
 - `/etc/letsencrypt` altındaki verileri silme. Sertifikalar oradan yenileniyor
@@ -380,7 +396,8 @@ geçerlidir.
 |---|---|
 | `Dockerfile` | üç aşamalı, node:22-alpine, standalone çıktı, kök değil |
 | `compose.yaml` | yalnızca uygulama, loopback'e yayın, bellek sınırı |
-| `deploy/nginx/acikdosya.org.conf` | vhost; kurulum adımları dosyanın başında |
+| `deploy/nginx/acikdosya.org.conf` | vhost; port yer tutucu, kurulum adımları defterde |
+| `deploy/RUNBOOK.example.md` | defterin iskeleti; doldurulmuşu `deploy/RUNBOOK.md`, git'te değil |
 | `scripts/deploy.sh` | yerelde derle, aktar, yenile, sağlık kontrolü |
 | `.env.production.example` | `.env.deploy` için örnek, gerçeği git'te değil |
 
@@ -399,7 +416,7 @@ Geri dönüş sunucuda duran sürüm etiketleriyle yapılır:
 ```
 docker image ls acikdosya
 docker tag acikdosya:<eski-sürüm> acikdosya:latest
-cd /opt/acikdosya && docker compose up -d
+cd "$DEPLOY_DIR" && docker compose up -d
 ```
 
 ### Derleme zamanında gömülenler
@@ -421,7 +438,7 @@ Altlık kendi sunucumuzdan geliyor (10.09.2026'dan beri). `pnpm build:tiles`
 Protomaps günlük planet yapısından Türkiye ve çevresini çıkarır; çıktı
 `public/tiles/` altında ~66 MB ve git'te durmaz.
 
-Paket **imaja girmez**: sunucuda `/opt/acikdosya/tiles` içinde durur ve
+Paket **imaja girmez**: sunucuda kurulum dizininin altında durur ve
 konteynere salt okunur bağlanır (`compose.yaml`). `scripts/deploy.sh`
 `build.json` özetini karşılaştırır, yalnızca değiştiyse gönderir.
 
@@ -438,15 +455,16 @@ konteynere salt okunur bağlanır (`compose.yaml`). `scripts/deploy.sh`
 ### Ölçüm
 
 Kendi sunucumuzda Umami + Postgres, `deploy/analytics/compose.yaml`.
-Kurulum adımları dosyanın başında; **yığın `deploy.sh` ile başlatılmaz**,
-yalnızca dosyası güncellenir. Sırları sunucudaki `.env` dosyasında durur.
+Kurulum adımları `deploy/RUNBOOK.md` içinde; **yığın `deploy.sh` ile
+başlatılmaz**, yalnızca dosyası güncellenir. Sırları sunucudaki `.env`
+dosyasında durur.
 
 | | |
 |---|---|
-| Konteyner | `acikdosya-umami`, `127.0.0.1:3004`, bellek sınırı 512 MB |
+| Konteyner | `acikdosya-umami`, yalnızca loopback, bellek sınırı 512 MB |
 | Veritabanı | `acikdosya-umami-db`, yalnızca yığının iç ağında, 256 MB |
 | Ağ | `acikdosya-net`, uygulama konteyneriyle ortak |
-| Yönetim | ssh tüneli (`ssh -L 3004:127.0.0.1:3004`), internete kapalı |
+| Yönetim | ssh tüneli, internete kapalı |
 
 Ziyaretçinin gördüğü tek adres `acikdosya.org/veri`: `next.config.ts`
 içindeki yeniden yazım orayı konteyner ağındaki Umami'ye vekilliyor.
@@ -462,6 +480,8 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 - Ziyaretçinin girdiği konumu, sorgu dizesini veya tam kaynak adresini
   olay verisine koyma. Kaynak bağında yalnızca alan adı taşınır.
 - Umami portunu dışarı açma. Panel ssh tüneliyle açılır.
+- Port numarasını, kurulum dizinini veya makinenin paylaşım bağlamını
+  depoya geri yazma. Yerleri `deploy/RUNBOOK.md` ve `.env.deploy`.
 
 ### Yayındaki eksikler
 

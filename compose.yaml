@@ -1,9 +1,13 @@
 # Sunucudaki calisma duzeni.
 #
-# Kenar vekil BU DOSYADA DEGIL: makine paylasimli ve 80/443 system-nginx'te,
-# 15 site onun arkasinda duruyor. Konteyner yalnizca loopback'e yayin yapiyor,
-# nginx vhost'u (deploy/nginx/acikdosya.org.conf) ona vekillik ediyor ve
-# sertifikayi certbot aliyor.
+# Kenar vekil BU DOSYADA DEGIL: makine paylasimli ve 80/443 bize ait olmayan
+# bir system-nginx'te. Konteyner yalnizca loopback'e yayin yapiyor, nginx
+# vhost'u (deploy/nginx/acikdosya.org.conf) ona vekillik ediyor ve sertifikayi
+# certbot aliyor.
+#
+# Port ve kurulum dizini burada yazili degil: depo public, o degerler
+# .env.deploy ve deploy/RUNBOOK.md icinde durur. deploy.sh sunucuya APP_PORT
+# tasiyan bir .env birakir, compose onu buradan okur.
 #
 # Imaj burada derlenmiyor — scripts/deploy.sh yerelde derleyip aktariyor.
 
@@ -19,7 +23,7 @@ services:
     # Yalnizca loopback: port disariya acik degil, nginx disinda kimse
     # dogrudan erisemez.
     ports:
-      - "127.0.0.1:3003:3000"
+      - "127.0.0.1:${APP_PORT:?APP_PORT tanimli degil — sunucudaki .env dosyasina yazilir}:3000"
     # Bu makinede baska uretim servisleri var; uygulama onlarin bellegini
     # yemesin.
     mem_limit: 512m

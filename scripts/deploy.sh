@@ -2,13 +2,13 @@
 #
 # Yerelde derler, imaji sunucuya aktarir, konteyneri yeniler.
 #
-# Imaj burada derleniyor cunku sunucu paylasimli ve uzerinde iki aydir
-# ayakta duran uretim servisleri var; derleme yukunu oraya bindirmiyoruz.
-# Bedeli: her dagitimda imajin sikistirilmis hali ssh uzerinden gidiyor.
+# Imaj burada derleniyor cunku sunucu paylasimli ve uzerinde baska uretim
+# servisleri var; derleme yukunu oraya bindirmiyoruz. Bedeli: her dagitimda
+# imajin sikistirilmis hali ssh uzerinden gidiyor.
 #
-# BU BETIK NGINX'E DOKUNMAZ. Kenar vekil 15 siteyi birden tasiyor; onun
-# yapilandirmasi bir kerelik ve elle yapilir, adimlar
-# deploy/nginx/acikdosya.org.conf basinda yaziyor.
+# BU BETIK NGINX'E DOKUNMAZ. Kenar vekil bize ait olmayan siteleri de
+# tasiyor; onun yapilandirmasi bir kerelik ve elle yapilir, adimlar
+# deploy/RUNBOOK.md icinde (git'te durmaz, ornegi RUNBOOK.example.md).
 #
 #   ./scripts/deploy.sh
 #
@@ -27,7 +27,17 @@ SITE_URL="${SITE_URL:-https://acikdosya.org}"
 CONTACT_EMAIL="${CONTACT_EMAIL:-}"
 UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID:-}"
 DEPLOY_HOST="${DEPLOY_HOST:?DEPLOY_HOST tanimli degil}"
-DEPLOY_DIR="${DEPLOY_DIR:-/opt/acikdosya}"
+# Dizin ve port varsayilan tasimiyor: depo public, gercek degerler
+# .env.deploy icinde ve deploy/RUNBOOK.md defterinde durur.
+DEPLOY_DIR="${DEPLOY_DIR:?DEPLOY_DIR tanimli degil — bkz. .env.production.example}"
+APP_PORT="${APP_PORT:?APP_PORT tanimli degil — bkz. .env.production.example}"
+
+case "$APP_PORT" in
+	'' | *[!0-9]*)
+		echo "HATA: APP_PORT sayi olmali, gelen: ${APP_PORT}" >&2
+		exit 1
+		;;
+esac
 
 REVISION="$(git rev-parse --short HEAD)"
 if ! git diff --quiet || ! git diff --cached --quiet; then
@@ -60,12 +70,27 @@ echo "==> Yapilandirma gonderiliyor"
 ssh "$DEPLOY_HOST" "mkdir -p '${DEPLOY_DIR}/analytics'"
 scp compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/"
 # Olcum yigini burada BASLATILMIYOR, yalnizca dosyasi guncelleniyor: sirlari
-# sunucudaki .env dosyasinda ve kurulumu bir kereliktir. Adimlar dosyanin
-# basinda yaziyor.
+# sunucudaki .env dosyasinda ve kurulumu bir kereliktir. Adimlar
+# deploy/RUNBOOK.md icinde.
 scp deploy/analytics/compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/analytics/"
 # vhost buraya kopyalaniyor ama kurulmuyor: /etc/nginx paylasimli alan,
-# oraya yazmak elle ve bilerek yapilir.
+# oraya yazmak elle ve bilerek yapilir. Dosya __APP_PORT__ yer tutucusu
+# tasir, kurarken sed ile degistirilir (deploy/RUNBOOK.md).
 scp deploy/nginx/acikdosya.org.conf "${DEPLOY_HOST}:${DEPLOY_DIR}/"
+
+# compose.yaml portu ortam degiskeninden okuyor; sunucudaki .env onu tasir.
+# Ustune yazmadan once icinde baska satir var mi diye bakiliyor: elle
+# eklenmis bir ayari sessizce silmek en kotu dagitim hatasi olurdu.
+echo "==> Sunucu .env"
+REMOTE_ENV="$(ssh "$DEPLOY_HOST" "cat '${DEPLOY_DIR}/.env' 2>/dev/null" || true)"
+FOREIGN="$(printf '%s\n' "$REMOTE_ENV" | grep -v '^[[:space:]]*$' | grep -v '^[[:space:]]*#' | grep -v '^APP_PORT=' || true)"
+if [ -n "$FOREIGN" ]; then
+	echo "HATA: ${DEPLOY_DIR}/.env icinde APP_PORT disinda satir var, ustune" >&2
+	echo "      yazilmiyor. Once elle bak:" >&2
+	printf '      %s\n' "$FOREIGN" >&2
+	exit 1
+fi
+ssh "$DEPLOY_HOST" "printf 'APP_PORT=%s\n' '${APP_PORT}' > '${DEPLOY_DIR}/.env'"
 
 # Harita paketi imajin disinda: 66 MB'lik arsiv her dagitimda yeniden
 # gitmezse deploy uc dakika surer, giderse on dakika. Sunucuda duruyor,
@@ -105,7 +130,7 @@ echo "==> Baslatiliyor"
 ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d"
 
 echo "==> Saglik kontrolu"
-ssh "$DEPLOY_HOST" "curl -sf -o /dev/null -w 'loopback: %{http_code}\n' http://127.0.0.1:3003/"
+ssh "$DEPLOY_HOST" "curl -sf -o /dev/null -w 'loopback: %{http_code}\n' http://127.0.0.1:${APP_PORT}/"
 
 echo
 echo "==> Bitti: ${SITE_URL}  (${REVISION})"

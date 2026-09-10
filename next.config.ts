@@ -29,7 +29,7 @@ const nextConfig: NextConfig = {
    *
    * Umami konteyneri disariya port acmiyor; yalnizca uygulama konteyneri
    * onunla ayni docker aginda ve yalnizca bu yeniden yazim uzerinden
-   * erisiyor. Yonetim arayuzu (127.0.0.1:3004) ssh tuneliyle aciliyor,
+   * erisiyor. Yonetim arayuzu loopback'te durur ve ssh tuneliyle aciliyor,
    * internete kapali.
    *
    * proxy.ts eslestiricisinden /veri disarida birakildi: ara katman onu

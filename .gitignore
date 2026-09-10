@@ -53,3 +53,6 @@ next-env.d.ts
 
 # GitHub yayin plani — ic not, depoya girmez
 /GITHUB.md
+
+# sunucu defteri — port, dizin ve makine baglami; ornegi RUNBOOK.example.md
+/deploy/RUNBOOK.md

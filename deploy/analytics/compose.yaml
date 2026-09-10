@@ -12,20 +12,15 @@
 # /veri altini bu yigina vekilliyor (next.config.ts). Umami konteyneri
 # internete acik degil.
 #
-# NGINX'E DOKUNULMAZ. Bu yigin kenar vekile hic gorunmez; makinedeki 15
-# sitenin onundeki yapilandirma elle ve bir kereliktir (CLAUDE.md §11).
+# NGINX'E DOKUNULMAZ. Bu yigin kenar vekile hic gorunmez; makinedeki
+# sitelerin onundeki yapilandirma elle ve bir kereliktir (CLAUDE.md §11).
 #
-# KURULUM (bir kez):
-#   ssh $DEPLOY_HOST 'docker network create acikdosya-net'   # deploy.sh de yapar
-#   ssh $DEPLOY_HOST 'mkdir -p /opt/acikdosya/analytics'
-#   scp deploy/analytics/compose.yaml $DEPLOY_HOST:/opt/acikdosya/analytics/
-#   scp deploy/analytics/.env.example  $DEPLOY_HOST:/opt/acikdosya/analytics/.env
-#   ssh $DEPLOY_HOST 'cd /opt/acikdosya/analytics && vi .env'   # iki sir doldurulur
-#   ssh $DEPLOY_HOST 'cd /opt/acikdosya/analytics && docker compose up -d'
+# KURULUM ADIMLARI, port ve kurulum dizini deploy/RUNBOOK.md icinde
+# (git'te durmaz, ornegi RUNBOOK.example.md). Depo public: bu dosya yigin
+# nasil calisiyor onu anlatir, hangi portta durdugunu degil.
 #
-# YONETIM ARAYUZU internete kapali, ssh tuneliyle acilir:
-#   ssh -L 3004:127.0.0.1:3004 $DEPLOY_HOST
-#   tarayicida http://localhost:3004  (ilk giris admin / umami — HEMEN degistir)
+# YONETIM ARAYUZU internete kapali, ssh tuneliyle acilir — adres ve port
+# runbook'ta.
 #
 # Panelde site eklendikten sonra cikan website id, imaja derleme zamaninda
 # gomulur: .env.deploy icindeki UMAMI_WEBSITE_ID, sonra ./scripts/deploy.sh.
@@ -73,9 +68,9 @@ services:
       DISABLE_TELEMETRY: '1'
     # Yalnizca loopback: yonetim arayuzu ssh tuneliyle aciliyor, internete
     # kapali. Ziyaretcinin gordugu yol acikdosya.org/veri, o da uygulama
-    # konteyneri uzerinden ic agda.
+    # konteyneri uzerinden ic agda. Port .env icinde (bkz. runbook).
     ports:
-      - '127.0.0.1:3004:3000'
+      - '127.0.0.1:${UMAMI_PORT:?UMAMI_PORT tanimli degil — .env dosyasina yazilir}:3000'
     networks:
       - internal
       # Uygulama konteynerinin /veri yeniden yazimi buradan geciyor.
@@ -86,8 +81,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
-    # Makine paylasimli ve 3,7 GB. Olcum, sitenin kendisinden once
-    # sikismasi gereken taraftir.
+    # Makine paylasimli. Olcum, sitenin kendisinden once sikismasi gereken
+    # taraftir.
     mem_limit: 512m
     logging:
       driver: json-file
