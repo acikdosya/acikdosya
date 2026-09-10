@@ -186,8 +186,16 @@ content/
 lib/
   geo.ts                  # jeodezik daire, mesafe
   schema.ts               # zod şemaları — build'de içeriği doğrula
+  brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
+  tokens.ts               # paletin JS kopyası — CSS değişkeni okuyamayanlar için
+  og.tsx                  # paylaşım görselleri ve ikonlar, next/og
+deploy/
+  nginx/acikdosya.org.conf  # vhost, kurulum adımları başında — bkz. §11
+scripts/
+  deploy.sh               # yerelde derle, sunucuya aktar, yenile
 reference/
   prototype.html          # çalışan tek dosya prototip, davranış referansı
+  design/                 # Claude Design çıktısı — yerleşim referansı, kod değil
   tayfun.json
 ```
 
@@ -313,29 +321,65 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 11. Dağıtım
 
-**Alan adı:** acikdosya.org · **Sunucu:** Hetzner, 46.62.206.100, Ubuntu 24.04
+**Yayında:** https://acikdosya.org — 10.09.2026'dan beri.
 
-### Sunucu paylaşımlı
+| | |
+|---|---|
+| Sunucu | Hetzner, 46.62.206.100, Ubuntu 24.04, 2 vCPU / 3,7 GB |
+| Konteyner | `acikdosya-app`, `127.0.0.1:3003`, bellek sınırı 512 MB |
+| Dizin | `/opt/acikdosya` |
+| Sertifika | Let's Encrypt, `acikdosya.org` + `www`, certbot otomatik yeniler |
 
-Makinede 15 nginx sitesi ve birkaç üretim konteyneri çalışıyor. 80 ve 443
-system-nginx'te. Bu yüzden §2'deki Caddy kararı burada uygulanmadı: Caddy o
-portları isteyecekti, koymak diğer sitelerin önündeki vekili devirmek olurdu.
+### Sunucu paylaşımlı — en önemli kısıt
 
-Yerleşik düzene girildi. Konteyner `127.0.0.1:3003`'e yayın yapar, nginx
-vhost'u ona vekillik eder, sertifikayı `certbot --nginx` alır. Bu makinedeki
-her site aynı deseni kullanıyor.
+Makine bize ait değil, üzerinde 15 nginx sitesi ve iki aydır ayakta duran
+üretim konteynerleri var. 80 ve 443 system-nginx'te.
 
-Yeni bir sunucuya taşınırsa §2'deki Caddy kararı yeniden geçerlidir.
+Bu yüzden §2'deki Caddy kararı burada uygulanmadı. Caddy o portları
+isteyecekti; koymak bütün sitelerin önündeki vekili devirmek olurdu.
+Yerleşik düzene girildi: konteyner loopback'e yayın yapar, nginx vhost'u ona
+vekillik eder, sertifikayı `certbot --nginx` alır. Makinedeki her site aynı
+deseni kullanıyor.
+
+Yeni ve tek başına bir sunucuya taşınırsa §2'deki Caddy kararı yeniden
+geçerlidir.
+
+**Yapma:**
+- `scripts/deploy.sh` içinden nginx'e dokunma. Kenar vekil 15 siteyi
+  taşıyor; yapılandırması bir kereliktir ve elle yapılır.
+- nginx'i `nginx -t` geçmeden yeniden yükleme. Düşerse 15 site birden düşer.
+- Sunucuda genel `docker image prune -a` veya `docker system prune`
+  çalıştırma. Bizim olmayan imajları siler.
+- `/etc/letsencrypt` altındaki verileri silme. Sertifikalar oradan yenileniyor
+  ve Let's Encrypt haftalık oran sınırı uyguluyor.
 
 ### Dosyalar
 
 | Dosya | İş |
 |---|---|
-| `Dockerfile` | üç aşamalı, node:22-alpine, standalone çıktı |
-| `compose.yaml` | yalnızca uygulama, loopback'e yayın |
-| `deploy/nginx/acikdosya.org.conf` | vhost, kurulum adımları başında |
-| `scripts/deploy.sh` | yerelde derle, aktar, yenile |
-| `.env.production.example` | `.env.deploy` için örnek |
+| `Dockerfile` | üç aşamalı, node:22-alpine, standalone çıktı, kök değil |
+| `compose.yaml` | yalnızca uygulama, loopback'e yayın, bellek sınırı |
+| `deploy/nginx/acikdosya.org.conf` | vhost; kurulum adımları dosyanın başında |
+| `scripts/deploy.sh` | yerelde derle, aktar, yenile, sağlık kontrolü |
+| `.env.production.example` | `.env.deploy` için örnek, gerçeği git'te değil |
+
+### Güncelleme
+
+```
+./scripts/deploy.sh
+```
+
+Yerelde derler, iki etiketi (sürüm ve `latest`) sunucuya aktarır, konteyneri
+yeniler, loopback'ten sağlık kontrolü yapar. nginx'e dokunmaz. Yaklaşık üç
+dakika.
+
+Geri dönüş sunucuda duran sürüm etiketleriyle yapılır:
+
+```
+docker image ls acikdosya
+docker tag acikdosya:<eski-sürüm> acikdosya:latest
+cd /opt/acikdosya && docker compose up -d
+```
 
 ### Derleme zamanında gömülenler
 
@@ -343,8 +387,13 @@ Yeni bir sunucuya taşınırsa §2'deki Caddy kararı yeniden geçerlidir.
 Canonical, hreflang, OG ve AR adresleri ilkinden türer. Değiştirmek
 konteyneri yeniden başlatmakla olmaz, imaj yeniden derlenir.
 
-### nginx'e dokunma kuralı
+### Yayındaki eksikler
 
-`scripts/deploy.sh` nginx'e dokunmaz. Kenar vekil 15 siteyi taşıyor; onun
-yapılandırması bir kereliktir ve elle yapılır. Betik vhost dosyasını
-sunucuya kopyalar, kurmaz.
+1. **İletişim adresi yok.** `CONTACT_EMAIL` boş, hakkında sayfası kanalın
+   yayımlanmadığını yazıyor. Site düzeltme talebi istiyor ama talebin
+   gideceği bir yer yok. Uydurma adres yazılmadı (§5.7).
+2. **Harita üçüncü taraftan.** Menzil zarfı `demotiles.maplibre.org`
+   üzerinden çalışıyor; o bölüme inen her ziyaretçinin IP adresi dışarı
+   gidiyor. §6 kendi origin'imizi şart koşuyor, aykırılık bilerek kabul
+   edildi ve `content/assets.json` içinde gerekçesiyle kayıtlı. PMTiles
+   paketi üretilince tek değişecek yer `lib/config.ts`.

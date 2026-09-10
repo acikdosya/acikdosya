@@ -1,7 +1,7 @@
 # Savunma Sanayii İnteraktif Dosya
 
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
-dijital dosya. Faz 0 kapsamı tek sistem: TAYFUN.
+dijital dosya. Yayında: https://acikdosya.org — şimdilik tek sistem, TAYFUN.
 
 Projenin kalıcı bağlamı ve pazarlık dışı editoryal kuralları [CLAUDE.md](./CLAUDE.md)
 dosyasındadır. Bir karar o dosyayla çelişiyorsa önce konuşulur.
@@ -21,6 +21,7 @@ pnpm dev          # http://localhost:3000
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm lint` | ESLint |
 | `pnpm validate:content` | `content/` altındaki JSON'ları şemaya sokar |
+| `./scripts/deploy.sh` | Yerelde derler, sunucuya aktarır, yeniler |
 
 `pnpm validate:content` build'e `prebuild` olarak bağlıdır. Şemadan geçmeyen içerik
 deploy'a gidemez.
@@ -140,7 +141,7 @@ NEXT_PUBLIC_SITE_URL=https://ornek.com
 Menzil halkaları `range_km` verisinden türer, kodda sabit değer yoktur. Halkalar
 büyük daire yöntemiyle çizilir; Turf eklenmez.
 
-### Harita lisansı — üretim öncesi çözülmesi gereken
+### Harita lisansı — yayında bilerek kabul edilen aykırılık
 
 `demotiles.maplibre.org` **demo ve test amaçlıdır**. GitHub Pages üzerinde barındırılır,
 üretim altyapısı olarak tasarlanmamıştır ve servis garantisi yoktur.
@@ -154,12 +155,52 @@ büyük daire yöntemiyle çizilir; Turf eklenmez.
   Bu proje onları kullanmaz, sadece vektör altlığı kullanır. Stil değiştirilirken
   bu kontrol tekrarlanmalı.
 
-Üretime çıkmadan önce kendi PMTiles altlığımıza geçilmeli. Atıf metni de o kaynağa
-göre güncellenmeli.
+**Site bu kaynakla yayına çıktı (10.09.2026).** Menzil bölümüne inen her ziyaretçinin
+IP adresi üçüncü tarafa gidiyor; fontları tam bu gerekçeyle self-host etmiştik.
+CLAUDE.md §6 tile'ları kendi origin'imizden şart koşuyor, aykırılık bilerek kabul
+edildi ve `content/assets.json` içinde `maplibre-demotiles` kaydında gerekçesiyle
+duruyor.
+
+Kendi PMTiles altlığımıza geçilince tek değişecek yer `lib/config.ts`: `MAP_STYLE_URL`
+ve `MAP_SOURCES`. Atıf metni de o kaynağa göre güncellenmeli.
 
 **Sürüm kısıtı:** `maplibre-gl` 5.x'te sabitlenmiştir. 6.9 sürümünde harita kuruluyor
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.
 Yükseltmeden önce haritanın gerçekten çizildiği doğrulanmalı.
+
+## Dağıtım
+
+Site https://acikdosya.org adresinde yayında. Ayrıntılar ve sunucuya dair
+kısıtlar [CLAUDE.md §11](./CLAUDE.md) içinde.
+
+```bash
+cp .env.production.example .env.deploy   # bir kez, sonra doldur
+./scripts/deploy.sh
+```
+
+Betik yerelde Docker imajı derler, sunucuya aktarır, konteyneri yeniler ve
+sağlık kontrolü yapar. Yaklaşık üç dakika.
+
+**Sunucu paylaşımlı.** Aynı makinede 15 nginx sitesi ve başka üretim
+servisleri çalışıyor. 80 ve 443 system-nginx'te; bizim konteynerimiz
+`127.0.0.1:3003`'e yayın yapıyor ve nginx ona vekillik ediyor. Bu yüzden:
+
+- Betik nginx'e dokunmaz. Vhost kurulumu bir kereliktir ve elle yapılır,
+  adımları `deploy/nginx/acikdosya.org.conf` dosyasının başında.
+- Sunucuda genel `docker system prune` çalıştırma, bizim olmayan imajları
+  siler.
+
+**Sitenin adresi ve iletişim adresi derleme zamanında imaja gömülür.**
+Değiştirmek konteyneri yeniden başlatmakla olmaz, `deploy.sh` yeniden
+çalıştırılır.
+
+Geri dönüş sunucudaki sürüm etiketleriyle:
+
+```bash
+ssh root@46.62.206.100 'docker image ls acikdosya'
+ssh root@46.62.206.100 'docker tag acikdosya:<eski-sürüm> acikdosya:latest \
+                        && cd /opt/acikdosya && docker compose up -d'
+```
 
 ## Editoryal sınırlar
 

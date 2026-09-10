@@ -55,7 +55,11 @@ scp compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/"
 scp deploy/nginx/acikdosya.org.conf "${DEPLOY_HOST}:${DEPLOY_DIR}/"
 
 echo "==> Imaj aktariliyor"
-docker save acikdosya:latest | gzip -1 | ssh "$DEPLOY_HOST" 'gunzip | docker load'
+# Iki etiket de gonderiliyor. Katmanlar ortak, tek kopya gidiyor; kazanc
+# sunucuda surumlu bir etiketin kalmasi. Geri donus bunun uzerine kurulu:
+# eski surum etiketi olmadan hangi imaja donulecegi bilinemez.
+docker save "acikdosya:${REVISION}" acikdosya:latest \
+	| gzip -1 | ssh "$DEPLOY_HOST" 'gunzip | docker load'
 
 echo "==> Baslatiliyor"
 ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d"
@@ -63,5 +67,13 @@ ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d"
 echo "==> Saglik kontrolu"
 ssh "$DEPLOY_HOST" "curl -sf -o /dev/null -w 'loopback: %{http_code}\n' http://127.0.0.1:3003/"
 
-echo "==> Bitti. Etiketsiz kalan eski imajlari temizlemek icin:"
-echo "    ssh ${DEPLOY_HOST} 'docker image prune -f'"
+echo
+echo "==> Bitti: ${SITE_URL}  (${REVISION})"
+echo
+echo "Geri donus:"
+echo "    ssh ${DEPLOY_HOST} 'docker image ls acikdosya'"
+echo "    ssh ${DEPLOY_HOST} 'docker tag acikdosya:<eski-surum> acikdosya:latest \\"
+echo "                        && cd ${DEPLOY_DIR} && docker compose up -d'"
+echo
+echo "Temizlik — makinede baska servisler var, GENEL prune calistirma:"
+echo "    ssh ${DEPLOY_HOST} 'docker image ls acikdosya --format \"{{.Tag}}\"'"
