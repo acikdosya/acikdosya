@@ -1,7 +1,14 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import {useEffect, useRef, useState, useSyncExternalStore} from 'react';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore
+} from 'react';
+import {EVENTS, track} from '@/lib/analytics';
 import type {Confidence} from '@/lib/schema';
 import {ArButton} from './ArButton';
 import type {ViewerAnnotation} from './MissileViewer';
@@ -82,6 +89,19 @@ export function ModelSection({
   const [viewId, setViewId] = useState('overview');
   const fullscreen = useFullscreen();
 
+  /*
+   * Olcum: 3D bolumu gercekten kuruldu mu, kuruldugunda WebGL var miydi.
+   * Bolume inildigi halde silüete dusuluyorsa bunu bilmek isteriz —
+   * agir chunk bosa inmis demektir (CLAUDE.md §6).
+   */
+  const reported = useRef(false);
+
+  const handleReady = useCallback((webgl: boolean) => {
+    if (reported.current) return;
+    reported.current = true;
+    track(EVENTS.model, {webgl});
+  }, []);
+
   useEffect(() => {
     const element = wrapper.current;
     if (!element || inView) return;
@@ -138,6 +158,7 @@ export function ModelSection({
           focusT={view.t}
           fallback={fallback}
           label={active.ariaLabel}
+          onReady={handleReady}
         />
       ) : (
         <div className="viewer-skeleton" aria-hidden>
@@ -153,7 +174,10 @@ export function ModelSection({
                 type="button"
                 className={styles.button}
                 aria-pressed={variant.id === active.id}
-                onClick={() => setActiveId(variant.id)}
+                onClick={() => {
+                  setActiveId(variant.id);
+                  track(EVENTS.variant, {varyant: variant.id});
+                }}
               >
                 {variant.label}
                 <span className={`chip conf-${variant.confidence}`}>

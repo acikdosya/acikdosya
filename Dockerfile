@@ -35,6 +35,11 @@ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 ARG NEXT_PUBLIC_CONTACT_EMAIL
 ENV NEXT_PUBLIC_CONTACT_EMAIL=$NEXT_PUBLIC_CONTACT_EMAIL
 
+# Olcum kimligi de derleme zamaninda gomuluyor. Bos birakilirsa tarayici
+# script'i hic basilmaz, yani olcum kapali bir imaj cikar.
+ARG NEXT_PUBLIC_UMAMI_ID
+ENV NEXT_PUBLIC_UMAMI_ID=$NEXT_PUBLIC_UMAMI_ID
+
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm build
 

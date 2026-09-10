@@ -3,6 +3,7 @@ import {BrandLockup} from '@/components/brand/BrandLockup';
 import {LocaleSwitcher} from '@/components/locale-switcher/LocaleSwitcher';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
+import {EVENTS} from '@/lib/analytics';
 import styles from './SiteHeader.module.css';
 
 /*
@@ -26,7 +27,16 @@ export function SiteHeader() {
       <BrandLockup />
       <nav className={styles.nav} aria-label={t('primary')}>
         {LINKS.map((link) => (
-          <Link key={link.href} href={link.href} className={styles.link}>
+          <Link
+            key={link.href}
+            href={link.href}
+            className={styles.link}
+            /* Yontem sayfasina gidis olcum konusu; digerleri degil. */
+            data-track-event={
+              link.href === '/yontem' ? EVENTS.method : undefined
+            }
+            data-track-yer="gezinme"
+          >
             {t(link.key)}
           </Link>
         ))}

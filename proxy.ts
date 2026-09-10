@@ -15,6 +15,11 @@ export const config = {
    * opengraph-image DISARIDA DEGIL: o gercekten yerellestirilmis bir rota
    * (app/[locale]/opengraph-image.tsx), yani /opengraph-image adresinin
    * calismasi ara katmanin onu /tr/... altina yazmasina bagli.
+   *
+   * /veri de disarida: olcum sunucusuna giden yeniden yazim (next.config.ts).
+   * script.js noktali oldugu icin zaten dusuyordu ama olay ucu (/veri/api/send)
+   * dusmuyordu; ara katman onu /tr/veri/api/send'e yazip istegi kaybediyordu.
    */
-  matcher: '/((?!api|_next|_vercel|icons?(?:/|$)|apple-icon(?:/|$)|.*\\..*).*)'
+  matcher:
+    '/((?!api|_next|_vercel|veri(?:/|$)|icons?(?:/|$)|apple-icon(?:/|$)|.*\\..*).*)'
 };

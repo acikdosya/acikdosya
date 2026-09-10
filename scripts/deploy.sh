@@ -25,6 +25,7 @@ fi
 
 SITE_URL="${SITE_URL:-https://acikdosya.org}"
 CONTACT_EMAIL="${CONTACT_EMAIL:-}"
+UMAMI_WEBSITE_ID="${UMAMI_WEBSITE_ID:-}"
 DEPLOY_HOST="${DEPLOY_HOST:?DEPLOY_HOST tanimli degil}"
 DEPLOY_DIR="${DEPLOY_DIR:-/opt/acikdosya}"
 
@@ -40,17 +41,28 @@ if [ -z "$CONTACT_EMAIL" ]; then
 	echo "     degisiklik yeniden derleme ister." >&2
 fi
 
+if [ -z "$UMAMI_WEBSITE_ID" ]; then
+	echo "NOT: UMAMI_WEBSITE_ID bos — olcum kapali bir imaj cikacak." >&2
+	echo "     Kimlik Umami panelinden alinir, .env.deploy'a yazilir;" >&2
+	echo "     degisiklik yeniden derleme ister." >&2
+fi
+
 echo "==> Derleniyor  (${REVISION}, ${SITE_URL})"
 docker build \
 	--build-arg "NEXT_PUBLIC_SITE_URL=${SITE_URL}" \
 	--build-arg "NEXT_PUBLIC_CONTACT_EMAIL=${CONTACT_EMAIL}" \
+	--build-arg "NEXT_PUBLIC_UMAMI_ID=${UMAMI_WEBSITE_ID}" \
 	--tag "acikdosya:${REVISION}" \
 	--tag acikdosya:latest \
 	.
 
 echo "==> Yapilandirma gonderiliyor"
-ssh "$DEPLOY_HOST" "mkdir -p '${DEPLOY_DIR}'"
+ssh "$DEPLOY_HOST" "mkdir -p '${DEPLOY_DIR}/analytics'"
 scp compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/"
+# Olcum yigini burada BASLATILMIYOR, yalnizca dosyasi guncelleniyor: sirlari
+# sunucudaki .env dosyasinda ve kurulumu bir kereliktir. Adimlar dosyanin
+# basinda yaziyor.
+scp deploy/analytics/compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/analytics/"
 # vhost buraya kopyalaniyor ama kurulmuyor: /etc/nginx paylasimli alan,
 # oraya yazmak elle ve bilerek yapilir.
 scp deploy/nginx/acikdosya.org.conf "${DEPLOY_HOST}:${DEPLOY_DIR}/"
@@ -61,6 +73,11 @@ echo "==> Imaj aktariliyor"
 # eski surum etiketi olmadan hangi imaja donulecegi bilinemez.
 docker save "acikdosya:${REVISION}" acikdosya:latest \
 	| gzip -1 | ssh "$DEPLOY_HOST" 'gunzip | docker load'
+
+# Uygulama konteyneri olcum yiginiyla ayni agda durur. Ag yoksa compose
+# baslamaz; burada olusturmak nginx'e dokunmayan, tekrarlanabilir bir adim.
+echo "==> Ag kontrolu"
+ssh "$DEPLOY_HOST" "docker network inspect acikdosya-net >/dev/null 2>&1 || docker network create acikdosya-net"
 
 echo "==> Baslatiliyor"
 ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d"

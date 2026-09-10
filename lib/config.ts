@@ -57,3 +57,31 @@ export const MAP_ATTRIBUTION = MAP_SOURCES.map((source) =>
 export const MAP_DEFAULT_CENTER: [number, number] = [35.2, 39.0];
 
 export const MAP_DEFAULT_ZOOM = 4.1;
+
+/**
+ * Olcum — kendi sunucumuzdaki Umami.
+ *
+ * Kimlik derleme zamaninda gomulur; verilmezse tarayici script'i hic
+ * basilmaz. Yerelde ve derleme argumani gecilmemis imajda olcum kapalidir,
+ * kapatmak icin ayri bir bayrak yok.
+ */
+export const ANALYTICS_WEBSITE_ID = process.env.NEXT_PUBLIC_UMAMI_ID || '';
+
+/**
+ * Script ve olay ucu kendi origin'imizden gecer. next.config.ts bu yolu
+ * konteyner agindaki Umami'ye yeniden yaziyor; ziyaretcinin tarayicisi
+ * disariya tek bir istek yapmaz.
+ */
+export const ANALYTICS_BASE_PATH = '/veri';
+
+export const ANALYTICS_SCRIPT_URL = `${ANALYTICS_BASE_PATH}/script.js`;
+
+/**
+ * Umami olay ucunu data-host-url'e ekledigi "/api/send" ile kurar. Yol
+ * onekimiz oldugu icin mutlak adres veriyoruz: script kendi src'sinden
+ * turetseydi /veri oneki dusup istek 404 olurdu.
+ */
+export const ANALYTICS_HOST_URL = new URL(
+  ANALYTICS_BASE_PATH,
+  SITE_URL
+).toString();

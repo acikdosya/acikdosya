@@ -1,0 +1,104 @@
+# Umami — kendi sunucumuzda calisan olcum.
+#
+# NEDEN BOYLE: ucuncu taraf olcum script'i ziyaretcinin IP adresini bize
+# ait olmayan bir sunucuya gonderir. Fontlari tam bu gerekceyle self-host
+# ettik (CLAUDE.md §4); olcumu disariya vermek o karari bosa cikarirdi.
+#
+# CEREZ BANDI YOK: Umami cerez yazmaz, parmak izi cikarmaz, ziyaretci
+# kimligini gunluk tuzla hash'ler. Riza gerektiren bir izleme yok, o yuzden
+# sorulacak bir sey de yok.
+#
+# ZIYARETCININ GORDUGU ADRES acikdosya.org/veri: uygulama konteyneri
+# /veri altini bu yigina vekilliyor (next.config.ts). Umami konteyneri
+# internete acik degil.
+#
+# NGINX'E DOKUNULMAZ. Bu yigin kenar vekile hic gorunmez; makinedeki 15
+# sitenin onundeki yapilandirma elle ve bir kereliktir (CLAUDE.md §11).
+#
+# KURULUM (bir kez):
+#   ssh root@46.62.206.100 'docker network create acikdosya-net'   # deploy.sh de yapar
+#   ssh root@46.62.206.100 'mkdir -p /opt/acikdosya/analytics'
+#   scp deploy/analytics/compose.yaml root@46.62.206.100:/opt/acikdosya/analytics/
+#   scp deploy/analytics/.env.example  root@46.62.206.100:/opt/acikdosya/analytics/.env
+#   ssh root@46.62.206.100 'cd /opt/acikdosya/analytics && vi .env'   # iki sir doldurulur
+#   ssh root@46.62.206.100 'cd /opt/acikdosya/analytics && docker compose up -d'
+#
+# YONETIM ARAYUZU internete kapali, ssh tuneliyle acilir:
+#   ssh -L 3004:127.0.0.1:3004 root@46.62.206.100
+#   tarayicida http://localhost:3004  (ilk giris admin / umami — HEMEN degistir)
+#
+# Panelde site eklendikten sonra cikan website id, imaja derleme zamaninda
+# gomulur: .env.deploy icindeki UMAMI_WEBSITE_ID, sonra ./scripts/deploy.sh.
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: acikdosya-umami-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: ${UMAMI_DB_PASSWORD:?UMAMI_DB_PASSWORD tanimli degil}
+    volumes:
+      - umami-db:/var/lib/postgresql/data
+    # Veritabani yalnizca bu yiginin ic aginda. Uygulama konteynerinin
+    # ona erisimi yok, disariya port da acilmiyor.
+    networks:
+      - internal
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U umami -d umami']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    mem_limit: 256m
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-v2.20.2
+    container_name: acikdosya-umami
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_TYPE: postgresql
+      DATABASE_URL: postgresql://umami:${UMAMI_DB_PASSWORD:?UMAMI_DB_PASSWORD tanimli degil}@db:5432/umami
+      # Oturum imzasi. Degisirse tum oturumlar duser; yedegi .env'de durur.
+      APP_SECRET: ${UMAMI_APP_SECRET:?UMAMI_APP_SECRET tanimli degil}
+      # Umami'nin kendi kullanim verisini disariya gondermesi kapali.
+      DISABLE_TELEMETRY: '1'
+    # Yalnizca loopback: yonetim arayuzu ssh tuneliyle aciliyor, internete
+    # kapali. Ziyaretcinin gordugu yol acikdosya.org/veri, o da uygulama
+    # konteyneri uzerinden ic agda.
+    ports:
+      - '127.0.0.1:3004:3000'
+    networks:
+      - internal
+      # Uygulama konteynerinin /veri yeniden yazimi buradan geciyor.
+      - acikdosya-net
+    healthcheck:
+      test: ['CMD-SHELL', 'curl -f http://localhost:3000/api/heartbeat || exit 1']
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    # Makine paylasimli ve 3,7 GB. Olcum, sitenin kendisinden once
+    # sikismasi gereken taraftir.
+    mem_limit: 512m
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+volumes:
+  umami-db:
+
+networks:
+  internal:
+  acikdosya-net:
+    external: true

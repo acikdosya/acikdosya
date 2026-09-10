@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {hasLocale, NextIntlClientProvider, useTranslations} from 'next-intl';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
+import {Analytics} from '@/components/analytics/Analytics';
 import {MeasureRail} from '@/components/measure-rail/MeasureRail';
 import {SiteFooter} from '@/components/site-footer/SiteFooter';
 import {SiteHeader} from '@/components/site-header/SiteHeader';
@@ -88,6 +89,7 @@ export default async function LocaleLayout({children, params}: Props) {
             </main>
             <SiteFooter />
           </div>
+          <Analytics />
         </NextIntlClientProvider>
       </body>
     </html>

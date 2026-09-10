@@ -9,6 +9,7 @@ import type {
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Badge} from '@/components/confidence-badge/ConfidenceBadge';
 import type {Locale} from '@/i18n/routing';
+import {EVENTS, track} from '@/lib/analytics';
 import {
   MAP_ATTRIBUTION,
   MAP_DEFAULT_CENTER,
@@ -111,6 +112,21 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
    */
   const touched = useRef(false);
 
+  /*
+   * Olcum: haritaya dokunuldu mu. Sayfa basina bir kez, ilk dokunusun
+   * turuyle. Her surukleme karesini saymak ne bize bir sey soyler ne de
+   * ziyaretcinin hakkidir — soru "bu bolum kullaniliyor mu", "nereye
+   * bakildi" degil (CLAUDE.md §5.1).
+   */
+  const reported = useRef(false);
+
+  const interacted = useCallback((kind: 'isaretci' | 'halka' | 'koordinat') => {
+    touched.current = true;
+    if (reported.current) return;
+    reported.current = true;
+    track(EVENTS.map, {tur: kind});
+  }, []);
+
   // Harita geri cagrilari render disinda calisir, guncel degeri buradan alir.
   const originRef = useRef(origin);
   const visibleRef = useRef(visible);
@@ -175,7 +191,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
         redraw(next);
       });
       pin.on('dragend', () => {
-        touched.current = true;
+        interacted('isaretci');
         setState((current) => ({...current, origin: originRef.current}));
       });
 
@@ -215,7 +231,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
       map.current = null;
       marker.current = null;
     };
-  }, [copy.markerHint, redraw, rings]);
+  }, [copy.markerHint, interacted, redraw, rings]);
 
   // Merkez veya secim degisince halkalar, isaretci ve URL esitlenir.
   useEffect(() => {
@@ -240,7 +256,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
   }, [origin, redraw, rings, visible]);
 
   const toggle = (id: string) => {
-    touched.current = true;
+    interacted('halka');
     setState((current) => {
       const next = new Set(current.visible);
       if (next.has(id)) next.delete(id);
@@ -251,7 +267,7 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
 
   const moveTo = (axis: 0 | 1, value: number) => {
     if (!Number.isFinite(value)) return;
-    touched.current = true;
+    interacted('koordinat');
     setState((current) => {
       const next: LngLat =
         axis === 0

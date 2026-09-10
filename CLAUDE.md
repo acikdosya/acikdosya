@@ -394,6 +394,34 @@ gösteriyor. Varsayılan `lib/config.ts` içinde duruyor ki derleme argümanı
 geçilmemiş bir imajda da adres kaybolmasın; `NEXT_PUBLIC_CONTACT_EMAIL`
 ile ezilir.
 
+### Ölçüm
+
+Kendi sunucumuzda Umami + Postgres, `deploy/analytics/compose.yaml`.
+Kurulum adımları dosyanın başında; **yığın `deploy.sh` ile başlatılmaz**,
+yalnızca dosyası güncellenir. Sırları sunucudaki `.env` dosyasında durur.
+
+| | |
+|---|---|
+| Konteyner | `acikdosya-umami`, `127.0.0.1:3004`, bellek sınırı 512 MB |
+| Veritabanı | `acikdosya-umami-db`, yalnızca yığının iç ağında, 256 MB |
+| Ağ | `acikdosya-net`, uygulama konteyneriyle ortak |
+| Yönetim | ssh tüneli (`ssh -L 3004:127.0.0.1:3004`), internete kapalı |
+
+Ziyaretçinin gördüğü tek adres `acikdosya.org/veri`: `next.config.ts`
+içindeki yeniden yazım orayı konteyner ağındaki Umami'ye vekilliyor.
+Üçüncü taraf script yok, çerez yok, çerez bandı yok. Sorgu dizesi
+kaydedilmez — menzil zarfı referans noktası URL'de taşınıyor ve o nokta
+ziyaretçinin seçtiği bir konumdur.
+
+Olay sözlüğü `lib/analytics.ts` içinde tek yerde durur. Yeni olay
+eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
+
+**Yapma:**
+- Üçüncü taraf ölçüm (GA, Plausible bulut, Vercel Analytics) ekleme.
+- Ziyaretçinin girdiği konumu, sorgu dizesini veya tam kaynak adresini
+  olay verisine koyma. Kaynak bağında yalnızca alan adı taşınır.
+- Umami portunu dışarı açma. Panel ssh tüneliyle açılır.
+
 ### Yayındaki eksikler
 
 1. **Harita üçüncü taraftan.** Menzil zarfı `demotiles.maplibre.org`

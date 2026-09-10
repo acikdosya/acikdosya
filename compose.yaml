@@ -23,8 +23,22 @@ services:
     # Bu makinede baska uretim servisleri var; uygulama onlarin bellegini
     # yemesin.
     mem_limit: 512m
+    # Olcum yigini ayri bir compose dosyasinda (deploy/analytics). Uygulama
+    # ona yalnizca bu paylasilan ag uzerinden, /veri yeniden yazimiyla
+    # ulasiyor; Umami'nin disariya acik portu yok.
+    #
+    # Ag yoksa "docker compose up" hata verir; scripts/deploy.sh eksikse
+    # olusturuyor. Olcum yigini hic kurulmamis olsa da uygulama ayakta
+    # kalir — o durumda /veri altina istek de gitmez, cunku website id
+    # gomulu degilse script hic basilmaz.
+    networks:
+      - acikdosya-net
     logging:
       driver: json-file
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  acikdosya-net:
+    external: true

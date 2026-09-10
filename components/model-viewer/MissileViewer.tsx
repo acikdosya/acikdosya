@@ -43,6 +43,13 @@ interface Props {
   /** WebGL yoksa gösterilecek içerik — sayfa ScaleSilhouette veriyor. */
   fallback: React.ReactNode;
   label: string;
+  /**
+   * Görüntüleyici kurulduğunda bir kez çağrılır. Parametre, WebGL2 bulunup
+   * bulunmadığını söyler: false ise sahne değil silüet gösteriliyor.
+   * Kararlı bir başvuru bekler — her render'da yeni işlev verilirse
+   * yeniden çağrılır.
+   */
+  onReady?: (webgl: boolean) => void;
 }
 
 function Missile({
@@ -242,17 +249,24 @@ export default function MissileViewer({
   annotations,
   focusT,
   fallback,
-  label
+  label,
+  onReady
 }: Props) {
   const reduce = usePrefersReducedMotion();
   const [grabbed, setGrabbed] = useState(false);
+
+  // ssr:false ile yuklendigi icin burasi yalnizca tarayicida calisir.
+  const webgl = supportsWebGL2();
+
+  useEffect(() => {
+    onReady?.(webgl);
+  }, [onReady, webgl]);
 
   // Kendi kendine donus yalnizca genel gorunumde, kullanici dokunana kadar.
   const autoRotate = !reduce && !grabbed && focusT === null;
   const radius = spec.diameterMm / 2000;
 
-  // ssr:false ile yuklendigi icin burasi yalnizca tarayicida calisir.
-  if (!supportsWebGL2()) return <>{fallback}</>;
+  if (!webgl) return <>{fallback}</>;
 
   return (
     <div

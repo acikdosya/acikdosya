@@ -5,6 +5,7 @@ import {
 } from '@/components/confidence-badge/ConfidenceBadge';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
+import {EVENTS, sourceHost} from '@/lib/analytics';
 import {
   formatDate,
   formatValue,
@@ -41,7 +42,18 @@ function SourceLine({
   return (
     <span className={styles.source}>
       {sourceUrl ? (
-        <a href={sourceUrl} rel="nofollow noopener">
+        /*
+         * Olcum oznitelikleri: bu bilesen sunucuda ciziliyor ve oyle
+         * kalmali. Tiklamayi Analytics bilesenindeki tek dinleyici
+         * topluyor — lib/analytics.ts.
+         */
+        <a
+          href={sourceUrl}
+          rel="nofollow noopener"
+          data-track-event={EVENTS.source}
+          data-track-kaynak={sourceHost(sourceUrl)}
+          data-track-yer="tablo"
+        >
           {source}
         </a>
       ) : (
@@ -208,7 +220,13 @@ export function SpecTable({system, locale}: Props) {
 
       {/* Rozetlerin ne anlama geldigi her tablodan bir tik uzakta. */}
       <p className={styles.methodLink}>
-        <Link href="/yontem">{t('methodLink')}</Link>
+        <Link
+          href="/yontem"
+          data-track-event={EVENTS.method}
+          data-track-yer="tablo"
+        >
+          {t('methodLink')}
+        </Link>
       </p>
     </div>
   );

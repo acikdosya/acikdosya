@@ -202,6 +202,39 @@ ssh root@46.62.206.100 'docker tag acikdosya:<eski-sürüm> acikdosya:latest \
                         && cd /opt/acikdosya && docker compose up -d'
 ```
 
+## Ölçüm
+
+Kendi sunucumuzda Umami. Üçüncü taraf script yok, çerez yok, çerez bandı da
+yok: script `acikdosya.org/veri/script.js` adresinden servis edilir, olay ucu
+da aynı origin'dedir. Ziyaretçinin IP adresi başka bir sunucuya gitmez —
+fontları da tam bu gerekçeyle self-host ediyoruz.
+
+Yığın `deploy/analytics/compose.yaml` içinde; kurulum adımları dosyanın
+başında. Umami loopback'te (`127.0.0.1:3004`) durur, yönetim arayüzü ssh
+tüneliyle açılır, internete kapalıdır. Uygulama konteyneri ona paylaşılan
+docker ağı üzerinden ulaşır; `next.config.ts` içindeki `/veri` yeniden yazımı
+tek bağlantı noktasıdır.
+
+Site kimliği derleme zamanında gömülür (`UMAMI_WEBSITE_ID`). Boşsa tarayıcı
+script'i hiç basılmaz — yerelde ölçüm kapalıdır, kapatmak için ayrı bayrak yok.
+
+İzlenen olaylar `lib/analytics.ts` içinde tek sözlükte durur:
+
+| Olay | Ne zaman |
+|---|---|
+| `harita-etkilesim` | menzil zarfında işaretçi taşındı ya da halka açılıp kapandı (sayfa başına bir kez) |
+| `model-yuklendi` | 3D bölüm görüntüye girdi ve görüntüleyici kuruldu (`webgl` verisiyle) |
+| `varyant-degisti` | model bölümünde varyant değiştirildi |
+| `yontem-gidis` | yöntem sayfasına giden bağ tıklandı |
+| `kaynak-tikla` | bir ölçümün kaynak bağı tıklandı (tam adres değil, yalnızca alan adı) |
+
+Sunucuda çizilen bağlara olay `data-track-event` özniteliğiyle takılır;
+`components/analytics/Analytics.tsx` içindeki tek dinleyici toplar. Böylece
+kaynak bağları için bir bileşeni istemciye taşımak gerekmez.
+
+Sorgu dizesi kaydedilmez. Menzil zarfı referans noktasını URL'de taşıyor
+(`?ref=41.0,29.0`); o nokta ziyaretçinin seçtiği bir konum, kaydı tutulmaz.
+
 ## Editoryal sınırlar
 
 Tam listesi CLAUDE.md §5'te. Kısaca:

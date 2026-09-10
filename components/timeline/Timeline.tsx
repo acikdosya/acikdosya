@@ -1,5 +1,6 @@
 import {ConfidenceBadge} from '@/components/confidence-badge/ConfidenceBadge';
 import type {Locale} from '@/i18n/routing';
+import {EVENTS, sourceHost} from '@/lib/analytics';
 import {formatEventDate} from '@/lib/format';
 import type {System} from '@/lib/schema';
 import styles from './Timeline.module.css';
@@ -39,7 +40,13 @@ export function Timeline({system, locale}: Props) {
             {event.source ? (
               <span className={styles.source}>
                 {event.source_url ? (
-                  <a href={event.source_url} rel="nofollow noopener">
+                  <a
+                    href={event.source_url}
+                    rel="nofollow noopener"
+                    data-track-event={EVENTS.source}
+                    data-track-kaynak={sourceHost(event.source_url)}
+                    data-track-yer="takvim"
+                  >
                     {event.source[locale]}
                   </a>
                 ) : (
