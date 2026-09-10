@@ -19,10 +19,24 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({locale}));
 }
 
+/*
+ * Uretilmeyen dil degeri hic cizilmez, dogrudan 404 olur.
+ *
+ * Kok seviyede karsiligi olmayan nokta iceren adresler (/robots.txt gibi)
+ * ara katmanin desenine takilmadan bu rotaya dusuyor. Kontrol yerlesimde
+ * duruyordu ama sayfa bileseni onunla ayni anda ciziliyor: gecersiz dil
+ * Intl'e ulasip RangeError firlatiyor ve ziyaretci 404 yerine 500
+ * goruyordu. Segment duzeyindeki bu satir cizimden once devreye girer.
+ */
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params
 }: Omit<Props, 'children'>): Promise<Metadata> {
   const {locale} = await params;
+  /* Ikinci savunma hatti; birincisi yukaridaki dynamicParams. */
+  if (!hasLocale(routing.locales, locale)) notFound();
+
   const t = await getTranslations({locale, namespace: 'Site'});
 
   return {

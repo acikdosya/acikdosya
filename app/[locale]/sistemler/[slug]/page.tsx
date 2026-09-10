@@ -12,28 +12,18 @@ import {ScaleSilhouette} from '@/components/scale-silhouette/ScaleSilhouette';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
 import {SpecTable} from '@/components/spec-table/SpecTable';
 import {Timeline} from '@/components/timeline/Timeline';
-import {getPathname} from '@/i18n/navigation';
 import {routing, type Locale} from '@/i18n/routing';
 import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {primary} from '@/lib/format';
 import type {Confidence, System} from '@/lib/schema';
+import {absoluteUrl, localizedUrls} from '@/lib/urls';
 import styles from './page.module.css';
 
 type Props = {params: Promise<{locale: string; slug: string}>};
 
 export function generateStaticParams() {
   return getSystemSlugs().map((slug) => ({slug}));
-}
-
-function absoluteUrl(locale: Locale, slug: string): string {
-  return new URL(
-    getPathname({
-      locale,
-      href: {pathname: '/sistemler/[slug]', params: {slug}}
-    }),
-    SITE_URL
-  ).toString();
 }
 
 /**
@@ -90,6 +80,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
   if (!system) return {};
 
   const lang = locale as Locale;
+  const href = {pathname: '/sistemler/[slug]', params: {slug}} as const;
   const t = await getTranslations({locale, namespace: 'SystemPage'});
 
   const description =
@@ -100,17 +91,15 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
     title: system.name[lang],
     description,
     alternates: {
-      canonical: absoluteUrl(lang, slug),
-      languages: Object.fromEntries(
-        routing.locales.map((item) => [item, absoluteUrl(item, slug)])
-      )
+      canonical: absoluteUrl(lang, href),
+      languages: localizedUrls(href, routing.locales)
     },
     openGraph: {
       type: 'article',
       locale: lang,
       title: system.name[lang],
       description,
-      url: absoluteUrl(lang, slug)
+      url: absoluteUrl(lang, href)
     }
   };
 }
