@@ -1,5 +1,6 @@
 import {useTranslations} from 'next-intl';
 import type {DivergenceKind} from '@/lib/measurement/divergence';
+import {KIND_MESSAGE_KEY} from '@/lib/measurement/labels';
 import type {Measurement, Variant} from '@/lib/schema';
 import styles from './DivergenceNote.module.css';
 
@@ -14,13 +15,6 @@ import styles from './DivergenceNote.module.css';
  * cerceve koyar ve okuyucu hangisinin neyi soyledigini ayirt edemez.
  */
 
-const KIND_KEY: Record<DivergenceKind, string> = {
-  celiski: 'kind_celiski',
-  'farkli-aciklama': 'kind_farkliAciklama',
-  'farkli-kapsam': 'kind_farkliKapsam',
-  belirsiz: 'kind_belirsiz'
-};
-
 /**
  * Satirin durumu. Dort durum once metinle ayrisir; celiski ayrica satirin
  * kendisini isaretler (SpecTable). 'farkli-kapsam' ve 'belirsiz' zemin
@@ -33,7 +27,7 @@ export function DivergenceLabel({kind}: {kind: DivergenceKind}) {
 
   return (
     <span className={styles.label} data-divergence={kind}>
-      {t(KIND_KEY[kind])}
+      {t(`kind_${KIND_MESSAGE_KEY[kind]}`)}
     </span>
   );
 }

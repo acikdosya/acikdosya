@@ -169,8 +169,8 @@
     "conflictHeading": "Why we do not hide conflicts",
     "conflictIntro": "Open-source figures diverge from each other. Picking one and deleting the rest means making an editorial decision the reader cannot see. Instead they all sit stacked in the same cell, each carrying its own source.",
     "conflictPick": "Where only one figure fits, such as the scaled silhouette and the 3D model, the most reliable value is used: official, then press, then estimate. That choice affects the drawing, not the record — the table keeps showing all of them.",
-    "divergenceHeading": "Three kinds of divergence",
-    "divergenceIntro": "More than one value in the same field is not a contradiction on its own. Which case applies is computed from the operators and the scope fields, not flagged by hand. There are three outcomes.",
+    "divergenceHeading": "Four kinds of divergence",
+    "divergenceIntro": "More than one value in the same field is not a contradiction on its own. Which case applies is computed from the operators and the scope fields, not flagged by hand. There are four outcomes.",
     "divergence_celiski": "The intervals do not overlap: no number can satisfy both. Either one source is wrong, or the two are in fact talking about different things. This is rare, which is why the row is marked.",
     "divergence_farkliAciklama": "The intervals overlap, so both can be true at once. Lower bounds work this way: “> 280” and “> 500” do not contradict each other, the second already satisfies the first. This is a normal state, not a warning.",
     "divergence_farkliKapsam": "The values are not measuring the same thing: they were obtained by different methods, belong to different variants, or were stated on different dates. No interval arithmetic is done here, because the values are not comparable. Which field differs is written under the value.",
@@ -178,7 +178,7 @@
     "divergenceExample_celiski": "“< 6 m” and “> 9 m” — contradiction. No length is both under 6 and over 9.",
     "divergenceExample_farkliAciklama": "“> 6 m” and “> 9 m” — different statements. Any body longer than 9 metres satisfies both.",
     "divergenceExample_farkliKapsam": "“9 m” (third-party measurement) and “> 6 m” (declared) — different scope. One measured the object, the other stated a figure.",
-    "divergenceScope": "Scope is carried in three fields: how the value was obtained (declared, measured in a test, third-party measurement, inference), which variant it belongs to, and the date the statement was made. When these are unknown they are left empty and the value reads “scope not stated”. They are never filled in by guesswork.",
+    "divergenceScope": "Comparability is decided by two fields: how the value was obtained (declared, measured in a test, third-party measurement, inference) and which variant it belongs to. The date of the statement is shown under every value but does not enter the decision: two statements of the same scope can contradict each other on different dates, and that contradiction must stay visible. When these fields are unknown they are left empty and the value reads “scope not stated”. They are never filled in by guesswork.",
     "divergenceBadgeNote": "The official badge shows who the statement came from; it does not show that the information has been independently verified. A figure being official does not mean we measured it, or that anyone else confirmed it.",
     "limitsHeading": "What we do not publish",
     "limitsIntro": "Some material is findable in open sources and still stays out of these files. The limit is editorial rather than technical.",
@@ -187,7 +187,9 @@
     "limit_internals": "No technical detail on production, guidance internals, warhead design or accuracy optimisation. The limit is this: dimensions, mass, programme timeline and published performance claims.",
     "limit_imagery": "No combat or explosion imagery.",
     "correctionsHeading": "Corrections",
-    "correctionsBody": "If you believe a value is wrong, or you hold a better source, send it. Every sourced correction goes on record. Contact details are <link>on the about page</link>."
+    "correctionsBody": "If you believe a value is wrong, or you hold a better source, send it. Every sourced correction goes on record. Contact details are <link>on the about page</link>.",
+    "divergence_belirsiz": "One of the comparability fields is filled on one side only. We do not know whether the values measure the same thing, so no interval arithmetic is done. Not knowing is not a contradiction: declaring one because a field is missing would be the opposite of the method this page describes.",
+    "divergenceExample_belirsiz": "“9 m” (third-party measurement) and “7 m” (scope not stated) — not comparable. We do not know how the second figure was obtained."
   },
   "About": {
     "eyebrow": "About",
