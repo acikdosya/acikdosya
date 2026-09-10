@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAYFUN — Açık kaynak teknik dosya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.css" rel="stylesheet">
+<style>
+:root{
+  --ground:#E4E5E1;
+  --paper:#F3F4F1;
+  --ink:#1C2124;
+  --ink-2:#5C6367;
+  --rule:#C6C9C3;
+  --signal:#B3131B;
+  --signal-soft:rgba(179,19,27,.09);
+  --measure:60px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Source Serif 4",Georgia,serif;font-size:18px;line-height:1.62;
+}
+h1,h2,h3,.ui,button,th,.num{font-family:Archivo,system-ui,sans-serif}
+a{color:inherit}
+
+/* measurement rail motif -------------------------------------------------- */
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 0 calc(24px + var(--measure));position:relative}
+.rail{position:absolute;left:24px;top:0;bottom:0;width:var(--measure);border-right:1px solid var(--rule)}
+.rail i{position:absolute;right:0;width:9px;height:1px;background:var(--rule)}
+.rail i.major{width:20px;background:var(--ink-2)}
+.rail span{position:absolute;right:26px;transform:translateY(-50%);
+  font-family:Archivo;font-size:11px;font-weight:600;color:var(--ink-2);letter-spacing:.04em}
+@media(max-width:820px){:root{--measure:0px}.rail{display:none}.wrap{padding-left:20px;padding-right:20px}}
+
+section{padding:72px 0;border-top:1px solid var(--rule)}
+section:first-of-type{border-top:0}
+h2{font-size:15px;font-weight:800;letter-spacing:.02em;margin:0 0 28px;color:var(--ink-2)}
+p{max-width:62ch}
+
+/* hero -------------------------------------------------------------------- */
+.hero{padding-top:56px}
+.mark{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.mark h1{font-size:clamp(52px,10vw,104px);font-weight:800;letter-spacing:-.035em;line-height:.9;margin:0}
+.mark em{font-family:Archivo;font-style:normal;font-size:13px;font-weight:600;color:var(--signal);
+  border:1px solid var(--signal);border-radius:2px;padding:3px 7px}
+.sub{font-size:19px;color:var(--ink-2);max-width:52ch;margin:14px 0 40px}
+
+.scale{background:var(--paper);border:1px solid var(--rule);padding:26px 22px 18px}
+.scale svg{width:100%;height:auto;display:block;overflow:visible}
+.scale figcaption{font-family:Archivo;font-size:12px;color:var(--ink-2);margin-top:14px}
+.silo{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.silo.b4{stroke:var(--signal)}
+.human{fill:var(--ink-2)}
+.dim{stroke:var(--rule);stroke-width:1}
+.dimtxt{font-family:Archivo;font-size:11px;font-weight:600;fill:var(--ink-2)}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 1.15s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}}
+
+/* spec table -------------------------------------------------------------- */
+table{width:100%;border-collapse:collapse;font-family:Archivo}
+th{text-align:left;font-size:11px;font-weight:600;color:var(--ink-2);
+  padding:0 12px 10px 0;border-bottom:1px solid var(--ink-2);letter-spacing:.04em}
+td{padding:14px 12px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top;font-size:15px}
+td.num{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.num small{font-size:13px;font-weight:400;color:var(--ink-2);margin-left:3px}
+.src{font-size:12px;color:var(--ink-2);line-height:1.45}
+.chip{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.05em;
+  padding:2px 6px;border-radius:2px;white-space:nowrap}
+.chip.official{border:1px solid var(--ink);color:var(--ink)}
+.chip.press{border:1px dashed var(--ink-2);color:var(--ink-2)}
+.chip.estimate{border:1px solid var(--signal);color:var(--signal);background:var(--signal-soft)}
+tr.conflict td{background:var(--signal-soft)}
+.alt{display:block;margin-top:6px;padding-top:6px;border-top:1px dotted var(--rule)}
+
+/* timeline ---------------------------------------------------------------- */
+ol.tl{list-style:none;margin:0;padding:0;counter-reset:t}
+ol.tl li{counter-increment:t;display:grid;grid-template-columns:34px 96px 1fr;gap:16px;
+  padding:16px 0;border-bottom:1px solid var(--rule)}
+ol.tl li::before{content:counter(t,decimal-leading-zero);font-family:Archivo;font-size:12px;
+  font-weight:600;color:var(--ink-2);padding-top:5px}
+ol.tl time{font-family:Archivo;font-size:13px;font-weight:600;padding-top:3px}
+ol.tl h3{font-family:Archivo;font-size:15px;font-weight:600;margin:0 0 3px}
+ol.tl p{font-size:16px;margin:0;color:var(--ink-2)}
+@media(max-width:640px){ol.tl li{grid-template-columns:28px 1fr}ol.tl time{grid-column:2}}
+
+/* map --------------------------------------------------------------------- */
+#map{height:520px;border:1px solid var(--rule);background:var(--paper)}
+@media(max-width:640px){#map{height:400px}}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+button.ring{font-size:12px;font-weight:600;padding:8px 12px;border:1px solid var(--rule);
+  background:var(--paper);color:var(--ink-2);border-radius:2px;cursor:pointer}
+button.ring[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);background:#fff}
+button.ring:focus-visible,a:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.legend{margin-top:14px;font-size:13px;color:var(--ink-2);max-width:64ch}
+.maplibregl-popup-content{font-family:Archivo;font-size:12px;padding:8px 10px;border-radius:2px}
+
+footer{border-top:1px solid var(--rule);padding:36px 0 64px;font-size:14px;color:var(--ink-2)}
+footer strong{font-family:Archivo;font-size:12px;font-weight:600;color:var(--ink);display:block;margin-bottom:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="rail" id="rail"></div>
+
+<!-- HERO ------------------------------------------------------------------ -->
+<section class="hero">
+  <div class="mark">
+    <h1>TAYFUN</h1>
+    <em>açık kaynak dosya</em>
+  </div>
+  <p class="sub">ROKETSAN'ın balistik füze ailesi. Bu sayfadaki her sayı, geldiği kaynak ve güvenilirlik
+  seviyesiyle birlikte gösterilir — çelişen değerler gizlenmez.</p>
+
+  <figure class="scale">
+    <svg id="silhouette" viewBox="0 0 700 268" role="img"
+         aria-label="TAYFUN ve TAYFUN BLOK-4'ün 1,8 metrelik insan figürüne göre ölçekli siluetleri"></svg>
+    <figcaption>Ölçekli karşılaştırma — siluetler yayımlanmış boyut verilerinden çizilmiştir, teknik çizim değildir.</figcaption>
+  </figure>
+</section>
+
+<!-- SPECS ----------------------------------------------------------------- -->
+<section>
+  <h2>Teknik veriler ve kaynakları</h2>
+  <table id="specs">
+    <thead><tr><th style="width:24%">Alan</th><th style="width:20%">TAYFUN</th>
+    <th style="width:20%">BLOK-4</th><th>Kaynak notu</th></tr></thead>
+    <tbody></tbody>
+  </table>
+</section>
+
+<!-- TIMELINE -------------------------------------------------------------- -->
+<section>
+  <h2>Program takvimi</h2>
+  <ol class="tl" id="timeline"></ol>
+</section>
+
+<!-- MAP ------------------------------------------------------------------- -->
+<section>
+  <h2>Menzil zarfı</h2>
+  <p style="margin-top:-14px;margin-bottom:24px">Referans noktasını sürükleyerek taşıyabilirsin. Halkalar,
+  yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili, hedef veya operasyonel
+  kullanım göstermez.</p>
+
+  <div class="controls" id="ringControls"></div>
+  <div id="map"></div>
+  <p class="legend">Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator'da düz daire çizmek
+  yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle
+  çelişmektedir; kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir.</p>
+</section>
+
+<footer>
+  <strong>Bağımsız yayın</strong>
+  Bu sayfa kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir, ROKETSAN veya herhangi bir
+  kamu kurumuyla bağı yoktur. Marka adları yalnızca tanımlama amacıyla kullanılmıştır.
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/4.7.1/maplibre-gl.min.js"></script>
+<script>
+/* ---------------------------------------------------------------- veri ---- */
+/* Uretimde bu blok tayfun.json'dan gelir. Ayni sema mobil uygulamayi da besler. */
+const DATA = {
+  variants: [
+    { id:"tayfun", label:"TAYFUN", color:"var(--ink)",
+      specs:{
+        length_m:[{v:6.5,c:"official",s:"MSB / ROKETSAN açık veri"}],
+        diameter_mm:[{v:610,c:"official",s:"MSB / ROKETSAN açık veri"}],
+        mass_kg:[{v:2300,c:"official",s:"MSB / ROKETSAN açık veri"}],
+        range_km:[{v:280,op:">",c:"official",s:"MSB resmî açıklaması"},
+                  {v:500,op:">",c:"press",s:"Basın derlemesi, 2026"}],
+        cep_m:[{v:10,op:"≤",c:"official",s:"MSB resmî açıklaması"}]
+      },
+      attrs:{ guidance:{v:"GNSS / INS",c:"official"},
+              propellant:{v:"Katı yakıt",c:"official"},
+              stages:{v:"Tek kademe",c:"official"} } },
+
+    { id:"blok4", label:"BLOK-4", color:"var(--signal)",
+      specs:{
+        length_m:[{v:10,op:"~",c:"press",s:"IDEF 2025 sergileme"}],
+        diameter_mm:[{v:938,op:"~",c:"press",s:"Basın derlemesi"}],
+        mass_kg:[{v:7200,op:"~",c:"press",s:"Basın derlemesi"}],
+        range_km:[{v:1000,op:"≤",c:"estimate",s:"Bağımsız değerlendirme, resmî teyit yok"}],
+        cep_m:[]
+      },
+      attrs:{ guidance:{v:"Açıklanmadı",c:"estimate"},
+              propellant:{v:"Katı yakıt",c:"press"},
+              stages:{v:"Açıklanmadı",c:"estimate"} } }
+  ],
+  timeline:[
+    {d:"18.10.2022",t:"İlk test atışı",b:"Rize-Artvin Havalimanı'ndan gerçekleştirildi.",c:"official"},
+    {d:"Tem 2025",t:"BLOK-4 duyurusu",b:"IDEF 2025'te ailenin büyük gövdeli versiyonu tanıtıldı.",c:"press"},
+    {d:"22.07.2025",t:"Kamuya tanıtım",b:"Sistem ilk kez kamuoyuna açık olarak tanıtıldı.",c:"official"},
+    {d:"Nis 2026",t:"Teslimat töreni",b:"ROKETSAN tesis açılışında BLOK-4 sergilendi.",c:"press"}
+  ]
+};
+const LABELS = { length_m:["Uzunluk","m"], diameter_mm:["Çap","mm"], mass_kg:["Ağırlık","kg"],
+                 range_km:["Menzil","km"], cep_m:["Sapma (CEP)","m"] };
+const ATTRS  = { guidance:"Güdüm", propellant:"Yakıt", stages:"Kademe" };
+const CHIP   = { official:"resmî", press:"basın", estimate:"tahmin" };
+
+/* --------------------------------------------------------- olcu cetveli --- */
+(function rail(){
+  const el=document.getElementById('rail'); if(!el) return;
+  const h=document.body.scrollHeight, step=24;
+  let out='';
+  for(let y=0,n=0;y<h;y+=step,n++){
+    const major=n%5===0;
+    out+=`<i class="${major?'major':''}" style="top:${y}px"></i>`;
+    if(major&&n>0) out+=`<span style="top:${y}px">${Math.round(y/step)*5}</span>`;
+  }
+  el.innerHTML=out;
+})();
+
+/* ------------------------------------------------------------- siluet ----- */
+(function silhouette(){
+  const svg=document.getElementById('silhouette');
+  const PX=50, GROUND=250, HUMAN=1.8;
+  const val=(a)=>a&&a[0]?a[0].v:0;
+
+  function missile(x,cy,lenM,diaMm,cls,delay){
+    const L=lenM*PX, D=(diaMm/1000)*PX, r=D/2, nose=L*0.22, tail=L*0.14;
+    const p=[`M ${x} ${cy}`,
+             `C ${x+nose*0.4} ${cy-r*0.75} ${x+nose*0.8} ${cy-r} ${x+nose} ${cy-r}`,
+             `L ${x+L-tail} ${cy-r}`, `L ${x+L} ${cy-r*1.05}`,
+             `L ${x+L} ${cy+r*1.05}`, `L ${x+L-tail} ${cy+r}`,
+             `L ${x+nose} ${cy+r}`,
+             `C ${x+nose*0.8} ${cy+r} ${x+nose*0.4} ${cy+r*0.75} ${x} ${cy}`,`Z`].join(' ');
+    const fin=`M ${x+L-tail} ${cy-r} L ${x+L} ${cy-r*2.1} L ${x+L} ${cy-r} Z
+               M ${x+L-tail} ${cy+r} L ${x+L} ${cy+r*2.1} L ${x+L} ${cy+r} Z`;
+    return {L,D,markup:`
+      <path class="silo ${cls} draw" d="${p}" style="--len:${(L+D)*2.4};animation-delay:${delay}s"/>
+      <path class="silo ${cls} draw" d="${fin}" style="--len:${D*6};animation-delay:${delay+.35}s"/>
+      <line class="dim" x1="${x}" y1="${cy+r*2.6}" x2="${x+L}" y2="${cy+r*2.6}"/>
+      <text class="dimtxt" x="${x+L+8}" y="${cy+r*2.6+4}">${lenM} m</text>`};
+  }
+
+  const t = DATA.variants[0], b = DATA.variants[1];
+  const hH = HUMAN*PX, x0 = 96;
+  const b4 = missile(x0, 92,  val(b.specs.length_m), val(b.specs.diameter_mm), 'b4', .15);
+  const tf = missile(x0, 196, val(t.specs.length_m), val(t.specs.diameter_mm), '',   .45);
+
+  svg.innerHTML = `
+    <line class="dim" x1="0" y1="${GROUND}" x2="700" y2="${GROUND}"/>
+    <g class="human" transform="translate(30,${GROUND-hH})">
+      <circle cx="9" cy="10" r="8"/>
+      <rect x="4" y="20" width="10" height="${hH*0.42}" rx="4"/>
+      <rect x="4" y="${20+hH*0.42}" width="4" height="${hH*0.38}" rx="2"/>
+      <rect x="10" y="${20+hH*0.42}" width="4" height="${hH*0.38}" rx="2"/>
+    </g>
+    <text class="dimtxt" x="30" y="${GROUND+16}">1,8 m</text>
+    ${b4.markup}
+    <text class="dimtxt" x="${x0}" y="42" style="font-size:13px;fill:var(--signal)">${b.label}</text>
+    ${tf.markup}
+    <text class="dimtxt" x="${x0}" y="156" style="font-size:13px;fill:var(--ink)">${t.label}</text>`;
+})();
+
+/* -------------------------------------------------------------- tablo ----- */
+(function specTable(){
+  const tb=document.querySelector('#specs tbody');
+  const cell=(arr,unit)=>{
+    if(!arr||!arr.length) return `<td class="num" style="color:var(--ink-2);font-size:15px">—</td>`;
+    const main=arr[0];
+    const one=(d)=>`${d.op?d.op+' ':''}${d.v.toLocaleString('tr-TR')}<small>${unit}</small>`;
+    let html=`<td class="num">${one(main)}`;
+    arr.slice(1).forEach(d=>{ html+=`<span class="alt num" style="font-size:15px">${one(d)}</span>`; });
+    return html+`</td>`;
+  };
+  const note=(a,b)=>{
+    const lines=[];
+    (a||[]).forEach(d=>lines.push(`<span class="chip ${d.c}">${CHIP[d.c]}</span> ${d.s}`));
+    (b||[]).forEach(d=>lines.push(`<span class="chip ${d.c}">${CHIP[d.c]}</span> ${d.s}`));
+    return `<td class="src">${lines.join('<br>')||'—'}</td>`;
+  };
+  const [t,b]=DATA.variants;
+  Object.keys(LABELS).forEach(k=>{
+    const [name,unit]=LABELS[k];
+    const conflict=(t.specs[k]||[]).length>1;
+    tb.insertAdjacentHTML('beforeend',
+      `<tr class="${conflict?'conflict':''}"><td>${name}${conflict?
+        ' <span class="chip estimate">çelişki</span>':''}</td>
+       ${cell(t.specs[k],unit)}${cell(b.specs[k],unit)}${note(t.specs[k],b.specs[k])}</tr>`);
+  });
+  Object.keys(ATTRS).forEach(k=>{
+    const A=t.attrs[k],B=b.attrs[k];
+    tb.insertAdjacentHTML('beforeend',
+      `<tr><td>${ATTRS[k]}</td><td>${A.v}</td><td>${B.v}</td>
+       <td class="src"><span class="chip ${A.c}">${CHIP[A.c]}</span> /
+       <span class="chip ${B.c}">${CHIP[B.c]}</span></td></tr>`);
+  });
+})();
+
+/* ------------------------------------------------------------ takvim ------ */
+document.getElementById('timeline').innerHTML = DATA.timeline.map(e=>
+  `<li><time>${e.d}</time><div><h3>${e.t} <span class="chip ${e.c}">${CHIP[e.c]}</span></h3>
+   <p>${e.b}</p></div></li>`).join('');
+
+/* --------------------------------------------------------------- harita --- */
+(function rangeMap(){
+  const RINGS = [
+    {id:'r280', km:280,  label:'280 km',  conf:'official', on:true},
+    {id:'r500', km:500,  label:'500 km',  conf:'press',    on:true},
+    {id:'r1000',km:1000, label:'1.000 km',conf:'estimate', on:false}
+  ];
+  const STYLE = { official:{color:'#1C2124',dash:null},
+                  press:{color:'#5C6367',dash:[3,3]},
+                  estimate:{color:'#B3131B',dash:[1,2]} };
+
+  /* jeodezik daire — buyuk daire uzerinde nokta uretimi (Turf'e gerek yok) */
+  function geoCircle(lng,lat,km,steps=180){
+    const R=6371.0088, d=km/R, φ1=lat*Math.PI/180, λ1=lng*Math.PI/180, ring=[];
+    for(let i=0;i<=steps;i++){
+      const θ=2*Math.PI*i/steps;
+      const φ2=Math.asin(Math.sin(φ1)*Math.cos(d)+Math.cos(φ1)*Math.sin(d)*Math.cos(θ));
+      const λ2=λ1+Math.atan2(Math.sin(θ)*Math.sin(d)*Math.cos(φ1),
+                             Math.cos(d)-Math.sin(φ1)*Math.sin(φ2));
+      ring.push([((λ2*180/Math.PI+540)%360)-180, φ2*180/Math.PI]);
+    }
+    return {type:'Feature',geometry:{type:'LineString',coordinates:ring}};
+  }
+
+  const map=new maplibregl.Map({
+    container:'map',
+    style:'https://demotiles.maplibre.org/style.json',
+    center:[35.2,39.0], zoom:4.1, attributionControl:{compact:true}
+  });
+  map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+
+  let origin=[35.2,39.0];
+  const marker=new maplibregl.Marker({draggable:true,color:'#B3131B'})
+      .setLngLat(origin)
+      .setPopup(new maplibregl.Popup({offset:26,closeButton:false})
+        .setText('Referans nokta — sürükleyebilirsin'))
+      .addTo(map);
+
+  function redraw(){
+    RINGS.forEach(r=>{
+      const src=map.getSource(r.id);
+      if(src) src.setData(geoCircle(origin[0],origin[1],r.km));
+    });
+  }
+  marker.on('drag',()=>{ origin=marker.getLngLat().toArray(); redraw(); });
+
+  map.on('load',()=>{
+    RINGS.forEach(r=>{
+      map.addSource(r.id,{type:'geojson',data:geoCircle(origin[0],origin[1],r.km)});
+      const s=STYLE[r.conf];
+      map.addLayer({id:r.id,type:'line',source:r.id,
+        layout:{visibility:r.on?'visible':'none','line-cap':'round'},
+        paint:{'line-color':s.color,'line-width':1.8,
+               ...(s.dash?{'line-dasharray':s.dash}:{})}});
+    });
+  });
+
+  /* kontroller */
+  document.getElementById('ringControls').innerHTML = RINGS.map(r=>
+    `<button class="ring" data-id="${r.id}" aria-pressed="${r.on}">
+       <span class="chip ${r.conf}">${CHIP[r.conf]}</span>&nbsp; ${r.label}</button>`).join('');
+
+  document.getElementById('ringControls').addEventListener('click',e=>{
+    const btn=e.target.closest('button.ring'); if(!btn) return;
+    const on=btn.getAttribute('aria-pressed')!=='true';
+    btn.setAttribute('aria-pressed',on);
+    if(map.getLayer(btn.dataset.id))
+      map.setLayoutProperty(btn.dataset.id,'visibility',on?'visible':'none');
+  });
+})();
+</script>
+</body>
+</html>
