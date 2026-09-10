@@ -1,0 +1,81 @@
+.frame {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 26px 22px 18px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.body {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.bodyAlt {
+  stroke: var(--signal);
+}
+
+.human {
+  fill: var(--ink-2);
+}
+
+.dimension {
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.dimensionText {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--ink-2);
+}
+
+.variantLabel {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.variantLabelAlt {
+  fill: var(--signal);
+}
+
+.caption {
+  font-family: var(--font-display);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-top: 14px;
+}
+
+/*
+ * Sayfanin tek orkestre edilmis ani — CLAUDE.md §4.
+ * pathLength="1" sayesinde uzunluk normalize, dasharray hesabi gerekmiyor.
+ */
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.15s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

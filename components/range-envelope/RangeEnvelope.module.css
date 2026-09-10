@@ -1,0 +1,97 @@
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-2);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.toggle[aria-pressed='true'] {
+  border-color: var(--ink);
+  color: var(--ink);
+  background: #fff;
+}
+
+.map {
+  height: 520px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+@media (max-width: 640px) {
+  .map {
+    height: 400px;
+  }
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.coordinates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 16px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.coordinates label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coordinates input {
+  width: 9ch;
+  padding: 5px 7px;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  border-radius: 2px;
+}
+
+.legend {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 64ch;
+}
+
+/* Popup ve kontrol kutulari harita disindaki dille ayni kalsin. */
+.map :global(.maplibregl-popup-content) {
+  font-family: var(--font-display);
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 2px;
+}
+
+.map :global(.maplibregl-ctrl-attrib) {
+  font-family: var(--font-display);
+  font-size: 11px;
+}

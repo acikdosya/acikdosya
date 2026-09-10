@@ -58,11 +58,13 @@ Tek değer seçip diğerini gizlemek bu projede hata sayılır.
 ```ts
 type Confidence = 'official' | 'press' | 'estimate';
 
+interface LocalizedText { tr: string; en: string }   // AR ileride opsiyonel alan olarak
+
 interface Measurement {
   value: number;
   operator?: '>' | '<' | '≤' | '≥' | '~';
   confidence: Confidence;
-  source: string;        // insan okuyabilir kaynak adı
+  source: LocalizedText; // insan okuyabilir kaynak adı, EN okuyucu ikincil hedef kitle
   source_url?: string;
   verified_at: string;   // ISO tarih — 6 ay sonra "bu nereden geldi" sorusunun cevabı
 }
@@ -168,3 +170,13 @@ reference/
 - Zod şeması içerik dosyalarını build zamanında doğrulasın — bozuk veri deploy'a gitmesin.
 - Türkçe karakterler her yerde test edilsin (İ/ı/ğ/ş sıralama ve font desteği).
 - Emin olmadığın yerde tahmin etme, sor.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

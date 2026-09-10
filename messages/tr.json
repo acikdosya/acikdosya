@@ -1,0 +1,69 @@
+{
+  "Site": {
+    "name": "Açık Kaynak Savunma Dosyası",
+    "tagline": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları"
+  },
+  "Footer": {
+    "heading": "Bağımsız yayın",
+    "body": "Bu sayfa kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir, hiçbir üretici veya kamu kurumuyla bağı yoktur. Marka adları yalnızca tanımlama amacıyla kullanılmıştır."
+  },
+  "Home": {
+    "heading": "Sistemler"
+  },
+  "A11y": {
+    "skipToContent": "İçeriğe geç"
+  },
+  "ScaleSilhouette": {
+    "caption": "Ölçekli karşılaştırma — siluetler yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
+    "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
+    "humanLabel": "{height} m",
+    "lengthLabel": "{value} m"
+  },
+  "SpecTable": {
+    "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
+    "field": "Alan"
+  },
+  "Specs": {
+    "length_m": "Uzunluk",
+    "diameter_mm": "Çap",
+    "mass_kg": "Kütle",
+    "range_km": "Menzil",
+    "cep_m": "Dairesel sapma (CEP)"
+  },
+  "Attributes": {
+    "guidance": "Güdüm",
+    "propellant": "Yakıt",
+    "stages": "Kademe"
+  },
+  "Confidence": {
+    "official": "resmî",
+    "press": "basın",
+    "estimate": "tahmin",
+    "conflict": "çelişki"
+  },
+  "SystemPage": {
+    "specs": "Teknik veriler ve kaynakları",
+    "timeline": "Program takvimi",
+    "range": "Menzil zarfı",
+    "badge": "açık kaynak dosya",
+    "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya."
+  },
+  "RangeEnvelope": {
+    "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
+    "markerHint": "Referans nokta — sürükleyebilirsin",
+    "mapLabel": "Menzil zarfı haritası, referans nokta sürüklenebilir",
+    "latitude": "Enlem",
+    "longitude": "Boylam",
+    "loading": "Harita yükleniyor…",
+    "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir."
+  },
+  "Categories": {
+    "balistik-fuze": "Balistik füze"
+  },
+  "Status": {
+    "gelistirme": "Geliştirme",
+    "test": "Test aşaması",
+    "seri-uretim": "Seri üretim",
+    "envanterde": "Envanterde"
+  }
+}

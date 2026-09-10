@@ -1,0 +1,103 @@
+.scroller {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-display);
+  min-width: 520px;
+}
+
+.table caption {
+  text-align: left;
+  font-size: 13px;
+  color: var(--ink-2);
+  padding-bottom: 14px;
+}
+
+.table thead th {
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  padding: 0 12px 10px 0;
+  border-bottom: 1px solid var(--ink-2);
+  vertical-align: bottom;
+}
+
+/* Satir basliklari alan adi — govde hucreleriyle ayni boyda. */
+.table tbody th {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 14px 12px 14px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.table td {
+  padding: 14px 12px 14px 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  font-size: 15px;
+}
+
+.field {
+  width: 22%;
+  color: var(--ink);
+}
+
+/* Celisen alan gizlenmez, isaretlenir — CLAUDE.md §3. */
+.conflictRow td {
+  background: var(--signal-soft);
+}
+
+.entry + .entry {
+  display: block;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dotted var(--rule);
+}
+
+.value {
+  font-size: 20px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  margin-right: 6px;
+}
+
+.value small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-2);
+  margin-left: 3px;
+}
+
+.attributeValue {
+  font-size: 15px;
+  margin-right: 6px;
+}
+
+.source {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+.source a {
+  color: inherit;
+}
+
+.verified {
+  white-space: nowrap;
+}
+
+.empty {
+  color: var(--ink-2);
+}

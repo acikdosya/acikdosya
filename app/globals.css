@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+/* Tasarim tokenlari — CLAUDE.md §4. Palet burada tanimli, baska yerde renk yok. */
+:root {
+  --ground: #e4e5e1;
+  --paper: #f3f4f1;
+  --ink: #1c2124;
+  --ink-2: #5c6367;
+  --rule: #c6c9c3;
+  --signal: #b3131b;
+  --signal-soft: rgba(179, 19, 27, 0.09);
+
+  /* Sol kenardaki olcu cetvelinin genisligi. Dekorasyon degil: sayfa olcum hakkinda. */
+  --measure: 60px;
+}
+
+@media (max-width: 820px) {
+  :root {
+    --measure: 0px;
+  }
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-rule: var(--rule);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+
+  /* Fontlar app/_fonts/fonts.ts icinde next/font/local ile self-host edilir.
+     latin ve latin-ext ayri dosyalar; ext ailesi stack'te hemen arkasinda
+     durur ki ğ/ş/İ glyphleri sistem fontuna dusmeden bulunabilsin. */
+  --font-display: var(--font-archivo), var(--font-archivo-ext), system-ui,
+    sans-serif;
+  --font-body: var(--font-source-serif), var(--font-source-serif-ext), Georgia,
+    "Times New Roman", serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.62;
+  }
+
+  /* Baslik, sayi ve UI Archivo; govde metni Source Serif 4. */
+  h1,
+  h2,
+  h3,
+  h4,
+  th,
+  button,
+  input,
+  select,
+  label,
+  time {
+    font-family: var(--font-display);
+  }
+
+  /* Sayilar hizali dursun — tablo ve olcum sayfasi bunun uzerine kurulu. */
+  th,
+  td,
+  time {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--signal-soft);
+  }
+}
+
+/* Genel guvenlik agi. Bilesenler ayrica kendi reduced-motion davranisini tanimlar. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "$schema_version": "0.1",
+  "id": "tayfun",
+  "slug": "tayfun",
+  "name": {
+    "tr": "TAYFUN",
+    "en": "TAYFUN"
+  },
+  "category": "balistik-fuze",
+  "manufacturer": {
+    "id": "roketsan",
+    "name": "ROKETSAN"
+  },
+  "status": "seri-uretim",
+  "summary": {
+    "tr": "ROKETSAN'ın balistik füze ailesi.",
+    "en": "ROKETSAN's ballistic missile family."
+  },
+  "variants": [
+    {
+      "id": "tayfun",
+      "label": "TAYFUN",
+      "introduced": 2022,
+      "specs": {
+        "length_m": [
+          {
+            "value": 6.5,
+            "confidence": "official",
+            "source": {
+              "tr": "MSB / ROKETSAN açık veri",
+              "en": "Turkish MoND / ROKETSAN public data"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "diameter_mm": [
+          {
+            "value": 610,
+            "confidence": "official",
+            "source": {
+              "tr": "MSB / ROKETSAN açık veri",
+              "en": "Turkish MoND / ROKETSAN public data"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "mass_kg": [
+          {
+            "value": 2300,
+            "confidence": "official",
+            "source": {
+              "tr": "MSB / ROKETSAN açık veri",
+              "en": "Turkish MoND / ROKETSAN public data"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "range_km": [
+          {
+            "value": 280,
+            "operator": ">",
+            "confidence": "official",
+            "source": {
+              "tr": "MSB resmî açıklaması",
+              "en": "Turkish MoND official statement"
+            },
+            "verified_at": "2026-09-10"
+          },
+          {
+            "value": 500,
+            "operator": ">",
+            "confidence": "press",
+            "source": {
+              "tr": "Basın derlemesi (2026)",
+              "en": "Press compilation (2026)"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "cep_m": [
+          {
+            "value": 10,
+            "operator": "≤",
+            "confidence": "official",
+            "source": {
+              "tr": "MSB resmî açıklaması",
+              "en": "Turkish MoND official statement"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ]
+      },
+      "attributes": {
+        "guidance": {
+          "value": {
+            "tr": "GNSS / INS",
+            "en": "GNSS / INS"
+          },
+          "confidence": "official"
+        },
+        "propellant": {
+          "value": {
+            "tr": "Katı yakıt",
+            "en": "Solid propellant"
+          },
+          "confidence": "official"
+        },
+        "stages": {
+          "value": {
+            "tr": "Tek kademe",
+            "en": "Single stage"
+          },
+          "confidence": "official"
+        }
+      },
+      "_todo": [
+        "attributes alanlarina source ve verified_at eklenecek",
+        "spec kaynaklarina source_url eklenecek"
+      ]
+    },
+    {
+      "id": "tayfun-blok-4",
+      "label": "TAYFUN BLOK-4",
+      "introduced": 2025,
+      "specs": {
+        "length_m": [
+          {
+            "value": 10,
+            "operator": "~",
+            "confidence": "press",
+            "source": {
+              "tr": "IDEF 2025 sergilemesi, basın ölçümü",
+              "en": "IDEF 2025 display, press measurement"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "diameter_mm": [
+          {
+            "value": 938,
+            "operator": "~",
+            "confidence": "press",
+            "source": {
+              "tr": "Basın derlemesi",
+              "en": "Press compilation"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "mass_kg": [
+          {
+            "value": 7200,
+            "operator": "~",
+            "confidence": "press",
+            "source": {
+              "tr": "Basın derlemesi",
+              "en": "Press compilation"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ],
+        "range_km": [
+          {
+            "value": 1000,
+            "operator": "≤",
+            "confidence": "estimate",
+            "source": {
+              "tr": "Bağımsız değerlendirme — resmî teyit yok",
+              "en": "Independent assessment — no official confirmation"
+            },
+            "verified_at": "2026-09-10"
+          }
+        ]
+      },
+      "attributes": {
+        "guidance": {
+          "value": {
+            "tr": "Açıklanmadı",
+            "en": "Not disclosed"
+          },
+          "confidence": "estimate"
+        },
+        "propellant": {
+          "value": {
+            "tr": "Katı yakıt",
+            "en": "Solid propellant"
+          },
+          "confidence": "press"
+        },
+        "stages": {
+          "value": {
+            "tr": "Açıklanmadı",
+            "en": "Not disclosed"
+          },
+          "confidence": "estimate"
+        }
+      },
+      "_todo": [
+        "cep_m icin acik kaynak bulunamadi — alan bos birakildi",
+        "attributes alanlarina source ve verified_at eklenecek",
+        "spec kaynaklarina source_url eklenecek"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2022-10-18",
+      "title": {
+        "tr": "İlk test atışı",
+        "en": "First test launch"
+      },
+      "body": {
+        "tr": "Rize-Artvin Havalimanı'ndan gerçekleştirildi.",
+        "en": "Conducted from Rize-Artvin Airport."
+      },
+      "confidence": "official"
+    },
+    {
+      "date": "2025-07-01",
+      "title": {
+        "tr": "BLOK-4 duyurusu",
+        "en": "BLOK-4 announced"
+      },
+      "body": {
+        "tr": "IDEF 2025'te ailenin büyük gövdeli versiyonu duyuruldu.",
+        "en": "The larger-bodied version of the family was announced at IDEF 2025."
+      },
+      "confidence": "press"
+    },
+    {
+      "date": "2025-07-22",
+      "title": {
+        "tr": "Kamuya tanıtım",
+        "en": "Public unveiling"
+      },
+      "body": {
+        "tr": "Sistem ilk kez kamuoyuna açık olarak tanıtıldı.",
+        "en": "The system was presented to the public for the first time."
+      },
+      "confidence": "official"
+    },
+    {
+      "date": "2026-04-07",
+      "title": {
+        "tr": "Teslimat töreni",
+        "en": "Delivery ceremony"
+      },
+      "body": {
+        "tr": "ROKETSAN tesis açılışında BLOK-4 sergilendi.",
+        "en": "BLOK-4 was displayed at a ROKETSAN facility opening."
+      },
+      "confidence": "press"
+    }
+  ],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
+  },
+  "_todo": [
+    "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
+    "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",
+    "ikinci sistem eklenene kadar kategori enumu tek degerli"
+  ]
+}

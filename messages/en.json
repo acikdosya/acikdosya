@@ -1,0 +1,69 @@
+{
+  "Site": {
+    "name": "Open Source Defence File",
+    "tagline": "Sourced technical files on Turkish defence industry systems"
+  },
+  "Footer": {
+    "heading": "Independent publication",
+    "body": "Compiled from publicly available sources. This is not an official publication and has no affiliation with any manufacturer or government body. Brand names are used for identification purposes only."
+  },
+  "Home": {
+    "heading": "Systems"
+  },
+  "A11y": {
+    "skipToContent": "Skip to content"
+  },
+  "ScaleSilhouette": {
+    "caption": "Scaled comparison — silhouettes are derived from published dimensions, not technical drawings.",
+    "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
+    "humanLabel": "{height} m",
+    "lengthLabel": "{value} m"
+  },
+  "SpecTable": {
+    "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
+    "field": "Field"
+  },
+  "Specs": {
+    "length_m": "Length",
+    "diameter_mm": "Diameter",
+    "mass_kg": "Mass",
+    "range_km": "Range",
+    "cep_m": "Circular error probable (CEP)"
+  },
+  "Attributes": {
+    "guidance": "Guidance",
+    "propellant": "Propellant",
+    "stages": "Stages"
+  },
+  "Confidence": {
+    "official": "official",
+    "press": "press",
+    "estimate": "estimate",
+    "conflict": "conflict"
+  },
+  "SystemPage": {
+    "specs": "Technical data and sources",
+    "timeline": "Programme timeline",
+    "range": "Range envelope",
+    "badge": "open source file",
+    "metaFallback": "A {manufacturer} system — technical file compiled from public sources."
+  },
+  "RangeEnvelope": {
+    "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
+    "markerHint": "Reference point — drag to move",
+    "mapLabel": "Range envelope map, reference point is draggable",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "loading": "Loading map…",
+    "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation."
+  },
+  "Categories": {
+    "balistik-fuze": "Ballistic missile"
+  },
+  "Status": {
+    "gelistirme": "In development",
+    "test": "In testing",
+    "seri-uretim": "Serial production",
+    "envanterde": "In service"
+  }
+}
