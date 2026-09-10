@@ -1,4 +1,10 @@
-# Sunucudaki calisma duzeni: uygulama ve onunde Caddy.
+# Sunucudaki calisma duzeni.
+#
+# Kenar vekil BU DOSYADA DEGIL: makine paylasimli ve 80/443 system-nginx'te,
+# 15 site onun arkasinda duruyor. Konteyner yalnizca loopback'e yayin yapiyor,
+# nginx vhost'u (deploy/nginx/acikdosya.org.conf) ona vekillik ediyor ve
+# sertifikayi certbot aliyor.
+#
 # Imaj burada derlenmiyor — scripts/deploy.sh yerelde derleyip aktariyor.
 
 services:
@@ -10,35 +16,15 @@ services:
       NODE_ENV: production
       PORT: "3000"
       HOSTNAME: 0.0.0.0
-    # Port disari acilmiyor: yalnizca Caddy erisiyor.
-    expose:
-      - "3000"
-    networks:
-      - web
-
-  caddy:
-    image: caddy:2-alpine
-    container_name: acikdosya-caddy
-    restart: unless-stopped
+    # Yalnizca loopback: port disariya acik degil, nginx disinda kimse
+    # dogrudan erisemez.
     ports:
-      - "80:80"
-      - "443:443"
-      # HTTP/3 icin UDP.
-      - "443:443/udp"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      # Sertifikalar burada durur. Silinirse Let's Encrypt'ten yeniden
-      # alinir ve oran siniri riske girer, bu yuzden adlandirilmis birim.
-      - caddy_data:/data
-      - caddy_config:/config
-    depends_on:
-      - app
-    networks:
-      - web
-
-networks:
-  web:
-
-volumes:
-  caddy_data:
-  caddy_config:
+      - "127.0.0.1:3003:3000"
+    # Bu makinede baska uretim servisleri var; uygulama onlarin bellegini
+    # yemesin.
+    mem_limit: 512m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

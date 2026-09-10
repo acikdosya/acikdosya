@@ -39,7 +39,7 @@ sunulabilir ve yabancı basında bağlamından koparılamaz.
 | Animasyon | GSAP + ScrollTrigger; Rive (ileride) | |
 | İçerik | `content/**.json` (+ MDX uzun metin) | git'te versiyonlu, CMS sonra |
 | i18n | `next-intl`, TR varsayılan, EN zorunlu | AR ileride, RTL'i baştan kırma |
-| Deploy | Hetzner, Docker, Caddy | mevcut altyapı |
+| Deploy | Hetzner, Docker, nginx + certbot | sunucu paylaşımlı, bkz. §11 |
 
 **Yapma:**
 - Mapbox GL JS kullanma (lisans).
@@ -308,3 +308,43 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+---
+
+## 11. Dağıtım
+
+**Alan adı:** acikdosya.org · **Sunucu:** Hetzner, 46.62.206.100, Ubuntu 24.04
+
+### Sunucu paylaşımlı
+
+Makinede 15 nginx sitesi ve birkaç üretim konteyneri çalışıyor. 80 ve 443
+system-nginx'te. Bu yüzden §2'deki Caddy kararı burada uygulanmadı: Caddy o
+portları isteyecekti, koymak diğer sitelerin önündeki vekili devirmek olurdu.
+
+Yerleşik düzene girildi. Konteyner `127.0.0.1:3003`'e yayın yapar, nginx
+vhost'u ona vekillik eder, sertifikayı `certbot --nginx` alır. Bu makinedeki
+her site aynı deseni kullanıyor.
+
+Yeni bir sunucuya taşınırsa §2'deki Caddy kararı yeniden geçerlidir.
+
+### Dosyalar
+
+| Dosya | İş |
+|---|---|
+| `Dockerfile` | üç aşamalı, node:22-alpine, standalone çıktı |
+| `compose.yaml` | yalnızca uygulama, loopback'e yayın |
+| `deploy/nginx/acikdosya.org.conf` | vhost, kurulum adımları başında |
+| `scripts/deploy.sh` | yerelde derle, aktar, yenile |
+| `.env.production.example` | `.env.deploy` için örnek |
+
+### Derleme zamanında gömülenler
+
+`NEXT_PUBLIC_SITE_URL` ve `NEXT_PUBLIC_CONTACT_EMAIL` imaja gömülür.
+Canonical, hreflang, OG ve AR adresleri ilkinden türer. Değiştirmek
+konteyneri yeniden başlatmakla olmaz, imaj yeniden derlenir.
+
+### nginx'e dokunma kuralı
+
+`scripts/deploy.sh` nginx'e dokunmaz. Kenar vekil 15 siteyi taşıyor; onun
+yapılandırması bir kereliktir ve elle yapılır. Betik vhost dosyasını
+sunucuya kopyalar, kurmaz.

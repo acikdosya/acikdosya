@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 #
-# Yerelde derler, imaji sunucuya aktarir, ayaga kaldirir.
+# Yerelde derler, imaji sunucuya aktarir, konteyneri yeniler.
 #
-# Imaj burada derleniyor cunku sunucu kucuk ve derleme bellek istiyor.
+# Imaj burada derleniyor cunku sunucu paylasimli ve uzerinde iki aydir
+# ayakta duran uretim servisleri var; derleme yukunu oraya bindirmiyoruz.
 # Bedeli: her dagitimda imajin sikistirilmis hali ssh uzerinden gidiyor.
+#
+# BU BETIK NGINX'E DOKUNMAZ. Kenar vekil 15 siteyi birden tasiyor; onun
+# yapilandirmasi bir kerelik ve elle yapilir, adimlar
+# deploy/nginx/acikdosya.org.conf basinda yaziyor.
 #
 #   ./scripts/deploy.sh
 #
@@ -29,6 +34,11 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
 	echo "UYARI: calisma agaci temiz degil, imaj ${REVISION} olarak etiketleniyor." >&2
 fi
 
+if [ -z "$CONTACT_EMAIL" ]; then
+	echo "NOT: CONTACT_EMAIL bos — hakkinda sayfasi iletisim adresinin" >&2
+	echo "     yayimlanmadigini yazacak. Sonradan eklemek yeniden derleme ister." >&2
+fi
+
 echo "==> Derleniyor  (${REVISION}, ${SITE_URL})"
 docker build \
 	--build-arg "NEXT_PUBLIC_SITE_URL=${SITE_URL}" \
@@ -39,12 +49,19 @@ docker build \
 
 echo "==> Yapilandirma gonderiliyor"
 ssh "$DEPLOY_HOST" "mkdir -p '${DEPLOY_DIR}'"
-scp compose.yaml Caddyfile "${DEPLOY_HOST}:${DEPLOY_DIR}/"
+scp compose.yaml "${DEPLOY_HOST}:${DEPLOY_DIR}/"
+# vhost buraya kopyalaniyor ama kurulmuyor: /etc/nginx paylasimli alan,
+# oraya yazmak elle ve bilerek yapilir.
+scp deploy/nginx/acikdosya.org.conf "${DEPLOY_HOST}:${DEPLOY_DIR}/"
 
 echo "==> Imaj aktariliyor"
 docker save acikdosya:latest | gzip -1 | ssh "$DEPLOY_HOST" 'gunzip | docker load'
 
 echo "==> Baslatiliyor"
-ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d && docker image prune -f"
+ssh "$DEPLOY_HOST" "cd '${DEPLOY_DIR}' && docker compose up -d"
 
-echo "==> Bitti: ${SITE_URL}"
+echo "==> Saglik kontrolu"
+ssh "$DEPLOY_HOST" "curl -sf -o /dev/null -w 'loopback: %{http_code}\n' http://127.0.0.1:3003/"
+
+echo "==> Bitti. Etiketsiz kalan eski imajlari temizlemek icin:"
+echo "    ssh ${DEPLOY_HOST} 'docker image prune -f'"
