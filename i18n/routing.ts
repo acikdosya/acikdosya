@@ -13,6 +13,16 @@ export const routing = defineRouting({
   localePrefix: 'as-needed',
   /* Kok adres her taraycida TR acilir; paylasilan link herkeste ayni gorunur. */
   localeDetection: false,
+  /*
+   * NEXT_LOCALE cerezi yazilmaz.
+   *
+   * Ara katman varsayilan olarak dil tercihini cereze yaziyordu. Tespit
+   * zaten kapali ve dil adresten belli, yani cerez hicbir ise yaramiyordu
+   * ama yaziliyordu — hakkinda sayfasindaki "cerez kullanilmiyor"
+   * cumlesini yanlis cikaracak tek sey oydu. Yayinda tarayicida gorulup
+   * kapatildi.
+   */
+  localeCookie: false,
   pathnames: {
     '/': '/',
     '/sistemler/[slug]': {
