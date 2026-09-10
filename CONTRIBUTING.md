@@ -72,3 +72,11 @@ duruyor:
 
 Sayı verilir, kaynağı gösterilir, çelişki gizlenmez. Ne övgü ne yergi.
 Bu ton bir tercih değil, projenin çalışma biçimi.
+
+## Tartışma kuralları
+
+Konu itibarıyla issue'larda hararetli tartışma çıkar. Kural önceden yazılı
+olmazsa bir thread'i kilitlemek keyfi görünür, o yüzden yazılı:
+[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) — Katkıcı Sözleşmesi 2.1.
+
+Bildirim adresi info@acikdosya.org.

@@ -367,6 +367,10 @@ Kaynağı olmayan bildirim değerlendirilmez — bu kural bize de uygulanıyor.
 Yol: [CONTRIBUTING.md](./CONTRIBUTING.md).
 Güvenlik açığı issue olarak açılmaz: [SECURITY.md](./SECURITY.md).
 
+Tartışma kuralları: [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md). Konu gereği
+issue'larda hararetli tartışma çıkar; kural önceden yazılı olmazsa bir
+thread'i kilitlemek keyfi görünür. İletişim: info@acikdosya.org.
+
 ## Lisans
 
 Üç ayrı şey var ve aynı lisansla yönetilemezler.
