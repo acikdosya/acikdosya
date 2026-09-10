@@ -387,12 +387,16 @@ cd /opt/acikdosya && docker compose up -d
 Canonical, hreflang, OG ve AR adresleri ilkinden türer. Değiştirmek
 konteyneri yeniden başlatmakla olmaz, imaj yeniden derlenir.
 
+### İletişim
+
+Düzeltme kanalı: **info@acikdosya.org**. Hakkında sayfası bu adresi
+gösteriyor. Varsayılan `lib/config.ts` içinde duruyor ki derleme argümanı
+geçilmemiş bir imajda da adres kaybolmasın; `NEXT_PUBLIC_CONTACT_EMAIL`
+ile ezilir.
+
 ### Yayındaki eksikler
 
-1. **İletişim adresi yok.** `CONTACT_EMAIL` boş, hakkında sayfası kanalın
-   yayımlanmadığını yazıyor. Site düzeltme talebi istiyor ama talebin
-   gideceği bir yer yok. Uydurma adres yazılmadı (§5.7).
-2. **Harita üçüncü taraftan.** Menzil zarfı `demotiles.maplibre.org`
+1. **Harita üçüncü taraftan.** Menzil zarfı `demotiles.maplibre.org`
    üzerinden çalışıyor; o bölüme inen her ziyaretçinin IP adresi dışarı
    gidiyor. §6 kendi origin'imizi şart koşuyor, aykırılık bilerek kabul
    edildi ve `content/assets.json` içinde gerekçesiyle kayıtlı. PMTiles

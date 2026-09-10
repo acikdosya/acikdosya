@@ -78,17 +78,11 @@ export default async function AboutPage({params}: Props) {
         />
         <div className={styles.body}>
           <p>{t('contactBody')}</p>
-          {CONTACT_EMAIL ? (
-            <p className={styles.contact}>
-              <a href={`mailto:${CONTACT_EMAIL}`} className={styles.inlineLink}>
-                {CONTACT_EMAIL}
-              </a>
-            </p>
-          ) : (
-            <p className={styles.contactAbsent} data-state="absent">
-              {t('contactAbsent')}
-            </p>
-          )}
+          <p className={styles.contact}>
+            <a href={`mailto:${CONTACT_EMAIL}`} className={styles.inlineLink}>
+              {CONTACT_EMAIL}
+            </a>
+          </p>
           <p>{t('contactWhat')}</p>
         </div>
       </section>

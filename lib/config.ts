@@ -6,13 +6,18 @@ export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
 
 /**
- * Duzeltme ve iletisim adresi.
+ * Duzeltme ve iletisim adresi. Kanal yayimda: info@acikdosya.org.
  *
- * Tanimli degilse hakkinda sayfasi kanalin henuz yayimlanmadigini soyler —
- * uydurma bir adres yazilmaz (CLAUDE.md §5.7). Deploy ortaminda
- * NEXT_PUBLIC_CONTACT_EMAIL ile verilir.
+ * Varsayilan burada duruyor ki adres yerelde de, derleme argumani
+ * gecilmeyen bir imajda da gorunsun. NEXT_PUBLIC_CONTACT_EMAIL ile ezilir.
+ *
+ * ?? degil || kullaniliyor: build arg gecilmediginde degisken bos DIZE
+ * olarak geliyor, ?? bos dizeyi yakalamaz ve hakkinda sayfasi adresi
+ * kaybederdi. Uydurma adres yazilmaz (CLAUDE.md §5.7) — buradaki adres
+ * gercek ve yayimlanmis olandir.
  */
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL;
+export const CONTACT_EMAIL =
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@acikdosya.org';
 
 /**
  * Harita yapilandirmasi tek noktada. Simdilik MapLibre demo tile'lari;

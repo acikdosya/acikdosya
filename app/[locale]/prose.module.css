@@ -126,12 +126,6 @@
   font-size: var(--size-ui);
 }
 
-/* Adres yayimlanmadiginda: uydurma bir kanal yazilmaz, durum soylenir. */
-.contactAbsent {
-  font-size: var(--size-body-s);
-  color: var(--ink-2);
-}
-
 /*
  * Cumle icindeki baglanti. Satir ici oldugu icin dokunma hedefi istisnasi
  * gecerli (WCAG 2.5.8); tek basina duran baglantilar .standaloneLink alir.

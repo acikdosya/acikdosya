@@ -35,8 +35,9 @@ if ! git diff --quiet || ! git diff --cached --quiet; then
 fi
 
 if [ -z "$CONTACT_EMAIL" ]; then
-	echo "NOT: CONTACT_EMAIL bos — hakkinda sayfasi iletisim adresinin" >&2
-	echo "     yayimlanmadigini yazacak. Sonradan eklemek yeniden derleme ister." >&2
+	echo "NOT: CONTACT_EMAIL bos — lib/config.ts icindeki yayimlanmis adres" >&2
+	echo "     kullanilacak. Baska bir adres istiyorsan .env.deploy'a yaz;" >&2
+	echo "     degisiklik yeniden derleme ister." >&2
 fi
 
 echo "==> Derleniyor  (${REVISION}, ${SITE_URL})"
