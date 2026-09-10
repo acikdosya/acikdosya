@@ -1,0 +1,46 @@
+/*
+ * Sayfa basligi. Kilit solda, gezinme sagda. Kilidin bosluk payina hicbir
+ * oge girmez — pay BrandLockup icinde padding olarak uygulaniyor, buradaki
+ * gap onun ustune biner.
+ */
+.header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s-4) var(--s-6);
+  padding-block: var(--s-5);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+}
+
+/*
+ * Baglantilar satir ici metin degil, gezinme hedefi: dokunma alani en az
+ * 44px yuksekliginde. Kutu buyurken alt cizgi metne yapisik kalsin diye
+ * hizalama merkezde, dolgu degil min-height kullaniliyor.
+ */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: var(--border-w) solid transparent;
+  padding-bottom: 1px;
+}
+
+.link:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.link[aria-current='page'] {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}

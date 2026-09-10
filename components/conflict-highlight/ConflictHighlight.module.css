@@ -1,0 +1,146 @@
+/*
+ * Hero'daki celisen veri satiri. Sayfanin TEK orkestre edilmis hareket ani
+ * burasi — CLAUDE.md §4.
+ *
+ * Rozetler ve kilavuz cizgileri AYNI ANDA belirir, artan gecikmeyle degil:
+ * kademeli giris kaskadi (n oge, artan gecikme) yasak. Gecikme tek bir
+ * degiskende (--conflict-delay) duruyor ki iki animasyon ayrisamasin.
+ *
+ * Hareketi azaltma tercihinde sure ve gecikme globals.css'te sifirlanir;
+ * "both" doldurma sayesinde satir dogrudan son halinde gorunur.
+ */
+.panel {
+  --conflict-delay: 320ms;
+
+  margin: 0;
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-4);
+  padding-bottom: var(--s-3);
+  font-family: var(--font-display);
+}
+
+.field {
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+}
+
+.count {
+  font-size: var(--size-label);
+  color: var(--ink-2);
+  font-variant-numeric: var(--num);
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2) var(--s-3);
+  border-top: var(--border-w) solid var(--rule);
+  padding: var(--pad-row-y) 0;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: var(--size-value-l);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: var(--num);
+  letter-spacing: var(--track-value-l);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/*
+ * Deger rengi guven seviyesini TEKRAR eder, tek basina tasimaz: durumu
+ * rozetin cercevesi ve yazisi soyler. Renk korlugunde satir yine okunur.
+ */
+.value[data-confidence='press'] {
+  color: var(--ink-2);
+}
+
+.value[data-confidence='estimate'] {
+  color: var(--signal);
+}
+
+/*
+ * Birim sayiyla ayni olcude ve ayni agirlikta dizilir — desen sayfasi §03.
+ * Kucultulmus bir birim, sayinin bir ustsimge tasidigi izlenimi veriyor.
+ */
+.value small {
+  font-size: inherit;
+  font-weight: inherit;
+  margin-left: 0.28em;
+}
+
+/* Sayiyi rozetine baglayan kilavuz cizgi. */
+.lead {
+  flex: 1 1 var(--s-5);
+  height: 1px;
+  background: var(--rule);
+  transform-origin: left;
+  animation: conflict-lead var(--dur-base) var(--ease) var(--conflict-delay)
+    both;
+}
+
+.badge {
+  animation: conflict-in var(--dur-base) var(--ease) var(--conflict-delay) both;
+}
+
+.source {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}
+
+.source a {
+  color: inherit;
+}
+
+/*
+ * Satirlarin gercek dosyadan geldigini soyleyen not. Ust cizgisi ink:
+ * ornek ile kaydin arasindaki sinir bilgi tasiyor.
+ */
+.note {
+  margin: 0;
+  border-top: var(--border-w) solid var(--ink);
+  padding-top: var(--s-3);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}
+
+@keyframes conflict-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes conflict-lead {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}

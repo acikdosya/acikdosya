@@ -18,6 +18,14 @@ export const routing = defineRouting({
     '/sistemler/[slug]': {
       tr: '/sistemler/[slug]',
       en: '/systems/[slug]'
+    },
+    '/yontem': {
+      tr: '/yontem',
+      en: '/method'
+    },
+    '/hakkinda': {
+      tr: '/hakkinda',
+      en: '/about'
     }
   }
 });

@@ -3,8 +3,14 @@ import {
   ConfidenceBadge,
   ConflictBadge
 } from '@/components/confidence-badge/ConfidenceBadge';
+import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
-import {formatDate, formatValue, hasConflict} from '@/lib/format';
+import {
+  formatDate,
+  formatValue,
+  hasConflict,
+  SPEC_UNITS
+} from '@/lib/format';
 import {
   attributeKeys,
   specKeys,
@@ -15,15 +21,6 @@ import {
   type System
 } from '@/lib/schema';
 import styles from './SpecTable.module.css';
-
-/** Birim alan adinin icinde tasiniyor; cevrilmez. */
-const UNITS: Record<SpecKey, string> = {
-  length_m: 'm',
-  diameter_mm: 'mm',
-  mass_kg: 'kg',
-  range_km: 'km',
-  cep_m: 'm'
-};
 
 type Props = {
   system: System;
@@ -184,7 +181,7 @@ export function SpecTable({system, locale}: Props) {
                   <MeasurementCell
                     key={variant.id}
                     list={variant.specs[key]}
-                    unit={UNITS[key]}
+                    unit={SPEC_UNITS[key]}
                     locale={locale}
                   />
                 ))}
@@ -208,6 +205,11 @@ export function SpecTable({system, locale}: Props) {
           ))}
         </tbody>
       </table>
+
+      {/* Rozetlerin ne anlama geldigi her tablodan bir tik uzakta. */}
+      <p className={styles.methodLink}>
+        <Link href="/yontem">{t('methodLink')}</Link>
+      </p>
     </div>
   );
 }

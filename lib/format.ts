@@ -1,5 +1,23 @@
-import type {Confidence, LocalizedText, Measurement} from './schema';
+import type {
+  Confidence,
+  LocalizedText,
+  Measurement,
+  SpecKey
+} from './schema';
 import type {Locale} from '@/i18n/routing';
+
+/**
+ * Birim alan adinin icinde tasiniyor, ayri alan yok — bu yuzden cevrilmez
+ * ve tek yerde duruyor. Tabloda, hero'daki celiski satirinda ve paylasim
+ * gorselinde ayni birim yazar.
+ */
+export const SPEC_UNITS: Record<SpecKey, string> = {
+  length_m: 'm',
+  diameter_mm: 'mm',
+  mass_kg: 'kg',
+  range_km: 'km',
+  cep_m: 'm'
+};
 
 /** Guven siralamasi — dusuk sayi daha guvenilir. */
 const CONFIDENCE_ORDER: Record<Confidence, number> = {

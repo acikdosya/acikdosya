@@ -273,7 +273,7 @@ kullanımı.
 | Kural | Değer |
 |---|---|
 | Boşluk payı | Sembol gövde eni × 1, dört yönde |
-| Sembol–yazı aralığı | Sembol eni × 1,3 |
+| Sembol–yazı aralığı | Sembol gövde eni × 1,3 |
 | En küçük kilit | 96 px ekran / 26 mm basılı |
 | En küçük sembol | 16 px ekran / 5 mm basılı |
 

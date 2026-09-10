@@ -1,38 +1,45 @@
 .controls {
   display: flex;
-  gap: 10px;
+  gap: var(--s-3);
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: var(--s-4);
 }
 
+/* Dokunma hedefi en az 44px — WCAG 2.5.8'in AA esigi 24px, tasarim 44 diyor. */
 .toggle {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  min-height: var(--touch-min);
+  gap: var(--s-2);
   font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 12px;
-  border: 1px solid var(--rule);
+  font-size: var(--size-micro);
+  font-weight: var(--weight-semibold);
+  padding: var(--s-2) var(--s-3);
+  border: var(--border-w) solid var(--rule);
   background: var(--paper);
   color: var(--ink-2);
-  border-radius: 2px;
+  border-radius: var(--radius);
   cursor: pointer;
 }
 
+/*
+ * Secili katman: cerceve ve metin ink'e ciker, zemin bir kademe acilir.
+ * Zemin daha once #fff idi — palet disi bir renkti, --paper-hover ile
+ * degistirildi (CLAUDE.md §4: renk yalnizca palettten).
+ */
 .toggle[aria-pressed='true'] {
   border-color: var(--ink);
   color: var(--ink);
-  background: #fff;
+  background: var(--paper-hover);
 }
 
 .map {
   height: 520px;
-  border: 1px solid var(--rule);
+  border: var(--border-w) solid var(--rule);
   background: var(--paper);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 639px) {
   .map {
     height: 400px;
   }
@@ -43,42 +50,43 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: var(--size-label);
   color: var(--ink-2);
 }
 
 .coordinates {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 16px;
+  gap: var(--s-5);
+  margin-top: var(--s-4);
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: var(--size-label);
   color: var(--ink-2);
 }
 
 .coordinates label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--s-2);
 }
 
 .coordinates input {
   width: 9ch;
+  /* Girdi kenari bilgi tasir: --rule degil --rule-strong, 3:1 (WCAG 1.4.11). */
   padding: 5px 7px;
-  border: 1px solid var(--rule);
+  border: var(--border-w) solid var(--rule-strong);
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-  border-radius: 2px;
+  font-size: var(--size-label);
+  font-variant-numeric: var(--num);
+  border-radius: var(--radius);
 }
 
 .legend {
-  margin-top: 16px;
-  font-size: 13px;
-  line-height: 1.5;
+  margin-top: var(--s-4);
+  font-size: var(--size-label);
+  line-height: var(--lh-body-s);
   color: var(--ink-2);
   max-width: 64ch;
 }
@@ -86,12 +94,12 @@
 /* Popup ve kontrol kutulari harita disindaki dille ayni kalsin. */
 .map :global(.maplibregl-popup-content) {
   font-family: var(--font-display);
-  font-size: 12px;
-  padding: 8px 10px;
-  border-radius: 2px;
+  font-size: var(--size-micro);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--radius);
 }
 
 .map :global(.maplibregl-ctrl-attrib) {
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: var(--size-badge-sm);
 }

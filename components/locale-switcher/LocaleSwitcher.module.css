@@ -1,0 +1,41 @@
+/*
+ * Dil gecisi. Iki dil de her zaman gorunur: hangisinde oldugunu ve nereye
+ * gidebilecegini ayni anda soyler. Secili olan alt cizgi tasir, olcusu ve
+ * agirligi degismez — geciste satir kaymaz.
+ */
+.group {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  border-left: var(--border-w) solid var(--rule);
+  padding-left: var(--s-5);
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+}
+
+.current {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding-inline: var(--s-1);
+  font-weight: var(--weight-semibold);
+  border-bottom: var(--border-w) solid var(--ink);
+  padding-bottom: 1px;
+}
+
+/* Iki harflik hedef: yukseklik 44px, yatayda ic bosluk 24px esigini asiyor. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding-inline: var(--s-1);
+  color: var(--ink-2);
+  text-decoration: none;
+  /* Secili olanla ayni yer kaplasin diye seffaf cizgi. */
+  border-bottom: var(--border-w) solid transparent;
+  padding-bottom: 1px;
+}
+
+.link:hover {
+  color: var(--ink);
+}

@@ -1,0 +1,33 @@
+/*
+ * Uc guven seviyesinin acilimi. Ana sayfada ozet, yontem sayfasinda ayni
+ * kartlar: iki yerde ayni metin, ayni gorunum — ikisi ayrisirsa okuyucu
+ * hangisinin gecerli oldugunu bilemez.
+ *
+ * Uc kartin cercevesi ayni. Tasarim referansinda tahmin kartinin cercevesi
+ * kirmizi; burada degil, cunku durumu tasiyan oge rozetin kendisi. Kart
+ * cercevesini de kirmiziya cekmek bolumun tamamini uyari gibi okuturdu.
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap-grid);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel);
+}
+
+.badge {
+  align-self: flex-start;
+}
+
+.body {
+  margin: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}

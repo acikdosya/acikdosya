@@ -3,49 +3,53 @@
   margin: 0;
   padding: 0;
   counter-reset: event;
-  border-top: 1px solid var(--rule);
+  border-top: var(--border-w) solid var(--rule);
 }
 
 .item {
   counter-increment: event;
   display: grid;
+  /* Sira numarasi ve tarih sutunu icerige gore degil sabit: satirlar arasi
+     dikey hiza tarih uzunluguna gore kaymasin. */
   grid-template-columns: 34px 108px 1fr;
-  gap: 16px;
-  padding: 16px 0;
-  border-bottom: 1px solid var(--rule);
+  gap: var(--s-4);
+  padding: var(--pad-row-y) 0;
+  border-bottom: var(--border-w) solid var(--rule);
 }
 
 .item::before {
   content: counter(event, decimal-leading-zero);
   font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--size-micro);
+  font-weight: var(--weight-semibold);
   color: var(--ink-2);
+  /* Numara basligin taban cizgisine oturur, kutunun tepesine degil. */
   padding-top: 5px;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: var(--num);
 }
 
 .date {
   font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
   padding-top: 3px;
-  font-variant-numeric: tabular-nums;
+  font-variant-numeric: var(--num);
 }
 
 .title {
   font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: var(--size-ui);
+  font-weight: var(--weight-semibold);
   margin: 0 0 3px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: var(--s-2);
 }
 
 .body {
-  font-size: 16px;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
   margin: 0;
   color: var(--ink-2);
   max-width: 62ch;
@@ -53,7 +57,7 @@
 
 .source {
   display: block;
-  font-size: 12px;
+  font-size: var(--size-micro);
   color: var(--ink-2);
   margin-top: 5px;
 }
@@ -62,7 +66,8 @@
   color: inherit;
 }
 
-@media (max-width: 640px) {
+/* Tek sutuna gecis — rayin kalktigi kirilma noktasiyla ayni. */
+@media (max-width: 639px) {
   .item {
     grid-template-columns: 28px 1fr;
   }

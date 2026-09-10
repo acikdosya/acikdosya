@@ -1,7 +1,7 @@
 .frame {
   background: var(--paper);
-  border: 1px solid var(--rule);
-  padding: 24px 24px 16px;
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel) var(--pad-panel) var(--s-4);
 }
 
 .svg {
@@ -33,15 +33,15 @@
 
 .dimensionText {
   font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--size-badge-sm);
+  font-weight: var(--weight-semibold);
   fill: var(--ink-2);
 }
 
 .variantLabel {
   font-family: var(--font-display);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
   fill: var(--ink);
 }
 
@@ -51,9 +51,8 @@
 
 .caption {
   font-family: var(--font-display);
-  font-size: 12px;
-  line-height: 1.5;
+  font-size: var(--size-micro);
+  line-height: var(--lh-body-s);
   color: var(--ink-2);
-  margin-top: 14px;
+  margin-top: var(--s-4);
 }
-

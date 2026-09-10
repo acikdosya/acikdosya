@@ -1,0 +1,41 @@
+/*
+ * Bolum basligi. Uc parca: iki haneli sira numarasi, baslik ve saga yasli
+ * ikincil bilgi. Numara signal renginde cunku sayfadaki tek sira isareti o;
+ * baslikta kirmizi kullanilmaz.
+ *
+ * Ust cizgi ink: bolum siniri okuyucu icin bilgi tasir, dekoratif --rule
+ * cizgisinden ayrilir.
+ */
+.heading {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  border-top: var(--border-w) solid var(--ink);
+  padding-top: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+
+.index {
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: var(--num);
+  color: var(--signal);
+}
+
+.title {
+  font-size: var(--size-h2);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--track-h2);
+  line-height: var(--lh-h2);
+  margin: 0;
+}
+
+.meta {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-variant-numeric: var(--num);
+  color: var(--ink-2);
+}

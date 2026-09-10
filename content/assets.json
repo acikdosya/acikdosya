@@ -1,7 +1,6 @@
 {
   "$schema_version": "0.2",
   "_rule": "public/ altındaki her dosya ve repoya giren her font, 3D varlık ve harita verisi burada kayıtlı olmak zorunda. Kaydı olmayan dosya build'i düşürür (scripts/validate-content.ts iki yönlü kontrol eder). Kendi ürettiğimiz varlıklar da kaydedilir — 'own' da bir lisans durumudur. presence alanı dosyanın diskte mi, build çıktısında mı, yoksa hiç repoda mı olmadığını söyler.",
-
   "assets": [
     {
       "id": "logo-primary",
@@ -18,7 +17,7 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
       "used_in": [],
-      "notes": "Sembol + kelime markası, yatay kilit. Claude Design ile üretildi, tarafımızca seçildi ve düzenlendi. Henüz hiçbir sayfada render edilmiyor; kullanım kuralları CLAUDE.md §10."
+      "notes": "Sembol + kelime markasi, yatay kilit. Dagitim kopyasi: ucuncu taraf kullanimi, basili materyal ve magaza basvurulari icin. SITE BU DOSYAYI RENDER ETMIYOR — sayfadaki kilit lib/brand.ts'teki geometriden cizilir, kelime markasi self-host Archivo ile dizilir. Iki yerde ayni geometri duruyor; biri degisirse digeri de degismeli. Kullanim kurallari CLAUDE.md §10."
     },
     {
       "id": "logo-mark",
@@ -35,7 +34,7 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
       "used_in": [],
-      "notes": "Yalnız sembol, 100 birimlik kare. En küçük kullanım 16 px — CLAUDE.md §10."
+      "notes": "Yalniz sembol, 100 birimlik kare. Dagitim kopyasi; sayfadaki ve ikonlardaki sembol lib/brand.ts'ten cizilir. En kucuk kullanim 16 px — CLAUDE.md §10."
     },
     {
       "id": "logo-mono",
@@ -52,7 +51,7 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
       "used_in": [],
-      "notes": "Tek renk kilit, fill=currentColor. Faks ve 1-bit çıktı için."
+      "notes": "Tek renk kilit, fill=currentColor. Faks ve 1-bit cikti icin dagitim kopyasi. Sayfadaki tek renk varyant BrandMark tone=\"mono\" ile uretilir."
     },
     {
       "id": "font-archivo-latin",
@@ -68,7 +67,9 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["app/_fonts/fonts.ts"],
+      "used_in": [
+        "app/_fonts/fonts.ts"
+      ],
       "notes": "Variable, wght 100-900. latin alt kümesi; ı (U+0131) burada. Lisans metni app/_fonts/ARCHIVO-LICENSE.txt."
     },
     {
@@ -85,7 +86,9 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["app/_fonts/fonts.ts"],
+      "used_in": [
+        "app/_fonts/fonts.ts"
+      ],
       "notes": "Variable, wght 100-900. latin-ext alt kümesi; ğ ş İ Ğ Ş burada (U+0130, U+011E-011F, U+015E-015F)."
     },
     {
@@ -102,7 +105,9 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["app/_fonts/fonts.ts"],
+      "used_in": [
+        "app/_fonts/fonts.ts"
+      ],
       "notes": "Variable, wght 200-900. Gövde metni — 18px / 1.62. Lisans metni app/_fonts/SOURCE-SERIF-4-LICENSE.txt."
     },
     {
@@ -119,8 +124,48 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["app/_fonts/fonts.ts"],
+      "used_in": [
+        "app/_fonts/fonts.ts"
+      ],
       "notes": "Variable, wght 200-900. latin-ext alt kümesi."
+    },
+    {
+      "id": "font-archivo-og-latin",
+      "file": "app/_fonts/og/archivo-600-latin.ttf",
+      "kind": "font",
+      "origin": "public-domain",
+      "presence": "committed",
+      "license": "SIL OFL 1.1",
+      "author": "Omnibus-Type",
+      "source_url": "https://github.com/Omnibus-Type/Archivo",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-10",
+      "used_in": [
+        "lib/og.tsx"
+      ],
+      "notes": "Paylasim gorselleri icin. next/og'un altindaki satori yalnizca ttf/otf/woff okuyor, sayfanin kullandigi variable woff2 gecmiyor. Bu dosya ayni OFL kaynaktan wght=600'de sabitlenerek uretildi — scripts/derive-og-font.py. Turev eser; OFL turetmeye izin veriyor, lisans korunuyor. latin alt kümesi; ı (U+0131) burada."
+    },
+    {
+      "id": "font-archivo-og-latin-ext",
+      "file": "app/_fonts/og/archivo-600-latin-ext.ttf",
+      "kind": "font",
+      "origin": "public-domain",
+      "presence": "committed",
+      "license": "SIL OFL 1.1",
+      "author": "Omnibus-Type",
+      "source_url": "https://github.com/Omnibus-Type/Archivo",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-10",
+      "used_in": [
+        "lib/og.tsx"
+      ],
+      "notes": "Paylasim gorsellerinin latin-ext alt kümesi; ğ ş İ burada (U+0130, U+011E-011F, U+015E-015F). latin ile birlestirilmedi: ImageResponse'a iki font olarak verilir, satori glif bulamayinca sirayla ikincisine duser."
     },
     {
       "id": "geometry-parametric",
@@ -156,7 +201,9 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["components/model-viewer/ArButton.tsx"],
+      "used_in": [
+        "components/model-viewer/ArButton.tsx"
+      ],
       "notes": "Dizin kaydı. scripts/bake-glb.mjs prebuild'de geometry-parametric'ten pişirir, git'te durmaz (.gitignore). Varyant eklenince yeni GLB da bu kayda dahildir."
     },
     {
@@ -173,7 +220,9 @@
       "commercial_use": true,
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
-      "used_in": ["lib/config.ts"],
+      "used_in": [
+        "lib/config.ts"
+      ],
       "notes": "ŞU AN YAYINDA OLAN KAYNAK BU. Uzak origin'den çekiliyor (demotiles.maplibre.org), CLAUDE.md §6 'harita tile'ları kendi origin'imizden' kuralına aykırı. basemap-tiles üretilince buradan çıkılacak. Atıf lib/config.ts içinde tanımlı ve MapLibre attributionControl kapatılmıyor."
     },
     {
@@ -211,7 +260,6 @@
       "notes": "Kanatçık oranını çıkarmak için bakıldı, repoya kopyalanmadı, yayımlanmadı. Ölçü çıkarımı türev eser sayılmaz ama kaydını tutuyoruz."
     }
   ],
-
   "rejected": [
     {
       "id": "sketchfab-generic-missile",

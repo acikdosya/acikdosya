@@ -1,41 +1,93 @@
 import {getTranslations, setRequestLocale} from 'next-intl/server';
-import {getSystemSlugs, getSystem} from '@/lib/content';
+import {ConfidenceLevels} from '@/components/confidence-levels/ConfidenceLevels';
+import {ConflictHighlight} from '@/components/conflict-highlight/ConflictHighlight';
+import {SectionHeading} from '@/components/section-heading/SectionHeading';
+import {SystemCard} from '@/components/system-card/SystemCard';
 import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
+import {getSystem, getSystemSlugs} from '@/lib/content';
+import {findConflict} from '@/lib/stats';
+import styles from './page.module.css';
 
 type Props = {params: Promise<{locale: string}>};
+
+const FILES_ID = 'dosyalar';
 
 export default async function HomePage({params}: Props) {
   const {locale} = await params;
   setRequestLocale(locale);
 
+  const lang = locale as Locale;
   const t = await getTranslations('Home');
+
   const systems = getSystemSlugs()
     .map((slug) => getSystem(slug))
     .filter((system) => system !== undefined);
 
+  /*
+   * Hero'daki celiski gercek dosyadan geliyor. Hicbir sistemde celisen alan
+   * yoksa panel cizilmez — uydurma bir ornek satir konmaz (CLAUDE.md §5.7).
+   */
+  const conflict = systems
+    .map((system) => findConflict(system))
+    .find((item) => item !== undefined);
+
   return (
-    <div className="py-14">
-      <h1 className="mb-8 text-4xl font-semibold tracking-tight">
-        {t('heading')}
-      </h1>
-      <ul className="border-t border-rule">
+    <div className={styles.page}>
+      <section className={styles.hero}>
+        <div className={styles.heroText}>
+          <p className={styles.eyebrow}>{t('eyebrow')}</p>
+          <h1 className={styles.title}>
+            {conflict
+              ? t('heading', {
+                  sources: conflict.sources,
+                  values: conflict.distinct
+                })
+              : t('headingPlain')}
+          </h1>
+          <p className={styles.lead}>{t('lead')}</p>
+          <p className={styles.leadSecondary}>{t('leadSecondary')}</p>
+          <a className={styles.button} href={`#${FILES_ID}`}>
+            {t('cta')}
+          </a>
+        </div>
+
+        {conflict ? (
+          <div className={styles.heroPanel}>
+            <ConflictHighlight conflict={conflict} locale={lang} />
+          </div>
+        ) : null}
+      </section>
+
+      {/*
+        Tek sistem varken izgara bos hucre veya "yakinda" karti ile
+        doldurulmuyor: az sayida oge durustce gorunuyor.
+      */}
+      <section className={styles.files} id={FILES_ID}>
+        <SectionHeading
+          title={t('filesHeading')}
+          meta={t('filesCount', {count: systems.length})}
+        />
         {systems.map((system) => (
-          <li key={system.slug} className="border-b border-rule">
-            <Link
-              href={{pathname: '/sistemler/[slug]', params: {slug: system.slug}}}
-              className="flex flex-wrap items-baseline gap-x-4 py-5 hover:text-signal"
-            >
-              <span className="font-display text-2xl font-semibold">
-                {system.name[locale as Locale]}
-              </span>
-              <span className="text-sm text-ink-2">
-                {system.summary?.[locale as Locale] ?? system.manufacturer.name}
-              </span>
-            </Link>
-          </li>
+          <SystemCard key={system.slug} system={system} locale={lang} />
         ))}
-      </ul>
+      </section>
+
+      <section className={styles.method}>
+        <SectionHeading title={t('methodHeading')} meta={t('methodMeta')} />
+        <p className={styles.methodIntro}>{t('methodIntro')}</p>
+
+        <ConfidenceLevels />
+
+        <div className={styles.conflictNote}>
+          <span className={styles.conflictLabel}>{t('conflictLabel')}</span>
+          <p className={styles.conflictBody}>{t('conflictBody')}</p>
+        </div>
+
+        <p className={styles.methodLink}>
+          <Link href="/yontem">{t('methodLink')}</Link>
+        </p>
+      </section>
     </div>
   );
 }

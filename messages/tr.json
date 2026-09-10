@@ -1,14 +1,29 @@
 {
   "Site": {
-    "name": "Açık Kaynak Savunma Dosyası",
+    "name": "Açık Dosya",
     "tagline": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları"
   },
   "Footer": {
     "heading": "Bağımsız yayın",
-    "body": "Bu sayfa kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir, hiçbir üretici veya kamu kurumuyla bağı yoktur. Marka adları yalnızca tanımlama amacıyla kullanılmıştır."
+    "body": "Bu sayfa kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir, hiçbir üretici veya kamu kurumuyla bağı yoktur. Marka adları yalnızca tanımlama amacıyla kullanılmıştır.",
+    "mapData": "Harita verisi",
+    "links": "Bağlantılar"
   },
   "Home": {
-    "heading": "Sistemler"
+    "heading": "Tek bir alan, {sources} kaynak, {values} farklı değer.",
+    "eyebrow": "Bağımsız teknik dosya",
+    "headingPlain": "Her değerin yanında onu yayınlayan kaynak var.",
+    "lead": "Açık Dosya, Türk savunma sanayii sistemlerinin teknik dosyalarını tutar. Her sayının yanına onu yayınlayan kaynağı, doğrulama tarihini ve güven seviyesini koyar.",
+    "leadSecondary": "Çelişen değerler ayıklanmıyor. Hepsi dosyada duruyor, hangisini kullanacağınıza siz karar veriyorsunuz.",
+    "cta": "Dosyaları gör",
+    "filesHeading": "Sistem dosyaları",
+    "filesCount": "{count} dosya yayında",
+    "methodHeading": "Nasıl çalışıyoruz",
+    "methodMeta": "Üç güven seviyesi",
+    "methodIntro": "Her değer üç durumdan birini taşır. Durum, değerin doğru olduğunu değil, kaynağının niteliğini anlatır. Aynı üç durum tabloda, harita lejantında, 3B etiketlerde ve zaman tünelinde birebir aynı görünür.",
+    "conflictLabel": "Çelişki",
+    "conflictBody": "Bir değer için birden çok kaynak varsa hepsi listelenir. Çelişki bir hata değil, kaydın parçasıdır.",
+    "methodLink": "Yöntemin tamamı"
   },
   "A11y": {
     "skipToContent": "İçeriğe geç"
@@ -22,7 +37,8 @@
   "SpecTable": {
     "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
     "field": "Alan",
-    "absent": "veri yok"
+    "absent": "veri yok",
+    "methodLink": "Güven seviyeleri ne anlama geliyor?"
   },
   "Specs": {
     "length_m": "Uzunluk",
@@ -48,7 +64,8 @@
     "range": "Menzil zarfı",
     "badge": "açık kaynak dosya",
     "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya.",
-    "model": "Şematik model"
+    "model": "Şematik model",
+    "scale": "Ölçekli karşılaştırma"
   },
   "RangeEnvelope": {
     "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
@@ -77,5 +94,82 @@
     "overview": "Genel görünüm",
     "fullscreen": "Tam ekran",
     "exitFullscreen": "Tam ekrandan çık"
+  },
+  "Nav": {
+    "primary": "Ana gezinme",
+    "files": "Dosyalar",
+    "method": "Yöntem",
+    "about": "Hakkında"
+  },
+  "LocaleSwitcher": {
+    "tr": "Türkçe",
+    "en": "English"
+  },
+  "Conflict": {
+    "onRecord": "kayıtta {count} değer",
+    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
+  },
+  "SystemCard": {
+    "counts": "{values} değer, {sources} kaynak",
+    "updated": "son doğrulama {date}",
+    "distribution": "Kayıttaki güven dağılımı",
+    "open": "Dosyayı aç"
+  },
+  "ConfidenceLevels": {
+    "official": "Üreticinin veya kurumun kendi açıklaması. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır.",
+    "press": "İkincil kaynak: haber, dergi, fuar veya konferans notu. Doğrulanmadı, ama kayda geçti ve gizlenmiyor.",
+    "estimate": "Bağımsız değerlendirme, resmî teyidi yok. Rozeti kırmızı, çünkü bu bir beyan değil bir çıkarım."
+  },
+  "Method": {
+    "eyebrow": "Yöntem",
+    "title": "Kaynak, güven seviyesi ve çelişki",
+    "lead": "Bu sayfa dosyaların nasıl kurulduğunu anlatır: bir sayı hangi koşulda yayımlanır, güven seviyesi neyi söyler, çelişen değerler neden gizlenmez.",
+    "levelsHeading": "Üç güven seviyesi",
+    "levelsIntro": "Her değer üç durumdan birini taşır. Durum, değerin doğru olduğunu değil, kaynağının niteliğini anlatır.",
+    "levelsNote": "Üç durum yalnızca renkle değil desenle de ayrışır: düz çerçeve, kesikli çerçeve, kırmızı çerçeve ve soft dolgu. Renk körlüğünde ve siyah-beyaz çıktıda da okunur. Aynı üç durum tabloda, harita lejantında, 3B etiketlerde ve zaman tünelinde birebir aynı görünür.",
+    "recordHeading": "Bir değer neyi taşır",
+    "recordIntro": "Güven seviyesi olmayan bir sayı arayüze çıkmaz. Bunun istisnası yok: alan boş kalır, uydurma bir değerle doldurulmaz.",
+    "term_value": "Değer",
+    "termBody_value": "Sayının kendisi ve varsa operatörü. \"> 280\" ile \"280\" aynı değer değildir; kaynak sınır verdiyse sınır yazılır.",
+    "term_confidence": "Güven",
+    "termBody_confidence": "Resmî, basın veya tahmin. Kaynağın niteliğini söyler.",
+    "term_source": "Kaynak",
+    "termBody_source": "Değeri yayımlayan kurumun veya yayının insan okuyabilir adı, mümkünse bağlantısı.",
+    "term_verified": "Doğrulama tarihi",
+    "termBody_verified": "Kaydın en son ne zaman kontrol edildiği. Altı ay sonra \"bu sayı nereden geldi\" sorusunun cevabı bu alandır.",
+    "recordUnits": "Birim alan adının içinde taşınır, ayrı bir alan değildir. Metre ile milimetreyi karıştırmak bu yüzden mümkün değil.",
+    "recordMissing": "Veri yoksa tire konur ve ekran okuyucuya \"veri yok\" denir. Eksik veri dördüncü bir güven durumu değildir; kaydın orada boş olduğunu söyler.",
+    "conflictHeading": "Çelişkiyi neden gizlemiyoruz",
+    "conflictIntro": "Açık kaynak veriler birbiriyle çelişir. Tek bir değeri seçip diğerini silmek, okuyucunun göremediği bir editoryal karar vermek demektir. Bunun yerine hepsi aynı hücrede alt alta durur ve her biri kendi kaynağını taşır.",
+    "conflictPick": "Ölçekli siluet ve 3B model gibi tek bir sayı alabilen yerlerde en güvenilir değer kullanılır: resmî, yoksa basın, o da yoksa tahmin. Bu seçim görüntüyü etkiler, kaydı değil — tablo hepsini göstermeye devam eder.",
+    "limitsHeading": "Neyi yayımlamıyoruz",
+    "limitsIntro": "Bazı bilgiler açık kaynakta bulunabilir olsa da bu dosyalara girmez. Sınır teknik değil editoryal.",
+    "limit_targets": "Hedef dili yok. Menzil halkası çizilir; hedef şehir veya ülke etiketlenmez, vurgulanmaz. Kullanılan terim \"menzil zarfı\" ve \"referans nokta\".",
+    "limit_classes": "Sistemin hangi hedef sınıflarına karşı geliştirildiğine dair liste yayımlanmaz.",
+    "limit_internals": "Üretim, güdüm iç yapısı, harp başlığı tasarımı ve isabet optimizasyonu konularında teknik detay verilmez. Sınır şudur: boyut, kütle, program takvimi ve yayımlanmış performans beyanı.",
+    "limit_imagery": "Çatışma veya patlama görseli kullanılmaz.",
+    "correctionsHeading": "Düzeltme",
+    "correctionsBody": "Bir değerin yanlış olduğunu düşünüyorsanız veya elinizde daha iyi bir kaynak varsa gönderin. Kaynağı olan her düzeltme kayda geçer. İletişim bilgisi <link>hakkında sayfasında</link>."
+  },
+  "About": {
+    "eyebrow": "Hakkında",
+    "title": "Açık Dosya",
+    "lead": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyalarını tutan bağımsız bir yayın.",
+    "independenceHeading": "Bağımsızlık",
+    "independenceBody": "Açık Dosya bağımsız bir yayındır. Hiçbir kurum, üretici veya kamu kuruluşuyla bağı yoktur, hiçbirinden destek almaz ve hiçbirini temsil etmez. Bu sayfalar resmî yayın değildir.",
+    "independenceBrands": "Marka, sistem ve kurum adları yalnızca tanımlama amacıyla kullanılır ve sahiplerine aittir. Üretici logoları kullanılmaz.",
+    "scopeHeading": "Kapsam",
+    "scopeBody": "Az sayıda sistemi derinlemesine anlatıyoruz. Bu bir katalog veya ansiklopedi değil: her dosya kaynaklı veri, ölçekli çizim, program takvimi ve menzil zarfı içerir. Haber akışı yok, kullanıcı içeriği yok.",
+    "scopeMethod": "Bir sayının nasıl kayda girdiğini <link>yöntem sayfasında</link> anlattık.",
+    "contactHeading": "İletişim ve düzeltme",
+    "contactBody": "Düzeltme, eksik kaynak bildirimi ve sorular için yazabilirsiniz.",
+    "contactAbsent": "İletişim adresi henüz yayımlanmadı.",
+    "contactWhat": "Düzeltme gönderirken hangi sistemi, hangi alanı ve hangi kaynağı kastettiğinizi yazın. Kaynağı olmayan bildirimler kayda giremiyor."
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "Bu adreste bir dosya yok",
+    "body": "Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir.",
+    "home": "Dosyalara dön"
   }
 }

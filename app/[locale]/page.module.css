@@ -1,0 +1,190 @@
+/*
+ * Ana sayfa yerlesimi. Bolum araliklari --gap-section; ic yapilar medya
+ * sorgusu yerine auto-fit izgara ve flex-basis ile akar.
+ */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+  padding-block: var(--gap-section);
+}
+
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-6) var(--s-8);
+}
+
+.heroText {
+  flex: 1 1 380px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.heroPanel {
+  flex: 1 1 420px;
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-medium);
+  color: var(--ink-2);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--size-h1);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--track-h1);
+  line-height: var(--lh-h1);
+  text-wrap: pretty;
+}
+
+.lead {
+  margin: 0;
+  max-width: 52ch;
+  text-wrap: pretty;
+}
+
+.leadSecondary {
+  composes: lead;
+  color: var(--ink-2);
+}
+
+/*
+ * Birincil buton. Ic bosluklar bilesen tokeni; cerceve payi calc() ile
+ * gorunur. Yukseklik --touch-min: 15px metin + 12px optik bosluk zaten
+ * bunu sagliyor, ama olcu degisirse dokunma hedefi kucumesin.
+ */
+.button {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding: var(--btn-py) var(--btn-px);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-weight: var(--weight-medium);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+
+.button:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+}
+
+.button:active {
+  background: var(--signal-press);
+  border-color: var(--signal-press);
+}
+
+.files {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-grid);
+}
+
+.method {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.methodIntro {
+  margin: 0;
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap-grid);
+}
+
+/*
+ * Uc kartin cercevesi ayni. Tasarim referansinda tahmin kartinin cercevesi
+ * kirmizi; burada degil, cunku durumu tasiyan oge rozetin kendisi. Kart
+ * cercevesini de kirmiziya cekmek uyariyi bilgi kaybi olmadan iki kez
+ * soylemek yerine, bolumun tamami uyariymis gibi okunmasina yol acardi.
+ */
+.methodCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel);
+}
+
+.methodCard p {
+  margin: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}
+
+.methodBadge {
+  align-self: flex-start;
+}
+
+.conflictNote {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-3) var(--s-5);
+  border-top: var(--border-w) solid var(--rule);
+  padding-top: var(--s-4);
+}
+
+.conflictLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-weight: var(--weight-medium);
+}
+
+.conflictBody {
+  flex: 1 1 320px;
+  margin: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}
+
+/* Yontem sayfasina giden bag. Ana sayfadaki ozet oranin tamami degil. */
+.methodLink {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-weight: var(--weight-medium);
+}
+
+/*
+ * Cumle icinde degil, tek basina duran bir hedef: WCAG 2.5.8'in satir ici
+ * baglanti istisnasi burada gecerli degil, dokunma alani 44px.
+ */
+.methodLink a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: var(--border-w) solid var(--ink);
+  padding-bottom: 2px;
+}
+
+.methodLink a:hover {
+  color: var(--signal);
+  border-bottom-color: var(--signal);
+}

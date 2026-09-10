@@ -1,0 +1,87 @@
+/*
+ * Sistem dosyasi sayfasi. Bolumler arasi bosluk --gap-section; bolum
+ * cizgisini SectionHeading tasiyor, burada ikinci bir cizgi yok.
+ */
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-section);
+  padding-block: var(--gap-section);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-medium);
+  color: var(--ink-2);
+}
+
+/*
+ * Hero baslik kendi kademesinde: --size-display yalnizca burada kullanilir,
+ * h1 genel olcegi (--size-h1) bolum basliklariyla ayni ailede kalir.
+ */
+.title {
+  margin: 0;
+  font-size: var(--size-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--track-display);
+  line-height: var(--lh-display);
+}
+
+.meta {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.03em;
+  color: var(--ink-2);
+}
+
+.summary {
+  margin: var(--s-2) 0 0;
+  max-width: 52ch;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.intro {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.note {
+  margin: 0;
+  max-width: 70ch;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}
+
+/*
+ * Sayfa sonundaki sorumluluk notu. Icerik dosyasindan gelir, altbilgideki
+ * genel bagimsizlik ibaresinden ayridir: bu sistemin kendi kaydina dair.
+ */
+.disclaimer {
+  margin: 0;
+  border-top: var(--border-w) solid var(--rule);
+  padding-top: var(--s-4);
+  max-width: 62ch;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}

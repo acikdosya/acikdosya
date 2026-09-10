@@ -1,25 +1,54 @@
 import {useTranslations} from 'next-intl';
-import {LocaleSwitcher} from '@/components/locale-switcher/LocaleSwitcher';
+import {BrandMark} from '@/components/brand/BrandMark';
+import {Link} from '@/i18n/navigation';
+import {BRAND_NAME} from '@/lib/brand';
+import {MAP_SOURCES} from '@/lib/config';
+import styles from './SiteFooter.module.css';
 
 /**
  * Bagimsizlik ibaresi her sayfada bulunur — CLAUDE.md §5.5.
+ * Harita kaynaklari lib/config.ts'teki MAP_SOURCES'tan geliyor; ayni dizi
+ * haritanin kendi atif kontrolunu de besliyor, ikisi ayrisamaz.
  */
 export function SiteFooter() {
   const t = useTranslations('Footer');
+  const tNav = useTranslations('Nav');
 
   return (
-    <footer className="mt-4 border-t border-rule pt-9 pb-16 text-ink-2">
-      <div className="flex flex-wrap items-start justify-between gap-6">
-        <div>
-          <strong className="mb-2 block text-xs font-semibold text-ink">
-            {t('heading')}
-          </strong>
-          <p className="max-w-[62ch] text-sm">{t('body')}</p>
-        </div>
-        <div className="text-sm">
-          <LocaleSwitcher />
-        </div>
+    <footer className={styles.footer}>
+      <div className={styles.mark}>
+        <BrandMark size={32} label={BRAND_NAME} />
       </div>
+
+      <div className={styles.body}>
+        <strong className={styles.heading}>{t('heading')}</strong>
+        <p className={styles.text}>{t('body')}</p>
+
+        <p className={styles.attribution}>
+          {t('mapData')}:{' '}
+          {MAP_SOURCES.map((source, index) => (
+            <span key={source.label}>
+              {index > 0 ? ' · ' : null}
+              {source.url ? (
+                <a href={source.url} rel="nofollow noopener">
+                  {source.label}
+                </a>
+              ) : (
+                source.label
+              )}
+            </span>
+          ))}
+        </p>
+      </div>
+
+      <nav className={styles.links} aria-label={t('links')}>
+        <Link href="/yontem" className={styles.link}>
+          {tNav('method')}
+        </Link>
+        <Link href="/hakkinda" className={styles.link}>
+          {tNav('about')}
+        </Link>
+      </nav>
     </footer>
   );
 }

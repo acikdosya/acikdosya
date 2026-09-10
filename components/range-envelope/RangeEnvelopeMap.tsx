@@ -6,9 +6,8 @@ import type {
   Map as MapLibreMap,
   Marker
 } from 'maplibre-gl';
-import {useTranslations} from 'next-intl';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {ConfidenceBadge} from '@/components/confidence-badge/ConfidenceBadge';
+import {Badge} from '@/components/confidence-badge/ConfidenceBadge';
 import type {Locale} from '@/i18n/routing';
 import {
   MAP_ATTRIBUTION,
@@ -19,6 +18,8 @@ import {
 import {formatNumber} from '@/lib/format';
 import {clampLngLat, geodesicRing, type LngLat} from '@/lib/geo';
 import type {Confidence} from '@/lib/schema';
+import {PALETTE} from '@/lib/tokens';
+import type {RangeCopy} from './copy';
 import type {Ring} from './rings';
 import styles from './RangeEnvelope.module.css';
 import 'maplibre-gl/dist/maplibre-gl.css';
@@ -26,6 +27,7 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 type Props = {
   rings: Ring[];
   locale: Locale;
+  copy: RangeCopy;
 };
 
 /**
@@ -93,14 +95,21 @@ function writeUrlState(origin: LngLat, visible: Set<string>) {
   );
 }
 
-export default function RangeEnvelopeMap({rings, locale}: Props) {
-  const t = useTranslations('RangeEnvelope');
+export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
   const container = useRef<HTMLDivElement>(null);
   const map = useRef<MapLibreMap>(null);
   const marker = useRef<Marker>(null);
 
   // Baslangic durumu URL'den okunur; sonrasinda state yonetir.
   const [{origin, visible}, setState] = useState(() => readUrlState(rings));
+
+  /*
+   * Adres cubugu ancak kullanici bir sey degistirince yazilir. Onceden her
+   * mount'ta yaziliyordu: okuyucu haritaya scroll ettigi anda adres
+   * uzuyordu, hicbir sey yapmadan. Paylasilan link kullanicinin kendi
+   * kurdugu gorunumu tasimali.
+   */
+  const touched = useRef(false);
 
   // Harita geri cagrilari render disinda calisir, guncel degeri buradan alir.
   const originRef = useRef(origin);
@@ -149,11 +158,12 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
       );
       instance.keyboard.enable();
 
-      const pin = new maplibre.Marker({draggable: true, color: '#B3131B'})
+      /* MapLibre CSS degiskeni okumuyor; renk lib/tokens.ts'ten geliyor. */
+      const pin = new maplibre.Marker({draggable: true, color: PALETTE.signal})
         .setLngLat(start)
         .setPopup(
           new maplibre.Popup({offset: 26, closeButton: false}).setText(
-            t('markerHint')
+            copy.markerHint
           )
         )
         .addTo(instance);
@@ -165,6 +175,7 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
         redraw(next);
       });
       pin.on('dragend', () => {
+        touched.current = true;
         setState((current) => ({...current, origin: originRef.current}));
       });
 
@@ -204,7 +215,7 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
       map.current = null;
       marker.current = null;
     };
-  }, [redraw, rings, t]);
+  }, [copy.markerHint, redraw, rings]);
 
   // Merkez veya secim degisince halkalar, isaretci ve URL esitlenir.
   useEffect(() => {
@@ -225,10 +236,11 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
       }
     }
 
-    writeUrlState(origin, visible);
+    if (touched.current) writeUrlState(origin, visible);
   }, [origin, redraw, rings, visible]);
 
   const toggle = (id: string) => {
+    touched.current = true;
     setState((current) => {
       const next = new Set(current.visible);
       if (next.has(id)) next.delete(id);
@@ -239,6 +251,7 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
 
   const moveTo = (axis: 0 | 1, value: number) => {
     if (!Number.isFinite(value)) return;
+    touched.current = true;
     setState((current) => {
       const next: LngLat =
         axis === 0
@@ -259,7 +272,10 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
             aria-pressed={visible.has(ring.id)}
             onClick={() => toggle(ring.id)}
           >
-            <ConfidenceBadge confidence={ring.confidence} />
+            <Badge
+              confidence={ring.confidence}
+              label={copy.confidence[ring.confidence]}
+            />
             <span>
               {ring.variantLabel} ·{' '}
               {ring.operator ? `${ring.operator} ` : ''}
@@ -273,13 +289,13 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
         ref={container}
         className={styles.map}
         role="application"
-        aria-label={t('mapLabel')}
+        aria-label={copy.mapLabel}
       />
 
       {/* Isaretciyi surukleyemeyenler icin klavyeyle ayni islem. */}
       <div className={styles.coordinates}>
         <label>
-          {t('latitude')}
+          {copy.latitude}
           <input
             type="number"
             inputMode="decimal"
@@ -291,7 +307,7 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
           />
         </label>
         <label>
-          {t('longitude')}
+          {copy.longitude}
           <input
             type="number"
             inputMode="decimal"
@@ -304,7 +320,7 @@ export default function RangeEnvelopeMap({rings, locale}: Props) {
         </label>
       </div>
 
-      <p className={styles.legend}>{t('legend')}</p>
+      <p className={styles.legend}>{copy.legend}</p>
     </div>
   );
 }

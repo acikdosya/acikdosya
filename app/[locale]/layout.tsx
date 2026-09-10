@@ -4,7 +4,9 @@ import {hasLocale, NextIntlClientProvider, useTranslations} from 'next-intl';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {MeasureRail} from '@/components/measure-rail/MeasureRail';
 import {SiteFooter} from '@/components/site-footer/SiteFooter';
+import {SiteHeader} from '@/components/site-header/SiteHeader';
 import {routing} from '@/i18n/routing';
+import {SITE_URL} from '@/lib/config';
 import {fontVariables} from '../_fonts/fonts';
 import '../globals.css';
 
@@ -24,8 +26,14 @@ export async function generateMetadata({
   const t = await getTranslations({locale, namespace: 'Site'});
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: {default: t('name'), template: `%s — ${t('name')}`},
-    description: t('tagline')
+    description: t('tagline'),
+    /*
+     * Twitter kendi gorselini opengraph-image'dan alir; burada yalnizca
+     * kart tipini soyluyoruz ki gorsel kirpilmadan buyuk gosterilsin.
+     */
+    twitter: {card: 'summary_large_image'}
   };
 }
 
@@ -53,9 +61,17 @@ export default async function LocaleLayout({children, params}: Props) {
       <body>
         <NextIntlClientProvider>
           <SkipLink />
-          <div className="relative mx-auto max-w-[1180px] pr-6 pl-[calc(24px+var(--measure))]">
+          {/*
+            Ray mutlak konumlu, bu yuzden sarmalayici relative. min-h-dvh ve
+            dikey flex: kisa sayfalarda altbilgi ekranin altina oturur, ray
+            da tam boy kalir.
+          */}
+          <div className="relative mx-auto flex min-h-dvh max-w-[var(--content-max)] flex-col pr-[var(--page-x)] pl-[calc(var(--page-x)+var(--rail-offset))]">
             <MeasureRail />
-            <main id="content">{children}</main>
+            <SiteHeader />
+            <main id="content" className="flex-1">
+              {children}
+            </main>
             <SiteFooter />
           </div>
         </NextIntlClientProvider>

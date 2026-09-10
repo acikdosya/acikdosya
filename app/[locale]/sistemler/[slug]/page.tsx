@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
+import type {ReactNode} from 'react';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {
   ModelSection,
@@ -8,6 +9,7 @@ import {
 import {RangeEnvelope} from '@/components/range-envelope/RangeEnvelope';
 import {buildRings} from '@/components/range-envelope/rings';
 import {ScaleSilhouette} from '@/components/scale-silhouette/ScaleSilhouette';
+import {SectionHeading} from '@/components/section-heading/SectionHeading';
 import {SpecTable} from '@/components/spec-table/SpecTable';
 import {Timeline} from '@/components/timeline/Timeline';
 import {getPathname} from '@/i18n/navigation';
@@ -16,6 +18,7 @@ import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {primary} from '@/lib/format';
 import type {Confidence, System} from '@/lib/schema';
+import styles from './page.module.css';
 
 type Props = {params: Promise<{locale: string; slug: string}>};
 
@@ -133,68 +136,28 @@ export default async function SystemPage({params}: Props) {
     ariaLabel: (name) => tModel('ariaLabel', {name})
   });
 
-  return (
-    <article>
-      <section className="pt-14 pb-[calc(var(--gap-section)/2)]">
-        <div className="mb-2 flex flex-wrap items-baseline gap-4">
-          <h1 className="text-[clamp(52px,10vw,104px)] leading-[0.9] font-semibold tracking-[-0.035em]">
-            {system.name[lang]}
-          </h1>
-          {/*
-            Sayfa etiketi, guven rozeti degil. Kirmizi cerceve + kirmizi metin
-            'tahmin' rozetinin dilidir; onu burada kullanmak uc durumlu gorsel
-            dili bozar — CLAUDE.md §4. Duz ikincil metin olarak duruyor.
-          */}
-          <span className="font-display text-[13px] font-semibold text-ink-2">
-            {t('badge')}
-          </span>
-        </div>
+  /*
+   * Bolum kimlikleri cevrilmez: paylasilan bir bag (#specs) iki dilde de
+   * ayni bolumu acsin.
+   *
+   * Bolumler dizi olarak kuruluyor. Numaralar dizideki sirasindan gelir,
+   * elle yazilmaz: model veya menzil bolumu verisi olmadigi icin
+   * cizilmediginde kalan bolumler kesintisiz numaralanir.
+   */
+  const sections: {id: string; title: string; body: ReactNode}[] = [
+    {
+      id: 'scale',
+      title: t('scale'),
+      body: <ScaleSilhouette system={system} locale={lang} />
+    }
+  ];
 
-        <p className="font-display text-[13px] font-semibold tracking-[0.03em] text-ink-2">
-          {tCategory(system.category)} · {system.manufacturer.name} ·{' '}
-          {tStatus(system.status)}
-        </p>
-
-        {system.summary ? (
-          <p className="mt-4 mb-10 max-w-[52ch] text-ink-2">
-            {system.summary[lang]}
-          </p>
-        ) : (
-          <div className="mb-10" />
-        )}
-
-        <ScaleSilhouette system={system} locale={lang} />
-      </section>
-
-      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
-        <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
-          {t('specs')}
-        </h2>
-        <SpecTable system={system} locale={lang} />
-      </section>
-
-      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
-        <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
-          {t('timeline')}
-        </h2>
-        <Timeline system={system} locale={lang} />
-      </section>
-
-      {rings.length > 0 ? (
-        <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
-          <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
-            {t('range')}
-          </h2>
-          <p className="mb-6 max-w-[62ch] text-ink-2">{tRange('intro')}</p>
-          <RangeEnvelope rings={rings} locale={lang} />
-        </section>
-      ) : null}
-
-      {modelVariants.length > 0 ? (
-        <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
-          <h2 className="mb-7 font-display text-[15px] font-semibold tracking-[0.02em] text-ink-2">
-            {t('model')}
-          </h2>
+  if (modelVariants.length > 0) {
+    sections.push({
+      id: 'model',
+      title: t('model'),
+      body: (
+        <>
           <ModelSection
             variants={modelVariants}
             fallback={<ScaleSilhouette system={system} locale={lang} />}
@@ -207,17 +170,90 @@ export default async function SystemPage({params}: Props) {
               exitFullscreen: tModel('exitFullscreen')
             }}
           />
-          <p className="mt-6 max-w-[70ch] text-sm text-ink-2">
-            {tModel('note')}
-          </p>
-        </section>
-      ) : null}
+          <p className={styles.note}>{tModel('note')}</p>
+        </>
+      )
+    });
+  }
 
-      <section className="border-t border-rule py-[calc(var(--gap-section)/2)]">
-        <p className="max-w-[62ch] text-sm text-ink-2">
-          {system.disclaimer[lang]}
+  sections.push(
+    {
+      id: 'specs',
+      title: t('specs'),
+      body: <SpecTable system={system} locale={lang} />
+    },
+    {
+      id: 'timeline',
+      title: t('timeline'),
+      body: <Timeline system={system} locale={lang} />
+    }
+  );
+
+  if (rings.length > 0) {
+    sections.push({
+      id: 'range',
+      title: t('range'),
+      body: (
+        <>
+          <p className={styles.intro}>{tRange('intro')}</p>
+          <RangeEnvelope
+            rings={rings}
+            locale={lang}
+            copy={{
+              loading: tRange('loading'),
+              markerHint: tRange('markerHint'),
+              mapLabel: tRange('mapLabel'),
+              latitude: tRange('latitude'),
+              longitude: tRange('longitude'),
+              legend: tRange('legend'),
+              confidence: {
+                official: tConfidence('official'),
+                press: tConfidence('press'),
+                estimate: tConfidence('estimate')
+              }
+            }}
+          />
+        </>
+      )
+    });
+  }
+
+  return (
+    <article className={styles.page}>
+      <header className={styles.hero}>
+        {/*
+          Sayfa etiketi, guven rozeti degil. Kirmizi cerceve + kirmizi metin
+          'tahmin' rozetinin dilidir; onu burada kullanmak uc durumlu gorsel
+          dili bozar — CLAUDE.md §4.
+        */}
+        <p className={styles.eyebrow}>{t('badge')}</p>
+        <h1 className={styles.title}>{system.name[lang]}</h1>
+        <p className={styles.meta}>
+          {tCategory(system.category)} · {system.manufacturer.name} ·{' '}
+          {tStatus(system.status)}
         </p>
-      </section>
+        {system.summary ? (
+          <p className={styles.summary}>{system.summary[lang]}</p>
+        ) : null}
+      </header>
+
+      {sections.map((section, index) => (
+        <section
+          key={section.id}
+          id={section.id}
+          className={styles.section}
+          aria-labelledby={`${section.id}-heading`}
+        >
+          <SectionHeading
+            index={index + 1}
+            title={section.title}
+            id={`${section.id}-heading`}
+          />
+          {section.body}
+        </section>
+      ))}
+
+      <p className={styles.disclaimer}>{system.disclaimer[lang]}</p>
     </article>
   );
 }

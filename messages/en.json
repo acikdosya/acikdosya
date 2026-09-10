@@ -1,14 +1,29 @@
 {
   "Site": {
-    "name": "Open Source Defence File",
+    "name": "Açık Dosya",
     "tagline": "Sourced technical files on Turkish defence industry systems"
   },
   "Footer": {
     "heading": "Independent publication",
-    "body": "Compiled from publicly available sources. This is not an official publication and has no affiliation with any manufacturer or government body. Brand names are used for identification purposes only."
+    "body": "Compiled from publicly available sources. This is not an official publication and has no affiliation with any manufacturer or government body. Brand names are used for identification purposes only.",
+    "mapData": "Map data",
+    "links": "Links"
   },
   "Home": {
-    "heading": "Systems"
+    "heading": "One field, {sources} sources, {values} different values.",
+    "eyebrow": "Independent technical file",
+    "headingPlain": "Every value carries the source that published it.",
+    "lead": "Açık Dosya keeps technical files on Turkish defence industry systems. Next to every figure it puts the source that published it, the date it was verified and a confidence level.",
+    "leadSecondary": "Conflicting values are not filtered out. All of them stay in the file, and you decide which one to use.",
+    "cta": "See the files",
+    "filesHeading": "System files",
+    "filesCount": "{count, plural, one {# file} other {# files}} published",
+    "methodHeading": "How we work",
+    "methodMeta": "Three confidence levels",
+    "methodIntro": "Every value carries one of three states. The state does not say the value is correct; it describes the quality of its source. The same three states look identical in the table, the map legend, the 3D labels and the timeline.",
+    "conflictLabel": "Conflict",
+    "conflictBody": "When several sources publish a value, all of them are listed. A conflict is not an error; it is part of the record.",
+    "methodLink": "The full method"
   },
   "A11y": {
     "skipToContent": "Skip to content"
@@ -22,7 +37,8 @@
   "SpecTable": {
     "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
     "field": "Field",
-    "absent": "no data"
+    "absent": "no data",
+    "methodLink": "What do the confidence levels mean?"
   },
   "Specs": {
     "length_m": "Length",
@@ -48,7 +64,8 @@
     "range": "Range envelope",
     "badge": "open source file",
     "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
-    "model": "Schematic model"
+    "model": "Schematic model",
+    "scale": "Scale comparison"
   },
   "RangeEnvelope": {
     "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
@@ -77,5 +94,82 @@
     "overview": "Overview",
     "fullscreen": "Fullscreen",
     "exitFullscreen": "Exit fullscreen"
+  },
+  "Nav": {
+    "primary": "Primary navigation",
+    "files": "Files",
+    "method": "Method",
+    "about": "About"
+  },
+  "LocaleSwitcher": {
+    "tr": "Türkçe",
+    "en": "English"
+  },
+  "Conflict": {
+    "onRecord": "{count} values on record",
+    "note": "These rows come from the file itself, not from a sample."
+  },
+  "SystemCard": {
+    "counts": "{values} values, {sources} sources",
+    "updated": "last verified {date}",
+    "distribution": "Confidence spread on record",
+    "open": "Open the file"
+  },
+  "ConfidenceLevels": {
+    "official": "The manufacturer's or the institution's own statement. A link is given; if the link dies, an archive copy replaces it and the date is recorded.",
+    "press": "Secondary source: news report, magazine, trade show or conference note. Unverified, but on record and not hidden.",
+    "estimate": "Independent assessment with no official confirmation. Its badge is red, because this is an inference rather than a statement."
+  },
+  "Method": {
+    "eyebrow": "Method",
+    "title": "Source, confidence and conflict",
+    "lead": "This page explains how the files are built: when a figure gets published, what the confidence level says, and why conflicting values are not hidden.",
+    "levelsHeading": "Three confidence levels",
+    "levelsIntro": "Every value carries one of three states. The state does not say the value is correct; it describes the quality of its source.",
+    "levelsNote": "The three states differ by pattern as well as colour: solid border, dashed border, red border with a soft fill. They stay readable in colour blindness and in black and white print. The same three states look identical in the table, the map legend, the 3D labels and the timeline.",
+    "recordHeading": "What a value carries",
+    "recordIntro": "A figure without a confidence level never reaches the interface. There is no exception: the field stays empty rather than being filled with an invented value.",
+    "term_value": "Value",
+    "termBody_value": "The figure itself and its operator, if any. \"> 280\" is not the same value as \"280\"; when the source gives a bound, the bound is recorded.",
+    "term_confidence": "Confidence",
+    "termBody_confidence": "Official, press or estimate. It describes the quality of the source.",
+    "term_source": "Source",
+    "termBody_source": "The human-readable name of the body or publication that released the value, with a link where one exists.",
+    "term_verified": "Verified on",
+    "termBody_verified": "When the record was last checked. Six months from now, this field answers the question of where a figure came from.",
+    "recordUnits": "The unit lives inside the field name rather than in a field of its own. Confusing metres with millimetres is therefore impossible.",
+    "recordMissing": "Where there is no data, a dash is shown and screen readers hear \"no data\". Missing data is not a fourth confidence state; it says the record is empty there.",
+    "conflictHeading": "Why we do not hide conflicts",
+    "conflictIntro": "Open-source figures contradict each other. Picking one and deleting the rest means making an editorial decision the reader cannot see. Instead they all sit stacked in the same cell, each carrying its own source.",
+    "conflictPick": "Where only one figure fits, such as the scaled silhouette and the 3D model, the most reliable value is used: official, then press, then estimate. That choice affects the drawing, not the record — the table keeps showing all of them.",
+    "limitsHeading": "What we do not publish",
+    "limitsIntro": "Some material is findable in open sources and still stays out of these files. The limit is editorial rather than technical.",
+    "limit_targets": "No target language. A range ring is drawn; no target city or country is labelled or highlighted. The terms used are \"range envelope\" and \"reference point\".",
+    "limit_classes": "No list of the target classes a system was developed against.",
+    "limit_internals": "No technical detail on production, guidance internals, warhead design or accuracy optimisation. The limit is this: dimensions, mass, programme timeline and published performance claims.",
+    "limit_imagery": "No combat or explosion imagery.",
+    "correctionsHeading": "Corrections",
+    "correctionsBody": "If you believe a value is wrong, or you hold a better source, send it. Every sourced correction goes on record. Contact details are <link>on the about page</link>."
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "Açık Dosya",
+    "lead": "An independent publication keeping sourced technical files on Turkish defence industry systems.",
+    "independenceHeading": "Independence",
+    "independenceBody": "Açık Dosya is an independent publication. It has no affiliation with any institution, manufacturer or government body, receives no support from any of them and represents none of them. These pages are not an official publication.",
+    "independenceBrands": "Brand, system and institution names are used for identification only and belong to their owners. Manufacturer logos are not used.",
+    "scopeHeading": "Scope",
+    "scopeBody": "We cover a small number of systems in depth. This is not a catalogue or an encyclopaedia: each file holds sourced data, a scaled drawing, a programme timeline and a range envelope. There is no news feed and no user-contributed content.",
+    "scopeMethod": "How a figure enters the record is described <link>on the method page</link>.",
+    "contactHeading": "Contact and corrections",
+    "contactBody": "Write for corrections, missing sources and questions.",
+    "contactAbsent": "A contact address has not been published yet.",
+    "contactWhat": "When sending a correction, say which system, which field and which source you mean. Reports without a source cannot enter the record."
+  },
+  "NotFound": {
+    "code": "404",
+    "title": "There is no file at this address",
+    "body": "The link may be old, or the address may be mistyped.",
+    "home": "Back to the files"
   }
 }

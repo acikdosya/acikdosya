@@ -6,22 +6,24 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
-  margin-top: 16px;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
 }
 
+/* Dokunma hedefi en az 44px. */
 .button {
   display: inline-flex;
   align-items: center;
+  min-height: var(--touch-min);
   gap: 6px;
-  padding: 8px 12px;
-  border: 1px solid var(--rule);
-  border-radius: 2px;
+  padding: var(--s-2) var(--s-3);
+  border: var(--border-w) solid var(--rule);
+  border-radius: var(--radius);
   background: var(--paper);
   color: var(--ink-2);
   font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--size-micro);
+  font-weight: var(--weight-semibold);
   cursor: pointer;
   text-decoration: none;
 }
@@ -33,7 +35,7 @@
 
 .hint {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: var(--size-micro);
   color: var(--ink-2);
 }
 
@@ -42,8 +44,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 8px;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
 }
 
 /*
@@ -54,7 +56,7 @@
   display: flex;
   flex-direction: column;
   background: var(--ground);
-  padding: 16px;
+  padding: var(--s-4);
 }
 
 .wrapper:fullscreen :global(.viewer),
