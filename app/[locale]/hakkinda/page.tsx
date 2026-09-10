@@ -1,7 +1,9 @@
 import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
+import {alternates} from '@/lib/urls';
 import {Link} from '@/i18n/navigation';
+import type {Locale} from '@/i18n/routing';
 import {CONTACT_EMAIL} from '@/lib/config';
 import styles from '../prose.module.css';
 
@@ -15,7 +17,11 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
    * Sekme basligi bolumun adini tasir. Sayfa basligi marka adiyla ayni
    * oldugu icin sablon "Açık Dosya — Açık Dosya" uretiyordu.
    */
-  return {title: t('eyebrow'), description: t('lead')};
+  return {
+    title: t('eyebrow'),
+    description: t('lead'),
+    alternates: alternates(locale as Locale, '/hakkinda')
+  };
 }
 
 /**

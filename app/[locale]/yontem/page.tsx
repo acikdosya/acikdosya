@@ -3,7 +3,9 @@ import {Fragment} from 'react';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ConfidenceLevels} from '@/components/confidence-levels/ConfidenceLevels';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
+import {alternates} from '@/lib/urls';
 import {Link} from '@/i18n/navigation';
+import type {Locale} from '@/i18n/routing';
 import styles from '../prose.module.css';
 
 type Props = {params: Promise<{locale: string}>};
@@ -12,7 +14,11 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
   const {locale} = await params;
   const t = await getTranslations({locale, namespace: 'Method'});
 
-  return {title: t('title'), description: t('lead')};
+  return {
+    title: t('title'),
+    description: t('lead'),
+    alternates: alternates(locale as Locale, '/yontem')
+  };
 }
 
 const LIMITS = ['targets', 'classes', 'internals', 'imagery'] as const;

@@ -220,6 +220,46 @@ büyük daire yöntemiyle çizilir; Turf eklenmez.
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.
 Yükseltmeden önce haritanın gerçekten çizildiği doğrulanmalı.
 
+## Keşfedilebilirlik
+
+`/robots.txt` ve `/sitemap.xml` kök seviyede üretilir. Site haritası her sayfanın
+iki dildeki karşılığını `alternates.languages` ile verir; rota adları çevrildiği
+için (`/yontem` karşısında `/en/method`) arama motorunun bunu kendiliğinden
+bilmesi beklenmez.
+
+Her sayfa kanonik adresini ve `hreflang` bağlarını taşır: `tr`, `en` ve
+`x-default`. `x-default` Türkçeyi gösterir, çünkü kök adres her tarayıcıda
+Türkçe açılır (`localeDetection: false`) — başka bir dili göstermek arama
+motoruna yanlış söz vermek olurdu. Tek kaynak `lib/urls.ts`.
+
+### Yapısal veri
+
+Sistem sayfaları JSON-LD taşır (`lib/structured-data.ts`), iki tür:
+
+- **Article** — sayfanın kendisi: başlık, özet, son güncelleme, yayımlayan.
+- **Dataset** — sayfadaki ölçümler. Her değer `variableMeasured` içinde birimi,
+  güven seviyesi ve kaynağıyla birlikte. Çelişen değerler tek bir "doğru" değere
+  indirgenmez; sayfada nasıl duruyorsa öyle listelenir.
+
+Operatör değerin parçasıdır: `> 280 km` schema.org'un `minValue` alanına,
+`≤ 1.000 km` `maxValue` alanına yazılır. Sahip olmadığımız bir kesinlik iddia
+edilmez.
+
+Sayfada görünmeyen hiçbir alan yapısal veriye girmez. §5 sınırları burada da
+geçerlidir: hedef, hedef sınıfı, operasyonel yorum yok.
+
+### Paylaşım görselleri
+
+`app/[locale]/opengraph-image.tsx` ve sistem sayfası için ayrı bir tane.
+Adresleri elle yazılır (`ogImage`, `lib/urls.ts`): Next'in dosya sözleşmesinden
+ürettiği adres `[locale]` segmentini kullanıyor ve Türkçe için `/tr/...`
+çıkıyordu, o da 307 ile öneksize dönüyordu. Yönlendirmeyi izlemeyen paylaşım
+istemcisi görseli hiç göstermez.
+
+Görsel rotası **çevrilmez**: İngilizce sistem sayfasının görseli
+`/en/sistemler/<slug>/opengraph-image` adresindedir, sayfanın kendisi
+`/en/systems/<slug>` olsa bile.
+
 ## Dağıtım
 
 Site https://acikdosya.org adresinde yayında. Ayrıntılar ve sunucuya dair

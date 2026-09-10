@@ -66,7 +66,9 @@
     "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
     "model": "Schematic model",
     "scale": "Scale comparison",
-    "revisions": "Correction log"
+    "revisions": "Correction log",
+    "datasetName": "{name} — technical data",
+    "datasetDescription": "Measurement record compiled from public sources. Every figure carries its confidence level and source; conflicting figures are kept, not resolved."
   },
   "RangeEnvelope": {
     "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",

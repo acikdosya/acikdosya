@@ -6,8 +6,9 @@ import {Analytics} from '@/components/analytics/Analytics';
 import {MeasureRail} from '@/components/measure-rail/MeasureRail';
 import {SiteFooter} from '@/components/site-footer/SiteFooter';
 import {SiteHeader} from '@/components/site-header/SiteHeader';
-import {routing} from '@/i18n/routing';
+import {routing, type Locale} from '@/i18n/routing';
 import {SITE_URL} from '@/lib/config';
+import {ogImage} from '@/lib/urls';
 import {fontVariables} from '../_fonts/fonts';
 import '../globals.css';
 
@@ -44,6 +45,12 @@ export async function generateMetadata({
     metadataBase: new URL(SITE_URL),
     title: {default: t('name'), template: `%s — ${t('name')}`},
     description: t('tagline'),
+    /*
+     * Gorsel adresi elle veriliyor: dosya sozlesmesinin urettigi /tr/...
+     * adresi yonlendirmeye dusuyordu — lib/urls.ts. Sistem sayfasi kendi
+     * gorseline kendisi isaret eder.
+     */
+    openGraph: {images: ogImage(locale as Locale)},
     /*
      * Twitter kendi gorselini opengraph-image'dan alir; burada yalnizca
      * kart tipini soyluyoruz ki gorsel kirpilmadan buyuk gosterilsin.

@@ -171,6 +171,10 @@ Prototipte oturmuş palet — koru:
    bilinmeyen görsel commit edilmez. Wikimedia'daki her dosya serbest değildir.
 7. **Uydurma yok.** Bir sayının kaynağını bulamıyorsan alanı boş bırak ve bana
    söyle. Placeholder sayı üretme — bu projede en tehlikeli hata bu.
+8. **Yapısal veri sayfayı tekrar eder, aşmaz.** JSON-LD'ye sayfada görünmeyen
+   alan konmaz; makineye söylediğimizle okuyucuya söylediğimiz aynı olmalı.
+   Operatör değerin parçasıdır: `> 280` schema.org'da `minValue`'dur,
+   `value` değil.
 
 ---
 
@@ -204,6 +208,8 @@ lib/
   brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
   tokens.ts               # paletin JS kopyası — CSS değişkeni okuyamayanlar için
   og.tsx                  # paylaşım görselleri ve ikonlar, next/og
+  structured-data.ts      # Article + Dataset JSON-LD, sayfadan türer
+  urls.ts                 # kanonik adres, hreflang, OG adresi — tek kaynak
 deploy/
   nginx/acikdosya.org.conf  # vhost, kurulum adımları başında — bkz. §11
 scripts/

@@ -13,12 +13,13 @@ import {ScaleSilhouette} from '@/components/scale-silhouette/ScaleSilhouette';
 import {SectionHeading} from '@/components/section-heading/SectionHeading';
 import {SpecTable} from '@/components/spec-table/SpecTable';
 import {Timeline} from '@/components/timeline/Timeline';
-import {routing, type Locale} from '@/i18n/routing';
+import type {Locale} from '@/i18n/routing';
 import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {primary} from '@/lib/format';
 import type {Confidence, System} from '@/lib/schema';
-import {absoluteUrl, localizedUrls} from '@/lib/urls';
+import {systemJsonLd} from '@/lib/structured-data';
+import {absoluteUrl, alternates, ogImage} from '@/lib/urls';
 import styles from './page.module.css';
 
 type Props = {params: Promise<{locale: string; slug: string}>};
@@ -91,16 +92,15 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
   return {
     title: system.name[lang],
     description,
-    alternates: {
-      canonical: absoluteUrl(lang, href),
-      languages: localizedUrls(href, routing.locales)
-    },
+    alternates: alternates(lang, href),
     openGraph: {
       type: 'article',
       locale: lang,
       title: system.name[lang],
       description,
-      url: absoluteUrl(lang, href)
+      url: absoluteUrl(lang, href),
+      /* Gorsel rotasi cevrilmez: /en/sistemler/... — lib/urls.ts. */
+      images: ogImage(lang, `/sistemler/${slug}`)
     }
   };
 }
@@ -119,6 +119,24 @@ export default async function SystemPage({params}: Props) {
   const tStatus = await getTranslations('Status');
   const tModel = await getTranslations('ModelViewer');
   const tConfidence = await getTranslations('Confidence');
+  const tSpecs = await getTranslations('Specs');
+
+  /*
+   * Yapisal veri sayfanin kendisinden turer: Article sayfayi, Dataset
+   * icindeki olcumleri tarif eder. Sayfada gorunmeyen hicbir alan
+   * eklenmez — lib/structured-data.ts.
+   */
+  const jsonLd = systemJsonLd({
+    system,
+    locale: lang,
+    url: absoluteUrl(lang, {pathname: '/sistemler/[slug]', params: {slug}}),
+    labels: {
+      spec: (key) => tSpecs(key),
+      confidence: (level) => tConfidence(level),
+      datasetName: t('datasetName', {name: system.name[lang]}),
+      datasetDescription: t('datasetDescription')
+    }
+  });
 
   const rings = buildRings(system);
   const modelVariants = buildModelVariants(system, lang, {
@@ -224,6 +242,14 @@ export default async function SystemPage({params}: Props) {
 
   return (
     <article className={styles.page}>
+      {/*
+        JSON-LD sayfanin icinde: ayri bir uc nokta degil, cizilen sayfanin
+        parcasi. Boylece veri ile isaret ayni build'den cikar.
+      */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{__html: JSON.stringify(jsonLd)}}
+      />
       <header className={styles.hero}>
         {/*
           Sayfa etiketi, guven rozeti degil. Kirmizi cerceve + kirmizi metin

@@ -1,3 +1,4 @@
+import type {Metadata} from 'next';
 import {getTranslations, setRequestLocale} from 'next-intl/server';
 import {ConfidenceLevels} from '@/components/confidence-levels/ConfidenceLevels';
 import {ConflictHighlight} from '@/components/conflict-highlight/ConflictHighlight';
@@ -7,11 +8,32 @@ import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {findConflict} from '@/lib/stats';
+import {alternates, ogImage} from '@/lib/urls';
 import styles from './page.module.css';
 
 type Props = {params: Promise<{locale: string}>};
 
 const FILES_ID = 'dosyalar';
+
+/*
+ * Baslik ve aciklama yerlesimden geliyor (Site.name / Site.tagline);
+ * burada yalnizca kanonik adres ve dil karsiliklari veriliyor. Kok adres
+ * iki dilde iki ayri sayfa: /  ve  /en — arama motorunun bunu kendiliginden
+ * bilmesi beklenmez.
+ */
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+  const {locale} = await params;
+
+  /*
+   * Gorsel adresi burada da veriliyor: opengraph-image.tsx bu sayfayla ayni
+   * segmentte durdugu icin dosya sozlesmesi yerlesimdeki degeri eziyor ve
+   * yonlendirmeye dusen /tr/... adresini yaziyordu — lib/urls.ts.
+   */
+  return {
+    alternates: alternates(locale as Locale, '/'),
+    openGraph: {images: ogImage(locale as Locale)}
+  };
+}
 
 export default async function HomePage({params}: Props) {
   const {locale} = await params;
