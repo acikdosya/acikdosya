@@ -43,7 +43,10 @@
     "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
     "field": "Field",
     "absent": "no data",
-    "methodLink": "What do the confidence levels mean?"
+    "methodLink": "What do the confidence levels mean?",
+    "accessed": "accessed {date}",
+    "archive": "archived copy",
+    "digest": "digest {value}…"
   },
   "Specs": {
     "length_m": "Length",
@@ -84,7 +87,11 @@
     "chain_confidence": "Confidence",
     "chain_scope": "Scope",
     "chain_source": "Source",
-    "chain_verified": "Verified on"
+    "chain_verified": "Verified on",
+    "chain_document": "Document",
+    "accessed": "accessed {date}",
+    "archive": "archived copy",
+    "digest": "digest {value}…"
   },
   "SystemPage": {
     "specs": "Technical data and sources",
@@ -186,10 +193,18 @@
     "limit_classes": "No list of the target classes a system was developed against.",
     "limit_internals": "No technical detail on production, guidance internals, warhead design or accuracy optimisation. The limit is this: dimensions, mass, programme timeline and published performance claims.",
     "limit_imagery": "No combat or explosion imagery.",
+    "omittedIntro": "This rule is not abstract. The primary source for the TAYFUN file is ROKETSAN’s product card, and there are two fields on that card we read and deliberately left out:",
+    "omitted_targets": "Target type. The card lists the classes of target the system was developed against. That list does not enter the file: we draw the range envelope, but we do not build target language around it.",
+    "omitted_warhead": "Warhead type. The card states the type of warhead. That is design information and falls outside the limit; dimensions, mass and published performance claims fall inside it.",
+    "omittedNote": "We write here that we read these fields and left them out. Skipping them silently would mean reporting the source incompletely. The link to the source is on the page already, and readers can consult the document themselves.",
     "correctionsHeading": "Corrections",
     "correctionsBody": "If you believe a value is wrong, or you hold a better source, send it. Every sourced correction goes on record. Contact details are <link>on the about page</link>.",
     "divergence_belirsiz": "One of the comparability fields is filled on one side only. We do not know whether the values measure the same thing, so no interval arithmetic is done. Not knowing is not a contradiction: declaring one because a field is missing would be the opposite of the method this page describes.",
-    "divergenceExample_belirsiz": "“9 m” (third-party measurement) and “7 m” (scope not stated) — not comparable. We do not know how the second figure was obtained."
+    "divergenceExample_belirsiz": "“9 m” (third-party measurement) and “7 m” (scope not stated) — not comparable. We do not know how the second figure was obtained.",
+    "term_document": "Document",
+    "termBody_document": "When a value is read from a document, the version of that document and the date we accessed it. The same address can be updated silently; without a version name, the claim that “this figure was written here” cannot be checked a year later.",
+    "term_integrity": "Digest and archive",
+    "termBody_integrity": "The SHA-256 digest of the document we read, and the address of a third-party archived copy where one exists. We do not republish the document from our own server: manufacturer cards carry fields we do not publish and carry the manufacturer’s branding, so serving a mirror would mean publishing them ourselves. The digest leaves a check without crossing that line: anyone who finds the same file computes the digest themselves."
   },
   "About": {
     "eyebrow": "About",

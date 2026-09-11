@@ -43,7 +43,10 @@
     "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
     "field": "Alan",
     "absent": "veri yok",
-    "methodLink": "Güven seviyeleri ne anlama geliyor?"
+    "methodLink": "Güven seviyeleri ne anlama geliyor?",
+    "accessed": "erişim {date}",
+    "archive": "arşiv kopyası",
+    "digest": "özet {value}…"
   },
   "Specs": {
     "length_m": "Uzunluk",
@@ -84,7 +87,11 @@
     "chain_confidence": "Güven",
     "chain_scope": "Kapsam",
     "chain_source": "Kaynak",
-    "chain_verified": "Doğrulama tarihi"
+    "chain_verified": "Doğrulama tarihi",
+    "chain_document": "Belge",
+    "accessed": "erişim {date}",
+    "archive": "arşiv kopyası",
+    "digest": "özet {value}…"
   },
   "SystemPage": {
     "specs": "Teknik veriler ve kaynakları",
@@ -188,8 +195,16 @@
     "limit_classes": "Sistemin hangi hedef sınıflarına karşı geliştirildiğine dair liste yayımlanmaz.",
     "limit_internals": "Üretim, güdüm iç yapısı, harp başlığı tasarımı ve isabet optimizasyonu konularında teknik detay verilmez. Sınır şudur: boyut, kütle, program takvimi ve yayımlanmış performans beyanı.",
     "limit_imagery": "Çatışma veya patlama görseli kullanılmaz.",
+    "omittedIntro": "Bu kural soyut değil. TAYFUN dosyasının birincil kaynağı ROKETSAN’ın ürün kartı ve karta bakıp bilerek almadığımız iki alan var:",
+    "omitted_targets": "Hedef tipi. Kart, sistemin hangi hedef sınıflarına karşı geliştirildiğini sayıyor. Bu liste dosyaya girmiyor: menzil halkası çiziliyor ama hedef dili kurulmuyor.",
+    "omitted_warhead": "Harp başlığı tipi. Kart harp başlığının türünü yazıyor. Bu bir tasarım bilgisi ve sınırın dışında kalıyor; boyut, kütle ve yayımlanmış performans beyanı sınırın içinde.",
+    "omittedNote": "Bu alanları okuduğumuzu ve almadığımızı burada yazıyoruz. Sessizce atlamak kaynağı eksik aktarmak olurdu; kaynağın bağlantısı zaten sayfada duruyor ve okuyucu belgeye kendisi bakabilir.",
     "correctionsHeading": "Düzeltme",
-    "correctionsBody": "Bir değerin yanlış olduğunu düşünüyorsanız veya elinizde daha iyi bir kaynak varsa gönderin. Kaynağı olan her düzeltme kayda geçer. İletişim bilgisi <link>hakkında sayfasında</link>."
+    "correctionsBody": "Bir değerin yanlış olduğunu düşünüyorsanız veya elinizde daha iyi bir kaynak varsa gönderin. Kaynağı olan her düzeltme kayda geçer. İletişim bilgisi <link>hakkında sayfasında</link>.",
+    "term_document": "Belge",
+    "termBody_document": "Değer bir belgeden okunduysa belgenin sürümü ve ona eriştiğimiz tarih. Aynı adres sessizce güncellenebilir; sürüm adı olmadan “bu sayı burada yazıyordu” iddiası bir yıl sonra doğrulanamaz.",
+    "term_integrity": "Özet ve arşiv",
+    "termBody_integrity": "Okuduğumuz belgenin SHA-256 özeti ve varsa üçüncü taraf arşiv kopyasının adresi. Belgenin kopyasını kendi sunucumuzdan yayımlamıyoruz: üretici kartları yayımlamadığımız alanları ve üreticinin markasını taşıyor, aynasını servis etmek onları bizim yayımlamamız olurdu. Özet bu sınırı bozmadan doğrulama bırakır: aynı dosyayı bulan herkes özeti kendisi hesaplar."
   },
   "About": {
     "eyebrow": "Hakkında",

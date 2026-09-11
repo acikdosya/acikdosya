@@ -24,7 +24,23 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 }
 
 const LIMITS = ['targets', 'classes', 'internals', 'imagery'] as const;
-const TERMS = ['value', 'confidence', 'source', 'verified'] as const;
+
+/**
+ * Birincil kaynakta OLUP yayimlamadigimiz alanlar.
+ *
+ * Sinirlar bolumu neyi yayimlamadigimizi soyluyordu ama soyut kaliyordu.
+ * Elimizdeki belge bu alanlari tasiyor ve biz onlari okuyup birakiyoruz;
+ * bunu yazmak kaynagi tam aktarmanin parcasi — CLAUDE.md §5.
+ */
+const OMITTED = ['targets', 'warhead'] as const;
+const TERMS = [
+  'value',
+  'confidence',
+  'source',
+  'document',
+  'integrity',
+  'verified'
+] as const;
 
 /*
  * Durumlar lib/measurement/labels.ts'ten geliyor; burada ikinci bir liste
@@ -143,6 +159,17 @@ export default async function MethodPage({params}: Props) {
             <li key={limit}>{t(`limit_${limit}`)}</li>
           ))}
         </ul>
+        <div className={styles.body}>
+          <p>{t('omittedIntro')}</p>
+        </div>
+        <ul className={styles.limits}>
+          {OMITTED.map((field) => (
+            <li key={field}>{t(`omitted_${field}`)}</li>
+          ))}
+        </ul>
+        <div className={styles.body}>
+          <p>{t('omittedNote')}</p>
+        </div>
       </section>
 
       <section className={styles.section} aria-labelledby="corrections-heading">

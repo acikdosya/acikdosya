@@ -81,6 +81,46 @@ export function HeroProvenance({
           </dd>
         </div>
 
+        {/*
+          Belge halkasi yalnizca belge surumu varsa cizilir. Bos bir
+          "Belge" satiri, kaydin eksik oldugunu degil sorulmadigini
+          gosterirdi.
+        */}
+        {measurement.document_version ? (
+          <div className={styles.link}>
+            <dt>{t('chain_document')}</dt>
+            <dd>
+              {measurement.document_version[locale]}
+              {measurement.accessed_at ? (
+                <>
+                  {' · '}
+                  {t('accessed', {
+                    date: formatDate(measurement.accessed_at, locale)
+                  })}
+                </>
+              ) : null}
+              {measurement.archive_url ? (
+                <>
+                  {' · '}
+                  <a href={measurement.archive_url} rel="nofollow noopener">
+                    {t('archive')}
+                  </a>
+                </>
+              ) : null}
+              {measurement.source_sha256 ? (
+                <>
+                  {' · '}
+                  <span title={measurement.source_sha256}>
+                    {t('digest', {
+                      value: measurement.source_sha256.slice(0, 12)
+                    })}
+                  </span>
+                </>
+              ) : null}
+            </dd>
+          </div>
+        ) : null}
+
         <div className={styles.link}>
           <dt>{t('chain_verified')}</dt>
           <dd>{formatDate(measurement.verified_at, locale)}</dd>
