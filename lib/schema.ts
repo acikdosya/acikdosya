@@ -36,6 +36,14 @@ const isoDateSchema = z
     'gelecek tarih — verified_at dogrulamanin yapildigi gundur'
   );
 
+/**
+ * SHA-256 ozeti: 64 kucuk harf onaltilik basamak. Buyuk harfli ya da kisa
+ * bir dize sessizce kabul edilirse dogrulama hic calismaz.
+ */
+const sha256Schema = z
+  .string()
+  .regex(/^[0-9a-f]{64}$/, '64 basamakli kucuk harf onaltilik SHA-256 bekleniyor');
+
 /** Takvim olaylari icin: gun bilinmiyorsa YYYY-MM, ay da bilinmiyorsa YYYY. */
 const partialIsoDateSchema = z
   .string()
@@ -95,9 +103,66 @@ export const measurementSchema = z.strictObject({
   /** Insan okuyabilir kaynak adi. Ikincil hedef kitle yabanci okuyucu, bu yuzden cift dilli. */
   source: localizedTextSchema,
   source_url: z.url().optional(),
+  /**
+   * Belgenin hangi surumunden okundugu — "2024 katalogu" gibi.
+   *
+   * Bir urun karti sessizce guncellenir ve ayni adreste baska sayilar
+   * cikar. Surum adi olmadan "bu sayi bu adreste yaziyordu" iddiasi bir
+   * yil sonra dogrulanamaz hale gelir.
+   *
+   * Dosya yukleme damgasi (adresteki sayi, dosya tarihi) BU DEGILDIR ve
+   * beyan tarihi olarak da kullanilmaz: bir belgenin sunucuya ne zaman
+   * konuldugu, icindeki sayinin ne zaman aciklandigini soylemez.
+   */
+  document_version: localizedTextSchema.optional(),
+  /**
+   * Belgeye ne zaman eristigimiz. verified_at ile ayni gun olabilir ama
+   * ayni sey degil: biri kaydi kontrol ettigimiz gun, oteki belgeyi
+   * indirdigimiz gun. Bag curudugunde "o tarihte su adreste duruyordu"
+   * demenin dayanagi budur.
+   */
+  accessed_at: isoDateSchema.optional(),
+  /**
+   * Okudugumuz belgenin SHA-256 ozeti.
+   *
+   * Bag curudugunde ya da belge sessizce degistiginde "okudugumuz belge
+   * buydu" demenin dayanagi. Belgeyi yeniden yayimlamadan dogrulanabilir
+   * bir kayit birakir: ayni dosyayi bulan herkes ozeti kendisi hesaplar.
+   *
+   * Belgenin kopyasini kendi alan adimizdan SERVIS ETMIYORUZ. Uretici
+   * kartlari yayimlamadigimiz alanlar tasiyor (§5.2 hedef tipi, §5.3 harp
+   * basligi) ve uretici markasini tasiyor (§10). Kaynak gostermek ile
+   * kaynagi yeniden yayimlamak ayni sey degil; ozet ve ucuncu taraf arsiv
+   * bu ayrimi koruyarak dogrulanabilirligi saglar.
+   */
+  source_sha256: sha256Schema.optional(),
+  /**
+   * Ucuncu taraf arsiv kopyasi. Bizim degil: aynasi bizde durmadigi icin
+   * §5 ve §10 sinirlarina girmez, ama adres oldugunde okuyucu belgeye
+   * yine ulasir.
+   */
+  archive_url: z.url().optional(),
   /** "Bu sayi 6 ay sonra nereden geldi" sorusunun cevabi. */
   verified_at: isoDateSchema
 })
+  /*
+   * Belge surumu ve erisim tarihi bir ADRESE dair iddialardir. Adres
+   * olmadan ikisi de dogrulanamaz, yani kaydin degerini artirmaz;
+   * dogrulanabilir gorunen bir kayit uretirler, ki bu daha kotusudur.
+   */
+  .refine(
+    (measurement) =>
+      (!measurement.document_version &&
+        !measurement.accessed_at &&
+        !measurement.source_sha256 &&
+        !measurement.archive_url) ||
+      measurement.source_url !== undefined,
+    {
+      error:
+        'document_version ve accessed_at source_url olmadan yazilmaz — neye dair oldugu belirsiz kalir',
+      path: ['source_url']
+    }
+  )
   .refine((measurement) => !measurement.stated_at || measurement.stated_at <= today(), {
     error: 'gelecek tarih — stated_at aciklamanin yapildigi gundur',
     path: ['stated_at']
@@ -144,13 +209,32 @@ export const specsSchema = z.strictObject({
 export type Specs = z.infer<typeof specsSchema>;
 
 /** Sayisal olmayan, metinsel ozellik. Yine de guven seviyesi zorunlu. */
-export const attributeSchema = z.strictObject({
-  value: localizedTextSchema,
-  confidence: confidenceSchema,
-  source: localizedTextSchema.optional(),
-  source_url: z.url().optional(),
-  verified_at: isoDateSchema.optional()
-});
+export const attributeSchema = z
+  .strictObject({
+    value: localizedTextSchema,
+    confidence: confidenceSchema,
+    source: localizedTextSchema.optional(),
+    source_url: z.url().optional(),
+    /** Olcumdeki ile ayni anlam — atif bicimi alan turune gore degismez. */
+    document_version: localizedTextSchema.optional(),
+    accessed_at: isoDateSchema.optional(),
+    source_sha256: sha256Schema.optional(),
+    archive_url: z.url().optional(),
+    verified_at: isoDateSchema.optional()
+  })
+  .refine(
+    (attribute) =>
+      (!attribute.document_version &&
+        !attribute.accessed_at &&
+        !attribute.source_sha256 &&
+        !attribute.archive_url) ||
+      attribute.source_url !== undefined,
+    {
+      error:
+        'belge alanlari (document_version, accessed_at, source_sha256, archive_url) source_url olmadan yazilmaz — neye dair olduklari belirsiz kalir',
+      path: ['source_url']
+    }
+  );
 export type Attribute = z.infer<typeof attributeSchema>;
 
 export const attributeKeys = ['guidance', 'propellant', 'stages'] as const;

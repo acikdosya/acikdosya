@@ -136,6 +136,16 @@
 }
 
 /*
+ * Belge ozeti. Onaltilik basamaklar sekil degil sayi: tabular figurlerle
+ * dizilir ve satir sonunda kirilmaz.
+ */
+.digest {
+  white-space: nowrap;
+  font-variant-numeric: var(--num);
+  cursor: help;
+}
+
+/*
  * Tire tek basina ekran okuyucuya bir sey soylemiyor; yaninda gizli metin
  * duruyor. Gorsel taraf [data-state='absent'] ile globals.css'te — CLAUDE.md §4.
  */

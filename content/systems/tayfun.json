@@ -26,33 +26,57 @@
           {
             "value": 6.5,
             "confidence": "official",
+            "scope": "beyan",
             "source": {
-              "tr": "MSB / ROKETSAN açık veri",
-              "en": "Turkish MoND / ROKETSAN public data"
+              "tr": "ROKETSAN TAYFUN ürün kartı",
+              "en": "ROKETSAN TAYFUN product card"
             },
-            "verified_at": "2026-09-10"
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+            "verified_at": "2026-09-11"
           }
         ],
         "diameter_mm": [
           {
             "value": 610,
             "confidence": "official",
+            "scope": "beyan",
             "source": {
-              "tr": "MSB / ROKETSAN açık veri",
-              "en": "Turkish MoND / ROKETSAN public data"
+              "tr": "ROKETSAN TAYFUN ürün kartı",
+              "en": "ROKETSAN TAYFUN product card"
             },
-            "verified_at": "2026-09-10"
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+            "verified_at": "2026-09-11"
           }
         ],
         "mass_kg": [
           {
             "value": 2300,
             "confidence": "official",
+            "scope": "beyan",
             "source": {
-              "tr": "MSB / ROKETSAN açık veri",
-              "en": "Turkish MoND / ROKETSAN public data"
+              "tr": "ROKETSAN TAYFUN ürün kartı",
+              "en": "ROKETSAN TAYFUN product card"
             },
-            "verified_at": "2026-09-10"
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+            "verified_at": "2026-09-11"
           }
         ],
         "range_km": [
@@ -62,10 +86,28 @@
             "confidence": "official",
             "scope": "beyan",
             "source": {
-              "tr": "MSB resmî açıklaması",
-              "en": "Turkish MoND official statement"
+              "tr": "ROKETSAN TAYFUN ürün kartı",
+              "en": "ROKETSAN TAYFUN product card"
             },
-            "verified_at": "2026-09-10"
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 561,
+            "confidence": "press",
+            "scope": "test",
+            "stated_at": "2022-10-18",
+            "source": {
+              "tr": "DHA bülteni, 18.10.2022",
+              "en": "DHA news agency bulletin, 18 Oct 2022"
+            },
+            "verified_at": "2026-09-11"
           }
         ],
         "cep_m": [
@@ -73,21 +115,41 @@
             "value": 10,
             "operator": "≤",
             "confidence": "official",
+            "scope": "beyan",
             "source": {
-              "tr": "MSB resmî açıklaması",
-              "en": "Turkish MoND official statement"
+              "tr": "ROKETSAN TAYFUN ürün kartı",
+              "en": "ROKETSAN TAYFUN product card"
             },
-            "verified_at": "2026-09-10"
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+            "verified_at": "2026-09-11"
           }
         ]
       },
       "attributes": {
         "guidance": {
           "value": {
-            "tr": "GNSS / INS",
-            "en": "GNSS / INS"
+            "tr": "Koordinata güdüm sistemi; karıştırmaya karşı dayanıklı",
+            "en": "Coordinate guidance system; resistant to jamming"
           },
-          "confidence": "official"
+          "confidence": "official",
+          "source": {
+            "tr": "ROKETSAN TAYFUN ürün kartı",
+            "en": "ROKETSAN TAYFUN product card"
+          },
+          "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595739_tayfun.pdf",
+          "document_version": {
+            "tr": "2024 kataloğu",
+            "en": "2024 catalogue"
+          },
+          "accessed_at": "2026-09-11",
+          "source_sha256": "cb8bf85670ae83295a5acccfc277ba231d1eaf30d28e0cf0178e61fe373dd9d5",
+          "verified_at": "2026-09-11"
         },
         "propellant": {
           "value": {
@@ -137,12 +199,9 @@
         }
       ],
       "_todo": [
-        "range_km > 280 KAYNAK ATFI YANLIS: birden fazla ikincil kaynak degerin MSB aciklamasi degil ROKETSAN urun karti/brosuru oldugunu soyluyor. Birincil belge roketsan.com.tr'den indirilip source ve source_url ile duzeltilecek. Duzeltilene kadar mevcut atif yayinda kaliyor.",
-        "range_km > 280 icin stated_at bilinmiyor — aciklamanin yapildigi tarih bulunup girilecek",
-        "range_km 561 km, scope 'test', Ekim 2022 ilk atis: tek somut kaynak (yayin adi + tarih + URL) bulununca girilecek. Kaynak bulunmadan eklenmez.",
-        "range_km > 500 (basin) kayittan cikarildi: yayin adi, tarih ve baglanti yoktu. Tek bir somut kaynak bulununca geri eklenecek, bulunamazsa kalici olarak disarida kalir.",
-        "attributes alanlarina source ve verified_at eklenecek",
-        "spec kaynaklarina source_url eklenecek"
+        "561 km kaydinin source_url'i yok. Ayni DHA bulteninden tureyen haberlerde ucus suresi 458 ve 456 saniye olarak celisiyor; kaynak zinciri zayif, resmi teyit yok.",
+        "attributes.propellant ve attributes.stages 'official' tasiyor ama kaynaksiz. Urun kartinda ikisi de GECMIYOR; ya kaynak bulunacak ya confidence dusurulecek.",
+        "urun kartindaki harp basligi tipi ve hedef tipi alanlari bilerek alinmadi — CLAUDE.md §5.2 ve §5.3, yontem sayfasinda yazili."
       ]
     },
     {
@@ -155,25 +214,41 @@
             "value": 10,
             "operator": "~",
             "confidence": "press",
-            "scope": "olcum",
+            "scope": "beyan",
+            "stated_at": "2025-07",
             "source": {
-              "tr": "IDEF 2025 sergilemesi, basın ölçümü",
-              "en": "IDEF 2025 display, press measurement"
+              "tr": "IDEF 2025 tanıtımı, 22-23.07.2025",
+              "en": "IDEF 2025 presentation, 22-23 Jul 2025"
             },
-            "verified_at": "2026-09-10"
+            "verified_at": "2026-09-11"
           }
         ],
-        "range_km": [
+        "diameter_mm": [
           {
-            "value": 1000,
-            "operator": "≤",
-            "confidence": "estimate",
-            "scope": "tahmin",
+            "value": 938,
+            "operator": "~",
+            "confidence": "press",
+            "scope": "beyan",
+            "stated_at": "2025-07",
             "source": {
-              "tr": "Bağımsız değerlendirme — resmî teyit yok",
-              "en": "Independent assessment — no official confirmation"
+              "tr": "IDEF 2025 tanıtımı, 22-23.07.2025",
+              "en": "IDEF 2025 presentation, 22-23 Jul 2025"
             },
-            "verified_at": "2026-09-10"
+            "verified_at": "2026-09-11"
+          }
+        ],
+        "mass_kg": [
+          {
+            "value": 7200,
+            "operator": "~",
+            "confidence": "press",
+            "scope": "beyan",
+            "stated_at": "2025-07",
+            "source": {
+              "tr": "IDEF 2025 tanıtımı, 22-23.07.2025",
+              "en": "IDEF 2025 presentation, 22-23 Jul 2025"
+            },
+            "verified_at": "2026-09-11"
           }
         ]
       },
@@ -233,12 +308,10 @@
         }
       ],
       "_todo": [
-        "diameter_mm ~ 938 kayittan cikarildi: kaynagi 'Basin derlemesi' idi, yayin adi/tarih/baglanti yok. Ayni IDEF 2025 olcumunden geldigine dair kayit da yok. Somut kaynak bulununca geri eklenecek.",
-        "mass_kg ~ 7200 kayittan cikarildi: ayni gerekce. Kutle zaten fuarda olculemez, kaynagi ayrica gerekiyor.",
-        "diameter_mm olmadan BLOK-4 geometrisi uretilemiyor — siluet ve 3B disinda kaliyor.",
-        "cep_m icin acik kaynak bulunamadi — alan bos birakildi",
-        "attributes alanlarina source ve verified_at eklenecek",
-        "spec kaynaklarina source_url eklenecek"
+        "BLOK-4 range_km bosaltildi: dolasimda birden fazla bagimsiz tahmin var (≤1000 km ve 3000 km'ye kadar uzananlar) ve 'aciklanmadi' diyen kaynaklar da var. Tek tahmini gosterip otekileri gizlemek kendi kuralimizin ihlali olurdu. Ya hepsi kaynagiyla girilecek ya alan bos kalacak.",
+        "BLOK-4 olculeri icin tek bir somut yayin adi ve baglanti yok — IDEF 2025 tanitimi bir olay, yayin degil.",
+        "mass_kg kaynaklarda 7.200 / 7.300 / '7 tonun uzerinde' olarak degisiyor; ~ bandi bu dagilimi kapsiyor. Ayri kayitlar olarak girilmesi gerekip gerekmedigi acik soru.",
+        "cep_m icin acik kaynak bulunamadi — alan bos birakildi"
       ]
     }
   ],
@@ -322,6 +395,76 @@
         "tr": "Kaynak “basın derlemesi” idi: yayın adı, tarih ve bağlantı yok. Kütle bir fuar sergilemesinde ölçülemez, dolayısıyla ölçüme dayandığı da varsayılamaz. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
         "en": "The source was a “press compilation”: no publication name, date or link. Mass cannot be measured from a trade show display, so it cannot be assumed to rest on a measurement either. Removed from the record until a concrete source is found."
       }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "source",
+      "from": "MSB / ROKETSAN açık veri; MSB resmî açıklaması",
+      "to": "ROKETSAN TAYFUN ürün kartı, 2024 kataloğu",
+      "reason": {
+        "tr": "Uzunluk, çap, kütle, menzil ve CEP değerlerinin kaynağı MSB açıklaması diye yazılmıştı. Birincil belge bulundu: değerlerin beşi de ROKETSAN'ın TAYFUN ürün kartında birebir geçiyor. Atıf belgeye bağlandı, belge sürümü ve erişim tarihi kayda eklendi.",
+        "en": "Length, diameter, mass, range and CEP were attributed to a Turkish MoND statement. The primary document was found: all five figures appear verbatim on ROKETSAN's TAYFUN product card. The attribution now points at the document, with its version and our access date on the record."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "range_km",
+      "from": "> 280 km (resmî)",
+      "to": "> 280 km (resmî, beyan) ve 561 km (basın, test)",
+      "reason": {
+        "tr": "2022 test atışında kat edilen mesafe kayda eklendi. Beyan edilen azami menzille aynı şeyi ölçmediği için çelişki değil, farklı kapsam olarak işaretleniyor. Resmî teyidi yok.",
+        "en": "The distance covered in the 2022 test launch was added to the record. It does not measure the same thing as the declared maximum range, so it is marked as different scope rather than a contradiction. It carries no official confirmation."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "guidance",
+      "from": "GNSS / INS",
+      "to": "Koordinata güdüm sistemi; karıştırmaya karşı dayanıklı",
+      "reason": {
+        "tr": "“GNSS / INS” ifadesi ürün kartında geçmiyor; resmî rozetiyle yayımlanmış bir atıf hatasıydı. Değer kartın kendi diliyle değiştirildi.",
+        "en": "The phrase “GNSS / INS” does not appear on the product card; it was an attribution error published under the official badge. The value now uses the card's own wording."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "length_m",
+      "from": "~ 10 m (TAYFUN BLOK-4, basın ölçümü)",
+      "to": "~ 10 m (TAYFUN BLOK-4, IDEF 2025 tanıtımı)",
+      "reason": {
+        "tr": "Değer fuarda ölçülmüş gibi kaydedilmişti. Tanıtımda açıklanan bir rakam; kapsam “dışarıdan ölçüm”den “beyan”a düzeltildi.",
+        "en": "The figure was recorded as if measured at the trade show. It was a figure announced during the presentation; the scope was corrected from third-party measurement to declared."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "diameter_mm",
+      "from": "kayıt yok",
+      "to": "~ 938 mm (TAYFUN BLOK-4, basın)",
+      "reason": {
+        "tr": "Değer, kaynağı “basın derlemesi” olduğu için çıkarılmıştı. Somut bir olaya bağlandı: IDEF 2025 tanıtımı. Tek bir yayın adı ve bağlantı hâlâ eksik, bu yüzden güven “basın”.",
+        "en": "The figure had been removed because its source was a “press compilation”. It is now tied to a concrete event, the IDEF 2025 presentation. A single publication name and link are still missing, so the confidence stays at press."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "mass_kg",
+      "from": "kayıt yok",
+      "to": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
+      "reason": {
+        "tr": "Aynı gerekçeyle çıkarılmıştı, aynı olaya bağlanarak geri alındı. Kaynaklar 7.200, 7.300 ve “7 tonun üzerinde” arasında değişiyor; “~” bandı bu dağılımı kapsıyor.",
+        "en": "Removed for the same reason and restored against the same event. Sources vary between 7,200, 7,300 and “over 7 tonnes”; the “~” band covers that spread."
+      }
+    },
+    {
+      "date": "2026-09-11",
+      "field": "range_km",
+      "from": "≤ 1000 km (TAYFUN BLOK-4, tahmin)",
+      "to": "kayıt yok",
+      "reason": {
+        "tr": "Dolaşımdaki tek bağımsız tahmin bu değildi: 3000 km'ye kadar uzanan değerlendirmeler ve “açıklanmadı” diyen kaynaklar da var. Bir tahmini seçip diğerlerini gizlemek, bu dosyanın kurulduğu kuralın ihlali. Hepsi kaynağıyla girilene kadar alan boş.",
+        "en": "This was not the only independent estimate in circulation: assessments reaching up to 3,000 km exist, as do sources that say the figure was not disclosed. Picking one estimate and hiding the rest breaks the rule this file is built on. The field stays empty until all of them can be entered with their sources."
+      }
     }
   ],
   "disclaimer": {
@@ -329,6 +472,7 @@
     "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
   },
   "_todo": [
+    "urun kartinin ucuncu taraf arsiv kopyasi (archive_url) alinamadi: Internet Archive 11.09.2026'da kapaliydi. Belge ozeti (source_sha256) kayitta duruyor, arsiv adresi sonra eklenecek.",
     "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
     "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
     "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",

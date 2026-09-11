@@ -26,17 +26,42 @@ type Props = {
   locale: Locale;
 };
 
+/**
+ * Kaynak satiri: kim soyledi, hangi belgede, ne zaman baktik.
+ *
+ * Belge surumu kaynak adinin yaninda duruyor cunku ikisi birlikte bir
+ * atiftir: "urun karti" tek basina hangi yilin karti oldugunu soylemez ve
+ * ayni adres sessizce guncellenebilir.
+ *
+ * Erisim tarihi yalnizca dogrulama tarihinden FARKLIYSA yaziliyor. Ayni
+ * gunse iki kez tarih basmak satiri agirlastirir ve okura yeni bir sey
+ * soylemez; kayitta ikisi de duruyor.
+ *
+ * Belge ozeti kisaltilmis gorunuyor, tamami title'da. Kisaltma gizleme
+ * degil: 64 basamak tablo hucresinde okunmaz, tam deger hem burada hem
+ * icerik dosyasinda duruyor.
+ */
 function SourceLine({
   source,
   sourceUrl,
+  documentVersion,
+  accessedAt,
+  archiveUrl,
+  sha256,
   verifiedAt,
   locale
 }: {
   source: string;
   sourceUrl?: string;
+  documentVersion?: string;
+  accessedAt?: string;
+  archiveUrl?: string;
+  sha256?: string;
   verifiedAt?: string;
   locale: Locale;
 }) {
+  const t = useTranslations('SpecTable');
+
   return (
     <span className={styles.source}>
       {sourceUrl ? (
@@ -57,10 +82,41 @@ function SourceLine({
       ) : (
         source
       )}
+      {documentVersion ? <>{', '}{documentVersion}</> : null}
       {verifiedAt ? (
         <>
           {' · '}
           <span className={styles.verified}>{formatDate(verifiedAt, locale)}</span>
+        </>
+      ) : null}
+      {accessedAt && accessedAt !== verifiedAt ? (
+        <>
+          {' · '}
+          <span className={styles.verified}>
+            {t('accessed', {date: formatDate(accessedAt, locale)})}
+          </span>
+        </>
+      ) : null}
+      {archiveUrl ? (
+        <>
+          {' · '}
+          <a
+            href={archiveUrl}
+            rel="nofollow noopener"
+            data-track-event={EVENTS.source}
+            data-track-kaynak={sourceHost(archiveUrl)}
+            data-track-yer="arsiv"
+          >
+            {t('archive')}
+          </a>
+        </>
+      ) : null}
+      {sha256 ? (
+        <>
+          {' · '}
+          <span className={styles.digest} title={sha256}>
+            {t('digest', {value: sha256.slice(0, 12)})}
+          </span>
         </>
       ) : null}
     </span>
@@ -108,6 +164,10 @@ function MeasurementCell({
           <SourceLine
             source={measurement.source[locale]}
             sourceUrl={measurement.source_url}
+            documentVersion={measurement.document_version?.[locale]}
+            accessedAt={measurement.accessed_at}
+            archiveUrl={measurement.archive_url}
+            sha256={measurement.source_sha256}
             verifiedAt={measurement.verified_at}
             locale={locale}
           />
@@ -146,6 +206,10 @@ function AttributeCell({
         <SourceLine
           source={attribute.source[locale]}
           sourceUrl={attribute.source_url}
+          documentVersion={attribute.document_version?.[locale]}
+          accessedAt={attribute.accessed_at}
+          archiveUrl={attribute.archive_url}
+          sha256={attribute.source_sha256}
           verifiedAt={attribute.verified_at}
           locale={locale}
         />
