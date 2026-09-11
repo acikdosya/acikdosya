@@ -18,6 +18,7 @@ import type {Locale} from '@/i18n/routing';
 import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {primary} from '@/lib/format';
+import {selectMeasurements, systemKind} from '@/lib/geometry/measurements';
 import type {Confidence, System} from '@/lib/schema';
 import {systemJsonLd} from '@/lib/structured-data';
 import {absoluteUrl, alternates, ogImage} from '@/lib/urls';
@@ -30,8 +31,13 @@ export function generateStaticParams() {
 }
 
 /**
- * Model bolumunun verisi. Olcu alani olmayan varyant atlanir; ayni kurali
- * scripts/bake-glb.mjs de uygular, boylece GLB ile sahne ayni kumede kalir.
+ * Model bolumunun verisi.
+ *
+ * Kaynak: lib/geometry/measurements.ts icindeki ortak olcu secimi.
+ * Siluet, paylasim gorseli, GLB pisirici ve bu bolum ayni secimden
+ * gecer; boylece aile duzeyindeki beyanlar tek bir tuketicide kalmaz
+ * ve "modeli ciziliyor" kararini iki yerde iki farkli kural vermez.
+ *
  * Cevrilmis metinler burada cozulur — goruntuleyici client tarafina
  * mesaj paketi tasimaz (CLAUDE.md §6).
  */
@@ -41,28 +47,33 @@ function buildModelVariants(
   labels: {
     confidence: (key: Confidence) => string;
     ariaLabel: (name: string) => string;
+    family: string;
   }
 ): ModelVariant[] {
-  // ilk surumde ucak icin 3B/AR uretilmiyor — dis profil kaniti yeterli degil.
-  if (system.category === 'insansiz-hava-araci') return [];
+  // Aile grubunun varyanti yoktur; etiket veriden degil, o gruba ait olur.
+  const variants = new Map(
+    system.variants.map((variant) => [variant.id, variant])
+  );
 
-  return system.variants
-    .map((variant) => {
-      const length = variant.specs.length_m;
-      const diameter = variant.specs.diameter_mm;
-      if (!length || !diameter) return undefined;
+  return selectMeasurements(system)
+    .filter((selection) => selection.canModel)
+    .map((selection) => {
+      const lengths = selection.group.specs.length_m;
+      if (!lengths) return undefined;
 
-      const primaryLength = primary(length);
+      const primaryLength = primary(lengths);
+      const variant = variants.get(selection.group.id);
+      const label =
+        selection.group.kind === 'family' ? labels.family : selection.group.label;
 
       return {
-        id: variant.id,
-        label: variant.label,
-        lengthM: primaryLength.value,
-        diameterMm: primary(diameter).value,
+        id: selection.group.id,
+        label,
+        dimensions: selection.dimensions,
         systemSlug: system.slug,
         confidence: primaryLength.confidence,
         confidenceLabel: labels.confidence(primaryLength.confidence),
-        annotations: (variant.annotations ?? []).map((annotation) => ({
+        annotations: (variant?.annotations ?? []).map((annotation) => ({
           id: annotation.id,
           t: annotation.t,
           angle: annotation.angle,
@@ -72,10 +83,10 @@ function buildModelVariants(
         })),
         // Scene Viewer goreli adres kabul etmez; bake script ayni adi yazar.
         modelUrl: new URL(
-          `/models/${system.slug}-${variant.id}.glb`,
+          `/models/${system.slug}-${selection.group.id}.glb`,
           SITE_URL
         ).toString(),
-        ariaLabel: labels.ariaLabel(variant.label)
+        ariaLabel: labels.ariaLabel(label)
       };
     })
     .filter((variant) => variant !== undefined);
@@ -145,10 +156,12 @@ export default async function SystemPage({params}: Props) {
     }
   });
 
+  const kind = systemKind(system);
   const rings = buildRings(system);
   const modelVariants = buildModelVariants(system, lang, {
     confidence: tConfidence,
-    ariaLabel: (name) => tModel('ariaLabel', {name})
+    ariaLabel: (name) => tModel('ariaLabel', {name}),
+    family: tSpecTable('familyLabel')
   });
 
   /*
@@ -196,7 +209,9 @@ export default async function SystemPage({params}: Props) {
               exitFullscreen: tModel('exitFullscreen')
             }}
           />
-          <p className={styles.note}>{tModel('note')}</p>
+          <p className={styles.note}>
+            {tModel(kind === 'missile' ? 'note' : 'noteAircraft')}
+          </p>
         </>
       )
     });

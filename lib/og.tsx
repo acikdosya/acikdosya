@@ -9,7 +9,7 @@ import {
 import type {Confidence} from './schema';
 import {PALETTE} from './tokens';
 import {
-  layoutAircrafts,
+  compactAircraftEnvelopes,
   type AircraftItem
 } from '@/components/scale-silhouette/aircraft-geometry';
 import {
@@ -181,34 +181,36 @@ export function silhouetteDataUri(
 /**
  * Ucak boyut semasi, veri URI'si olarak.
  *
- * Fuzedekiyle ayni ilke: geometri sayfadaki cizimle ayni fonksiyondan
- * gelir, etiketler metin katmaninda. Govde kalinligi kanat acikliginin
- * sabit oranidir; bu ayrinti degil, sema.
+ * Sayfadaki sema dikey duruyor — iki gorunus alt alta, insan figuru
+ * yaninda. Paylasim gorselinin yeri genis ve alcak, o yuzden buraya grup
+ * basina tek zarf giriyor (yukseklik verisi varsa on gorunus, yoksa ust
+ * gorunus). Olcek yine sayfayi cizen fonksiyondan geliyor.
+ *
+ * Kontur burada da yok: cizilen sey olcunun siniri. Hangi kenarin ne
+ * oldugunu gorselin metin katmani soyluyor.
  */
 export function aircraftDataUri(
   items: readonly AircraftItem[]
 ): {src: string; width: number; height: number} | undefined {
-  const layout = layoutAircrafts(items);
-  if (!layout) return undefined;
+  const compact = compactAircraftEnvelopes(items);
+  if (!compact) return undefined;
 
-  const shapes = layout.rows
-    .map((row, index) => {
-      const stroke = index === 0 ? PALETTE.ink : PALETTE.signal;
-      return `<path d="${row.topView}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linejoin="round"/>`;
+  const margin = 6;
+  const shapes = compact.rects
+    .map((rect, index) => {
+      const stroke = index === 0 ? PALETTE.ink2 : PALETTE.signal;
+      return (
+        `<path d="${rect.path}" fill="none" stroke="${stroke}" ` +
+        'stroke-width="2" stroke-dasharray="6 7"/>'
+      );
     })
     .join('');
 
-  const margin = 6;
-  const left =
-    Math.min(...layout.rows.map((row) => row.dimension.x1)) - margin;
-  const right =
-    Math.max(...layout.rows.map((row) => row.dimension.x2)) + margin;
-  const top = 14;
-  const width = right - left;
-  const height = layout.groundY - top;
+  const width = compact.width + margin * 2;
+  const height = compact.height + margin * 2;
 
   const svg =
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${left} ${top} ${width} ${height}">` +
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${-margin} ${-margin} ${width} ${height}">` +
     shapes +
     '</svg>';
 

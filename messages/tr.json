@@ -32,10 +32,14 @@
   "ScaleSilhouette": {
     "caption": "Ölçekli karşılaştırma — şematik görseller yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
     "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
-    "ariaLabelAircraft": "{names} üst görünüşleri, {height} metrelik insan figürüne göre ölçekli",
+    "ariaLabelAircraft": "{names} için boyut zarfı şeması: üst görünüşte kanat açıklığı ve uzunluk, ön görünüşte kanat açıklığı ve yükseklik, {height} metrelik insan figürüne göre ölçekli",
     "humanLabel": "{height} m",
     "lengthLabel": "{value} m",
-    "familyLabel": "Aile düzeyindeki beyanlar"
+    "familyLabel": "Aile düzeyindeki beyanlar",
+    "captionAircraft": "Ölçekli karşılaştırma — yalnızca yayımlanmış boyutların zarfı çizilir. Dış hat için kaynağımız olmadığından uçak konturu üretilmemiştir.",
+    "lengthNamed": "uzunluk {value} m",
+    "spanNamed": "açıklık {value} m",
+    "heightNamed": "yükseklik {value} m"
   },
   "MeasureGap": {
     "absent": "doğrulanmış ölçü verisi yok",
@@ -148,7 +152,8 @@
     "note": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Etiketler yalnızca dış bölümleri adlandırır ve kendi güven seviyelerini taşır. Gövde, yayımlanmış uzunluk ve çap değerlerinden türetilmiştir; teknik çizim değildir.",
     "overview": "Genel görünüm",
     "fullscreen": "Tam ekran",
-    "exitFullscreen": "Tam ekrandan çık"
+    "exitFullscreen": "Tam ekrandan çık",
+    "noteAircraft": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Modelin ölçeği iki yayımlanmış sayıdan gelir: gövde uzunluğu ve kanat açıklığı. Gövde eni, kanat veçhesi, kanat ucu kıvrımı ve kuyruk yüksekliği gibi oranlar yayımlanmış sayı değildir; üreticinin yayımladığı görsellerden ölçülmüştür. Hangi oranın ölçüldüğü, hangisinin okunabilirlik için seçildiği ayrı ayrı kayıtlıdır. Motor, pervane, iniş takımı ve yük istasyonları modellenmez. İniş takımı modellenmediği için modelin dikey ölçüsü, tabloda yazan yükseklik değeri değildir."
   },
   "Nav": {
     "primary": "Ana gezinme",

@@ -198,7 +198,9 @@ Yeni performans açıklaması çok kısa olmalı: tabloda geçen kavramları aç
 
 Sadece üç toplam boyuttan gerçek gövde genişliği, kanat profili, kanat kalınlığı, motor yeri veya kuyruk oranı türetilemez. Gereken dış biçim bilgisi yayımlanmış referanslarla desteklenmeli; görsel çıkarımın sınırı ve güveni belirtilmeli. Referanssız ayrıntı verilmez. Boyut şeması ile ayrıntılı modelin yayın eşikleri farklıdır.
 
-İlk modelde sade dış gövde/kanat/kuyruk yeterlidir. Görsel referansı yetersiz motor/pervane/iniş takımı ayrıntıları modellenmez. Dış biçim için yeni bir performans hesabı veya aerodinamik model kullanılmaz. Hazır model ve üretici sayfasındaki 360° varlığını indirmek yasaktır. İnternette görüntülenebilir olması yeniden kullanım lisansı sayılmaz.
+İlk modelde sade dış gövde/kanat/kuyruk yeterlidir. Motor/pervane/iniş takımı ve yük istasyonları modellenmez. Dış biçim için yeni bir performans hesabı veya aerodinamik model kullanılmaz. Hazır model indirilmez.
+
+**Güncelleme, 11.09.2026.** Üreticinin yayımladığı görsellerden — 360° gösterinin kareleri dahil — *oran ölçmek* serbesttir. Görselin kendisi indirilip saklanmaz, depoya girmez, sayfada gösterilmez; alınan şey görüntü değil, ölçülen orandır. Ölçüm yöntemi, görülme tarihi ve kaynak adresi profil dosyasına yazılır ve hangi oranın ölçüldüğü, hangisinin seçildiği ayrı ayrı belirtilir (`lib/geometry/akinci.ts`). İnternette görüntülenebilir olmak hâlâ yeniden kullanım lisansı sayılmaz; bu yüzden görsel yeniden yayımlanmaz.
 
 ### 6.3 Ortak ölçüm seçimi
 

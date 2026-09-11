@@ -1,6 +1,7 @@
 import {primary} from '../format';
 import {specGroups, type SpecGroup} from '../measurement/groups';
 import {type Measurement, type System} from '../schema';
+import {hasProfile} from './selection';
 
 /**
  * Sistem kategorisine gore geometri turu.
@@ -71,6 +72,13 @@ export function selectMeasurements(
       if (!diameterList) continue;
       const diameter = primary(diameterList);
 
+      /*
+       * Olcu yetmez, dis profil de gerekir. Profili tanimsiz bir
+       * sistem icin model uretmek varsayilan geometriye dusmek
+       * olurdu — lib/geometry/selection.ts.
+       */
+      const profiled = hasProfile(system.slug, 'missile');
+
       result.push({
         group,
         dimensions: {
@@ -79,7 +87,10 @@ export function selectMeasurements(
           diameterMm: diameter.value
         },
         sources: [length, diameter],
-        canModel: true
+        canModel: profiled,
+        reason: profiled
+          ? undefined
+          : 'Bu sistem icin dis profil tanimlanmamis.'
       });
       continue;
     }
@@ -91,6 +102,13 @@ export function selectMeasurements(
     const heightList = group.specs.height_m;
     const height = heightList ? primary(heightList) : undefined;
 
+    /*
+     * Ucakta modeli olcek belirler: uzunluk ve kanat acikligi. Yukseklik
+     * modele girmez — yayimlanmis yukseklik inis takimini iceriyor ve
+     * takim modellenmiyor (lib/geometry/aircraft.ts).
+     */
+    const profiled = hasProfile(system.slug, 'aircraft');
+
     result.push({
       group,
       dimensions: {
@@ -100,9 +118,10 @@ export function selectMeasurements(
         heightM: height?.value
       },
       sources: [length, wingspan, ...(height ? [height] : [])],
-      canModel: false,
-      reason:
-        'Yeterli dis profil kaniti yok; ilk surumde yalnizca boyut semasi.'
+      canModel: profiled,
+      reason: profiled
+        ? undefined
+        : 'Bu sistem icin dis profil tanimlanmamis.'
     });
   }
 

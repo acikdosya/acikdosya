@@ -27,8 +27,25 @@
 }
 
 .dimension {
+  fill: none;
   stroke: var(--rule);
   stroke-width: 1;
+}
+
+/*
+ * Olcu zarfi — ucak semasinda govde konturunun yerini alir.
+ * Kesikli olmasi bilgi tasir: "burasi olcunun siniri, cizilmis bir dis
+ * hat degil". Duz cizilseydi okuyucu onu siluet sanardi.
+ */
+.envelope {
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 4;
+}
+
+.envelopeAlt {
+  stroke: var(--signal);
 }
 
 .dimensionText {
@@ -36,6 +53,10 @@
   font-size: var(--size-badge-sm);
   font-weight: var(--weight-semibold);
   fill: var(--ink-2);
+}
+
+.dimensionTextMid {
+  text-anchor: middle;
 }
 
 .variantLabel {

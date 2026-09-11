@@ -32,10 +32,14 @@
   "ScaleSilhouette": {
     "caption": "Scaled comparison — schematic drawings are derived from published dimensions, not technical drawings.",
     "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
-    "ariaLabelAircraft": "Top views of {names}, scaled against a {height} m human figure",
+    "ariaLabelAircraft": "Dimension envelope diagram for {names}: wingspan and length in top view, wingspan and height in front view, scaled against a {height} m human figure",
     "humanLabel": "{height} m",
     "lengthLabel": "{value} m",
-    "familyLabel": "Family-level statements"
+    "familyLabel": "Family-level statements",
+    "captionAircraft": "Scaled comparison — only the envelope of the published dimensions is drawn. No aircraft outline is produced, because we have no source for the outer shape.",
+    "lengthNamed": "length {value} m",
+    "spanNamed": "wingspan {value} m",
+    "heightNamed": "height {value} m"
   },
   "MeasureGap": {
     "absent": "no verified dimensional data",
@@ -148,7 +152,8 @@
     "note": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cross-section, exploded view or internal component layout — we hold no sourced data on internal geometry. Labels name external sections only and each carries its own confidence level. The body is derived from published length and diameter values; it is not a technical drawing.",
     "overview": "Overview",
     "fullscreen": "Fullscreen",
-    "exitFullscreen": "Exit fullscreen"
+    "exitFullscreen": "Exit fullscreen",
+    "noteAircraft": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. No cutaway, no exploded view, no internal layout — we have no sourced data on internal geometry. The model's scale comes from two published numbers: fuselage length and wingspan. Proportions such as fuselage width, wing chord, wingtip upturn and tail height are not published numbers; they were measured from the manufacturer's published imagery. Which proportion was measured and which was chosen for readability is recorded separately. Engines, propellers, landing gear and payload stations are not modelled. Because the landing gear is not modelled, the model's vertical extent is not the height value shown in the table."
   },
   "Nav": {
     "primary": "Primary navigation",

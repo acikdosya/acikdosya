@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {SCHEMATIC, type ModelResult} from './result';
 
 /**
  * Parametrik füze gövdesi.
@@ -11,6 +12,9 @@ import * as THREE from 'three';
  *   y(x) = sqrt(rho² − (Ln − x)²) + R − rho     0 ≤ x ≤ Ln
  * Bu, y(0) = 0 ve y(Ln) = R sınır koşullarını sağlar; gövdeye teğet geçer.
  */
+
+/** Kanatcik ucunun govde yaricapina orani — kadraj hesabi da kullanir. */
+export const FIN_SPAN_RATIO = 1.9;
 
 export interface MissileSpec {
   /** Toplam uzunluk, metre. content.specs.length_m[0].value */
@@ -26,21 +30,6 @@ export interface MissileSpec {
   /** Lathe segment sayısı — mobilde 48, masaüstünde 72. */
   radialSegments?: number;
 }
-
-export interface MissileResult {
-  group: THREE.Group;
-  /** Uzunluk (m) ve yarıçap (m) — annotation konumlandırması bunları kullanır. */
-  dimensions: { L: number; R: number };
-  /** Bellekten düşürmek için. R3F unmount'ta çağırılmalı. */
-  dispose: () => void;
-}
-
-/** Sematik palet — CSS tokenlarinin 3D karsiligi (--ink, --ink-2). */
-export const SCHEMATIC = {
-  surface: 0x9ba1a4,
-  edge: 0x1c2124,
-  dimension: 0x5c6367,
-} as const;
 
 function profile(spec: Required<Pick<MissileSpec, 'lengthM' | 'diameterMm'>> &
   { noseRatio: number; boattail: number }, steps = 28): THREE.Vector2[] {
@@ -61,7 +50,7 @@ function profile(spec: Required<Pick<MissileSpec, 'lengthM' | 'diameterMm'>> &
   return pts;
 }
 
-export function buildMissile(spec: MissileSpec): MissileResult {
+export function buildMissile(spec: MissileSpec): ModelResult {
   const {
     lengthM, diameterMm,
     noseRatio = 0.22, boattail = 0.94,
@@ -90,14 +79,14 @@ export function buildMissile(spec: MissileSpec): MissileResult {
   group.add(new THREE.LineSegments(edgeGeo, edgeMat));
 
   // kanatçıklar
-  const span = R * 1.9;
+  const finSpan = R * FIN_SPAN_RATIO;
   const root = L * 0.14;
   const tip = root * 0.42;
   const shape = new THREE.Shape();
   shape.moveTo(0, 0);
   shape.lineTo(root, 0);
-  shape.lineTo(root, span);
-  shape.lineTo(root - tip, span);
+  shape.lineTo(root, finSpan);
+  shape.lineTo(root - tip, finSpan);
   shape.closePath();
 
   const finGeo = new THREE.ExtrudeGeometry(shape, { depth: R * 0.09, bevelEnabled: false });
@@ -137,22 +126,8 @@ export function buildMissile(spec: MissileSpec): MissileResult {
 
   return {
     group,
-    dimensions: { L, R },
+    // reach: kanatcik ucu — genel gorunumun kadraji govdeden genis.
+    dimensions: { L, R, reach: finSpan },
     dispose: () => disposables.forEach((d) => d.dispose()),
   };
-}
-
-/**
- * Annotation konumu veriden türer: t = gövde boyunca oran (0..1),
- * angle = radyal açı (derece). Ölçüler değişse de etiket doğru yerde kalır.
- */
-export function annotationPosition(
-  t: number, angleDeg: number, dims: { L: number; R: number }, offset = 1.6,
-): THREE.Vector3 {
-  const rad = (angleDeg * Math.PI) / 180;
-  return new THREE.Vector3(
-    Math.cos(rad) * dims.R * offset,
-    t * dims.L,
-    Math.sin(rad) * dims.R * offset,
-  );
 }

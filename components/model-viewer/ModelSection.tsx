@@ -9,17 +9,17 @@ import {
   useSyncExternalStore
 } from 'react';
 import {EVENTS, track} from '@/lib/analytics';
+import type {SelectedDimensions} from '@/lib/geometry/measurements';
 import type {Confidence} from '@/lib/schema';
 import {ArButton} from './ArButton';
-import type {ViewerAnnotation} from './MissileViewer';
+import type {ViewerAnnotation} from './ModelViewer';
 import styles from './ModelSection.module.css';
 
 export interface ModelVariant {
   id: string;
   label: string;
-  /** Olcu verisi — geometri yalnizca bunlardan turer. */
-  lengthM: number;
-  diameterMm: number;
+  /** Olcu verisi — geometri yalnizca bundan turer. */
+  dimensions: SelectedDimensions;
   /** Sistem slug'i — hangi dis profilin uygulanacagini belirler. */
   systemSlug: string;
   /** Olcu verisinin guven seviyesi; butondaki chip bunu gosterir. */
@@ -45,7 +45,7 @@ function ViewerSkeleton() {
   return <div className="viewer-skeleton" aria-hidden />;
 }
 
-const MissileViewer = dynamic(() => import('./MissileViewer'), {
+const ModelViewer = dynamic(() => import('./ModelViewer'), {
   ssr: false,
   loading: ViewerSkeleton
 });
@@ -154,10 +154,9 @@ export function ModelSection({
   return (
     <div ref={wrapper} className={styles.wrapper}>
       {inView ? (
-        <MissileViewer
+        <ModelViewer
           systemSlug={active.systemSlug}
-          lengthM={active.lengthM}
-          diameterMm={active.diameterMm}
+          dimensions={active.dimensions}
           annotations={active.annotations}
           focusT={view.t}
           fallback={fallback}

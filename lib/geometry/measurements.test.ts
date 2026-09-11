@@ -26,17 +26,22 @@ function variant(id: string, specs: Specs = {}): Variant {
   };
 }
 
+/**
+ * Varsayilan slug 'tayfun': dis profili tanimli bir sistem, cunku
+ * model uretimi olcuye DE profile de bagli (lib/geometry/selection.ts).
+ */
 function system(
   category: System['category'],
   overrides?: {
     specs?: Specs;
     variants?: Variant[];
+    slug?: string;
   }
 ): System {
   return {
     $schema_version: '0.1',
     id: 'test',
-    slug: 'test',
+    slug: overrides?.slug ?? 'tayfun',
     name: {tr: 'Test', en: 'Test'},
     category,
     manufacturer: {id: 'test', name: 'TEST'},
@@ -72,6 +77,36 @@ test('fuze icin uzunluk ve cap secilir', () => {
   assert.equal(result[0].dimensions.lengthM, 6);
   assert.equal(result[0].dimensions.diameterMm, 610);
   assert.equal(result[0].canModel, true);
+});
+
+test('dis profili tanimsiz fuze icin model uretilmez', () => {
+  const s = system('balistik-fuze', {
+    slug: 'henuz-profili-yok',
+    specs: {
+      length_m: [measurement(6)],
+      diameter_mm: [measurement(610)]
+    }
+  });
+  const result = selectMeasurements(s);
+
+  assert.equal(result.length, 1);
+  assert.equal(result[0].canModel, false);
+  assert.ok(result[0].reason);
+});
+
+test('dis profili olan ucak icin model uretilir', () => {
+  const s = system('insansiz-hava-araci', {
+    slug: 'akinci',
+    specs: {
+      length_m: [measurement(12.2)],
+      wingspan_m: [measurement(20)]
+    }
+  });
+  const result = selectMeasurements(s);
+
+  assert.equal(result.length, 1);
+  assert.equal(result[0].canModel, true);
+  assert.equal(result[0].reason, undefined);
 });
 
 test('ucak icin uzunluk ve kanat acikligi secilir; model uretilmez', () => {

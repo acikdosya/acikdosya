@@ -272,7 +272,7 @@
     "Servis tavanı (40.000 ft) ile sayfa banner'ındaki maksimum irtifa (45.118 ft) arasındaki ilişki açıklığa kavuşturulacak.",
     "Seyir/azami hız tek aralık olarak kaydedildi; üretici ayrı değerler verirse alanlar bölünecek.",
     "A/B/C varyantlarına özgü kaynaklı ölçüler eklenecek.",
-    "Dış görünüş / siluet için lisansı açık referans aranacak; şimdiki şema gövde kalınlığını kanat açıklığı oranından türetiyor.",
+    "3B modelin dış oranları üreticinin yayımladığı görsellerden ölçüldü (11.09.2026); yöntem ve hangi oranın ölçülüp hangisinin seçildiği lib/geometry/akinci.ts içinde. Üst görünüş karesi bulunmadığı için kanat ok açısı hâlâ seçilmiş değer; temiz bir arka görünüş bulunursa V kuyruk açısı da ölçülebilir.",
     "Üretici sayfasının üçüncü taraf arşiv kopyası alınacak."
   ]
 }

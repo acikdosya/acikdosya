@@ -19,7 +19,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, draco, prune, weld } from '@gltf-transform/functions';
 import draco3d from 'draco3dgltf';
 import { buildModel } from '../lib/geometry/model.ts';
-import { systemKind } from '../lib/geometry/measurements.ts';
+import { selectMeasurements } from '../lib/geometry/measurements.ts';
 
 /**
  * three'nin GLTFExporter'ı ikili çıktıyı FileReader üzerinden topluyor;
@@ -57,7 +57,9 @@ function stripLines(group) {
 async function exportGlb(group) {
   const scene = new THREE.Scene();
   // Web sahnesiyle aynı duruş: uzun eksen yatay. Burnu yere bakan dikey
-  // model hem yanlış okunur hem de sayfanın tonuna aykırı.
+  // model hem yanlış okunur hem de sayfanın tonuna aykırı. Füze ve uçak
+  // aynı çerçevede üretildiği için (lib/geometry/result.ts) tek dönüş yeter:
+  // gövde ekseni +Y, yukarı +X, kanat açıklığı ±Z.
   group.rotation.z = Math.PI / 2;
   scene.add(group);
   const exporter = new GLTFExporter();
@@ -78,8 +80,6 @@ async function optimize(buffer) {
   return Buffer.from(await io.writeBinary(doc));
 }
 
-const num = (field) => Array.isArray(field) && field[0] ? field[0].value : null;
-
 async function main() {
   await mkdir(OUT, { recursive: true });
   const files = (await readdir(CONTENT)).filter((f) => f.endsWith('.json'));
@@ -88,27 +88,37 @@ async function main() {
   for (const file of files) {
     const system = JSON.parse(await readFile(path.join(CONTENT, file), 'utf8'));
 
-    if (systemKind(system) === 'aircraft') {
-      console.log(`atlandı  ${system.slug} — ilk sürümde İHA modeli üretilmiyor`);
-      continue;
-    }
+    /*
+     * Ölçü seçimi sayfayla ortak: hangi grubun modeli çizilir kararını
+     * lib/geometry/measurements.ts veriyor. Burada ikinci bir kural
+     * yazılmaz, yoksa web ile AR ayrı kümeler üretir.
+     */
+    for (const selection of selectMeasurements(system)) {
+      const { group: specGroup, dimensions, canModel, reason } = selection;
 
-    for (const variant of system.variants ?? []) {
-      const lengthM = num(variant.specs?.length_m);
-      const diameterMm = num(variant.specs?.diameter_mm);
-
-      if (lengthM == null || diameterMm == null) {
-        console.log(`atlandı  ${system.slug}/${variant.id} — ölçü verisi yok`);
+      if (!canModel) {
+        console.log(`atlandı  ${system.slug}/${specGroup.id} — ${reason ?? 'model üretilmiyor'}`);
         continue; // uydurma değer üretme (CLAUDE.md §7)
       }
 
-      const { group, dispose } = buildModel({ systemSlug: system.slug, lengthM, diameterMm, radialSegments: 64 });
+      const built = buildModel({
+        systemSlug: system.slug,
+        dimensions,
+        radialSegments: 64,
+      });
+
+      if (!built) {
+        console.log(`atlandı  ${system.slug}/${specGroup.id} — dış profil tanımsız`);
+        continue;
+      }
+
+      const { group, dispose } = built;
       stripLines(group);
       const raw = await exportGlb(group);
       const glb = await optimize(raw);
       dispose();
 
-      const name = `${system.slug}-${variant.id}.glb`;
+      const name = `${system.slug}-${specGroup.id}.glb`;
       await writeFile(path.join(OUT, name), glb);
 
       const kb = (glb.length / 1024).toFixed(0);

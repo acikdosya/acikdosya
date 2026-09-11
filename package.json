@@ -9,7 +9,7 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "validate:content": "tsx scripts/validate-content.ts",
-    "test": "node --import tsx --test \"lib/**/*.test.ts\"",
+    "test": "node --import tsx --test \"lib/**/*.test.ts\" \"components/**/*.test.ts\"",
     "bake:models": "node --import tsx scripts/bake-glb.mjs",
     "build:tiles": "node --import tsx scripts/build-tiles.mjs",
     "prebuild": "pnpm validate:content && pnpm bake:models"

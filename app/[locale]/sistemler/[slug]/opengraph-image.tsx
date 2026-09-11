@@ -113,14 +113,18 @@ export default async function OpengraphImage({
   }
 
   /*
-   * Rozet, cizimin dayandigi olcunun rozeti: siluet uzunluk verisinden
-   * turedigi icin gorselin tasidigi guven de o degerin guveni.
+   * Rozet, cizimin dayandigi olcunun rozeti. Fuzede cizilen sey uzunluk
+   * ekseninde bir siluet; ucakta kanat acikligi ekseninde bir zarf. Bu
+   * yuzden alan tura gore secilir — altta uzunluk yazip kanat acikligi
+   * cizmek, makineye ve okuyucuya ayri sey soylemek olurdu (§5.8).
    */
-  const allLengths = [
-    ...(system.specs?.length_m ?? []),
-    ...system.variants.flatMap((variant) => variant.specs.length_m ?? [])
+  const dimensionKey = kind === 'missile' ? 'length_m' : 'wingspan_m';
+  const dimensionList = [
+    ...(system.specs?.[dimensionKey] ?? []),
+    ...system.variants.flatMap((variant) => variant.specs[dimensionKey] ?? [])
   ];
-  const lengthValue = allLengths.length > 0 ? primary(allLengths) : undefined;
+  const dimensionValue =
+    dimensionList.length > 0 ? primary(dimensionList) : undefined;
 
   return new ImageResponse(
     (
@@ -186,7 +190,7 @@ export default async function OpengraphImage({
           </div>
         ) : null}
 
-        {lengthValue ? (
+        {dimensionValue ? (
           <div
             style={{
               display: 'flex',
@@ -198,14 +202,14 @@ export default async function OpengraphImage({
             }}
           >
             <div style={{display: 'flex', color: PALETTE.ink2}}>
-              {tSpec('length_m')}
+              {tSpec(dimensionKey)}
             </div>
             <div style={{display: 'flex'}}>
-              {formatValue(lengthValue, lang)} {SPEC_UNITS.length_m}
+              {formatValue(dimensionValue, lang)} {SPEC_UNITS[dimensionKey]}
             </div>
             <OgBadge
-              confidence={lengthValue.confidence}
-              label={tConfidence(lengthValue.confidence)}
+              confidence={dimensionValue.confidence}
+              label={tConfidence(dimensionValue.confidence)}
               size={22}
               width={130}
             />

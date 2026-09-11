@@ -27,6 +27,47 @@ function groupLabel(
   return group.kind === 'family' ? t('familyLabel') : group.label;
 }
 
+/**
+ * Olcek referansi. Ayni figur iki semada da kullaniliyor; oranlar figur
+ * yuksekligine gore, cunku yukseklik olcekten geliyor.
+ */
+function HumanFigure({
+  x,
+  y,
+  height
+}: {
+  x: number;
+  y: number;
+  height: number;
+}) {
+  return (
+    <g className={styles.human} transform={`translate(${x} ${y})`}>
+      <circle cx={height * 0.09} cy={height * 0.08} r={height * 0.075} />
+      <rect
+        x={height * 0.03}
+        y={height * 0.17}
+        width={height * 0.12}
+        height={height * 0.42}
+        rx={height * 0.05}
+      />
+      <rect
+        x={height * 0.037}
+        y={height * 0.58}
+        width={height * 0.045}
+        height={height * 0.42}
+        rx={height * 0.02}
+      />
+      <rect
+        x={height * 0.105}
+        y={height * 0.58}
+        width={height * 0.045}
+        height={height * 0.42}
+        rx={height * 0.02}
+      />
+    </g>
+  );
+}
+
 function MissileSilhouette({
   system,
   locale
@@ -51,8 +92,6 @@ function MissileSilhouette({
   const layout = layoutSilhouettes(items);
   if (!layout) return null;
 
-  const humanHeight = layout.human.height;
-
   return (
     <svg
       className={styles.svg}
@@ -71,37 +110,11 @@ function MissileSilhouette({
         y2={layout.groundY}
       />
 
-      <g
-        className={styles.human}
-        transform={`translate(${layout.human.x} ${layout.human.y})`}
-      >
-        <circle
-          cx={humanHeight * 0.09}
-          cy={humanHeight * 0.08}
-          r={humanHeight * 0.075}
-        />
-        <rect
-          x={humanHeight * 0.03}
-          y={humanHeight * 0.17}
-          width={humanHeight * 0.12}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.05}
-        />
-        <rect
-          x={humanHeight * 0.037}
-          y={humanHeight * 0.58}
-          width={humanHeight * 0.045}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.02}
-        />
-        <rect
-          x={humanHeight * 0.105}
-          y={humanHeight * 0.58}
-          width={humanHeight * 0.045}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.02}
-        />
-      </g>
+      <HumanFigure
+        x={layout.human.x}
+        y={layout.human.y}
+        height={layout.human.height}
+      />
       <text
         className={styles.dimensionText}
         x={layout.human.x}
@@ -152,6 +165,15 @@ function MissileSilhouette({
   );
 }
 
+/**
+ * Ucak boyut semasi.
+ *
+ * Kontur yok, zarf var — gerekcesi aircraft-geometry.ts basinda. Her
+ * grup icin ust gorunus (kanat acikligi × uzunluk) ve yukseklik verisi
+ * varsa on gorunus (kanat acikligi × yukseklik) cizilir. Hangi kenarin
+ * ne oldugunu olcu etiketleri soyler; kutunun kendisi bir bicim iddiasi
+ * tasimaz.
+ */
 function AircraftSilhouette({
   system,
   locale
@@ -177,8 +199,6 @@ function AircraftSilhouette({
   const layout = layoutAircrafts(items);
   if (!layout) return null;
 
-  const humanHeight = layout.human.height;
-
   return (
     <svg
       className={styles.svg}
@@ -197,37 +217,11 @@ function AircraftSilhouette({
         y2={layout.groundY}
       />
 
-      <g
-        className={styles.human}
-        transform={`translate(${layout.human.x} ${layout.human.y})`}
-      >
-        <circle
-          cx={humanHeight * 0.09}
-          cy={humanHeight * 0.08}
-          r={humanHeight * 0.075}
-        />
-        <rect
-          x={humanHeight * 0.03}
-          y={humanHeight * 0.17}
-          width={humanHeight * 0.12}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.05}
-        />
-        <rect
-          x={humanHeight * 0.037}
-          y={humanHeight * 0.58}
-          width={humanHeight * 0.045}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.02}
-        />
-        <rect
-          x={humanHeight * 0.105}
-          y={humanHeight * 0.58}
-          width={humanHeight * 0.045}
-          height={humanHeight * 0.42}
-          rx={humanHeight * 0.02}
-        />
-      </g>
+      <HumanFigure
+        x={layout.human.x}
+        y={layout.human.y}
+        height={layout.human.height}
+      />
       <text
         className={styles.dimensionText}
         x={layout.human.x}
@@ -238,9 +232,9 @@ function AircraftSilhouette({
 
       {layout.rows.map((row, index) => {
         const alt = index > 0;
-        const bodyClass = alt
-          ? `${styles.body} ${styles.bodyAlt}`
-          : styles.body;
+        const envelopeClass = alt
+          ? `${styles.envelope} ${styles.envelopeAlt}`
+          : styles.envelope;
 
         return (
           <g key={row.id}>
@@ -255,21 +249,45 @@ function AircraftSilhouette({
             >
               {row.label}
             </text>
-            <path className={bodyClass} d={row.topView} />
-            <line
-              className={styles.dimension}
-              x1={row.dimension.x1}
-              y1={row.dimension.y}
-              x2={row.dimension.x2}
-              y2={row.dimension.y}
-            />
+
+            <path className={envelopeClass} d={row.plan.path} />
+            <path className={styles.dimension} d={row.length.path} />
             <text
               className={styles.dimensionText}
-              x={row.dimension.labelX}
-              y={row.dimension.y + 4}
+              x={row.length.labelX}
+              y={row.length.labelY}
             >
-              {t('lengthLabel', {value: formatNumber(row.lengthM, locale)})}
+              {t('lengthNamed', {
+                value: formatNumber(row.length.valueM, locale)
+              })}
             </text>
+
+            <path className={styles.dimension} d={row.wingspan.path} />
+            <text
+              className={`${styles.dimensionText} ${styles.dimensionTextMid}`}
+              x={row.wingspan.labelX}
+              y={row.wingspan.labelY}
+            >
+              {t('spanNamed', {
+                value: formatNumber(row.wingspan.valueM, locale)
+              })}
+            </text>
+
+            {row.front && row.height ? (
+              <>
+                <path className={envelopeClass} d={row.front.path} />
+                <path className={styles.dimension} d={row.height.path} />
+                <text
+                  className={styles.dimensionText}
+                  x={row.height.labelX}
+                  y={row.height.labelY}
+                >
+                  {t('heightNamed', {
+                    value: formatNumber(row.height.valueM, locale)
+                  })}
+                </text>
+              </>
+            ) : null}
           </g>
         );
       })}
@@ -281,12 +299,17 @@ export function ScaleSilhouette({system, locale}: Props) {
   const t = useTranslations('ScaleSilhouette');
   const kind = systemKind(system);
 
-  const Svg = kind === 'missile' ? MissileSilhouette : AircraftSilhouette;
-
   return (
     <figure className={styles.frame}>
-      <Svg system={system} locale={locale} />
-      <figcaption className={styles.caption}>{t('caption')}</figcaption>
+      {kind === 'missile' ? (
+        <MissileSilhouette system={system} locale={locale} />
+      ) : (
+        <AircraftSilhouette system={system} locale={locale} />
+      )}
+      {/* Altyazi tura gore: ucakta cizilen sey siluet degil, olcu zarfi. */}
+      <figcaption className={styles.caption}>
+        {kind === 'missile' ? t('caption') : t('captionAircraft')}
+      </figcaption>
     </figure>
   );
 }
