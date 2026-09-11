@@ -12,20 +12,29 @@ import {Canvas, useFrame, useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import {ContactShadows, Html, OrbitControls} from '@react-three/drei';
 import type {SelectedDimensions} from '@/lib/geometry/measurements';
+import {goalFor, horizontalRadius, type ViewSpec} from '@/lib/geometry/framing';
 import {buildModel, modelBounds} from '@/lib/geometry/model';
+import {focusPointFor} from '@/lib/geometry/parts-for';
 import {
   annotationPosition,
   SCHEMATIC,
-  type ModelDimensions
+  type ModelFrame
 } from '@/lib/geometry/result';
 import type {Confidence} from '@/lib/schema';
 
+export type {ViewSpec};
+
 export interface ViewerAnnotation {
   id: string;
-  /** Gövde boyunca oran, 0 = burun ucu, 1 = kuyruk. */
+  /**
+   * Hangi parçaya bağlı. Zorunlu: varsayılan olarak gövdeye düşmek,
+   * etiketi sessizce yanlış yere koymak olurdu.
+   */
+  part: string;
+  /** Parça üzerinde oran, 0 = baş, 1 = son. */
   t: number;
-  /** Radyal açı, derece. */
-  angle: number;
+  /** Radyal açı, derece. Yalnız dönel gövdede anlamlı. */
+  angle?: number;
   /** Dile göre çözülmüş etiket — bu bileşen mesaj paketi taşımaz. */
   label: string;
   confidence: Confidence;
@@ -39,10 +48,11 @@ interface Props {
   dimensions: SelectedDimensions;
   annotations: ViewerAnnotation[];
   /**
-   * Odaklanilacak bolumun govde orani. null ise genel gorunum.
-   * Deger annotation verisinden gelir; elle yazilmis kamera konumu yok.
+   * Hangi gorunum. Deger etiket verisinden gelir; elle yazilmis kamera
+   * konumu yok. 'front' burun ucuna bakar — ureticinin yayimladigi on
+   * gorunusle ayni kadraj ve iki boyutlu semayla ayni eksen.
    */
-  focusT: number | null;
+  view: ViewSpec;
   /** WebGL yoksa gösterilecek içerik — sayfa ScaleSilhouette veriyor. */
   fallback: React.ReactNode;
   label: string;
@@ -91,94 +101,52 @@ function Model({
   // zaten eliyor. Gelirse bos sahne cizilir, varsayilan govde degil.
   if (!model) return null;
 
-  const {group, dimensions: dims} = model;
+  const {group, parts, frame} = model;
 
   return (
     // uzun eksen ekranda yatay dursun
-    <group rotation={[0, 0, Math.PI / 2]} position={[dims.L / 2, 0, 0]}>
+    <group rotation={[0, 0, Math.PI / 2]} position={[frame.length / 2, 0, 0]}>
       <primitive object={group} />
-      {annotations.map((annotation) => (
-        <Html
-          key={annotation.id}
-          position={annotationPosition(annotation.t, annotation.angle, dims)}
-          center
-          occlude
-          style={{pointerEvents: 'none'}}
-        >
-          <span className="hotspot">
-            {annotation.label}
-            <span className={`chip conf-${annotation.confidence}`}>
-              {annotation.confidenceLabel}
+      {annotations.map((annotation) => {
+        /*
+         * Hedef parca bulunamazsa etiket HIC cizilmez. Yanlis yerde
+         * duran bir etiket, olmayan bir etiketten daha kotu.
+         */
+        const position = annotationPosition(parts, annotation);
+        if (!position) return null;
+
+        return (
+          <Html
+            key={annotation.id}
+            position={position}
+            center
+            occlude
+            style={{pointerEvents: 'none'}}
+          >
+            <span className="hotspot">
+              {annotation.label}
+              <span className={`chip conf-${annotation.confidence}`}>
+                {annotation.confidenceLabel}
+              </span>
             </span>
-          </span>
-        </Html>
-      ))}
+          </Html>
+        );
+      })}
     </group>
   );
 }
 
 type OrbitLike = {target: THREE.Vector3; update: () => void} | null;
 
-interface Goal {
-  target: THREE.Vector3;
-  position: THREE.Vector3;
-}
-
-/**
- * Modelin yatay yariçapi: govde yarim uzunlugu ile kanat/kanatcik ucu.
- * Model kendi ekseninde dondugu icin kadraj bu yaricapi kullanmali —
- * yalniz uzunluga bakan bir kadraj, AKINCI gibi kanat acikligi
- * govdesinden uzun bir sistemde kanat ucunu keser.
- */
-function horizontalRadius(dims: ModelDimensions): number {
-  return Math.hypot(dims.L / 2, dims.reach);
-}
-
-/**
- * Kamera konumu da olcuden turer. Genel gorunumde model kareyi doldurur;
- * bir bolume odaklanildiginda cerceve capin katidir. Model yatay durdugu
- * icin t orani dunya ekseninde x = L * (0.5 - t) olur.
- *
- * Kamera yuksekligi sabit bir oran DEGIL: kameraya donuk kanat ucu
- * en yakin nokta ve yukseklik arttikca kadrajin altindan tasar. Bu
- * yuzden yukseklik, en yakin noktanin dikey gorus acisina gore
- * sinirlanir.
- */
-function goalFor(
-  dims: ModelDimensions,
-  focusT: number | null,
-  fov: number,
-  aspect: number
-): Goal {
-  const tan = Math.tan(((fov * Math.PI) / 180) / 2);
-
-  if (focusT === null) {
-    const radius = horizontalRadius(dims);
-    const distance = Math.max(radius / (tan * aspect * 0.85), radius * 1.2);
-    const nearest = Math.max(distance - radius, radius * 0.2);
-    const height = Math.min(radius * 0.3, tan * nearest * 0.8);
-
-    return {
-      target: new THREE.Vector3(0, 0, 0),
-      position: new THREE.Vector3(0, height, distance)
-    };
-  }
-
-  const x = dims.L * (0.5 - focusT);
-  const distance = Math.max((dims.R * 7) / (2 * tan), dims.R * 3);
-  return {
-    target: new THREE.Vector3(x, 0, 0),
-    position: new THREE.Vector3(x, dims.R * 1.2, distance)
-  };
-}
-
 function Framing({
-  dims,
-  focusT,
+  frame,
+  view,
+  focus,
   reduce
 }: {
-  dims: ModelDimensions;
-  focusT: number | null;
+  frame: ModelFrame;
+  view: ViewSpec;
+  focus: {x: number; y: number} | undefined;
   reduce: boolean;
 }) {
   const camera = useThree((state) => state.camera);
@@ -190,8 +158,8 @@ function Framing({
 
   const goal = useMemo(() => {
     const fov = camera instanceof THREE.PerspectiveCamera ? camera.fov : 38;
-    return goalFor(dims, focusT, fov, width / height);
-  }, [camera, dims, focusT, width, height]);
+    return goalFor(frame, view, focus, fov, width / height);
+  }, [camera, frame, view, focus, width, height]);
 
   useEffect(() => {
     // Hedef degisti, yumusatma yeniden baslar.
@@ -214,7 +182,7 @@ function Framing({
     controls?.update();
 
     // Yeterince yaklasinca birak, aksi halde otomatik donus kilitlenir.
-    if (camera.position.distanceTo(goal.position) < dims.L * 0.01) {
+    if (camera.position.distanceTo(goal.position) < frame.length * 0.01) {
       moving.current = false;
     }
   });
@@ -265,7 +233,7 @@ export default function ModelViewer({
   systemSlug,
   dimensions,
   annotations,
-  focusT,
+  view,
   fallback,
   label,
   onReady
@@ -277,9 +245,18 @@ export default function ModelViewer({
   const webgl = supportsWebGL2();
 
   // Sahne kurulmadan once olculer: kadraj, golge ve zoom sinirlari.
-  const dims = useMemo(
+  const frame = useMemo(
     () => modelBounds({systemSlug, dimensions}),
     [systemSlug, dimensions]
+  );
+
+  // Odak noktasi parca uzerinde cozulur; sahne kurulmadan biliniyor.
+  const focus = useMemo(
+    () =>
+      view.kind === 'focus'
+        ? focusPointFor(systemSlug, dimensions, view)
+        : undefined,
+    [systemSlug, dimensions, view]
   );
 
   useEffect(() => {
@@ -287,12 +264,12 @@ export default function ModelViewer({
   }, [onReady, webgl]);
 
   // Kendi kendine donus yalnizca genel gorunumde, kullanici dokunana kadar.
-  const autoRotate = !reduce && !grabbed && focusT === null;
+  const autoRotate = !reduce && !grabbed && view.kind === 'overview';
 
   // WebGL yoksa ya da sistemin dis profili tanimsizsa sahne kurulmaz.
-  if (!webgl || !dims) return <>{fallback}</>;
+  if (!webgl || !frame) return <>{fallback}</>;
 
-  const radius = horizontalRadius(dims);
+  const radius = horizontalRadius(frame);
 
   return (
     <div
@@ -320,7 +297,7 @@ export default function ModelViewer({
         <hemisphereLight args={[0xffffff, 0xb9bdb8, 1.5]} />
         <directionalLight position={[3, 6, 5]} intensity={1.5} />
         <directionalLight position={[-4, -2, -3]} intensity={0.5} />
-        <Framing dims={dims} focusT={focusT} reduce={reduce} />
+        <Framing frame={frame} view={view} focus={focus} reduce={reduce} />
         <Suspense fallback={null}>
           <Model
             systemSlug={systemSlug}
@@ -330,10 +307,10 @@ export default function ModelViewer({
           {/* Govdeyi zemine oturtan yumusak golge: isik kurgusu degil,
               derinlik ipucu. Yuzey mat kalir, yansima yok. */}
           <ContactShadows
-            position={[0, -dims.R * 1.9, 0]}
+            position={[0, -frame.bodyRadius * 1.9, 0]}
             scale={radius * 2.6}
             resolution={256}
-            far={dims.R * 4}
+            far={frame.bodyRadius * 4}
             blur={2.6}
             opacity={0.26}
             color={`#${SCHEMATIC.edge.toString(16).padStart(6, '0')}`}
@@ -344,7 +321,7 @@ export default function ModelViewer({
           enableDamping
           autoRotate={autoRotate}
           autoRotateSpeed={0.5}
-          minDistance={dims.R * 2.5}
+          minDistance={frame.bodyRadius * 2.5}
           maxDistance={radius * 8}
           makeDefault
         />

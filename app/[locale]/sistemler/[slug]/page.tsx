@@ -7,7 +7,9 @@ import {
   type ModelVariant
 } from '@/components/model-viewer/ModelSection';
 import {MeasureGap} from '@/components/measure-gap/MeasureGap';
+import {ModelProvenance} from '@/components/model-provenance/ModelProvenance';
 import {RangeEnvelope} from '@/components/range-envelope/RangeEnvelope';
+import {RangeScale} from '@/components/range-scale/RangeScale';
 import {RevisionLog} from '@/components/revision-log/RevisionLog';
 import {buildRings} from '@/components/range-envelope/rings';
 import {ScaleSilhouette} from '@/components/scale-silhouette/ScaleSilhouette';
@@ -19,6 +21,7 @@ import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {primary} from '@/lib/format';
 import {selectMeasurements, systemKind} from '@/lib/geometry/measurements';
+import {specGroups} from '@/lib/measurement/groups';
 import type {Confidence, System} from '@/lib/schema';
 import {systemJsonLd} from '@/lib/structured-data';
 import {absoluteUrl, alternates, ogImage} from '@/lib/urls';
@@ -75,6 +78,7 @@ function buildModelVariants(
         confidenceLabel: labels.confidence(primaryLength.confidence),
         annotations: (variant?.annotations ?? []).map((annotation) => ({
           id: annotation.id,
+          part: annotation.part,
           t: annotation.t,
           angle: annotation.angle,
           label: annotation.label[lang],
@@ -158,6 +162,20 @@ export default async function SystemPage({params}: Props) {
 
   const kind = systemKind(system);
   const rings = buildRings(system);
+  /*
+   * Ucakta menzil halkasi cizilmiyor. Gerekcesi iki katli ve
+   * components/range-scale/geometry.ts basinda yazili: halka bir
+   * yaricap iddiasi, "operasyonel menzil" ise oyle yorumlanmadi;
+   * ustelik alti bin kilometrelik bir halka harita paketinin
+   * kapsamina girmiyor (CLAUDE.md §11). Yerine mesafe cetveli.
+   */
+  const hasRangeStatement =
+    kind === 'aircraft' &&
+    specGroups(system).some(
+      (group) =>
+        group.specs.operational_range_km !== undefined ||
+        group.specs.range_km !== undefined
+    );
   const modelVariants = buildModelVariants(system, lang, {
     confidence: tConfidence,
     ariaLabel: (name) => tModel('ariaLabel', {name}),
@@ -205,6 +223,7 @@ export default async function SystemPage({params}: Props) {
               hint: tModel('hint'),
               ar: tModel('ar'),
               overview: tModel('overview'),
+              front: tModel('front'),
               fullscreen: tModel('fullscreen'),
               exitFullscreen: tModel('exitFullscreen')
             }}
@@ -212,6 +231,12 @@ export default async function SystemPage({params}: Props) {
           <p className={styles.note}>
             {tModel(kind === 'missile' ? 'note' : 'noteAircraft')}
           </p>
+          {/*
+            Bicim kaydi: modelin oranlari nereden geldi. Sayfadaki her sayi
+            guven seviyesiyle sunuluyor; bicim de kokenini soylemeli
+            (specs/model-provenance).
+          */}
+          <ModelProvenance system={system} locale={lang} />
         </>
       )
     });
@@ -270,6 +295,14 @@ export default async function SystemPage({params}: Props) {
           />
         </>
       )
+    });
+  }
+
+  if (hasRangeStatement) {
+    sections.push({
+      id: 'range',
+      title: t('rangeDistance'),
+      body: <RangeScale system={system} locale={lang} />
     });
   }
 

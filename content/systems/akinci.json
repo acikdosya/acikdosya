@@ -19,6 +19,23 @@
   "specs": {
     "length_m": [
       {
+        "value": 12.3,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+          "en": "BAYKAR Bayraktar AKINCI product brochure"
+        },
+        "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+        "document_version": {
+          "tr": "18 Şubat 2026 sürümü",
+          "en": "18 February 2026 version"
+        },
+        "accessed_at": "2026-09-11",
+        "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
+        "verified_at": "2026-09-11"
+      },
+      {
         "value": 12.2,
         "confidence": "official",
         "scope": "beyan",
@@ -145,19 +162,38 @@
     "cruise_speed_ktas": [
       {
         "value": 150,
-        "upper_value": 240,
         "confidence": "official",
         "scope": "beyan",
-        "context_note": {
-          "tr": "Kaynak 'Seyir - Azami Hız 150 - 240 KTAS' şeklinde tek aralık veriyor; seyir ve azami hız ayrı değerler olarak belirtilmemiş.",
-          "en": "The source gives a single range 'Cruise - Maximum Speed 150 - 240 KTAS'; cruise and maximum speed are not stated as separate values."
-        },
         "source": {
-          "tr": "BAYKAR AKINCI ürün sayfası",
-          "en": "BAYKAR AKINCI product page"
+          "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+          "en": "BAYKAR Bayraktar AKINCI product brochure"
         },
-        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+        "document_version": {
+          "tr": "18 Şubat 2026 sürümü",
+          "en": "18 February 2026 version"
+        },
         "accessed_at": "2026-09-11",
+        "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "max_speed_ktas": [
+      {
+        "value": 240,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+          "en": "BAYKAR Bayraktar AKINCI product brochure"
+        },
+        "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+        "document_version": {
+          "tr": "18 Şubat 2026 sürümü",
+          "en": "18 February 2026 version"
+        },
+        "accessed_at": "2026-09-11",
+        "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
         "verified_at": "2026-09-11"
       }
     ],
@@ -186,10 +222,110 @@
       "label": "AKINCI",
       "introduced": 2021,
       "specs": {},
-      "attributes": {},
-      "annotations": [],
+      "attributes": {
+        "power_system": {
+          "value": {
+            "tr": "Turboprop motorlar (2×450 bg, 2×750 bg ya da 2×850 bg)",
+            "en": "Turboprop engines (2×450 hp, 2×750 hp or 2×850 hp)"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+            "en": "BAYKAR Bayraktar AKINCI product brochure"
+          },
+          "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+          "document_version": {
+            "tr": "18 Şubat 2026 sürümü",
+            "en": "18 February 2026 version"
+          },
+          "accessed_at": "2026-09-11",
+          "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
+          "verified_at": "2026-09-11"
+        },
+        "communications": {
+          "value": {
+            "tr": "Görüş hattı ve görüş hattı ötesi; SATCOM BLOS",
+            "en": "Line of sight and beyond line of sight; SATCOM BLOS"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+            "en": "BAYKAR Bayraktar AKINCI product brochure"
+          },
+          "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+          "document_version": {
+            "tr": "18 Şubat 2026 sürümü",
+            "en": "18 February 2026 version"
+          },
+          "accessed_at": "2026-09-11",
+          "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
+          "verified_at": "2026-09-11"
+        },
+        "variant_names": {
+          "value": {
+            "tr": "AKINCI-A, AKINCI-B ve AKINCI-C",
+            "en": "AKINCI-A, AKINCI-B and AKINCI-C"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+            "en": "BAYKAR Bayraktar AKINCI product brochure"
+          },
+          "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf",
+          "document_version": {
+            "tr": "18 Şubat 2026 sürümü",
+            "en": "18 February 2026 version"
+          },
+          "accessed_at": "2026-09-11",
+          "source_sha256": "fefeaa9368d56f8a0cdb738095ffd9bfafd463536c0315f76e41f80893d1dc99",
+          "verified_at": "2026-09-11"
+        }
+      },
+      "annotations": [
+        {
+          "id": "burun",
+          "part": "body",
+          "t": 0.07,
+          "angle": 90,
+          "label": {
+            "tr": "Burun bölümü",
+            "en": "Nose section"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kanat-ucu",
+          "part": "wing-tip-1",
+          "t": 0.62,
+          "label": {
+            "tr": "Kanat ucu kıvrımı",
+            "en": "Wing tip"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "dikey-stabilize",
+          "part": "fin",
+          "t": 0.68,
+          "label": {
+            "tr": "Dikey stabilize",
+            "en": "Vertical stabiliser"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "motor-gondolu",
+          "part": "nacelle-1-a",
+          "t": 0.5,
+          "label": {
+            "tr": "Motor gondolu",
+            "en": "Engine nacelle"
+          },
+          "confidence": "official"
+        }
+      ],
       "_todo": [
-        "A/B/C varyant adlari uretici sayfasinda geciyor ama varyanta ozgu kaynakli sayi henuz yok; aile duzeyindeki beyanlar yukarida."
+        "A/B/C varyant adlari ureticinin urun brosurunde resmen geciyor ama varyanta ozgu kaynakli sayi henuz yok; aile duzeyindeki beyanlar yukarida."
       ]
     }
   ],
@@ -263,16 +399,65 @@
       "source_url": "https://baykartech.com/tr/press/bayraktar-akinci-tiha-envantere-girdi/"
     }
   ],
-  "revisions": [],
+  "revisions": [
+    {
+      "date": "2026-09-11",
+      "field": "cruise_speed_ktas",
+      "from": "150 – 240 ktas",
+      "to": "150 ktas",
+      "reason": {
+        "tr": "Üretici ürün sayfasında seyir ve azami hızı tek aralık olarak veriyordu; bu yüzden tek kayda aralık olarak yazılmıştı. Ürün broşürü ikisini ayrı satırda veriyor, kayıt da ayrıldı.",
+        "en": "The product page gave cruise and maximum speed as a single range, so it was recorded as one range. The product brochure states them on separate lines, so the record was split."
+      },
+      "source": {
+        "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+        "en": "BAYKAR Bayraktar AKINCI product brochure"
+      },
+      "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf"
+    },
+    {
+      "date": "2026-09-11",
+      "field": "max_speed_ktas",
+      "from": "—",
+      "to": "240 ktas",
+      "reason": {
+        "tr": "Azami hız, seyir hızından ayrılan kaydın ikinci yarısı olarak eklendi.",
+        "en": "Maximum speed was added as the second half of the record split from cruise speed."
+      },
+      "source": {
+        "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+        "en": "BAYKAR Bayraktar AKINCI product brochure"
+      },
+      "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf"
+    },
+    {
+      "date": "2026-09-11",
+      "field": "length_m",
+      "from": "12,2 m",
+      "to": "12,3 m",
+      "reason": {
+        "tr": "Ürün broşürü uzunluğu 12,3 m veriyor, ürün sayfası 12,2 m. İkisi de üreticinin kendi beyanı; broşür daha yeni ve tarihli olduğu için birincil değer o oldu. Eski değer ikinci ölçüm olarak kayıtta duruyor, tabloda çelişki görünür.",
+        "en": "The product brochure gives the length as 12.3 m, the product page as 12.2 m. Both are the manufacturer's own statements; the brochure is newer and dated, so it became the primary value. The older value remains recorded as a second measurement and the divergence is visible in the table."
+      },
+      "source": {
+        "tr": "BAYKAR Bayraktar AKINCI ürün broşürü",
+        "en": "BAYKAR Bayraktar AKINCI product brochure"
+      },
+      "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/MQXc7YhrFZJyV3J1QaeTD7RFHTGyBU7J.pdf"
+    }
+  ],
   "disclaimer": {
     "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
     "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
   },
   "_todo": [
-    "Servis tavanı (40.000 ft) ile sayfa banner'ındaki maksimum irtifa (45.118 ft) arasındaki ilişki açıklığa kavuşturulacak.",
-    "Seyir/azami hız tek aralık olarak kaydedildi; üretici ayrı değerler verirse alanlar bölünecek.",
+    "Servis tavanı (40.000 ft) ile ürün sayfası banner'ındaki maksimum irtifa (45.118 ft) arasındaki ilişki açıklığa kavuşturulacak; broşürde 45.118 ft geçmiyor.",
     "A/B/C varyantlarına özgü kaynaklı ölçüler eklenecek.",
-    "3B modelin dış oranları üreticinin yayımladığı görsellerden ölçüldü (11.09.2026); yöntem ve hangi oranın ölçülüp hangisinin seçildiği lib/geometry/akinci.ts içinde. Üst görünüş karesi bulunmadığı için kanat ok açısı hâlâ seçilmiş değer; temiz bir arka görünüş bulunursa V kuyruk açısı da ölçülebilir.",
-    "Üretici sayfasının üçüncü taraf arşiv kopyası alınacak."
+    "3B modelin dış oranları üreticinin yayımladığı görsellerden ölçüldü (11.09.2026); yöntem ve hangi oranın ölçülüp hangisinin seçildiği lib/geometry/akinci.ts içinde. Üst görünüş karesi bulunmadığı için kanat ok açısı hâlâ seçilmiş değer; temiz bir arka görünüş bulunursa yatay stabilize veçhesi de ölçülebilir.",
+    "Üretici broşürünün üçüncü taraf arşiv kopyası alınacak (archive_url).",
+    "Yük istasyonları çıplak pilon olarak modelleniyor; taşınan mühimmatın biçimi çizilmiyor çünkü hiçbir mühimmat için kaynaklı ölçü kaydımız yok (CLAUDE.md §5.4, §5.7). Mühimmat ölçüleri kaynaklanırsa ayrı bir sistem dosyası olarak eklenir, AKINCI'nin modeline iliştirilmez.",
+    "Gövde kesit oranı (1,28) ön görünüşten okundu ama gövdenin üst kenarı kanat kökü omuz şişmesinin altında kalıyor; okunan yükseklik bir üst sınır. Temiz bir yan veya arka görünüş bulunursa oran ölçülebilir.",
+    "Pervane kanat sayısı (5) render'dan sayıldı; motor varyantına göre değişip değişmediği doğrulanacak.",
+    "Pistte çekilmiş yan görünüş fotoğrafı (PT-1) eksen boyu oranları için ölçülebilir: karede hem 12,3 m uzunluk hem 4,1 m yükseklik görünüyor ve iki eksenin ölçeği %2,3 içinde uyuşuyor. Dikkatli landmark çalışmasıyla noseRatio, tailConeRatio, wingPositionT, wingChordRatio, finPositionT, finChordRatio ve finHeightRatio 'reading' durumundan 'measured'a yükselebilir."
   ]
 }

@@ -1,10 +1,23 @@
+import type {Part} from '@/lib/geometry/parts';
+import {projectParts, transformPath} from '@/lib/geometry/project2d';
+
 /**
  * Siluet geometrisi. Saf fonksiyonlar — veri degisince gorsel degisir,
  * elle cizim yok (CLAUDE.md §3).
  *
- * Teknik cizim degil: govde, burun ve kanatcik oranlari sematiktir.
- * Gercek olan tek sey olcek — uzunluk, cap ve 1,8 m insan figuru
- * ayni carpanla cizilir.
+ * Kontur artik ELLE CIZILMIYOR: parca listesi varsa siluet, uc boyutlu
+ * modelle ayni listenin ortografik izdusumudur (specs/system-silhouette).
+ * Iki katman tek kaynaktan turedigi icin ayrisamazlar.
+ *
+ * Parca listesi YOKSA kontur cizilmez. Onceki surumde her fuze, urune
+ * ozel olmayan genel oranlarla (burun 0,22, kuyruk 0,14, kanatcik 2,1R)
+ * ciziliyordu — yani dis profili olmayan bir sisteme varsayilan bir
+ * bicim veriliyordu. CLAUDE.md §9'un yasakladigi sey tam olarak bu.
+ * O durumda artik kesikli olcu zarfi cizilir: "burasi bir sinir, bir dis
+ * hat degil".
+ *
+ * Gercek olan tek sey olcek — uzunluk, cap ve 1,8 m insan figuru ayni
+ * carpanla cizilir.
  */
 
 export const HUMAN_HEIGHT_M = 1.8;
@@ -19,24 +32,26 @@ const LABEL_COLUMN = 68;
 const TOP_PADDING = 34;
 /** Zemin cizgisinin altinda kalan etiket boslugu. */
 const BOTTOM_PADDING = 24;
-/** Kanatciklarin govde disina tastigi oran (yaricapin kati). */
-const FIN_SPAN = 2.1;
 
 export type SilhouetteItem = {
   id: string;
   label: string;
   lengthM: number;
   diameterMm: number;
+  /** Urun tanimindan gelen parca listesi. Yoksa kontur cizilmez. */
+  parts?: readonly Part[];
 };
 
 export type SilhouetteRow = {
   id: string;
   label: string;
   lengthM: number;
-  /** Govde dis hatti. */
+  /** Govde dis hatti. Parca listesi yoksa bos. */
   body: string;
-  /** Kuyruk kanatciklari. */
+  /** Govde disindaki yuzeyler. Parca listesi yoksa bos. */
   fins: string;
+  /** Parca listesi yoksa cizilen kesikli olcu zarfi. */
+  envelope?: string;
   /** Boyut cizgisi ve etiketi. */
   dimension: {x1: number; x2: number; y: number; labelX: number};
   labelY: number;
@@ -57,53 +72,54 @@ function round(value: number): number {
 }
 
 /**
- * Govde: yuvarlak burun, duz govde, hafif genisleyen kuyruk.
- * x sol uc, cy govde ekseni, radius yaricap.
+ * Kesikli olcu zarfi — dis hat DEGIL, sinir kutusu.
+ *
+ * Parca listesi olmayan sistem icin cizilir. Kenarlari ne anlama geldigini
+ * olcu cizgisinin etiketi soyler; kutunun kendisi bicim iddiasi tasimaz.
  */
-export function bodyPath(
+function envelopePath(
   x: number,
   cy: number,
   length: number,
   radius: number
 ): string {
-  const nose = length * 0.22;
-  const tail = length * 0.14;
-  const r = radius;
-
+  const top = cy - radius;
+  const bottom = cy + radius;
   return [
-    `M ${round(x)} ${round(cy)}`,
-    `C ${round(x + nose * 0.4)} ${round(cy - r * 0.75)} ${round(x + nose * 0.8)} ${round(cy - r)} ${round(x + nose)} ${round(cy - r)}`,
-    `L ${round(x + length - tail)} ${round(cy - r)}`,
-    `L ${round(x + length)} ${round(cy - r * 1.05)}`,
-    `L ${round(x + length)} ${round(cy + r * 1.05)}`,
-    `L ${round(x + length - tail)} ${round(cy + r)}`,
-    `L ${round(x + nose)} ${round(cy + r)}`,
-    `C ${round(x + nose * 0.8)} ${round(cy + r)} ${round(x + nose * 0.4)} ${round(cy + r * 0.75)} ${round(x)} ${round(cy)}`,
+    `M ${round(x)} ${round(top)}`,
+    `H ${round(x + length)}`,
+    `V ${round(bottom)}`,
+    `H ${round(x)}`,
     'Z'
   ].join(' ');
 }
 
-export function finPath(
+/**
+ * Parca listesinin yan gorunus izdusumu, cizim uzayina tasinmis.
+ *
+ * Govde ile geri kalan yuzeyler ayri yollarda toplanir; sayfa ikisini
+ * ayni sinifla ama ayri path ogeleriyle ciziyor.
+ */
+function projectRow(
+  parts: readonly Part[],
   x: number,
   cy: number,
-  length: number,
-  radius: number
-): string {
-  const tail = length * 0.14;
-  const base = x + length - tail;
-  const tip = x + length;
-  const span = radius * FIN_SPAN;
+  scale: number
+): {body: string; fins: string} {
+  const outlines = projectParts(parts, 'side');
+  const move = (path: string) =>
+    transformPath(path, {scale, offsetU: x, offsetV: cy});
 
-  return [
-    `M ${round(base)} ${round(cy - radius)}`,
-    `L ${round(tip)} ${round(cy - span)}`,
-    `L ${round(tip)} ${round(cy - radius)}`,
-    'Z',
-    `M ${round(base)} ${round(cy + radius)}`,
-    `L ${round(tip)} ${round(cy + span)}`,
-    `L ${round(tip)} ${round(cy + radius)}`,
-    'Z'
-  ].join(' ');
+  const body = outlines
+    .filter((outline) => outline.kind === 'body')
+    .map((outline) => move(outline.path))
+    .join(' ');
+  const fins = outlines
+    .filter((outline) => outline.kind !== 'body')
+    .map((outline) => move(outline.path))
+    .join(' ');
+
+  return {body, fins};
 }
 
 /**
@@ -126,27 +142,46 @@ export function layoutSilhouettes(
   const rows: SilhouetteRow[] = items.map((item) => {
     const length = item.lengthM * scale;
     const radius = ((item.diameterMm / 1000) * scale) / 2;
-    const finReach = radius * FIN_SPAN;
-    // Kanatciklar, boyut cizgisi ve ustteki ad icin gereken dikey alan.
-    const rowHeight = Math.max(finReach * 2 + 34, 62);
-    const cy = cursor + finReach + 6;
+    /*
+     * Dikey yer: parca listesi varsa gercek yanal uzanim, yoksa yalniz
+     * govde yaricapi. Zarf govdeden genis degil, cunku zarf yalniz
+     * yayimlanmis iki olcuyu tarif ediyor.
+     */
+    const reach = item.parts
+      ? Math.max(
+          ...item.parts.flatMap((part) =>
+            part.kind === 'panel'
+              ? [(part.stations.at(-1)?.span ?? 0) * scale]
+              : [radius]
+          )
+        )
+      : radius;
+    // Yuzeyler, boyut cizgisi ve ustteki ad icin gereken dikey alan.
+    const rowHeight = Math.max(reach * 2 + 34, 62);
+    const cy = cursor + reach + 6;
     cursor += rowHeight;
 
-    const dimensionY = cy + finReach + 12;
+    const dimensionY = cy + reach + 12;
+    const drawn = item.parts
+      ? projectRow(item.parts, HUMAN_COLUMN, cy, scale)
+      : undefined;
 
     return {
       id: item.id,
       label: item.label,
       lengthM: item.lengthM,
-      body: bodyPath(HUMAN_COLUMN, cy, length, radius),
-      fins: finPath(HUMAN_COLUMN, cy, length, radius),
+      body: drawn?.body ?? '',
+      fins: drawn?.fins ?? '',
+      envelope: drawn
+        ? undefined
+        : envelopePath(HUMAN_COLUMN, cy, length, radius),
       dimension: {
         x1: HUMAN_COLUMN,
         x2: round(HUMAN_COLUMN + length),
         y: round(dimensionY),
         labelX: round(HUMAN_COLUMN + length + 8)
       },
-      labelY: round(cy - finReach - 12)
+      labelY: round(cy - reach - 12)
     };
   });
 

@@ -196,9 +196,21 @@ export function aircraftDataUri(
   if (!compact) return undefined;
 
   const margin = 6;
+  /*
+   * Parca listesi olan grup gercek dis hattiyla cizilir; olmayan grup
+   * kesikli zarfla. Kesikli cerceve "bu bir sinir, bir dis hat degil"
+   * demek; dis hat cizildiginde o isaret kalkmali.
+   */
   const shapes = compact.rects
     .map((rect, index) => {
       const stroke = index === 0 ? PALETTE.ink2 : PALETTE.signal;
+      const outline = compact.outlines[index];
+      if (outline) {
+        return (
+          `<path d="${outline}" fill="none" stroke="${stroke}" ` +
+          'stroke-width="2" stroke-linejoin="round"/>'
+        );
+      }
       return (
         `<path d="${rect.path}" fill="none" stroke="${stroke}" ` +
         'stroke-width="2" stroke-dasharray="6 7"/>'

@@ -169,7 +169,7 @@
     },
     {
       "id": "geometry-parametric",
-      "file": "lib/geometry/missile.ts",
+      "file": "lib/geometry/axial.ts",
       "kind": "3d",
       "origin": "own",
       "presence": "committed",
@@ -182,12 +182,12 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-10",
       "used_in": [
-        "components/model-viewer/MissileViewer.tsx",
-        "scripts/bake-glb.mjs",
+        "lib/geometry/tayfun.ts",
+        "lib/geometry/atmaca.ts",
         "lib/geometry/model.ts",
-        "lib/geometry/selection.ts"
+        "scripts/bake-glb.mjs"
       ],
-      "notes": "Dosya değil, üretici kod. Geometri içerik verisinden türer, hiçbir hazır modelden türetilmedi. Bu kayıt kasıtlı: kökeni sorulduğunda cevabı burada."
+      "notes": "Dosya değil, üretici kod. Eksenel gövdeli ürünlerin parça listesini üretir; geometri içerik verisinden türer, hiçbir hazır modelden türetilmedi. Önceki adı lib/geometry/missile.ts idi; parça kitine taşınırken adı ve sorumluluğu daraldı. Bu kayıt kasıtlı: kökeni sorulduğunda cevabı burada."
     },
     {
       "id": "geometry-parametric-atmaca",
@@ -204,9 +204,9 @@
       "modifications_allowed": true,
       "acquired_at": "2026-09-11",
       "used_in": [
-        "lib/geometry/selection.ts"
+        "lib/geometry/registry.ts"
       ],
-      "notes": "ATMACA'ya ozel dis profil sabitleri. Yapisal olcu degildir; kanatcik/burun profili icin lisansli referans bulunana kadar genel seyir fuzesi oranlarina gore secilmistir."
+      "notes": "ATMACA'ya özel dış profil oranları. Yapısal ölçü değildir; kanatçık ve burun profili için lisanslı referans bulunana kadar genel seyir füzesi oranlarına göre seçilmiştir. Her oran köken beyanı taşır (lib/geometry/ratio.ts) ve hepsi 'chosen'."
     },
     {
       "id": "models-baked",
@@ -318,7 +318,189 @@
       "modifications_allowed": false,
       "acquired_at": "2026-09-10",
       "used_in": [],
-      "notes": "Kanatçık oranını çıkarmak için bakıldı, repoya kopyalanmadı, yayımlanmadı. Ölçü çıkarımı türev eser sayılmaz ama kaydını tutuyoruz."
+      "notes": "YER TUTUCU KAYIT — kaynak adresi example.invalid, yani gerçek bir kaynağa işaret etmiyor. lib/geometry/tayfun.ts oranlarının tamamı 'chosen' ve notları hiçbir görselden ölçülmediğini söylüyor; bu kayıt kodla çelişiyor. Silinmedi, çünkü bir zamanlar neyin varsayıldığının izi kalsın. Gerçek bir referans bulunursa bu kayıt onunla değiştirilecek."
+    },
+    {
+      "id": "geometry-part-kit",
+      "file": "lib/geometry/parts.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-11",
+      "used_in": [
+        "lib/geometry/build3d.ts",
+        "lib/geometry/product.ts",
+        "lib/geometry/model.ts"
+      ],
+      "notes": "Parça kiti: altı ilkelin işlenmemiş biçim tanımı. Renderer içermez; üç boyutlu sahne ile iki boyutlu izdüşüm aynı listeden türer, bu yüzden ayrışamazlar."
+    },
+    {
+      "id": "geometry-parametric-tayfun",
+      "file": "lib/geometry/tayfun.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-11",
+      "used_in": [
+        "lib/geometry/registry.ts"
+      ],
+      "notes": "TAYFUN dış profil oranları. Yapısal ölçü değildir. Oranların tamamı 'chosen': elimizde ortografik olduğu doğrulanabilen bir referans görsel yok, bu yüzden piksel okuması yapılmadı."
+    },
+    {
+      "id": "geometry-winged",
+      "file": "lib/geometry/winged.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-11",
+      "used_in": [
+        "lib/geometry/akinci.ts",
+        "lib/geometry/model.ts",
+        "scripts/bake-glb.mjs"
+      ],
+      "notes": "Kanatlı hava aracının topolojisi: tek gövde, iki kanat yarısı, iki kanat ucu, tek dikey stabilize, iki yatay stabilize. Önceki adı lib/geometry/aircraft.ts idi. Ölçek iki yayımlanmış sayıdan gelir; geri kalan oranlar ürün dosyasında ve her biri köken beyanı taşır."
+    },
+    {
+      "id": "geometry-parametric-akinci",
+      "file": "lib/geometry/akinci.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-11",
+      "used_in": [
+        "lib/geometry/registry.ts"
+      ],
+      "notes": "AKINCI dış profil oranları. Yapısal ölçü değildir. 11.09.2026'da izdüşüm sınavı yapıldı: üreticinin ön görünüş render'ı perspektif olduğu için yalnızca kanat düzlemi derinliğindeki üç oran 'measured' kaldı; yan görünüş ve 360° karelerinden okunanlar 'reading' oldu, yani kaynak ve tarih duruyor ama sınav yapılmadı. Görsellerin kendisi depoya girmez; alınan şey görüntü değil orandır."
+    },
+    {
+      "id": "atmaca-catalogue-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "ROKETSAN 2024 deniz sistemleri kataloğundaki üst görünüş çizgi çizimi. Dış geometri oranlarını çıkarmak için bakıldı; repoya kopyalanmadı, yayımlanmadı. Çizimin ortografik olduğu doğrudan sınandı ve geçti — gövde eni eksen boyunca %1,4 içinde sabit. Projedeki ilk ortografik kaynak; lib/geometry/atmaca.ts oranlarının tamamı buradan ölçüldü. Katalogda hedef tipi ve harp başlığı bilgisi de var, ikisi de alınmadı (CLAUDE.md §5.2, §5.3)."
+    },
+    {
+      "id": "akinci-render-refs",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/RqpaU6eZjeknYwWcpdMVAXYMLRcyuvT3.png",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "BAYKAR'ın yayımladığı ön görünüş render'ı ve ürün sayfasındaki 360° gösterinin kareleri. Oran çıkarmak için bakıldı; repoya kopyalanmadı. 11.09.2026'da izdüşüm sınavından GEÇMEDİ: ön görünüş perspektif, burun iniş takımı ana tekerleklerden aşağı projeksiyona düşüyor. Bu yüzden lib/geometry/akinci.ts oranlarının yalnızca kanat düzlemi derinliğindeki üçü 'measured'; geri kalanı 'reading'."
+    },
+    {
+      "id": "tayfun-blok4-press-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://example.invalid/tayfun-blok4-fuar",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "TAYFUN Blok-4'ün fuar maketine ait basın fotoğrafları. Bakıldı, repoya kopyalanmadı. Gövdenin dönel DEĞİL, sırtı çıkıntılı bir biçim olduğunu gösteriyor; mevcut model Blok-4'ü TAYFUN'un dairesel gövdesiyle çiziyor ve bu yanlış. Fotoğraflar perspektif ve bilinen bir referans ölçü taşımıyor, yani oran çıkarılamaz. Kaynak adresi yer tutucu: gerçek yayın adresleri doğrulanmadan yazılmayacak."
+    },
+    {
+      "id": "akinci-flight-photo-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://example.invalid/akinci-pt5-ucus",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "Uçuş ve pist halindeki AKINCI fotoğrafları (alttan-arkadan uçuş karesi ve gün batımında arkadan pist karesi). Bakıldı, repoya kopyalanmadı. ORAN ÇIKARILMADI: ikisi de perspektif ve bilinen bir referans ölçü taşımıyor. Yalnızca TOPOLOJİ doğrulaması için kullanıldı — tek dikey stabilize, tabanından çıkan ve aşağı sapan yatay stabilize, yukarı dönen kanat uçları, gövdenin yanından çıkıp tekerleklere doğru DIŞA açılan ana takım. V kuyruk değil. Bir topoloji iddiası ölçek gerektirmediği için bu doğrulama geçerli; oranlar hâlâ 'reading' olarak duruyor. Kaynak adresleri yer tutucu: gerçek yayın adresleri doğrulanmadan yazılmayacak."
+    },
+    {
+      "id": "akinci-ramp-photo-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://example.invalid/akinci-park-halinde",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "Park halindeki AKINCI'nın yerden, geniş açıyla çekilmiş burun fotoğrafı. Bakıldı, repoya kopyalanmadı. ORAN ÇIKARILMADI: aşırı perspektif, bilinen referans ölçü yok. Yalnızca SAYIM için kullanıldı — pervane beş kanatlı. Sayım izdüşümden bağımsız olduğu için geçerli ve ön görünüş render'ından yapılan sayımı bağımsız olarak doğruluyor. Gövde kesitinin dönel olmadığını da niteliksel olarak destekliyor. Kaynak adresi yer tutucu. Ayrıca ana iniş takımının düzenini gösteriyor: bacaklar gövdenin yanından çıkıp tekerleklere doğru dışa açılıyor, gondoldan inmiyor. Bu, bir zamanlar bu depoda yazılmış olan 'fotoğraflarda gondoldan çıkıyor' notunun yanlış olduğunu gösterdi."
+    },
+    {
+      "id": "akinci-side-photo-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://example.invalid/akinci-pt1-pist-yan",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-11",
+      "used_in": [],
+      "notes": "Pistte duran PT-1'in uzaktan, uzun objektifle çekilmiş yan görünüşe YAKIN fotoğrafı. Bakıldı, repoya kopyalanmadı. ORAN ÇIKARILMADI ama bu kare ötekilerden daha umut verici: uzun objektif derinlik sıkışmasını azaltıyor ve karede İKİ bilinen ölçü birden görünüyor (12,3 m uzunluk, 4,1 m yükseklik). Kaba bir tutarlılık sınaması iki eksenin ölçeğini %2,3 içinde uyumlu buldu; uçak hafifçe yalpalı olduğu için eksen boyu ölçüler kısa okunuyor. Dikkatli bir landmark çalışması yapılırsa lib/geometry/akinci.ts içindeki eksen boyu 'reading' oranları 'measured'a yükseltilebilir. Kaynak adresi yer tutucu."
     }
   ],
   "rejected": [

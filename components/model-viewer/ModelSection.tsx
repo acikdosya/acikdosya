@@ -12,7 +12,7 @@ import {EVENTS, track} from '@/lib/analytics';
 import type {SelectedDimensions} from '@/lib/geometry/measurements';
 import type {Confidence} from '@/lib/schema';
 import {ArButton} from './ArButton';
-import type {ViewerAnnotation} from './ModelViewer';
+import type {ViewerAnnotation, ViewSpec} from './ModelViewer';
 import styles from './ModelSection.module.css';
 
 export interface ModelVariant {
@@ -36,6 +36,7 @@ interface Copy {
   hint: string;
   ar: string;
   overview: string;
+  front: string;
   fullscreen: string;
   exitFullscreen: string;
 }
@@ -131,13 +132,24 @@ export function ModelSection({
   const active = variants.find((variant) => variant.id === activeId);
   if (!active) return null;
 
-  // Gorunum on ayarlari da veriden turer: etiketlerin kendi t oranlari.
-  const views: Array<{id: string; label: string; t: number | null}> = [
-    {id: 'overview', label: copy.overview, t: null},
+  /*
+   * Gorunum on ayarlari veriden turer: etiketlerin kendi parca ve
+   * oranlari. Iki sabit on ayar var — genel gorunum ve on gorunus.
+   * On gorunus, ureticinin yayimladigi on gorunusle ve iki boyutlu
+   * semanin 'front' izdusumuyle ayni ekseni kullanir.
+   */
+  const views: Array<{id: string; label: string; spec: ViewSpec}> = [
+    {id: 'overview', label: copy.overview, spec: {kind: 'overview'}},
+    {id: 'front', label: copy.front, spec: {kind: 'front'}},
     ...active.annotations.map((annotation) => ({
       id: annotation.id,
       label: annotation.label,
-      t: annotation.t
+      spec: {
+        kind: 'focus' as const,
+        part: annotation.part,
+        t: annotation.t,
+        angle: annotation.angle
+      }
     }))
   ];
   const view = views.find((item) => item.id === viewId) ?? views[0];
@@ -158,7 +170,7 @@ export function ModelSection({
           systemSlug={active.systemSlug}
           dimensions={active.dimensions}
           annotations={active.annotations}
-          focusT={view.t}
+          view={view.spec}
           fallback={fallback}
           label={active.ariaLabel}
           onReady={handleReady}

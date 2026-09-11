@@ -1,8 +1,9 @@
-import {buildAircraft, fuselageRadius} from './aircraft';
+import {buildGroup} from './build3d';
 import type {SelectedDimensions} from './measurements';
-import {buildMissile, FIN_SPAN_RATIO} from './missile';
-import type {ModelDimensions, ModelResult} from './result';
-import {specFor} from './selection';
+import {bodyRadiusOf, partsBounds, primaryBody, type Part} from './parts';
+import {partsForSystem} from './parts-for';
+import {productFor} from './registry';
+import type {ModelFrame, ModelResult} from './result';
 
 export interface ModelSpec {
   /** content/systems/*.json'daki slug. */
@@ -13,6 +14,46 @@ export interface ModelSpec {
   radialSegments?: number;
 }
 
+/** Urun ofset bildirmemisse kullanilan deger. */
+const DEFAULT_DIMENSION_OFFSET = 2.4;
+
+/**
+ * Parca listesinden kadraj olculeri.
+ *
+ * Elle yazilmis ikinci bir hesap TUTULMAZ: sinirlar parcalardan turer,
+ * bu yuzden mesh ile bildirilen erisim ayrisamaz. Olcu cizgisi bir parca
+ * degil, bu yuzden erisime karismaz — cizgi solda duruyor ve kadraji
+ * gereksizce genisletmemeli.
+ */
+export function frameFromParts(parts: readonly Part[]): ModelFrame {
+  const bounds = partsBounds(parts);
+  const body = primaryBody(parts);
+
+  const L = body
+    ? Math.abs(
+        (body.spec.stations[body.spec.stations.length - 1]?.y ?? 0) -
+          (body.spec.stations[0]?.y ?? 0)
+      )
+    : bounds.max.y - bounds.min.y;
+
+  const R = body
+    ? bodyRadiusOf(body)
+    : (bounds.max.x - bounds.min.x) / 2;
+
+  const reach = Math.max(
+    Math.abs(bounds.min.x),
+    Math.abs(bounds.max.x),
+    Math.abs(bounds.min.z),
+    Math.abs(bounds.max.z)
+  );
+
+  return {bounds, length: L, bodyRadius: R, reach};
+}
+
+function partsFor(spec: ModelSpec): Part[] | undefined {
+  return partsForSystem(spec.systemSlug, spec.dimensions);
+}
+
 /**
  * Sistem slug'ina gore dogru profille parametrik model uretir.
  *
@@ -20,71 +61,44 @@ export interface ModelSpec {
  *   - web'de runtime mesh (components/model-viewer)
  *   - AR'da statik GLB (scripts/bake-glb.mjs)
  *
- * Her ikisi de bu fonksiyondan gecer, bu yuzden profil farkliligi
- * iki yerde birden tutarli olur.
- *
- * Dis profili tanimsiz ya da profil turu olcu turuyle uyusmayan
- * sistem icin undefined doner — varsayilan geometriyle cizmek yerine
- * hic cizmemek dogru olan (CLAUDE.md §9). Cagiranlar: sahne siluete
- * duser, GLB pisirici atlar.
+ * Dis profili tanimsiz ya da profil turu olcu turuyle uyusmayan sistem
+ * icin undefined doner — varsayilan geometriyle cizmek yerine hic
+ * cizmemek dogru olan (CLAUDE.md §9). Cagiranlar: sahne siluete duser,
+ * GLB pisirici atlar.
  */
 export function buildModel({
   systemSlug,
   dimensions,
   radialSegments
 }: ModelSpec): ModelResult | undefined {
-  const profile = specFor(systemSlug);
-  if (!profile) return undefined;
+  const parts = partsFor({systemSlug, dimensions, radialSegments});
+  if (!parts) return undefined;
 
-  if (dimensions.kind === 'missile' && profile.kind === 'missile') {
-    return buildMissile({
-      lengthM: dimensions.lengthM,
-      diameterMm: dimensions.diameterMm,
-      noseRatio: profile.spec.noseRatio,
-      boattail: profile.spec.boattail,
-      finCount: profile.spec.finCount,
-      radialSegments
-    });
-  }
+  const scene = buildGroup(parts, {
+    segments: radialSegments ? {body: radialSegments} : undefined,
+    dimensionOffsetRatio:
+      productFor(systemSlug)?.dimensionOffsetRatio ?? DEFAULT_DIMENSION_OFFSET
+  });
 
-  if (dimensions.kind === 'aircraft' && profile.kind === 'aircraft') {
-    return buildAircraft({
-      lengthM: dimensions.lengthM,
-      wingspanM: dimensions.wingspanM,
-      profile: profile.spec,
-      radialSegments
-    });
-  }
-
-  return undefined;
+  return {
+    group: scene.group,
+    parts,
+    frame: frameFromParts(parts),
+    dispose: scene.dispose
+  };
 }
 
 /**
  * Modelin olculeri — mesh kurmadan.
  *
- * Kamera kadraji, golge duzlemi ve yakinlasma sinirlari sahne
- * kurulmadan once biliniyor olmali. Ayni sayilari buildModel de
- * uretiyor; ikisi ayni sabitlerden turedigi icin ayrisamazlar.
+ * Kamera kadraji, golge duzlemi ve yakinlasma sinirlari sahne kurulmadan
+ * once biliniyor olmali. Ayni parca listesi buildModel'i de besledigi
+ * icin iki sonuc ayrisamaz.
  */
 export function modelBounds({
   systemSlug,
   dimensions
-}: Omit<ModelSpec, 'radialSegments'>): ModelDimensions | undefined {
-  const profile = specFor(systemSlug);
-  if (!profile) return undefined;
-
-  if (dimensions.kind === 'missile' && profile.kind === 'missile') {
-    const R = dimensions.diameterMm / 2000;
-    return {L: dimensions.lengthM, R, reach: R * FIN_SPAN_RATIO};
-  }
-
-  if (dimensions.kind === 'aircraft' && profile.kind === 'aircraft') {
-    return {
-      L: dimensions.lengthM,
-      R: fuselageRadius(dimensions.lengthM, profile.spec),
-      reach: dimensions.wingspanM / 2
-    };
-  }
-
-  return undefined;
+}: Omit<ModelSpec, 'radialSegments'>): ModelFrame | undefined {
+  const parts = partsFor({systemSlug, dimensions});
+  return parts ? frameFromParts(parts) : undefined;
 }

@@ -2,6 +2,7 @@ import {useTranslations} from 'next-intl';
 import type {Locale} from '@/i18n/routing';
 import {formatNumber} from '@/lib/format';
 import {selectMeasurements, systemKind} from '@/lib/geometry/measurements';
+import {partsForSystem} from '@/lib/geometry/parts-for';
 import type {System} from '@/lib/schema';
 import {HUMAN_HEIGHT_M, layoutAircrafts} from './aircraft-geometry';
 import {layoutSilhouettes} from './geometry';
@@ -85,7 +86,12 @@ function MissileSilhouette({
         id: selection.group.id,
         label: groupLabel(selection.group, t),
         lengthM: dims.lengthM,
-        diameterMm: dims.diameterMm
+        diameterMm: dims.diameterMm,
+        /*
+         * Parca listesi varsa kontur cizilir, yoksa kesikli olcu zarfi.
+         * Urun tanimi olmayan sisteme varsayilan bir bicim verilmez.
+         */
+        parts: partsForSystem(system.slug, dims)
       };
     });
 
@@ -142,8 +148,14 @@ function MissileSilhouette({
             >
               {row.label}
             </text>
-            <path className={bodyClass} d={row.body} />
-            <path className={bodyClass} d={row.fins} />
+            {row.envelope ? (
+              <path className={styles.envelope} d={row.envelope} />
+            ) : (
+              <>
+                <path className={bodyClass} d={row.body} />
+                <path className={bodyClass} d={row.fins} />
+              </>
+            )}
             <line
               className={styles.dimension}
               x1={row.dimension.x1}
@@ -192,7 +204,8 @@ function AircraftSilhouette({
         label: groupLabel(selection.group, t),
         lengthM: dims.lengthM,
         wingspanM: dims.wingspanM,
-        heightM: dims.heightM
+        heightM: dims.heightM,
+        parts: partsForSystem(system.slug, dims)
       };
     });
 
@@ -250,7 +263,14 @@ function AircraftSilhouette({
               {row.label}
             </text>
 
-            <path className={envelopeClass} d={row.plan.path} />
+            {row.planOutline ? (
+              <path
+                className={alt ? `${styles.body} ${styles.bodyAlt}` : styles.body}
+                d={row.planOutline}
+              />
+            ) : (
+              <path className={envelopeClass} d={row.plan.path} />
+            )}
             <path className={styles.dimension} d={row.length.path} />
             <text
               className={styles.dimensionText}
@@ -275,7 +295,16 @@ function AircraftSilhouette({
 
             {row.front && row.height ? (
               <>
-                <path className={envelopeClass} d={row.front.path} />
+                {row.frontOutline ? (
+                  <path
+                    className={
+                      alt ? `${styles.body} ${styles.bodyAlt}` : styles.body
+                    }
+                    d={row.frontOutline}
+                  />
+                ) : (
+                  <path className={envelopeClass} d={row.front.path} />
+                )}
                 <path className={styles.dimension} d={row.height.path} />
                 <text
                   className={styles.dimensionText}

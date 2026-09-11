@@ -199,10 +199,12 @@ Prototipte oturmuş palet — koru:
 ```
 app/[locale]/             # sayfalar
 components/
-  scale-silhouette/       # veriden türeyen SVG siluet
+  scale-silhouette/       # ölçek şeması — parça listesinin ortografik izdüşümü
+  model-provenance/       # biçim kaydı: her oranın kökeni, §9
   measure-gap/            # ölçü verisi olmayan varyantın açık kaydı
   spec-table/             # kaynaklı veri tablosu + güven rozetleri
   range-envelope/         # MapLibre menzil zarfı
+  range-scale/            # menzil zarfı çizilemeyen sistemde mesafe cetveli
   timeline/
   revision-log/           # duzeltme defteri — timeline'dan ayri ve daha sade
   model-viewer/           # R3F, dinamik import
@@ -212,6 +214,23 @@ content/
 lib/
   geo.ts                  # jeodezik daire, mesafe
   hero.ts                 # ana sayfa panelinin konusu — sıralı geri çekilme
+  geometry/               # parça kiti ve ürün tanımları — bkz. §9
+    parts.ts              # altı ilkel: body, pod, panel, disc, strut, boom
+    panel.ts              # yüzey istasyonları: veçhe, kalınlık, kök ve uç eğrisi
+    ratio.ts              # oran + köken beyanı; three ve zod İÇE AKTARMAZ
+    ratio.schema.ts       # kökenin zod şeması — yalnız test ve doğrulama
+    product.ts            # ürün tanımı: parça listesi + oran tablosu
+    registry.ts           # slug → ürün; tanımsız slug varsayılana DÜŞMEZ
+    coverage.ts           # kategori → model durumu, derlemede exhaustive
+    axial.ts              # eksenel gövde topolojisi (füze ailesi)
+    winged.ts             # kanatlı hava aracı topolojisi
+    tayfun.ts atmaca.ts akinci.ts   # ürün başına oran tabloları
+    build3d.ts            # parça listesi → THREE.Group
+    project2d.ts          # parça listesi → ortografik SVG; three İÇE AKTARMAZ
+    parts-for.ts          # sistem → parça listesi, three'siz yol
+    framing.ts            # kamera kadrajı — sahneden ayrı, sınanabilir
+    model.ts result.ts    # ortak sözleşme ve giriş noktası
+    measurements.ts       # ölçü seçimi; kategori eşlemesi varsayılansız
   measurement/
     divergence.ts         # iki ölçüm ıraksıyor mu — aralık hesabı, §3
     divergence.test.ts    # birim testleri; pnpm test
@@ -252,9 +271,20 @@ model satın alınmaz veya indirilmez. Gerekçe: bu sitelerdeki savunma modeller
 lisans zinciri ve doğruluğu doğrulanamaz; kaynak takibi üzerine kurulmuş bir projede
 kaynağı bilinmeyen geometri tüm iddiayı çürütür.
 
-Gövde geometrisi `lib/geometry/missile.ts` içinde, içerik dosyasındaki `length_m` ve
-`diameter_mm` alanlarından üretilir. Ölçü verisi değişirse mesh değişir. Ölçü verisi
-yoksa model üretilmez — varsayılan bir değerle doldurulmaz.
+Bir ürünün biçimi iki şeyden ibarettir: hangi **ölçülere** dayandığı ve hangi
+**oranları** taşıdığı. Parça listesi bu ikisinden türer (`lib/geometry/product.ts`).
+Ölçü verisi değişirse mesh değişir. Ölçü verisi ya da ürün tanımı yoksa model
+üretilmez — varsayılan bir geometriye düşülmez.
+
+Parça kiti altı ilkelden oluşur: `body`, `pod`, `panel`, `disc`, `strut`, `boom`.
+Kit `three` içe aktarmaz; parçalar metre cinsinden saf biçim tanımıdır. İki tüketici
+onu okur: `build3d.ts` sahneyi kurar, `project2d.ts` ortografik SVG üretir. **İki
+boyutlu şema ile üç boyutlu model aynı listeden türediği için ayrışamazlar.**
+
+Yeni bir ürün eklemek bir ürün tanımı dosyası ve `registry.ts` içinde bir satırdır.
+Tip dalı açılmaz: "füze mi uçak mı" sorusu bu katmanda sorulmaz, bir ürün hangi
+parçaları kuruyorsa odur. Çift kirişli, V kuyruklu ve çok yüzeyli düzenler aynı
+kitle ifade edilir.
 
 Blender yalnızca yayımlanmış fotoğraflardan çıkarılabilen dış detaylar için kullanılır
 (kanatçık profili, taşıyıcı araç). Bu tür varlıklar `content/assets.json`'a kaydedilir.
@@ -264,24 +294,77 @@ Blender yalnızca yayımlanmış fotoğraflardan çıkarılabilen dış detaylar
 Mat gri yüzey, ince kontur çizgileri, ölçü çizgileri. Fotogerçekçi doku ve render
 yapılmaz — sahip olmadığımız bir doğruluk iddiası anlamına gelir.
 
+Şematik olmak "kabaca" demek değildir. Yüzeyler düz plaka değil, veçheyle birlikte
+incelen lofting yüzeylerdir; kesit yuvarlak hücum kenarı ve sivri firar kenarı taşır.
+Belirli bir kanat profili İDDİA EDİLMEZ — düz plaka da hiçbir uçakta bulunmayan bir
+biçimdir, yani "daha şematik" değil yalnızca daha yanlıştır.
+
+Eşli yüzeyler (iki kanat, iki stabilize) DÖNDÜRÜLEREK değil merkez düzlemde
+YANSITILARAK üretilir. Dönüş açıklığı doğru yöne taşır ama "yukarı" yönünü ters
+çevirir; düz bir plakada görünmeyen bu hata, kanat ucu kıvrımı eklenince bir kanadı
+aşağı baktırır.
+
 ### Kesit ve iç görünüm yasak
 
 Patlatılmış görünüm, kesit, iç bileşen yerleşimi üretilmez. İç geometriye dair
-kaynaklı verimiz yok. Etiketleme yalnızca dış bölümler üzerinde yapılır
-(burun bölümü, gövde, kuyruk, kanatçık) ve her etiket kendi `confidence` değerini
-taşır.
+kaynaklı verimiz yok. Etiketleme yalnızca dış bölümler üzerinde yapılır (burun
+bölümü, gövde, kanat, kanat ucu, kuyruk yüzeyleri, motor gondolu) ve her etiket
+kendi `confidence` değerini taşır.
+
+**Taşınan mühimmat modellenmez.** Yük istasyonları çıplak pilon olarak çizilebilir —
+konumları ölçülebiliyor — ama mühimmatın biçimi çizilmez. Gerekçe iki katlı: hiçbir
+mühimmat için kaynaklı ölçü kaydımız yok, yani biçim yalnız bir render'dan gelirdi
+(§5.7); ve yüklü istasyon teknik dosya tonunu silahlı sistem sunumuna çevirir
+(§5.4). Mühimmat ölçüleri kaynaklanırsa kendi sistem dosyası olarak eklenir,
+taşıyıcının modeline iliştirilmez.
+
+**Modellenmeyen parçalar sayfada açıkça yazılır.** Modelin dikey ölçüsü tablodaki
+yükseklik değeriyle örtüşmüyorsa bunun sebebi de aynı yerde anlatılır.
+
+### Oranların kökeni — §3'ün modele uygulanması
+
+Modelin ölçeği yayımlanmış ölçülerden gelir. Biçimini belirleyen **oranlar
+yayımlanmış sayı değildir** ve her biri kökenini taşır (`lib/geometry/ratio.ts`):
+
+| durum | anlamı |
+|---|---|
+| `measured` | yayımlanmış bir görselden okundu **ve** izdüşüm sınavı geçildi |
+| `reading` | okundu, izdüşüm sınavı yapılmadı; kaynak ve tarih yine kayıtlı |
+| `chosen` | görselden çıkarılamadı, okunabilir bir şema için seçildi |
+
+Köken beyanı olmayan oran modele girmez. Köken **güven seviyesi değildir**: güven
+"bu sayıyı kim söyledi", köken "bu oranı kim çıkardı" sorusuna cevap verir. Bu
+yüzden köken gösterimi §4'teki rozet çerçevesi dilini kullanmaz ve dördüncü bir
+güven varyantı üretmez; üç durum alt çizgi deseniyle ayrışır.
+
+**İzdüşüm sınavı.** Bir okuma `measured` sayılmadan önce görselin ortografik olduğu
+bilinen bir ölçüyle sınanır. Aynı çevrimsel gösterinin iki karesinin birbirini
+tutması kanıt DEĞİLDİR — iki kare aynı kamerayı paylaşır. Perspektif bir görselde
+yalnızca kalibrasyon düzlemindeki okumalar geçerlidir; başka derinlikteki okuma
+`chosen`'a düşer. Sayım bu kuralın dışındadır: perspektif bir görüntüde de dört
+yüzey dörttür.
+
+Kaynak görsel depoya GİRMEZ. Alınan şey görüntü değil, orandır; kaydı
+`content/assets.json` içinde durur.
 
 ### Annotation şeması
 
-Konum mutlak koordinat değil, orandır — ölçüler güncellenince etiket yerinde kalır.
+Konum mutlak koordinat değil, bir **parça üzerinde** orandır — ölçüler güncellenince
+etiket yerinde kalır.
 
     interface Annotation {
       id: string;
-      t: number;          // gövde boyunca oran, 0 = burun ucu, 1 = kuyruk
-      angle: number;      // radyal açı, derece
+      part: string;       // parça kimliği: 'body', 'wing-1', 'fin', 'nacelle-1-a'
+      t: number;          // parça üzerinde oran, 0 = baş, 1 = son
+      angle?: number;     // radyal açı, derece — yalnız dönel gövdede anlamlı
       label: { tr: string; en: string };
       confidence: Confidence;
     }
+
+Parça kimliği zorunludur: varsayılan olarak gövdeye düşmek, etiketi sessizce yanlış
+yere koymak olurdu. Etiketin gösterdiği parçanın gerçekten üretildiği derleme
+zamanında sınanır (`scripts/validate-content.ts`) — şema yalnızca kimliğin biçimini
+doğrulayabilir, var olup olmadığını doğrulayamaz.
 
 ### Teknik
 
@@ -290,8 +373,9 @@ Konum mutlak koordinat değil, orandır — ölçüler güncellenince etiket yer
 | Runtime | three.js + @react-three/fiber + @react-three/drei |
 | Yükleme | `next/dynamic` + `ssr:false` + IntersectionObserver; bölüme gelmeden yüklenmez |
 | Hotspot | drei `<Html occlude>` — DOM elemanı, yani çevrilebilir ve erişilebilir |
-| Segment | mobil 48, masaüstü 72 |
-| Fallback | WebGL yoksa mevcut `ScaleSilhouette` bileşenine düşülür |
+| Segment | parça sınıfı başına ayrı: gövde mobil 48 / masaüstü 72, disk ve çubuk daha düşük |
+| Fallback | WebGL yoksa `ScaleSilhouette` — aynı parça listesinin ortografik izdüşümü |
+| Görünüş | genel görünüm, ön görünüş ve etiket başına odak; kamera konumu elle yazılmaz |
 | Bellek | R3F unmount'ta `dispose()` çağrılır — geometri ve materyal sızdırmaz |
 | Hareket | `prefers-reduced-motion` ise autoRotate kapalı, `frameloop="demand"` |
 | AR | `scripts/bake-glb.mjs` build'de GLB pişirir, ARCore Scene Viewer intent'i onu kullanır |

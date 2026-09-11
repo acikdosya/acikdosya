@@ -1,13 +1,80 @@
 {
-  "Site": {
-    "name": "Açık Dosya",
-    "tagline": "Sourced technical files on Turkish defence industry systems"
+  "A11y": {
+    "skipToContent": "Skip to content"
+  },
+  "About": {
+    "eyebrow": "About",
+    "title": "Açık Dosya",
+    "lead": "An independent publication keeping sourced technical files on Turkish defence industry systems.",
+    "independenceHeading": "Independence",
+    "independenceBody": "Açık Dosya is an independent publication. It has no affiliation with any institution, manufacturer or government body, receives no support from any of them and represents none of them. These pages are not an official publication.",
+    "independenceBrands": "Brand, system and institution names are used for identification only and belong to their owners. Manufacturer logos are not used.",
+    "scopeHeading": "Scope",
+    "scopeBody": "We cover a small number of systems in depth. This is not a catalogue or an encyclopaedia: each file holds sourced data, a scaled drawing, a programme timeline and a range envelope. There is no news feed and no user-contributed content.",
+    "scopeMethod": "How a figure enters the record is described <link>on the method page</link>.",
+    "privacyHeading": "Privacy",
+    "privacyBody": "Visits are counted by a meter running on our own server. No cookies are used and none are sent with requests, so there is no consent banner. If your browser says it does not want to be tracked (Do Not Track), nothing is recorded.",
+    "privacyRequests": "The page makes no request to a third-party server: fonts, the map base layer and the analytics file are all served from this address. Query strings are not recorded — the reference point you choose on the range envelope never reaches us.",
+    "contactHeading": "Contact and corrections",
+    "contactBody": "Write for corrections, missing sources and questions.",
+    "contactWhat": "When sending a correction, say which system, which field and which source you mean. Reports without a source cannot enter the record."
+  },
+  "Attributes": {
+    "guidance": "Guidance",
+    "propellant": "Propellant",
+    "stages": "Stages",
+    "power_system": "Power system",
+    "communications": "Communications",
+    "variant_names": "Variation"
+  },
+  "Categories": {
+    "balistik-fuze": "Ballistic missile",
+    "seyir-fuzesi": "Cruise missile",
+    "insansiz-hava-araci": "Unmanned aerial vehicle"
+  },
+  "Confidence": {
+    "official": "official",
+    "press": "press",
+    "estimate": "estimate",
+    "officialCaveat": "The official badge shows who the statement came from; it does not show that the information has been independently verified."
+  },
+  "ConfidenceLevels": {
+    "official": "The manufacturer's or the institution's own statement. A link is given; if the link dies, an archive copy replaces it and the date is recorded. The official badge shows who the statement came from; it does not show that the information has been independently verified.",
+    "press": "Secondary source: news report, magazine, trade show or conference note. Unverified, but on record and not hidden.",
+    "estimate": "Independent assessment with no official confirmation. Its badge is red, because this is an inference rather than a statement."
+  },
+  "Divergence": {
+    "kind_celiski": "contradiction",
+    "kind_farkliAciklama": "different statements",
+    "kind_farkliKapsam": "different scope",
+    "kind_belirsiz": "not comparable",
+    "scope_beyan": "declared",
+    "scope_test": "measured in a test",
+    "scope_olcum": "third-party measurement",
+    "scope_tahmin": "inference",
+    "statedAt": "{year} statement",
+    "unknownScope": "scope not stated",
+    "onRecord": "{count} values on record",
+    "note": "These rows come from the file itself, not from a sample."
   },
   "Footer": {
     "heading": "Independent publication",
     "body": "Compiled from publicly available sources. This is not an official publication and has no affiliation with any manufacturer or government body. Brand names are used for identification purposes only.",
     "mapData": "Map data",
     "links": "Links"
+  },
+  "Hero": {
+    "revisionNote": "This entry comes from the correction log. Every change to a published value is written there.",
+    "provenanceNote": "This row comes from the file itself, not from a sample.",
+    "chain_value": "Value",
+    "chain_confidence": "Confidence",
+    "chain_scope": "Scope",
+    "chain_source": "Source",
+    "chain_verified": "Verified on",
+    "chain_document": "Document",
+    "accessed": "accessed {date}",
+    "archive": "archived copy",
+    "digest": "digest {value}…"
   },
   "Home": {
     "heading": "One field, {sources} sources, {values} different values.",
@@ -26,155 +93,14 @@
     "methodLink": "The full method",
     "headingRevision": "Every figure that changed says why."
   },
-  "A11y": {
-    "skipToContent": "Skip to content"
-  },
-  "ScaleSilhouette": {
-    "caption": "Scaled comparison — schematic drawings are derived from published dimensions, not technical drawings.",
-    "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
-    "ariaLabelAircraft": "Dimension envelope diagram for {names}: wingspan and length in top view, wingspan and height in front view, scaled against a {height} m human figure",
-    "humanLabel": "{height} m",
-    "lengthLabel": "{value} m",
-    "familyLabel": "Family-level statements",
-    "captionAircraft": "Scaled comparison — only the envelope of the published dimensions is drawn. No aircraft outline is produced, because we have no source for the outer shape.",
-    "lengthNamed": "length {value} m",
-    "spanNamed": "wingspan {value} m",
-    "heightNamed": "height {value} m"
+  "LocaleSwitcher": {
+    "tr": "Türkçe",
+    "en": "English"
   },
   "MeasureGap": {
     "absent": "no verified dimensional data",
     "familyLabel": "Family-level statements",
     "invite": "When we have no sourceable dimensional data for this system, no schematic drawing and no model are produced. If you have a source that carries a publication name, a date and a link, <link>send it to us</link>."
-  },
-  "SpecTable": {
-    "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
-    "field": "Field",
-    "absent": "no data",
-    "methodLink": "What do the confidence levels mean?",
-    "accessed": "accessed {date}",
-    "archive": "archived copy",
-    "digest": "digest {value}…",
-    "familyLabel": "Family-level statements"
-  },
-  "Specs": {
-    "length_m": "Length",
-    "diameter_mm": "Diameter",
-    "mass_kg": "Mass",
-    "range_km": "Range",
-    "cep_m": "Circular error probable (CEP)",
-    "warhead_weight_kg": "Warhead weight",
-    "wingspan_m": "Wingspan",
-    "height_m": "Height",
-    "mtow_kg": "Maximum take-off weight",
-    "payload_kg": "Payload capacity",
-    "endurance_h": "Endurance",
-    "service_ceiling_ft": "Service ceiling",
-    "operating_altitude_ft": "Operational altitude",
-    "cruise_speed_ktas": "Cruise speed",
-    "max_speed_ktas": "Maximum speed",
-    "operational_range_km": "Operational range"
-  },
-  "Attributes": {
-    "guidance": "Guidance",
-    "propellant": "Propellant",
-    "stages": "Stages"
-  },
-  "Confidence": {
-    "official": "official",
-    "press": "press",
-    "estimate": "estimate",
-    "officialCaveat": "The official badge shows who the statement came from; it does not show that the information has been independently verified."
-  },
-  "Divergence": {
-    "kind_celiski": "contradiction",
-    "kind_farkliAciklama": "different statements",
-    "kind_farkliKapsam": "different scope",
-    "kind_belirsiz": "not comparable",
-    "scope_beyan": "declared",
-    "scope_test": "measured in a test",
-    "scope_olcum": "third-party measurement",
-    "scope_tahmin": "inference",
-    "statedAt": "{year} statement",
-    "unknownScope": "scope not stated",
-    "onRecord": "{count} values on record",
-    "note": "These rows come from the file itself, not from a sample."
-  },
-  "Hero": {
-    "revisionNote": "This entry comes from the correction log. Every change to a published value is written there.",
-    "provenanceNote": "This row comes from the file itself, not from a sample.",
-    "chain_value": "Value",
-    "chain_confidence": "Confidence",
-    "chain_scope": "Scope",
-    "chain_source": "Source",
-    "chain_verified": "Verified on",
-    "chain_document": "Document",
-    "accessed": "accessed {date}",
-    "archive": "archived copy",
-    "digest": "digest {value}…"
-  },
-  "SystemPage": {
-    "specs": "Technical data and sources",
-    "timeline": "Programme timeline",
-    "range": "Range envelope",
-    "badge": "open source file",
-    "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
-    "model": "Schematic model",
-    "scale": "Scale comparison",
-    "revisions": "Correction log",
-    "datasetName": "{name} — technical data",
-    "datasetDescription": "Measurement record compiled from public sources. Every figure carries its confidence level and source; conflicting figures are kept, not resolved."
-  },
-  "RangeEnvelope": {
-    "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
-    "markerHint": "Reference point — drag to move",
-    "mapLabel": "Range envelope map, reference point is draggable",
-    "latitude": "Latitude",
-    "longitude": "Longitude",
-    "loading": "Loading map…",
-    "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation."
-  },
-  "Categories": {
-    "balistik-fuze": "Ballistic missile",
-    "seyir-fuzesi": "Cruise missile",
-    "insansiz-hava-araci": "Unmanned aerial vehicle"
-  },
-  "Status": {
-    "gelistirme": "In development",
-    "test": "In testing",
-    "seri-uretim": "Serial production",
-    "envanterde": "In service"
-  },
-  "ModelViewer": {
-    "loading": "Loading model…",
-    "hint": "drag: rotate · wheel: zoom",
-    "ar": "View in your space",
-    "ariaLabel": "{name} — rotatable schematic model",
-    "note": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cross-section, exploded view or internal component layout — we hold no sourced data on internal geometry. Labels name external sections only and each carries its own confidence level. The body is derived from published length and diameter values; it is not a technical drawing.",
-    "overview": "Overview",
-    "fullscreen": "Fullscreen",
-    "exitFullscreen": "Exit fullscreen",
-    "noteAircraft": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. No cutaway, no exploded view, no internal layout — we have no sourced data on internal geometry. The model's scale comes from two published numbers: fuselage length and wingspan. Proportions such as fuselage width, wing chord, wingtip upturn and tail height are not published numbers; they were measured from the manufacturer's published imagery. Which proportion was measured and which was chosen for readability is recorded separately. Engines, propellers, landing gear and payload stations are not modelled. Because the landing gear is not modelled, the model's vertical extent is not the height value shown in the table."
-  },
-  "Nav": {
-    "primary": "Primary navigation",
-    "files": "Files",
-    "method": "Method",
-    "about": "About"
-  },
-  "LocaleSwitcher": {
-    "tr": "Türkçe",
-    "en": "English"
-  },
-  "SystemCard": {
-    "counts": "{values} values, {sources} sources",
-    "updated": "last verified {date}",
-    "distribution": "Confidence spread on record",
-    "open": "Open the file"
-  },
-  "ConfidenceLevels": {
-    "official": "The manufacturer's or the institution's own statement. A link is given; if the link dies, an archive copy replaces it and the date is recorded. The official badge shows who the statement came from; it does not show that the information has been independently verified.",
-    "press": "Secondary source: news report, magazine, trade show or conference note. Unverified, but on record and not hidden.",
-    "estimate": "Independent assessment with no official confirmation. Its badge is red, because this is an inference rather than a statement."
   },
   "Method": {
     "eyebrow": "Method",
@@ -228,22 +154,37 @@
     "term_integrity": "Digest and archive",
     "termBody_integrity": "The SHA-256 digest of the document we read, and the address of a third-party archived copy where one exists. We do not republish the document from our own server: manufacturer cards carry fields we do not publish and carry the manufacturer’s branding, so serving a mirror would mean publishing them ourselves. The digest leaves a check without crossing that line: anyone who finds the same file computes the digest themselves."
   },
-  "About": {
-    "eyebrow": "About",
-    "title": "Açık Dosya",
-    "lead": "An independent publication keeping sourced technical files on Turkish defence industry systems.",
-    "independenceHeading": "Independence",
-    "independenceBody": "Açık Dosya is an independent publication. It has no affiliation with any institution, manufacturer or government body, receives no support from any of them and represents none of them. These pages are not an official publication.",
-    "independenceBrands": "Brand, system and institution names are used for identification only and belong to their owners. Manufacturer logos are not used.",
-    "scopeHeading": "Scope",
-    "scopeBody": "We cover a small number of systems in depth. This is not a catalogue or an encyclopaedia: each file holds sourced data, a scaled drawing, a programme timeline and a range envelope. There is no news feed and no user-contributed content.",
-    "scopeMethod": "How a figure enters the record is described <link>on the method page</link>.",
-    "privacyHeading": "Privacy",
-    "privacyBody": "Visits are counted by a meter running on our own server. No cookies are used and none are sent with requests, so there is no consent banner. If your browser says it does not want to be tracked (Do Not Track), nothing is recorded.",
-    "privacyRequests": "The page makes no request to a third-party server: fonts, the map base layer and the analytics file are all served from this address. Query strings are not recorded — the reference point you choose on the range envelope never reaches us.",
-    "contactHeading": "Contact and corrections",
-    "contactBody": "Write for corrections, missing sources and questions.",
-    "contactWhat": "When sending a correction, say which system, which field and which source you mean. Reports without a source cannot enter the record."
+  "ModelProvenance": {
+    "title": "Shape record",
+    "intro": "The model is scaled from published measurements. The ratios that determine its shape are not published figures; each one states below where it came from. This is a statement of origin, not a confidence level.",
+    "measured": "measured",
+    "reading": "reading",
+    "chosen": "chosen",
+    "measuredHint": "read from a published image and the projection check passed",
+    "readingHint": "read from a published image, the projection check was never run",
+    "chosenHint": "could not be extracted from imagery, chosen for a readable schematic",
+    "sourceLabel": "source",
+    "seenLabel": "seen",
+    "checkLabel": "projection check",
+    "summary": "{measured} measured · {reading} reading · {chosen} chosen"
+  },
+  "ModelViewer": {
+    "ar": "View in your space",
+    "ariaLabel": "{name} — rotatable schematic model",
+    "exitFullscreen": "Exit fullscreen",
+    "front": "Front view",
+    "fullscreen": "Fullscreen",
+    "hint": "drag: rotate · wheel: zoom",
+    "loading": "Loading model…",
+    "note": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cutaway, no exploded view and no internal component layout, because we have no sourced data on internal geometry. Labels name external sections only and each carries its own confidence level. The model is scaled from the published length and diameter; the proportions of the body and fins are not published figures, and the origin of each is set out in the shape record below. This is not a technical drawing.",
+    "noteAircraft": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cutaway, no exploded view and no internal component layout, because we have no sourced data on internal geometry. The model is scaled from three published figures: body length, wingspan and height. The landing gear length derives from the last of these, so the model's ground-to-fin-tip measurement is exactly the height value in the table. Fuselage width, wing chord, nacelle position and tail proportions are not published figures; which of them were measured, which are unchecked readings and which were chosen for readability is set out one by one in the shape record below. Load stations are drawn as bare pylons; carried stores are not modelled.",
+    "overview": "Overview"
+  },
+  "Nav": {
+    "primary": "Primary navigation",
+    "files": "Files",
+    "method": "Method",
+    "about": "About"
   },
   "NotFound": {
     "code": "404",
@@ -251,8 +192,159 @@
     "body": "The link may be old, or the address may be mistyped.",
     "home": "Back to the files"
   },
+  "RangeEnvelope": {
+    "intro": "Drag the reference point to move it. The rings are geodesic projections of published range figures; they do not show a flight profile or operational use.",
+    "markerHint": "Reference point — drag to move",
+    "mapLabel": "Range envelope map, reference point is draggable",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "loading": "Loading map…",
+    "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation."
+  },
+  "RangeScale": {
+    "caption": "Distance scale — the published range statement is drawn against the scale of the Earth. No ring is drawn on a map: a ring asserts a radius, while this value is the manufacturer's own term.",
+    "ariaLabel": "Distance scale for {names}, against the {reference} km from equator to pole",
+    "kmLabel": "{value} km",
+    "axisUnit": "thousand km",
+    "reference": "{value} km, equator to pole"
+  },
+  "RatioLabels": {
+    "boattail": "Boattail",
+    "bodySectionLowerRatio": "Body section lower extent",
+    "bodySectionUpperRatio": "Body section upper extent",
+    "crossAspect": "Body cross-section ratio",
+    "filletRatio": "Wing root fillet",
+    "finChordRatio": "Fin root chord",
+    "finCount": "Fin count",
+    "finHeightRatio": "Fin height",
+    "finPositionT": "Fin position",
+    "finRakeDeg": "Fin trailing-edge rake",
+    "finSpanRatio": "Fin span",
+    "finSweepDeg": "Fin sweep",
+    "finTaper": "Fin taper",
+    "finThicknessRatio": "Fin thickness",
+    "finTrailingT": "Fin trailing-edge position",
+    "fuselageRatio": "Fuselage width",
+    "mainGearAttachRatio": "Main gear attachment",
+    "mainGearPositionT": "Main gear station",
+    "mainGearSpanRatio": "Main gear track",
+    "nacelleCount": "Nacelle count",
+    "nacelleDiameterRatio": "Nacelle diameter",
+    "nacelleDropRatio": "Nacelle drop below wing",
+    "nacelleLengthRatio": "Nacelle length",
+    "nacellePositionT": "Nacelle station",
+    "nacelleSpanRatio": "Nacelle spanwise position",
+    "noseGearPositionT": "Nose gear station",
+    "noseRatio": "Nose section",
+    "propBladeCount": "Propeller blade count",
+    "propChordRatio": "Propeller blade chord",
+    "propDiameterRatio": "Propeller diameter",
+    "propHubRatio": "Propeller hub",
+    "pylonLengthRatio": "Pylon length",
+    "pylonPositionT": "Pylon station",
+    "pylonRadiusRatio": "Pylon thickness",
+    "pylonSpanInnerRatio": "Inner load station",
+    "pylonSpanMiddleRatio": "Middle load station",
+    "pylonSpanOuterRatio": "Outer load station",
+    "shoulderRatio": "Wing root shoulder",
+    "shoulderSpread": "Shoulder spread",
+    "shoulderT": "End of full-diameter section",
+    "stabAnhedralDeg": "Stabiliser anhedral",
+    "stabChordRatio": "Stabiliser chord",
+    "stabPositionT": "Stabiliser position",
+    "stabRakeDeg": "Stabiliser trailing-edge rake",
+    "stabSpanRatio": "Stabiliser span",
+    "strutRadiusRatio": "Gear strut thickness",
+    "tailConeRatio": "Tail cone",
+    "tailTipRatio": "Tail tip diameter",
+    "tipExponent": "Wing tip curve shape",
+    "tipReachRatio": "Wing tip curve reach",
+    "tipRiseRatio": "Wing tip rise",
+    "wheelDiameterRatio": "Wheel diameter",
+    "wingChordRatio": "Wing root chord",
+    "wingCount": "Wing count",
+    "wingHeightRatio": "Wing vertical position",
+    "wingPositionT": "Wing position",
+    "wingRakeDeg": "Wing trailing-edge rake",
+    "wingRootDropRatio": "Wing root drop",
+    "wingRootExponent": "Wing root joint curve",
+    "wingRootReachRatio": "Wing root joint reach",
+    "wingSpanRatio": "Wing span",
+    "wingTaper": "Wing taper",
+    "wingThicknessRatio": "Wing thickness",
+    "wingTrailingT": "Wing trailing-edge position"
+  },
   "RevisionLog": {
     "from": "previous value",
     "to": "new value"
+  },
+  "ScaleSilhouette": {
+    "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
+    "ariaLabelAircraft": "Scale drawing for {names}: outlines in top and front view, scaled against a {height} metre human figure",
+    "caption": "Scaled comparison — schematic drawings are derived from published dimensions, not technical drawings.",
+    "captionAircraft": "Scale comparison — the outline is an orthographic projection of the same part list that builds the 3D model, scaled from the published length, wingspan and height. A system with no ratio table gets no outline, only a dashed measurement envelope.",
+    "familyLabel": "Family-level statements",
+    "heightNamed": "height {value} m",
+    "humanLabel": "{height} m",
+    "lengthLabel": "{value} m",
+    "lengthNamed": "length {value} m",
+    "spanNamed": "wingspan {value} m"
+  },
+  "Site": {
+    "name": "Açık Dosya",
+    "tagline": "Sourced technical files on Turkish defence industry systems"
+  },
+  "SpecTable": {
+    "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
+    "field": "Field",
+    "absent": "no data",
+    "methodLink": "What do the confidence levels mean?",
+    "accessed": "accessed {date}",
+    "archive": "archived copy",
+    "digest": "digest {value}…",
+    "familyLabel": "Family-level statements"
+  },
+  "Specs": {
+    "length_m": "Length",
+    "diameter_mm": "Diameter",
+    "mass_kg": "Mass",
+    "range_km": "Range",
+    "cep_m": "Circular error probable (CEP)",
+    "warhead_weight_kg": "Warhead weight",
+    "wingspan_m": "Wingspan",
+    "height_m": "Height",
+    "mtow_kg": "Maximum take-off weight",
+    "payload_kg": "Payload capacity",
+    "endurance_h": "Endurance",
+    "service_ceiling_ft": "Service ceiling",
+    "operating_altitude_ft": "Operational altitude",
+    "cruise_speed_ktas": "Cruise speed",
+    "max_speed_ktas": "Maximum speed",
+    "operational_range_km": "Operational range"
+  },
+  "Status": {
+    "gelistirme": "In development",
+    "test": "In testing",
+    "seri-uretim": "Serial production",
+    "envanterde": "In service"
+  },
+  "SystemCard": {
+    "counts": "{values} values, {sources} sources",
+    "updated": "last verified {date}",
+    "distribution": "Confidence spread on record",
+    "open": "Open the file"
+  },
+  "SystemPage": {
+    "specs": "Technical data and sources",
+    "timeline": "Programme timeline",
+    "range": "Range envelope",
+    "badge": "open source file",
+    "metaFallback": "A {manufacturer} system — technical file compiled from public sources.",
+    "model": "Schematic model",
+    "scale": "Scale comparison",
+    "revisions": "Correction log",
+    "datasetName": "{name} — technical data",
+    "datasetDescription": "Measurement record compiled from public sources. Every figure carries its confidence level and source; conflicting figures are kept, not resolved.",
+    "rangeDistance": "Range scale"
   }
 }

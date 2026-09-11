@@ -1,13 +1,80 @@
 {
-  "Site": {
-    "name": "Açık Dosya",
-    "tagline": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları"
+  "A11y": {
+    "skipToContent": "İçeriğe geç"
+  },
+  "About": {
+    "eyebrow": "Hakkında",
+    "title": "Açık Dosya",
+    "lead": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyalarını tutan bağımsız bir yayın.",
+    "independenceHeading": "Bağımsızlık",
+    "independenceBody": "Açık Dosya bağımsız bir yayındır. Hiçbir kurum, üretici veya kamu kuruluşuyla bağı yoktur, hiçbirinden destek almaz ve hiçbirini temsil etmez. Bu sayfalar resmî yayın değildir.",
+    "independenceBrands": "Marka, sistem ve kurum adları yalnızca tanımlama amacıyla kullanılır ve sahiplerine aittir. Üretici logoları kullanılmaz.",
+    "scopeHeading": "Kapsam",
+    "scopeBody": "Az sayıda sistemi derinlemesine anlatıyoruz. Bu bir katalog veya ansiklopedi değil: her dosya kaynaklı veri, ölçekli çizim, program takvimi ve menzil zarfı içerir. Haber akışı yok, kullanıcı içeriği yok.",
+    "scopeMethod": "Bir sayının nasıl kayda girdiğini <link>yöntem sayfasında</link> anlattık.",
+    "privacyHeading": "Gizlilik",
+    "privacyBody": "Ziyaret sayısını kendi sunucumuzda tuttuğumuz bir sayaçla ölçüyoruz. Çerez kullanılmıyor ve isteklerle çerez gönderilmiyor; bu yüzden onay bandı da yok. Tarayıcınız izlenmek istemediğini bildiriyorsa (Do Not Track) hiçbir kayıt tutulmuyor.",
+    "privacyRequests": "Sayfa üçüncü taraf sunucuya istek yapmaz: yazı tipleri, harita altlığı ve ölçüm dosyası bu adres üzerinden gelir. Adres çubuğundaki sorgu dizesi kaydedilmez — menzil zarfında seçtiğiniz referans noktası bize ulaşmaz.",
+    "contactHeading": "İletişim ve düzeltme",
+    "contactBody": "Düzeltme, eksik kaynak bildirimi ve sorular için yazabilirsiniz.",
+    "contactWhat": "Düzeltme gönderirken hangi sistemi, hangi alanı ve hangi kaynağı kastettiğinizi yazın. Kaynağı olmayan bildirimler kayda giremiyor."
+  },
+  "Attributes": {
+    "guidance": "Güdüm",
+    "propellant": "Yakıt",
+    "stages": "Kademe",
+    "power_system": "Güç sistemi",
+    "communications": "Haberleşme",
+    "variant_names": "Varyasyon"
+  },
+  "Categories": {
+    "balistik-fuze": "Balistik füze",
+    "seyir-fuzesi": "Seyir füzesi",
+    "insansiz-hava-araci": "İnsansız hava aracı"
+  },
+  "Confidence": {
+    "official": "resmî",
+    "press": "basın",
+    "estimate": "tahmin",
+    "officialCaveat": "Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez."
+  },
+  "ConfidenceLevels": {
+    "official": "Üreticinin veya kurumun kendi açıklaması. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır. Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez.",
+    "press": "İkincil kaynak: haber, dergi, fuar veya konferans notu. Doğrulanmadı, ama kayda geçti ve gizlenmiyor.",
+    "estimate": "Bağımsız değerlendirme, resmî teyidi yok. Rozeti kırmızı, çünkü bu bir beyan değil bir çıkarım."
+  },
+  "Divergence": {
+    "kind_celiski": "çelişki",
+    "kind_farkliAciklama": "farklı açıklamalar",
+    "kind_farkliKapsam": "farklı kapsam",
+    "kind_belirsiz": "karşılaştırılamadı",
+    "scope_beyan": "beyan",
+    "scope_test": "testte ölçüldü",
+    "scope_olcum": "dışarıdan ölçüm",
+    "scope_tahmin": "çıkarım",
+    "statedAt": "{year} açıklaması",
+    "unknownScope": "kapsam belirtilmemiş",
+    "onRecord": "kayıtta {count} değer",
+    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
   },
   "Footer": {
     "heading": "Bağımsız yayın",
     "body": "Bu sayfa kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir, hiçbir üretici veya kamu kurumuyla bağı yoktur. Marka adları yalnızca tanımlama amacıyla kullanılmıştır.",
     "mapData": "Harita verisi",
     "links": "Bağlantılar"
+  },
+  "Hero": {
+    "revisionNote": "Bu kayıt düzeltme defterinden alınmıştır. Yayımlanmış her değer değişikliği buraya yazılır.",
+    "provenanceNote": "Bu satır dosyanın kendisinden alınmıştır, örnek değildir.",
+    "chain_value": "Değer",
+    "chain_confidence": "Güven",
+    "chain_scope": "Kapsam",
+    "chain_source": "Kaynak",
+    "chain_verified": "Doğrulama tarihi",
+    "chain_document": "Belge",
+    "accessed": "erişim {date}",
+    "archive": "arşiv kopyası",
+    "digest": "özet {value}…"
   },
   "Home": {
     "heading": "Tek bir alan, {sources} kaynak, {values} farklı değer.",
@@ -26,155 +93,14 @@
     "methodLink": "Yöntemin tamamı",
     "headingRevision": "Değişen her sayının nedeni yazılı."
   },
-  "A11y": {
-    "skipToContent": "İçeriğe geç"
-  },
-  "ScaleSilhouette": {
-    "caption": "Ölçekli karşılaştırma — şematik görseller yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
-    "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
-    "ariaLabelAircraft": "{names} için boyut zarfı şeması: üst görünüşte kanat açıklığı ve uzunluk, ön görünüşte kanat açıklığı ve yükseklik, {height} metrelik insan figürüne göre ölçekli",
-    "humanLabel": "{height} m",
-    "lengthLabel": "{value} m",
-    "familyLabel": "Aile düzeyindeki beyanlar",
-    "captionAircraft": "Ölçekli karşılaştırma — yalnızca yayımlanmış boyutların zarfı çizilir. Dış hat için kaynağımız olmadığından uçak konturu üretilmemiştir.",
-    "lengthNamed": "uzunluk {value} m",
-    "spanNamed": "açıklık {value} m",
-    "heightNamed": "yükseklik {value} m"
+  "LocaleSwitcher": {
+    "tr": "Türkçe",
+    "en": "English"
   },
   "MeasureGap": {
     "absent": "doğrulanmış ölçü verisi yok",
     "familyLabel": "Aile düzeyindeki beyanlar",
     "invite": "Bu sistem için gerekli boyut verilerinin kaynağı gösterilebilir bir ölçüsünü bilmiyorsak şematik görsel ve model üretilmiyor. Elinizde yayın adı, tarih ve bağlantı taşıyan bir kaynak varsa <link>bize gönderin</link>."
-  },
-  "SpecTable": {
-    "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
-    "field": "Alan",
-    "absent": "veri yok",
-    "methodLink": "Güven seviyeleri ne anlama geliyor?",
-    "accessed": "erişim {date}",
-    "archive": "arşiv kopyası",
-    "digest": "özet {value}…",
-    "familyLabel": "Aile düzeyindeki beyanlar"
-  },
-  "Specs": {
-    "length_m": "Uzunluk",
-    "diameter_mm": "Çap",
-    "mass_kg": "Kütle",
-    "range_km": "Menzil",
-    "cep_m": "Dairesel sapma (CEP)",
-    "warhead_weight_kg": "Harp başlığı ağırlığı",
-    "wingspan_m": "Kanat açıklığı",
-    "height_m": "Yükseklik",
-    "mtow_kg": "Azami kalkış ağırlığı",
-    "payload_kg": "Faydalı yük kapasitesi",
-    "endurance_h": "Havada kalış",
-    "service_ceiling_ft": "Servis tavanı",
-    "operating_altitude_ft": "Operasyonel irtifa",
-    "cruise_speed_ktas": "Seyir hızı",
-    "max_speed_ktas": "Azami hız",
-    "operational_range_km": "Operasyonel menzil"
-  },
-  "Attributes": {
-    "guidance": "Güdüm",
-    "propellant": "Yakıt",
-    "stages": "Kademe"
-  },
-  "Confidence": {
-    "official": "resmî",
-    "press": "basın",
-    "estimate": "tahmin",
-    "officialCaveat": "Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez."
-  },
-  "Divergence": {
-    "kind_celiski": "çelişki",
-    "kind_farkliAciklama": "farklı açıklamalar",
-    "kind_farkliKapsam": "farklı kapsam",
-    "kind_belirsiz": "karşılaştırılamadı",
-    "scope_beyan": "beyan",
-    "scope_test": "testte ölçüldü",
-    "scope_olcum": "dışarıdan ölçüm",
-    "scope_tahmin": "çıkarım",
-    "statedAt": "{year} açıklaması",
-    "unknownScope": "kapsam belirtilmemiş",
-    "onRecord": "kayıtta {count} değer",
-    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
-  },
-  "Hero": {
-    "revisionNote": "Bu kayıt düzeltme defterinden alınmıştır. Yayımlanmış her değer değişikliği buraya yazılır.",
-    "provenanceNote": "Bu satır dosyanın kendisinden alınmıştır, örnek değildir.",
-    "chain_value": "Değer",
-    "chain_confidence": "Güven",
-    "chain_scope": "Kapsam",
-    "chain_source": "Kaynak",
-    "chain_verified": "Doğrulama tarihi",
-    "chain_document": "Belge",
-    "accessed": "erişim {date}",
-    "archive": "arşiv kopyası",
-    "digest": "özet {value}…"
-  },
-  "SystemPage": {
-    "specs": "Teknik veriler ve kaynakları",
-    "timeline": "Program takvimi",
-    "range": "Menzil zarfı",
-    "badge": "açık kaynak dosya",
-    "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya.",
-    "model": "Şematik model",
-    "scale": "Ölçekli karşılaştırma",
-    "revisions": "Düzeltme geçmişi",
-    "datasetName": "{name} — teknik veri",
-    "datasetDescription": "Kamuya açık kaynaklardan derlenmiş ölçüm kaydı. Her değer güven seviyesi ve kaynağıyla birlikte tutulur; çelişen değerler ayıklanmaz."
-  },
-  "RangeEnvelope": {
-    "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
-    "markerHint": "Referans nokta — sürükleyebilirsin",
-    "mapLabel": "Menzil zarfı haritası, referans nokta sürüklenebilir",
-    "latitude": "Enlem",
-    "longitude": "Boylam",
-    "loading": "Harita yükleniyor…",
-    "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir."
-  },
-  "Categories": {
-    "balistik-fuze": "Balistik füze",
-    "seyir-fuzesi": "Seyir füzesi",
-    "insansiz-hava-araci": "İnsansız hava aracı"
-  },
-  "Status": {
-    "gelistirme": "Geliştirme",
-    "test": "Test aşaması",
-    "seri-uretim": "Seri üretim",
-    "envanterde": "Envanterde"
-  },
-  "ModelViewer": {
-    "loading": "Model yükleniyor…",
-    "hint": "sürükle: döndür · tekerlek: yakınlaş",
-    "ar": "Kendi ortamında gör",
-    "ariaLabel": "{name} — döndürülebilir şematik model",
-    "note": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Etiketler yalnızca dış bölümleri adlandırır ve kendi güven seviyelerini taşır. Gövde, yayımlanmış uzunluk ve çap değerlerinden türetilmiştir; teknik çizim değildir.",
-    "overview": "Genel görünüm",
-    "fullscreen": "Tam ekran",
-    "exitFullscreen": "Tam ekrandan çık",
-    "noteAircraft": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Modelin ölçeği iki yayımlanmış sayıdan gelir: gövde uzunluğu ve kanat açıklığı. Gövde eni, kanat veçhesi, kanat ucu kıvrımı ve kuyruk yüksekliği gibi oranlar yayımlanmış sayı değildir; üreticinin yayımladığı görsellerden ölçülmüştür. Hangi oranın ölçüldüğü, hangisinin okunabilirlik için seçildiği ayrı ayrı kayıtlıdır. Motor, pervane, iniş takımı ve yük istasyonları modellenmez. İniş takımı modellenmediği için modelin dikey ölçüsü, tabloda yazan yükseklik değeri değildir."
-  },
-  "Nav": {
-    "primary": "Ana gezinme",
-    "files": "Dosyalar",
-    "method": "Yöntem",
-    "about": "Hakkında"
-  },
-  "LocaleSwitcher": {
-    "tr": "Türkçe",
-    "en": "English"
-  },
-  "SystemCard": {
-    "counts": "{values} değer, {sources} kaynak",
-    "updated": "son doğrulama {date}",
-    "distribution": "Kayıttaki güven dağılımı",
-    "open": "Dosyayı aç"
-  },
-  "ConfidenceLevels": {
-    "official": "Üreticinin veya kurumun kendi açıklaması. Bağlantı verilir; bağlantı ölürse yerine arşiv kopyası konur ve tarihi yazılır. Resmî rozeti, açıklamanın kimden geldiğini gösterir; bilginin bağımsız olarak doğrulandığını göstermez.",
-    "press": "İkincil kaynak: haber, dergi, fuar veya konferans notu. Doğrulanmadı, ama kayda geçti ve gizlenmiyor.",
-    "estimate": "Bağımsız değerlendirme, resmî teyidi yok. Rozeti kırmızı, çünkü bu bir beyan değil bir çıkarım."
   },
   "Method": {
     "eyebrow": "Yöntem",
@@ -228,22 +154,37 @@
     "term_integrity": "Özet ve arşiv",
     "termBody_integrity": "Okuduğumuz belgenin SHA-256 özeti ve varsa üçüncü taraf arşiv kopyasının adresi. Belgenin kopyasını kendi sunucumuzdan yayımlamıyoruz: üretici kartları yayımlamadığımız alanları ve üreticinin markasını taşıyor, aynasını servis etmek onları bizim yayımlamamız olurdu. Özet bu sınırı bozmadan doğrulama bırakır: aynı dosyayı bulan herkes özeti kendisi hesaplar."
   },
-  "About": {
-    "eyebrow": "Hakkında",
-    "title": "Açık Dosya",
-    "lead": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyalarını tutan bağımsız bir yayın.",
-    "independenceHeading": "Bağımsızlık",
-    "independenceBody": "Açık Dosya bağımsız bir yayındır. Hiçbir kurum, üretici veya kamu kuruluşuyla bağı yoktur, hiçbirinden destek almaz ve hiçbirini temsil etmez. Bu sayfalar resmî yayın değildir.",
-    "independenceBrands": "Marka, sistem ve kurum adları yalnızca tanımlama amacıyla kullanılır ve sahiplerine aittir. Üretici logoları kullanılmaz.",
-    "scopeHeading": "Kapsam",
-    "scopeBody": "Az sayıda sistemi derinlemesine anlatıyoruz. Bu bir katalog veya ansiklopedi değil: her dosya kaynaklı veri, ölçekli çizim, program takvimi ve menzil zarfı içerir. Haber akışı yok, kullanıcı içeriği yok.",
-    "scopeMethod": "Bir sayının nasıl kayda girdiğini <link>yöntem sayfasında</link> anlattık.",
-    "privacyHeading": "Gizlilik",
-    "privacyBody": "Ziyaret sayısını kendi sunucumuzda tuttuğumuz bir sayaçla ölçüyoruz. Çerez kullanılmıyor ve isteklerle çerez gönderilmiyor; bu yüzden onay bandı da yok. Tarayıcınız izlenmek istemediğini bildiriyorsa (Do Not Track) hiçbir kayıt tutulmuyor.",
-    "privacyRequests": "Sayfa üçüncü taraf sunucuya istek yapmaz: yazı tipleri, harita altlığı ve ölçüm dosyası bu adres üzerinden gelir. Adres çubuğundaki sorgu dizesi kaydedilmez — menzil zarfında seçtiğiniz referans noktası bize ulaşmaz.",
-    "contactHeading": "İletişim ve düzeltme",
-    "contactBody": "Düzeltme, eksik kaynak bildirimi ve sorular için yazabilirsiniz.",
-    "contactWhat": "Düzeltme gönderirken hangi sistemi, hangi alanı ve hangi kaynağı kastettiğinizi yazın. Kaynağı olmayan bildirimler kayda giremiyor."
+  "ModelProvenance": {
+    "title": "Biçim kaydı",
+    "intro": "Modelin ölçeği yayımlanmış ölçülerden gelir. Biçimini belirleyen oranlar yayımlanmış sayı değildir; her biri nereden geldiğini aşağıda söyler. Bu bir güven seviyesi değil, köken beyanıdır.",
+    "measured": "ölçülmüş",
+    "reading": "okuma",
+    "chosen": "seçilmiş",
+    "measuredHint": "yayımlanmış bir görselden okundu ve izdüşüm sınavı geçildi",
+    "readingHint": "yayımlanmış bir görselden okundu, izdüşüm sınavı yapılmadı",
+    "chosenHint": "görselden çıkarılamadı, okunabilir bir şema için seçildi",
+    "sourceLabel": "kaynak",
+    "seenLabel": "görüldü",
+    "checkLabel": "izdüşüm sınavı",
+    "summary": "{measured} ölçülmüş · {reading} okuma · {chosen} seçilmiş"
+  },
+  "ModelViewer": {
+    "ar": "Kendi ortamında gör",
+    "ariaLabel": "{name} — döndürülebilir şematik model",
+    "exitFullscreen": "Tam ekrandan çık",
+    "front": "Ön görünüş",
+    "fullscreen": "Tam ekran",
+    "hint": "sürükle: döndür · tekerlek: yakınlaş",
+    "loading": "Model yükleniyor…",
+    "note": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Etiketler yalnızca dış bölümleri adlandırır ve kendi güven seviyelerini taşır. Modelin ölçeği yayımlanmış uzunluk ve çap değerlerinden gelir; gövdenin ve kanatçıkların oranları ise yayımlanmış sayı değildir ve her birinin kökeni aşağıdaki biçim kaydında yazılı. Teknik çizim değildir.",
+    "noteAircraft": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Modelin ölçeği üç yayımlanmış sayıdan gelir: gövde uzunluğu, kanat açıklığı ve yükseklik. İniş takımının boyu sonuncusundan türetilir; bu yüzden modelin zeminden dikey stabilize ucuna ölçüsü, tabloda yazan yükseklik değerinin ta kendisidir. Gövde eni, kanat veçhesi, gondol yeri ve kuyruk oranları yayımlanmış sayı değildir; hangisinin ölçüldüğü, hangisinin sınanmamış bir okuma olduğu ve hangisinin okunabilirlik için seçildiği aşağıdaki biçim kaydında tek tek yazılı. Yük istasyonları çıplak pilon olarak çizilir; taşınan mühimmat modellenmez.",
+    "overview": "Genel görünüm"
+  },
+  "Nav": {
+    "primary": "Ana gezinme",
+    "files": "Dosyalar",
+    "method": "Yöntem",
+    "about": "Hakkında"
   },
   "NotFound": {
     "code": "404",
@@ -251,8 +192,159 @@
     "body": "Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir.",
     "home": "Dosyalara dön"
   },
+  "RangeEnvelope": {
+    "intro": "Referans noktasını sürükleyerek taşıyabilirsin. Halkalar, yayımlanmış menzil değerlerinin jeodezik izdüşümüdür; uçuş profili veya operasyonel kullanım göstermez.",
+    "markerHint": "Referans nokta — sürükleyebilirsin",
+    "mapLabel": "Menzil zarfı haritası, referans nokta sürüklenebilir",
+    "latitude": "Enlem",
+    "longitude": "Boylam",
+    "loading": "Harita yükleniyor…",
+    "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir."
+  },
+  "RangeScale": {
+    "caption": "Mesafe cetveli — yayımlanmış menzil beyanı yer ölçeğine göre çizilir. Harita üzerinde halka çizilmez: halka bir yarıçap iddiasıdır, bu değer ise üreticinin kendi terimidir.",
+    "ariaLabel": "{names} için mesafe cetveli, ekvatordan kutba {reference} kilometrelik yer ölçüsüne göre",
+    "kmLabel": "{value} km",
+    "axisUnit": "bin km",
+    "reference": "ekvatordan kutba {value} km"
+  },
+  "RatioLabels": {
+    "boattail": "Kuyruk daralması",
+    "bodySectionLowerRatio": "Gövde kesitinin alt uzanımı",
+    "bodySectionUpperRatio": "Gövde kesitinin üst uzanımı",
+    "crossAspect": "Gövde kesiti oranı",
+    "filletRatio": "Kanat kökü yuvarlatması",
+    "finChordRatio": "Kanatçık kök veçhesi",
+    "finCount": "Kanatçık sayısı",
+    "finHeightRatio": "Dikey stabilize yüksekliği",
+    "finPositionT": "Dikey stabilize konumu",
+    "finRakeDeg": "Kanatçık firar kenarı eğimi",
+    "finSpanRatio": "Kanatçık açıklığı",
+    "finSweepDeg": "Dikey stabilize ok açısı",
+    "finTaper": "Kanatçık incelmesi",
+    "finThicknessRatio": "Kanatçık kalınlığı",
+    "finTrailingT": "Kanatçık firar kenarı konumu",
+    "fuselageRatio": "Gövde eni",
+    "mainGearAttachRatio": "Ana takımın gövde bağlantısı",
+    "mainGearPositionT": "Ana takım gövde konumu",
+    "mainGearSpanRatio": "Ana takım açıklığı",
+    "nacelleCount": "Motor gondolu sayısı",
+    "nacelleDiameterRatio": "Gondol çapı",
+    "nacelleDropRatio": "Gondolun kanat altına inişi",
+    "nacelleLengthRatio": "Gondol boyu",
+    "nacellePositionT": "Gondol gövde konumu",
+    "nacelleSpanRatio": "Gondol açıklık konumu",
+    "noseGearPositionT": "Burun takımı gövde konumu",
+    "noseRatio": "Burun bölümü",
+    "propBladeCount": "Pervane kanat sayısı",
+    "propChordRatio": "Pervane kanat veçhesi",
+    "propDiameterRatio": "Pervane çapı",
+    "propHubRatio": "Pervane göbeği",
+    "pylonLengthRatio": "Pilon boyu",
+    "pylonPositionT": "Pilon gövde konumu",
+    "pylonRadiusRatio": "Pilon kalınlığı",
+    "pylonSpanInnerRatio": "İç yük istasyonu",
+    "pylonSpanMiddleRatio": "Orta yük istasyonu",
+    "pylonSpanOuterRatio": "Dış yük istasyonu",
+    "shoulderRatio": "Kanat kökü omuz şişmesi",
+    "shoulderSpread": "Omuz şişmesinin yayılımı",
+    "shoulderT": "Tam çapın korunduğu son nokta",
+    "stabAnhedralDeg": "Yatay stabilize aşağı sapması",
+    "stabChordRatio": "Yatay stabilize veçhesi",
+    "stabPositionT": "Yatay stabilize konumu",
+    "stabRakeDeg": "Yatay stabilize firar kenarı eğimi",
+    "stabSpanRatio": "Yatay stabilize açıklığı",
+    "strutRadiusRatio": "İniş takımı bacak kalınlığı",
+    "tailConeRatio": "Kuyruk konisi",
+    "tailTipRatio": "Kuyruk ucu çapı",
+    "tipExponent": "Kanat ucu kıvrım eğrisi",
+    "tipReachRatio": "Kanat ucu kıvrımının yatay payı",
+    "tipRiseRatio": "Kanat ucu yükselişi",
+    "wheelDiameterRatio": "Tekerlek çapı",
+    "wingChordRatio": "Kanat kök veçhesi",
+    "wingCount": "Kanat sayısı",
+    "wingHeightRatio": "Kanadın dikey konumu",
+    "wingPositionT": "Kanat konumu",
+    "wingRakeDeg": "Kanat firar kenarı eğimi",
+    "wingRootDropRatio": "Kanat kökünün alçalması",
+    "wingRootExponent": "Kök bağlantı eğrisi",
+    "wingRootReachRatio": "Kök bağlantısının uzunluğu",
+    "wingSpanRatio": "Kanat açıklığı",
+    "wingTaper": "Kanat incelmesi",
+    "wingThicknessRatio": "Kanat kalınlığı",
+    "wingTrailingT": "Kanat firar kenarı konumu"
+  },
   "RevisionLog": {
     "from": "eski değer",
     "to": "yeni değer"
+  },
+  "ScaleSilhouette": {
+    "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
+    "ariaLabelAircraft": "{names} için ölçek şeması: üst ve ön görünüşte dış hat, {height} metrelik insan figürüne göre ölçekli",
+    "caption": "Ölçekli karşılaştırma — şematik görseller yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
+    "captionAircraft": "Ölçekli karşılaştırma — dış hat, üç boyutlu modelle aynı parça listesinin ortografik izdüşümüdür; ölçek yayımlanmış uzunluk, kanat açıklığı ve yükseklikten gelir. Oran tablosu olmayan bir sistem için kontur çizilmez, yerine kesikli ölçü zarfı çizilir.",
+    "familyLabel": "Aile düzeyindeki beyanlar",
+    "heightNamed": "yükseklik {value} m",
+    "humanLabel": "{height} m",
+    "lengthLabel": "{value} m",
+    "lengthNamed": "uzunluk {value} m",
+    "spanNamed": "açıklık {value} m"
+  },
+  "Site": {
+    "name": "Açık Dosya",
+    "tagline": "Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları"
+  },
+  "SpecTable": {
+    "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
+    "field": "Alan",
+    "absent": "veri yok",
+    "methodLink": "Güven seviyeleri ne anlama geliyor?",
+    "accessed": "erişim {date}",
+    "archive": "arşiv kopyası",
+    "digest": "özet {value}…",
+    "familyLabel": "Aile düzeyindeki beyanlar"
+  },
+  "Specs": {
+    "length_m": "Uzunluk",
+    "diameter_mm": "Çap",
+    "mass_kg": "Kütle",
+    "range_km": "Menzil",
+    "cep_m": "Dairesel sapma (CEP)",
+    "warhead_weight_kg": "Harp başlığı ağırlığı",
+    "wingspan_m": "Kanat açıklığı",
+    "height_m": "Yükseklik",
+    "mtow_kg": "Azami kalkış ağırlığı",
+    "payload_kg": "Faydalı yük kapasitesi",
+    "endurance_h": "Havada kalış",
+    "service_ceiling_ft": "Servis tavanı",
+    "operating_altitude_ft": "Operasyonel irtifa",
+    "cruise_speed_ktas": "Seyir hızı",
+    "max_speed_ktas": "Azami hız",
+    "operational_range_km": "Operasyonel menzil"
+  },
+  "Status": {
+    "gelistirme": "Geliştirme",
+    "test": "Test aşaması",
+    "seri-uretim": "Seri üretim",
+    "envanterde": "Envanterde"
+  },
+  "SystemCard": {
+    "counts": "{values} değer, {sources} kaynak",
+    "updated": "son doğrulama {date}",
+    "distribution": "Kayıttaki güven dağılımı",
+    "open": "Dosyayı aç"
+  },
+  "SystemPage": {
+    "specs": "Teknik veriler ve kaynakları",
+    "timeline": "Program takvimi",
+    "range": "Menzil zarfı",
+    "badge": "açık kaynak dosya",
+    "metaFallback": "{manufacturer} sistemi — kamuya açık kaynaklardan derlenmiş teknik dosya.",
+    "model": "Şematik model",
+    "scale": "Ölçekli karşılaştırma",
+    "revisions": "Düzeltme geçmişi",
+    "datasetName": "{name} — teknik veri",
+    "datasetDescription": "Kamuya açık kaynaklardan derlenmiş ölçüm kaydı. Her değer güven seviyesi ve kaynağıyla birlikte tutulur; çelişen değerler ayıklanmaz.",
+    "rangeDistance": "Menzil ölçeği"
   }
 }

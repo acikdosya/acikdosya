@@ -19,6 +19,7 @@ import {
   loadOgFonts,
   silhouetteDataUri
 } from '@/lib/og';
+import {partsForSystem} from '@/lib/geometry/parts-for';
 import {PALETTE} from '@/lib/tokens';
 
 /**
@@ -92,7 +93,9 @@ export default async function OpengraphImage({
           id: selection.group.id,
           label: selection.group.label,
           lengthM: dims.lengthM,
-          diameterMm: dims.diameterMm
+          diameterMm: dims.diameterMm,
+          // Sayfadaki semayla ayni parca listesi, ayni izdusum.
+          parts: partsForSystem(system.slug, selection.dimensions)
         };
       });
     silhouette = silhouetteDataUri(items);
@@ -106,7 +109,8 @@ export default async function OpengraphImage({
           label: selection.group.label,
           lengthM: dims.lengthM,
           wingspanM: dims.wingspanM,
-          heightM: dims.heightM
+          heightM: dims.heightM,
+          parts: partsForSystem(system.slug, selection.dimensions)
         };
       });
     silhouette = aircraftDataUri(items);

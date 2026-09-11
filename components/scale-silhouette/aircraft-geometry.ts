@@ -1,19 +1,36 @@
+import type {Part} from '@/lib/geometry/parts';
+import {
+  projectBounds,
+  projectParts,
+  transformPath
+} from '@/lib/geometry/project2d';
+
 /**
  * Ucak boyut semasi — kaynakli uzunluk, kanat acikligi ve (varsa)
  * yukseklikten turetilir.
  *
- * Burada bilerek UCAK KONTURU CIZILMEZ. Uc toplam olcuden govde
- * genisligi, kanat vechesi, motor yeri veya kuyruk orani turetilemez;
- * cizilecek her kontur sahip olmadigimiz bir bicim iddiasi olurdu
- * (CLAUDE.md §7, docs/AKINCI-IMPLEMENTATION-PLAN.md §6.1). Cizilen sey
- * olcunun kendisidir: ust gorunuste kanat acikligi × uzunluk zarfi, on
- * gorunuste kanat acikligi × yukseklik zarfi. Kesikli cerceve "burasi
- * bir sinir, bir dis hat degil" der.
+ * KONTUR KOSULLU CIZILIR. Onceki surumde hic cizilmiyordu ve gerekcesi
+ * suydu: uc toplam olcuden govde genisligi, kanat vechesi veya kuyruk
+ * orani turetilemez, cizilecek her kontur sahip olmadigimiz bir bicim
+ * iddiasi olurdu. Gerekce hala gecerli — ama artik uc olcuye ek olarak
+ * KOKEN KAYDI TASIYAN bir oran tablosu var (lib/geometry/akinci.ts) ve
+ * kontur ondan turuyor. Ret ortadan kalkmadi, kosullu hale geldi:
+ * oran tablosu olmayan sistem yine yalniz zarf alir.
  *
- * Eksen dagilimi: X = kanat acikligi, Y = uzunluk / yukseklik. Kontur
- * olmadigi icin bu yonelim bir bicim iddiasi tasimaz; genis olcu tuvalin
- * genis eksenine veriliyor ki cizim cerceveyi doldursun. Hangi kenarin
- * ne oldugunu olcu cizgisinin etiketi soyler.
+ * Ust ve on gorunus, parca listesi varsa gercek dis hattir. On gorunus
+ * ancak inis takimi modellendikten sonra dis hatta dondu: takim boyu
+ * yayimlanan `height_m` degerinden turedigi icin modelin dikey uzanimi
+ * artik tam olarak o deger. Takim modellenmeden once kontur, yukseklik
+ * braketinin icinde kisa kalir ve yanlis okunurdu.
+ *
+ * Parca listesi olmayan sistemde iki gorunus de zarf kalir; kesikli
+ * cerceve "burasi bir sinir, bir dis hat degil" der.
+ *
+ * Eksen dagilimi: X = kanat acikligi, Y = uzunluk / yukseklik. Genis olcu
+ * tuvalin genis eksenine veriliyor ki cizim cerceveyi doldursun; kontur
+ * cizildiginde de ayni yerlesim korunuyor, yani ust gorunus 90° cevrik
+ * seriliyor. Cevirme bir bicim iddiasi tasimaz — hangi kenarin ne oldugunu
+ * olcu cizgisinin etiketi soyler.
  *
  * Iki gorunus ve insan figuru TEK carpanla cizilir. Eksen basina ayri
  * olcek, karsilastirmayi yalan yapardi.
@@ -50,6 +67,8 @@ export type AircraftItem = {
   lengthM: number;
   wingspanM: number;
   heightM?: number;
+  /** Urun tanimindan gelen parca listesi. Yoksa ust gorunus de zarf kalir. */
+  parts?: readonly Part[];
 };
 
 /** Kesikli olcu zarfi — dis hat degil, sinir kutusu. */
@@ -74,8 +93,19 @@ export type AircraftRow = {
   label: string;
   /** Ust gorunus zarfi: kanat acikligi × uzunluk. */
   plan: Envelope;
+  /**
+   * Ust gorunus dis hatti — parca listesi varsa. Zarfin yerine cizilir;
+   * zarf yine de yerlesim ve olcu cizgileri icin hesaplanir.
+   */
+  planOutline?: string;
   /** On gorunus zarfi: kanat acikligi × yukseklik. Yukseklik yoksa yok. */
   front?: Envelope;
+  /**
+   * On gorunus dis hatti — parca listesi varsa ve modelin dikey uzanimi
+   * yayimlanan yukseklikle ortusuyorsa. Ortusmuyorsa cizilmez: kisa bir
+   * kontur, yukseklik braketini yalanlar.
+   */
+  frontOutline?: string;
   /** Ust gorunusun dikey kenarinda. */
   length: Dimension;
   /** Iki gorunusun arasinda, yatay. */
@@ -181,6 +211,7 @@ export function layoutAircrafts(
     cursor = spanY + DIM_LABEL;
 
     let front: Envelope | undefined;
+    let frontOutline: string | undefined;
     let height: Dimension | undefined;
 
     if (item.heightM !== undefined && item.heightM > 0) {
@@ -189,6 +220,25 @@ export function layoutAircrafts(
       const frontBottom = frontTop + frontHeight;
 
       front = envelope(HUMAN_COLUMN, frontTop, width, frontHeight);
+
+      /*
+       * On gorunus dis hatti, ancak modelin dikey uzanimi yayimlanan
+       * yukseklikle ortusuyorsa cizilir. Inis takimi modellenmemis bir
+       * modelde kontur braketten kisa kalir ve okuyucu ikisinden
+       * hangisinin dogru oldugunu bilemez.
+       */
+      const flat = item.parts ? projectBounds(item.parts, 'front') : undefined;
+      if (flat && Math.abs(flat.maxV - flat.minV - item.heightM) < 0.02) {
+        frontOutline = projectParts(item.parts!, 'front')
+          .map((outline) =>
+            transformPath(outline.path, {
+              scale,
+              offsetU: HUMAN_COLUMN + width / 2,
+              offsetV: frontTop - flat.minV * scale
+            })
+          )
+          .join(' ');
+      }
       height = {
         path: verticalDim(dimX, frontTop, frontBottom),
         labelX: round(dimX + 8),
@@ -202,10 +252,30 @@ export function layoutAircrafts(
       cursor += ROW_GAP;
     }
 
+    /*
+     * Ust gorunus izdusumu: uzunluk sayfada DIKEY seriliyor, izdusum ise
+     * uzunlugu yatay veriyor; `swap` ekran eksenlerini takas eder. Takas
+     * bir bicim iddiasi tasimaz, yalnizca yerlesimdir.
+     */
+    const planOutline = item.parts
+      ? projectParts(item.parts, 'top')
+          .map((outline) =>
+            transformPath(outline.path, {
+              scale,
+              offsetU: HUMAN_COLUMN + width / 2,
+              offsetV: planTop,
+              swap: true
+            })
+          )
+          .join(' ')
+      : undefined;
+
     return {
       id: item.id,
       label: item.label,
       plan: envelope(HUMAN_COLUMN, planTop, width, planHeight),
+      planOutline,
+      frontOutline,
       front,
       length: {
         path: verticalDim(dimX, planTop, planBottom),
@@ -254,25 +324,55 @@ export function layoutAircrafts(
  */
 export function compactAircraftEnvelopes(
   items: readonly AircraftItem[]
-): {width: number; height: number; rects: Envelope[]} | undefined {
+): {
+  width: number;
+  height: number;
+  rects: Envelope[];
+  /** Parca listesi olan gruplarin ust gorunus dis hatti; yoksa undefined. */
+  outlines: Array<string | undefined>;
+} | undefined {
   const layout = layoutAircrafts(items);
   if (!layout) return undefined;
 
   let cursor = 0;
-  const rects = items.map((item) => {
+  const rects: Envelope[] = [];
+  const outlines: Array<string | undefined> = [];
+
+  for (const item of items) {
+    const width = item.wingspanM * layout.scale;
+    /*
+     * Serit gorselde grup basina TEK cizim var. Parca listesi varsa ust
+     * gorunus dis hatti cizilir; yoksa zarf. Serit genis ve alcak
+     * oldugu icin ust gorunus 90° cevrilmeden, uzunluk yatay serilir.
+     */
+    const outline = item.parts
+      ? projectParts(item.parts, 'top')
+          .map((part) =>
+            transformPath(part.path, {
+              scale: layout.scale,
+              offsetU: 0,
+              offsetV: cursor + (item.wingspanM * layout.scale) / 2
+            })
+          )
+          .join(' ')
+      : undefined;
+
     const rect = envelope(
       0,
       cursor,
-      item.wingspanM * layout.scale,
-      (item.heightM ?? item.lengthM) * layout.scale
+      outline ? item.lengthM * layout.scale : width,
+      (outline ? item.wingspanM : (item.heightM ?? item.lengthM)) * layout.scale
     );
+
+    rects.push(rect);
+    outlines.push(outline);
     cursor += rect.height + COMPACT_GAP;
-    return rect;
-  });
+  }
 
   return {
     width: Math.max(...rects.map((rect) => rect.width)),
     height: round(cursor - COMPACT_GAP),
-    rects
+    rects,
+    outlines
   };
 }

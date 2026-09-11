@@ -287,13 +287,23 @@ export const attributeSchema = z
   );
 export type Attribute = z.infer<typeof attributeSchema>;
 
-export const attributeKeys = ['guidance', 'propellant', 'stages'] as const;
+export const attributeKeys = [
+  'guidance',
+  'propellant',
+  'stages',
+  'power_system',
+  'communications',
+  'variant_names'
+] as const;
 export type AttributeKey = (typeof attributeKeys)[number];
 
 export const attributesSchema = z.strictObject({
   guidance: attributeSchema.optional(),
   propellant: attributeSchema.optional(),
-  stages: attributeSchema.optional()
+  stages: attributeSchema.optional(),
+  power_system: attributeSchema.optional(),
+  communications: attributeSchema.optional(),
+  variant_names: attributeSchema.optional()
 });
 
 /**
@@ -304,10 +314,23 @@ export const attributesSchema = z.strictObject({
  */
 export const annotationSchema = z.strictObject({
   id: slugSchema,
-  /** Govde boyunca oran, 0 = burun ucu, 1 = kuyruk. */
+  /**
+   * Etiketin bagli oldugu PARCA — lib/geometry/parts.ts kimligi.
+   *
+   * Onceki surumde konum govde ekseninde kutupsaldi ({t, angle}) ve
+   * kanat ucu gibi eksen disi bir parcayi gosteremiyordu; AKINCI bu
+   * yuzden bos bir etiket dizisi tasiyordu. Parca kimligi verilmesi
+   * zorunlu: varsayilan olarak govdeye dusmek, etiketi sessizce yanlis
+   * yere koymak olurdu.
+   */
+  part: slugSchema,
+  /** Parca uzerinde oran, 0 = bas, 1 = son. */
   t: z.number().min(0).max(1),
-  /** Radyal aci, derece. */
-  angle: z.number().finite(),
+  /**
+   * Radyal aci, derece. Yalnizca donel govdede anlamli; kanat ya da
+   * cubuk gibi parcalarda yok sayilir, o yuzden istege bagli.
+   */
+  angle: z.number().finite().optional(),
   label: localizedTextSchema,
   /** Etiketin kendi guven seviyesi — gorsel dil tabloyla ayni. */
   confidence: confidenceSchema
@@ -379,6 +402,12 @@ export const categorySchema = z.enum([
   'seyir-fuzesi',
   'insansiz-hava-araci'
 ]);
+/**
+ * Kategori listesi geometri tarafinda da exhaustive kullanilir; buraya
+ * bir deger eklenip lib/geometry tarafinda karsiligi yazilmazsa derleme
+ * duser (lib/geometry/measurements.ts, lib/geometry/coverage.ts).
+ */
+export type Category = z.infer<typeof categorySchema>;
 
 export const statusSchema = z.enum([
   'gelistirme',

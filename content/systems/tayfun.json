@@ -169,6 +169,7 @@
       "annotations": [
         {
           "id": "nose",
+          "part": "body",
           "t": 0.1,
           "angle": 90,
           "label": {
@@ -179,6 +180,7 @@
         },
         {
           "id": "body",
+          "part": "body",
           "t": 0.52,
           "angle": 90,
           "label": {
@@ -189,8 +191,8 @@
         },
         {
           "id": "tail-fin",
-          "t": 0.93,
-          "angle": 200,
+          "part": "fin-1",
+          "t": 0.62,
           "label": {
             "tr": "Kuyruk kanatçığı",
             "en": "Tail fin"
@@ -278,6 +280,7 @@
       "annotations": [
         {
           "id": "nose",
+          "part": "body",
           "t": 0.1,
           "angle": 90,
           "label": {
@@ -288,6 +291,7 @@
         },
         {
           "id": "body",
+          "part": "body",
           "t": 0.52,
           "angle": 90,
           "label": {
@@ -298,8 +302,8 @@
         },
         {
           "id": "tail-fin",
-          "t": 0.93,
-          "angle": 200,
+          "part": "fin-1",
+          "t": 0.62,
           "label": {
             "tr": "Kuyruk kanatçığı",
             "en": "Tail fin"
@@ -476,6 +480,7 @@
     "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
     "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
     "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",
-    "ikinci sistem eklenene kadar kategori enumu tek degerli"
+    "ikinci sistem eklenene kadar kategori enumu tek degerli",
+    "Blok-4 gövdesi fuar fotoğraflarında dönel değil, sırtı çıkıntılı bir biçim gösteriyor; model onu şimdilik TAYFUN'un dairesel gövdesiyle çiziyor. Ortografik bir kaynak bulunana kadar Blok-4'e ayrı bir ürün tanımı yazılmadı."
   ]
 }

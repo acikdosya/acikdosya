@@ -1,0 +1,135 @@
+/*
+ * Koken kaydi — CLAUDE.md §4.
+ *
+ * Uc durum RENKLE DEGIL desenle ayrisir: alt cizgi duz / kesik /
+ * noktali. Siyah beyaz cikti ve renk korlugu icin zorunlu, sadelestirme
+ * adina kaldirilamaz. Guven rozetinin cerceve dili KULLANILMAZ; ayni
+ * gorunen iki sey farkli anlama gelirse okuyucu ikisini de yanlis okur.
+ */
+
+.wrap {
+  margin-top: 32px;
+  border-top: 1px solid var(--rule);
+  padding-top: 20px;
+}
+
+.intro {
+  margin: 0 0 8px;
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.summary {
+  margin: 0 0 20px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+
+.list {
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.row {
+  display: grid;
+  gap: 4px;
+  border-left: 2px solid var(--rule);
+  padding-left: 12px;
+}
+
+.term {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+
+.name {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/*
+ * Durum isareti. Cerceve yok — cerceve guven rozetinin dili.
+ * Ayrim alt cizginin DESENINDE.
+ */
+.basis {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+  padding-bottom: 2px;
+  border-bottom-width: 2px;
+  border-bottom-color: var(--ink-2);
+}
+
+.basis[data-basis='measured'] {
+  border-bottom-style: solid;
+  color: var(--ink);
+}
+
+.basis[data-basis='reading'] {
+  border-bottom-style: dashed;
+}
+
+.basis[data-basis='chosen'] {
+  border-bottom-style: dotted;
+}
+
+.detail {
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.note {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.source,
+.check {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+
+.source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.link {
+  color: var(--ink-2);
+}
+
+.seen {
+  font-variant-numeric: tabular-nums;
+}
+
+.check {
+  max-width: 68ch;
+  line-height: 1.55;
+}
+
+.checkLabel {
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    margin-top: 24px;
+  }
+}

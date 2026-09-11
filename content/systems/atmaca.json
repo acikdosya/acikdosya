@@ -223,6 +223,7 @@
       "annotations": [
         {
           "id": "nose",
+          "part": "body",
           "t": 0.1,
           "angle": 90,
           "label": {
@@ -233,6 +234,7 @@
         },
         {
           "id": "body",
+          "part": "body",
           "t": 0.52,
           "angle": 90,
           "label": {
@@ -242,14 +244,24 @@
           "confidence": "official"
         },
         {
+          "id": "wing",
+          "part": "wing-1",
+          "t": 0.6,
+          "label": {
+            "tr": "Gövde ortası kanat",
+            "en": "Mid-body wing"
+          },
+          "confidence": "official"
+        },
+        {
           "id": "tail-fin",
-          "t": 0.93,
-          "angle": 200,
+          "part": "fin-1",
+          "t": 0.6,
           "label": {
             "tr": "Kuyruk kanatçığı",
             "en": "Tail fin"
           },
-          "confidence": "press"
+          "confidence": "official"
         }
       ],
       "_todo": [
@@ -406,6 +418,7 @@
   "_todo": [
     "ROKETSAN web/PDF sayfalarinin ucuncu taraf arsiv kopyasi alinacak.",
     "PDF'nin gercek yayinlanma tarihi/surumu dogrulanacak.",
-    "Dis gorunus ve kanatcik profili icin lisansli referans bulunacak."
+    "Dış görünüş oranları ROKETSAN 2024 kataloğundaki üst görünüş çiziminden ölçüldü (11.09.2026); çizim ortografiklik sınavından geçti, yöntem lib/geometry/atmaca.ts içinde. Kalınlık üst görünüşte okunamıyor, seçilmiş kaldı; yan görünüş çizimi bulunursa ölçülebilir.",
+    "Kanat ve kanatçık setinin yuvarlanma açısı (+ mi X mi) üst görünüşten okunamıyor; dört yüzey simetrik varsayıldı."
   ]
 }

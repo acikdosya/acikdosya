@@ -5,6 +5,8 @@
 import {readFileSync, readdirSync, existsSync} from 'node:fs';
 import {join, relative, basename} from 'node:path';
 import {z} from 'zod';
+import {selectMeasurements} from '../lib/geometry/measurements';
+import {partsForSystem} from '../lib/geometry/parts-for';
 import {assetsFileSchema, systemSchema} from '../lib/schema';
 
 const ROOT = process.cwd();
@@ -89,6 +91,42 @@ for (const name of systemFiles) {
         relative(ROOT, path),
         `slug "${system.slug}" dosya adi "${expected}" ile uyusmuyor`
       );
+    }
+
+    /*
+     * Etiketin gosterdigi parca gercekten uretiliyor mu.
+     *
+     * Sema yalnizca kimligin BICIMINI dogrular; var olup olmadigini
+     * dogrulayamaz, cunku parca listesi olculerden turer. Yanlis yerde
+     * duran bir etiket, hic olmayan bir etiketten daha kotudur — o
+     * yuzden derlemeyi burada durduruyoruz.
+     */
+    for (const selection of selectMeasurements(system)) {
+      const variant = system.variants.find(
+        (item) => item.id === selection.group.id
+      );
+      const annotations = variant?.annotations ?? [];
+      if (annotations.length === 0) continue;
+
+      const parts = partsForSystem(system.slug, selection.dimensions);
+      if (!parts) {
+        fail(
+          relative(ROOT, path),
+          `"${selection.group.id}" etiket tasiyor ama parca listesi uretilemiyor`
+        );
+        continue;
+      }
+
+      const ids = new Set(parts.map((part) => part.id));
+      for (const annotation of annotations) {
+        if (!ids.has(annotation.part)) {
+          fail(
+            relative(ROOT, path),
+            `etiket "${annotation.id}" olmayan bir parcayi gosteriyor: "${annotation.part}"\n` +
+              `  uretilen parcalar: ${[...ids].join(', ')}`
+          );
+        }
+      }
     }
   });
 }

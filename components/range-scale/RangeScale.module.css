@@ -1,0 +1,117 @@
+.frame {
+  background: var(--paper);
+  border: var(--border-w) solid var(--rule);
+  padding: var(--pad-panel) var(--pad-panel) var(--s-4);
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/*
+ * Cubuk duz --ink. Kirmizi cerceve + soft dolgu BILEREK kullanilmiyor:
+ * o desen §4'te "tahmin" rozetinin dili ve buradaki olcum resmi bir
+ * beyan. Ayni deseni ikinci bir anlamda kullanmak rozetleri bozardi.
+ */
+.bar {
+  fill: var(--ink);
+}
+
+.axis {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+/*
+ * Yer olcusu isareti. Kesikli, cunku bir beyan degil, okuyucunun
+ * sayiyi oturtmasi icin konmus fiziksel bir uzunluk.
+ */
+.reference {
+  stroke: var(--ink-2);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  fill: var(--ink);
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: var(--size-badge-sm);
+  font-weight: var(--weight-semibold);
+  fill: var(--ink);
+}
+
+.tickLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-badge-sm);
+  fill: var(--ink-2);
+  text-anchor: middle;
+}
+
+.referenceLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-badge-sm);
+  fill: var(--ink-2);
+  text-anchor: end;
+}
+
+.unit {
+  font-family: var(--font-display);
+  font-size: var(--size-badge-sm);
+  color: var(--ink-2);
+  margin: var(--s-2) 0 0;
+  text-align: right;
+}
+
+.notes {
+  list-style: none;
+  margin: var(--s-4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+
+.note {
+  border-top: var(--border-w) solid var(--rule);
+  padding-top: var(--s-2);
+}
+
+.noteHead {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  color: var(--ink-2);
+}
+
+.noteValue {
+  font-weight: var(--weight-semibold);
+  color: var(--ink);
+}
+
+.noteBody {
+  display: block;
+  margin-top: var(--s-2);
+  font-size: var(--size-micro);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+}
+
+.caption {
+  font-family: var(--font-display);
+  font-size: var(--size-micro);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+  margin-top: var(--s-4);
+}

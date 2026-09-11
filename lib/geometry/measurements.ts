@@ -1,20 +1,41 @@
 import {primary} from '../format';
 import {specGroups, type SpecGroup} from '../measurement/groups';
-import {type Measurement, type System} from '../schema';
-import {hasProfile} from './selection';
+import {type Category, type Measurement, type System} from '../schema';
+import {resolveDimensions, type Dimensions} from './product';
+import {productFor} from './registry';
 
 /**
- * Sistem kategorisine gore geometri turu.
+ * Sistem kategorisine gore olcu ailesi.
  *
  * Fuzeler: uzunluk + cap ekseninde govde profili.
  * Hava araclari: uzunluk + kanat acikligi + yukseklik ekseninde
  * dis hat semasi.
+ *
+ * Bu bir SUNUM ayrimidir: hangi olcu alanlari okunur, tabloda hangi
+ * baslik yazilir, hangi acikla­ma metni gosterilir. Modelin cizilip
+ * cizilmeyecegini BELIRLEMEZ; onu urun kaydi belirler.
  */
 export type SystemKind = 'missile' | 'aircraft';
 
+/**
+ * Kategori → olcu ailesi. Acik tablo, VARSAYILAN YOK.
+ *
+ * Onceki surumde taninmayan kategori sessizce 'missile' donuyordu; bu,
+ * §9'un yasakladigi "varsayilan geometri" kuralinin tip duzeyindeki
+ * karsiligiydi. Bir tank eklense fuze sayilir, sonra diameter_mm
+ * bulunamadigi icin sessizce elenirdi.
+ *
+ * Record<Category, ...> exhaustive: semaya yeni kategori eklenip buraya
+ * satir yazilmazsa DERLEME DUSER.
+ */
+const CATEGORY_KIND: Record<Category, SystemKind> = {
+  'balistik-fuze': 'missile',
+  'seyir-fuzesi': 'missile',
+  'insansiz-hava-araci': 'aircraft'
+};
+
 export function systemKind(system: System): SystemKind {
-  if (system.category === 'insansiz-hava-araci') return 'aircraft';
-  return 'missile';
+  return CATEGORY_KIND[system.category];
 }
 
 export type MissileDimensions = {
@@ -51,6 +72,34 @@ export type MeasurementSelection = {
 };
 
 /**
+ * Bu grup icin model cizilebilir mi.
+ *
+ * Iki kosul: sistemin bir urun tanimi olmali VE o tanimin istedigi
+ * olculer grupta bulunmali. Ikisinden biri eksikse model URETILMEZ;
+ * varsayilan bir geometriye ya da varsayilan bir sayiya dusulmez
+ * (CLAUDE.md §9, specs/system-geometry).
+ */
+function canModel(
+  slug: string,
+  available: Dimensions
+): {canModel: boolean; reason?: string} {
+  const product = productFor(slug);
+  if (!product) {
+    return {
+      canModel: false,
+      reason: 'Bu sistem icin dis profil tanimlanmamis.'
+    };
+  }
+  if (!resolveDimensions(product.requires, available)) {
+    return {
+      canModel: false,
+      reason: 'Modelin istedigi olcu alanlari bu grupta eksik.'
+    };
+  }
+  return {canModel: true};
+}
+
+/**
  * Sistemdeki her olcu grubu icin bir secim sonucu uretir.
  *
  * Eksik gerekli alan varsa o grup atlanir; bu, "veri yok" demektir,
@@ -72,12 +121,10 @@ export function selectMeasurements(
       if (!diameterList) continue;
       const diameter = primary(diameterList);
 
-      /*
-       * Olcu yetmez, dis profil de gerekir. Profili tanimsiz bir
-       * sistem icin model uretmek varsayilan geometriye dusmek
-       * olurdu — lib/geometry/selection.ts.
-       */
-      const profiled = hasProfile(system.slug, 'missile');
+      const modelable = canModel(system.slug, {
+        length_m: length.value,
+        diameter_mm: diameter.value
+      });
 
       result.push({
         group,
@@ -87,10 +134,7 @@ export function selectMeasurements(
           diameterMm: diameter.value
         },
         sources: [length, diameter],
-        canModel: profiled,
-        reason: profiled
-          ? undefined
-          : 'Bu sistem icin dis profil tanimlanmamis.'
+        ...modelable
       });
       continue;
     }
@@ -102,12 +146,11 @@ export function selectMeasurements(
     const heightList = group.specs.height_m;
     const height = heightList ? primary(heightList) : undefined;
 
-    /*
-     * Ucakta modeli olcek belirler: uzunluk ve kanat acikligi. Yukseklik
-     * modele girmez — yayimlanmis yukseklik inis takimini iceriyor ve
-     * takim modellenmiyor (lib/geometry/aircraft.ts).
-     */
-    const profiled = hasProfile(system.slug, 'aircraft');
+    const modelable = canModel(system.slug, {
+      length_m: length.value,
+      wingspan_m: wingspan.value,
+      height_m: height?.value
+    });
 
     result.push({
       group,
@@ -118,10 +161,7 @@ export function selectMeasurements(
         heightM: height?.value
       },
       sources: [length, wingspan, ...(height ? [height] : [])],
-      canModel: profiled,
-      reason: profiled
-        ? undefined
-        : 'Bu sistem icin dis profil tanimlanmamis.'
+      ...modelable
     });
   }
 
