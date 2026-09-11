@@ -86,6 +86,20 @@ export const measurementSchema = z.strictObject({
    */
   upper_value: z.number().finite().optional(),
   upper_operator: operatorSchema.optional(),
+  /**
+   * Kaynagin kendi belirsizligi, ± ve alan birimiyle. "±3 km" diyen bir
+   * kaynak icin 3.
+   *
+   * VARSAYILAN DEGIL, GECERSIZ KILICI. Ondalik yazilmis her deger zaten
+   * ortuk bir bant tasir: yazilan son basamagin yarisi (12,3 → ±0,05,
+   * lib/measurement/divergence.ts). Bu alan o kurali ve `~` isaretinin
+   * %10'luk bandini birlikte ezer — kaynak belirsizligi kendisi
+   * yaziyorsa tahmin etmeye gerek yok.
+   *
+   * Bugun hicbir kayitta dolu degil. Alan simdiden duruyor ki gerektiginde
+   * operatoru zorlamak yerine dogru yere yazilsin.
+   */
+  uncertainty: z.number().finite().nonnegative().optional(),
   confidence: confidenceSchema,
   /**
    * Deger neyi olcuyor. Iki sayi kiyaslanmadan once bu sorulur: test
@@ -206,6 +220,35 @@ export const measurementSchema = z.strictObject({
     {
       error: 'upper_operator upper_value olmadan yazilmaz',
       path: ['upper_operator']
+    }
+  )
+  /*
+   * Belirsizlik acik uclu bir sinirla yazilamaz. "> 280 ± 5" ne demek
+   * belli degil: acik ucun zaten siniri yok, bant hangi uca uygulanacak?
+   * Sessizce yok saymak yerine reddediyoruz — yazilmis ama ise yaramayan
+   * bir alan, olmayan alandan daha kotudur.
+   */
+  .refine(
+    (measurement) =>
+      measurement.uncertainty === undefined ||
+      measurement.operator === undefined ||
+      measurement.operator === '~',
+    {
+      error:
+        'uncertainty acik uclu operatorle (> < ≤ ≥) birlikte yazilamaz — bandin hangi uca uygulanacagi tanimsiz',
+      path: ['uncertainty']
+    }
+  )
+  /*
+   * Aralik zaten iki uc veriyor; ustune bant yazmak ikinci bir
+   * belirsizlik tanimi olurdu ve hangisinin gecerli oldugu belirsiz kalirdi.
+   */
+  .refine(
+    (measurement) =>
+      measurement.uncertainty === undefined || measurement.upper_value === undefined,
+    {
+      error: 'uncertainty aralikli kayitla (upper_value) birlikte yazilmaz',
+      path: ['uncertainty']
     }
   );
 export type Measurement = z.infer<typeof measurementSchema>;
@@ -459,6 +502,26 @@ export const statusSchema = z.enum([
   'envanterde'
 ]);
 
+/**
+ * Ana sayfa panelinin konusu — ACIK ISARETCI.
+ *
+ * Onceki surumde paneli kod seciyordu: butun dosyalar taranir, en agir
+ * iraksama kazanirdi. Yani sitenin en gorunur bolumu bir siralama
+ * kuralinin ciktisiydi ve bir kaynak eklemek konuyu sessizce
+ * degistirebiliyordu. Artik hangi dosyanin hangi alani anlatildigi
+ * icerikte yaziyor; editoryal bir karar, editoryal bir yerde duruyor.
+ *
+ * Isaretci en fazla bir dosyada bulunur ve isaret ettigi alan gercekten
+ * iraksiyor olmali — ikisini de scripts/validate-content.ts sinar.
+ * Isaretci yoksa lib/hero.ts'teki sirali geri cekilme devreye girer.
+ */
+export const heroMarkerSchema = z.strictObject({
+  field: z.enum(specKeys),
+  /** Olcu grubu. Yazilmazsa alanin degerini tasiyan ilk grup secilir. */
+  variant: slugSchema.optional()
+});
+export type HeroMarker = z.infer<typeof heroMarkerSchema>;
+
 export const systemSchema = z
   .strictObject({
     $schema_version: z.literal('0.1'),
@@ -473,6 +536,8 @@ export const systemSchema = z
     status: statusSchema,
     /** Hero altindaki kisa tanim. */
     summary: localizedTextSchema.optional(),
+    /** Ana sayfa paneli bu dosyayi anlatiyorsa hangi alani anlattigi. */
+    hero: heroMarkerSchema.optional(),
     /** Aile duzeyindeki beyanlar — varyantlara otomatik kopyalanmaz. */
     specs: specsSchema.optional(),
     variants: z.array(variantSchema).min(1),

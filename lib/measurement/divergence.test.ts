@@ -4,6 +4,7 @@ import {
   comparability,
   compareIntervals,
   comparePair,
+  decimalPlaces,
   fieldDivergence,
   toInterval,
   TOLERANCE_RATIO,
@@ -335,13 +336,116 @@ test('~ bandi yuvarlama farkini yutar, gercek farki yutmaz', () => {
   assert.equal(outside?.kind, 'celiski');
 });
 
-test('operatorsuz deger tek noktadir', () => {
+test('operatorsuz TAM SAYI tek noktadir', () => {
   const interval = toInterval(280, undefined);
 
   assert.equal(interval.min, 280);
   assert.equal(interval.max, 280);
   assert.equal(interval.minClosed, true);
   assert.equal(interval.maxClosed, true);
+});
+
+/*
+ * ORTUK HASSASIYET BANDI.
+ *
+ * Sebebi yayindaki bir kayit: ureticinin broşürü 12,3 m, urun sayfasi
+ * 12,2 m diyor. Iki nokta deger kesismedigi icin hesap en sert kelimeyi
+ * kullaniyordu. "12,3" yazan kaynak bir yuvarlama yapmistir; iki okuma
+ * 12,25'te degiyor ve degme kesisme sayilir.
+ */
+
+test('ondalik deger yazildigi hassasiyetin bandini tasir', () => {
+  const interval = toInterval(12.3, undefined);
+
+  assert.equal(interval.min, 12.25);
+  assert.equal(interval.max, 12.35);
+  assert.equal(interval.minClosed, true);
+  assert.equal(interval.maxClosed, true);
+});
+
+test('bir basamak farkli iki okuma celiski degil', () => {
+  const result = fieldDivergence([m({value: 12.3}), m({value: 12.2})], 'm');
+
+  assert.equal(result?.kind, 'farkli-aciklama');
+});
+
+test('iki basamak farkli iki okuma celiski', () => {
+  const result = fieldDivergence([m({value: 12.3}), m({value: 12.1})], 'm');
+
+  assert.equal(result?.kind, 'celiski');
+});
+
+test('tam sayilarda bant yok — sondaki sifirdan basamak cikarilmaz', () => {
+  const result = fieldDivergence([m({value: 2300}), m({value: 2400})], 'kg');
+
+  assert.equal(result?.kind, 'celiski');
+  assert.equal(decimalPlaces(2300), 0);
+  assert.equal(decimalPlaces(610), 0);
+});
+
+test('bant yalnizca ondalik yazan tarafa uygulanir', () => {
+  /*
+   * 12 tam sayi, yani tek nokta; 12,3 bandi [12,25 – 12,35]. Ikisi
+   * kesismiyor. Tam sayiyi ondalik komsusuna bakarak genisletmek,
+   * kaynagin yazmadigi bir hassasiyet uydurmak olurdu.
+   */
+  const result = fieldDivergence([m({value: 12}), m({value: 12.3})], 'm');
+
+  assert.equal(result?.kind, 'celiski');
+});
+
+test('bant basamak sayisiyla daralir', () => {
+  assert.equal(decimalPlaces(12.3), 1);
+  assert.equal(decimalPlaces(12.34), 2);
+
+  const two = toInterval(12.34, undefined);
+  assert.equal(two.min, 12.335);
+  assert.equal(two.max, 12.345);
+});
+
+test('degen uclar kil payi ayrilmaz', () => {
+  /*
+   * Uc noktalar ondalik izgarada hesaplanmasaydi 12.3 - 0.05 ile
+   * 12.2 + 0.05 ikili gosterimde farkli cikardi ve degmesi gereken iki
+   * bant ayrilirdi. Ayni sayiyi vermeleri sart.
+   */
+  assert.equal(toInterval(12.3, undefined).min, toInterval(12.2, undefined).max);
+});
+
+test('~ isareti ortuk banda dusmez, kendi oranini korur', () => {
+  const interval = toInterval(10.5, '~');
+
+  assert.equal(interval.min, 10.5 - 10.5 * TOLERANCE_RATIO);
+  assert.equal(interval.max, 10.5 + 10.5 * TOLERANCE_RATIO);
+});
+
+test('uncertainty ortuk kurali gecersiz kilar', () => {
+  const interval = toInterval(12.3, undefined, undefined, undefined, 0.4);
+
+  assert.equal(interval.min, 12.3 - 0.4);
+  assert.equal(interval.max, 12.3 + 0.4);
+
+  /* Genis bant celiskiyi yutar: 12,3 ± 0,4 ile 12,1 artik kesisiyor. */
+  const result = fieldDivergence(
+    [m({value: 12.3, uncertainty: 0.4}), m({value: 12.1})],
+    'm'
+  );
+  assert.equal(result?.kind, 'farkli-aciklama');
+});
+
+test('uncertainty ~ bandini da ezer', () => {
+  const interval = toInterval(10, '~', undefined, undefined, 0.2);
+
+  assert.equal(interval.min, 9.8);
+  assert.equal(interval.max, 10.2);
+});
+
+test('aralikli kayitta ortuk bant yok', () => {
+  /* Kaynak iki ucu kendisi vermis; uclarini genisletmek onu degistirmek olur. */
+  const interval = toInterval(4.3, undefined, 5.2);
+
+  assert.equal(interval.min, 4.3);
+  assert.equal(interval.max, 5.2);
 });
 
 test('ucten fazla degerde kiyaslanabilir bir ayrik cift celiski yapar', () => {

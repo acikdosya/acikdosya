@@ -54,10 +54,53 @@ const UNITS: Record<SpecUnit, {dimension: Dimension; toBase: number}> = {
  * bir hatadir.
  *
  * Bir deger bundan baska bir bant gerektiriyorsa cozum operatoru zorlamak
- * degil, olcume ayri bir belirsizlik alani eklemektir. Bugun boyle bir
- * alan yok; ihtiyac dogunca eklenir.
+ * degil, olcumun kendi `uncertainty` alanini doldurmaktir; o alan hem bu
+ * orani hem de asagidaki ortuk bandi gecersiz kilar.
  */
 export const TOLERANCE_RATIO = 0.1;
+
+/**
+ * ORTUK HASSASIYET BANDI — yazilan son ondalik basamagin yarisi.
+ *
+ * Gerekcesi bir yayin hatasiydi: ureticinin iki belgesi uzunlugu 12,3 m ve
+ * 12,2 m veriyor. Iki nokta deger kesismedigi icin hesap 'celiski'
+ * diyordu — elimizdeki en sert kelime, bir yuvarlama basamagi farki icin.
+ * Oysa "12,3" yazan bir kaynak 12,25 ile 12,35 arasinda bir seyi
+ * yuvarlamistir; iki okuma 12,25'te degiyor.
+ *
+ * TAM SAYIDA BANT YOK. "2300" ve "610" nokta deger kalir: sondaki
+ * sifirlardan anlamli basamak cikarilamaz. 2300 kg yazan bir kaynak
+ * yuze mi, ona mi, bire mi yuvarladi bilinmiyor; bir bant uydurmak
+ * kaynagin soylemedigi bir kesinlik (ya da belirsizlik) iddia etmek olur.
+ * Ayni sebeple "12,30" ile "12,3" ayirt edilemez — JSON ikisini de ayni
+ * sayiya cozer, sondaki sifir kaybolur.
+ *
+ * Bant KAPALI: uc noktada degme kesisme sayilir. 12,3 ile 12,2 tam olarak
+ * 12,25'te degiyor ve bu bir celiski degil, ayni olcunun iki yuvarlamasi.
+ *
+ * Uc noktalar ondalik izgara uzerinde tam sayi olarak hesaplanir
+ * (deger × 10^basamak, yuvarla, ±0,5, bol). Dogrudan `12.3 - 0.05`
+ * yazilsaydi ikili gosterim yuzunden 12.250000000000002 cikar, komsu
+ * degerin ust ucu 12.249999999999998 olur ve degmesi gereken iki bant
+ * kil payi ayrilirdi — yani bu hesap yontemi bir uslup tercihi degil.
+ */
+export function decimalPlaces(value: number): number {
+  if (Number.isInteger(value)) return 0;
+
+  const [mantissa, exponent] = Math.abs(value).toString().split('e');
+  const fraction = mantissa.split('.')[1]?.length ?? 0;
+  return Math.max(fraction - (exponent ? Number(exponent) : 0), 0);
+}
+
+/** Ondalik izgaraya oturtulmus kapali bant. Tam sayida tek nokta doner. */
+function precisionBand(value: number): {min: number; max: number} {
+  const places = decimalPlaces(value);
+  if (places === 0) return {min: value, max: value};
+
+  const scale = 10 ** places;
+  const units = Math.round(value * scale);
+  return {min: (units - 0.5) / scale, max: (units + 0.5) / scale};
+}
 
 /**
  * Ucu acik olabilen sayi araligi. Sonsuz uclar Infinity ile yazilir;
@@ -71,17 +114,26 @@ export type Interval = {
 };
 
 /**
- * Operatoru araliga cevirir. Operatorsuz deger tek noktadir — kaynak
- * sinir degil rakam vermistir, boyle kaydedilir.
+ * Operatoru araliga cevirir.
+ *
+ * Operatorsuz deger TEK NOKTA DEGILDIR: ondalik yazilmissa yazildigi
+ * hassasiyetin bandini tasir (precisionBand). Tam sayi tek nokta kalir.
  *
  * upper_value varsa tek deger yerine aralik doner; ROKETSAN web
- * sayfasindaki "4,3-5,2 m" gibi kaynaklar icin.
+ * sayfasindaki "4,3-5,2 m" gibi kaynaklar icin. Aralikta ortuk bant
+ * UYGULANMAZ: kaynak iki ucu zaten kendisi vermis.
+ *
+ * `uncertainty` ortuk kurali gecersiz kilar — kaynak belirsizligi
+ * kendisi yaziyorsa tahmin etmeye gerek yok. Acik uclu operatorlerle
+ * (> < ≤ ≥) birlikte yazilamaz, sema orada reddeder: acik ucun zaten
+ * siniri yok, bandin ne anlama gelecegi tanimsiz kalirdi.
  */
 export function toInterval(
   value: number,
   operator: Operator | undefined,
   upper_value?: number,
-  upper_operator?: Operator | undefined
+  upper_operator?: Operator | undefined,
+  uncertainty?: number
 ): Interval {
   let min: number;
   let max: number;
@@ -114,18 +166,30 @@ export function toInterval(
       maxClosed = true;
       break;
     case '~': {
-      const band = Math.abs(value) * TOLERANCE_RATIO;
+      const band = uncertainty ?? Math.abs(value) * TOLERANCE_RATIO;
       min = value - band;
       max = value + band;
       minClosed = true;
       maxClosed = true;
       break;
     }
-    default:
-      min = value;
-      max = value;
+    default: {
+      /*
+       * Aralikli kayitta ortuk bant yok: alt uc kaynagin kendi verdigi
+       * sayidir, bir okuma degil.
+       */
+      const band =
+        uncertainty !== undefined
+          ? {min: value - uncertainty, max: value + uncertainty}
+          : upper_value !== undefined
+            ? {min: value, max: value}
+            : precisionBand(value);
+
+      min = band.min;
+      max = band.max;
       minClosed = true;
       maxClosed = true;
+    }
   }
 
   if (upper_value !== undefined) {
@@ -180,7 +244,8 @@ function intervalOf({measurement, unit}: Sized): Interval {
     measurement.value,
     measurement.operator,
     measurement.upper_value,
-    measurement.upper_operator
+    measurement.upper_operator,
+    measurement.uncertainty
   );
 
   return {

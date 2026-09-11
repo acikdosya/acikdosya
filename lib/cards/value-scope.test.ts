@@ -32,14 +32,28 @@ test('durum adi iraksama hesabindan gelir', () => {
 
 test('hesap celiski derse kart da celiski der', () => {
   /*
-   * Bugunku veride bu gercekten var: AKINCI uzunlugu iki ureticinin
-   * kendi beyaninda 12,3 ve 12,2 m. Kart hesabin sonucunu gizlemez.
+   * Bugunku veride bu gercekten var: ATMACA kutlesi icin "< 750",
+   * "750" ve "< 800" kayitlari duruyor. Kart hesabin sonucunu gizlemez.
+   */
+  const {system, group: variant} = group('atmaca', 'atmaca');
+  const card = valueScope(system, variant, 'mass_kg');
+
+  assert.ok(card);
+  assert.equal(card.kind, 'celiski');
+});
+
+test('bir yuvarlama basamagi celiski saymaz', () => {
+  /*
+   * AKINCI uzunlugu ureticinin iki belgesinde 12,3 ve 12,2 m. Ortuk
+   * hassasiyet bandi eklenmeden once hesap buna 'celiski' diyordu ve
+   * kart o kelimeyi yaziyordu — elimizdeki en sert kelime, on santim
+   * icin (lib/measurement/divergence.ts).
    */
   const {system, group: family} = group('akinci', 'family');
   const card = valueScope(system, family, 'length_m');
 
   assert.ok(card);
-  assert.equal(card.kind, 'celiski');
+  assert.equal(card.kind, 'farkli-aciklama');
 });
 
 test('kapsam sayisi baslik dilini belirler', () => {

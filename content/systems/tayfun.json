@@ -16,6 +16,10 @@
     "tr": "ROKETSAN'ın balistik füze ailesi.",
     "en": "ROKETSAN's ballistic missile family."
   },
+  "hero": {
+    "field": "range_km",
+    "variant": "tayfun"
+  },
   "variants": [
     {
       "id": "tayfun",

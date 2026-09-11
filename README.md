@@ -100,6 +100,31 @@ Kurallar şema seviyesinde zorlanır:
 - `operator` yalnız `> < ≤ ≥ ~` kabul eder, ASCII `<=` reddedilir.
 - Şemada tanımlı olmayan alan sessizce geçmez.
 
+### İki sayı ne zaman çelişir
+
+Ondalık yazılmış değer, yazıldığı hassasiyetin bandını taşır: son basamağın
+yarısı. `12,3` → `[12,25 – 12,35]`, kapalı bant, uç noktada değme kesişme
+sayılır. Üreticinin iki belgesinde 12,3 ve 12,2 m yazması çelişki değil, aynı
+ölçünün iki yuvarlamasıdır.
+
+**Tam sayıda bant yoktur.** `2300` ve `610` nokta değer kalır; sondaki
+sıfırlardan anlamlı basamak çıkarılamaz. `~` işaretinin %10'luk bandı ayrı ve
+korunuyor. Kaynak belirsizliğini kendisi yazıyorsa `uncertainty` alanı ikisini
+de geçersiz kılar (`lib/measurement/divergence.ts`).
+
+### Ana sayfa paneli
+
+Panelin konusu içerikte işaretlenir, kod seçmez:
+
+```jsonc
+"hero": {"field": "range_km", "variant": "tayfun"}
+```
+
+En fazla bir dosya işaretlenebilir ve işaretlenen alan gerçekten ıraksıyor
+olmalı — ikisini de `pnpm validate:content` sınar. İşaretçi yoksa
+`lib/hero.ts`'teki sıralı geri çekilme devreye girer: ıraksama, son düzeltme
+kaydı, köken zinciri.
+
 **Bir sayının kaynağını bulamıyorsan alanı boş bırak.** Placeholder sayı üretmek bu
 projedeki en tehlikeli hatadır. Eksik alanı `_todo` dizisine yaz:
 
@@ -363,12 +388,11 @@ Birkaç kural tasarımdan değil veriden gelir:
   düşerse ne kadarının düştüğü.
 - **Değer-kapsam kartının durumu hesaptan gelir.** Başlık her zaman nötrdür ama
   durum adı `groupDivergence()` ne dönerse odur ve gerektiğinde "çelişki" yazar.
-  Bugünkü veride üç alan çelişki döndürüyor (AKINCI uzunluğu, ATMACA kütlesi ve
-  harp başlığı ağırlığı). Elle etiketleme yok.
+  Bugünkü veride iki alan çelişki döndürüyor: ATMACA kütlesi ve harp başlığı
+  ağırlığı. Elle etiketleme yok.
 - **Düzeltme kartında güven rozeti yok.** Düzeltme kaydı bir ölçüm değildir
-  (§3); alt şeritte çerçevesiz bir etiket durur. "Kaldırıldı" durumu da
-  sezilmez — `from`/`to` serbest metin, Türkçe bir dizeye bakarak durum çıkarmak
-  kaydın söylemediği bir şey uydurmak olurdu.
+  (§3); alt şeritte çerçevesiz bir etiket durur. Kaldırma durumu sezilmez,
+  kaydın kendi `removed` kolundan okunur.
 - **Ölçek kartı görünüş seçerek çözer.** Füzenin baskın ölçüsü uzunluk, İHA'nın
   kanat açıklığı: AKINCI 12,3 m boyunda ama 20 m açıklıkta. Füze yan görünüşten,
   İHA üst görünüşten çizilir ve üst görünüş 90° çevrilerek serilir; böylece her

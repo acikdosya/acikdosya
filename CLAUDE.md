@@ -80,6 +80,46 @@ Kurallar:
 - Ürün kartındaki siluet/çizimler bu veriden **türetilir**, elle çizilmez. Veri
   değişince görsel değişmeli.
 
+### Hassasiyet — iki sayı ne zaman çelişir
+
+Ondalık yazılmış bir değer, yazıldığı hassasiyetin bandını taşır: bant, son
+ondalık basamağın yarısıdır. `12,3` → `[12,25 – 12,35]`, kapalı; uç noktada
+değme kesişme sayılır. Gerekçesi bir yayın hatası: üreticinin iki belgesi
+uzunluğu 12,3 ve 12,2 m veriyordu ve hesap buna "çelişki" diyordu — elimizdeki
+en sert kelime, on santim için.
+
+**Tam sayıda bant yoktur.** `2300` ve `610` nokta değer kalır: sondaki
+sıfırlardan anlamlı basamak çıkarılamaz. 2300 kg yazan kaynak yüze mi ona mı
+yuvarladı bilinmiyor, bir bant uydurmak kaynağın söylemediği bir şey iddia
+etmek olur. Aynı sebeple `12,30` ile `12,3` ayırt edilemez; JSON ikisini de
+aynı sayıya çözer.
+
+`~` işaretinin %10'luk bandı korunur, örtük kurala düşmez.
+
+Kaynak belirsizliği kendisi yazıyorsa ölçüme `uncertainty` alanı eklenir
+(± ve alan birimiyle). Bu alan hem örtük bandı hem de `~` oranını **geçersiz
+kılar**; açık uçlu operatörle ya da aralıklı kayıtla birlikte yazılamaz, şema
+orada reddeder. Bugün hiçbir kayıtta dolu değil.
+
+### Ana sayfa panelinin konusu
+
+Hangi dosyanın hangi alanının anlatıldığı **içerikte** yazar:
+
+```jsonc
+"hero": {"field": "range_km", "variant": "tayfun"}
+```
+
+Önceki sürümde paneli kod seçiyordu — bütün dosyalar taranır, en ağır ıraksama
+kazanırdı. Sitenin en görünür bölümü bir sıralama kuralının çıktısıydı ve bir
+kaynak eklemek konuyu sessizce değiştirebiliyordu. Editoryal karar artık
+editoryal bir yerde duruyor.
+
+- İşaretçi en fazla **bir** dosyada bulunur. İkisi birden işaretlenirse derleme
+  düşer: ana sayfa tek konu anlatır.
+- İşaretlenen alan gerçekten ıraksıyor olmalı. Panelin birinci katmanı ıraksama
+  anlatır; gösterecek bir şey yoksa işaretçi yanıltır, derleme düşer.
+- İşaretçi yoksa `lib/hero.ts`'teki sıralı geri çekilme devreye girer.
+
 ### Düzeltme kaydı
 
 Yayımlanmış bir değer değişince `revisions` dizisine kayıt düşülür:
@@ -168,9 +208,10 @@ Prototipte oturmuş palet — koru:
 
 **Hareket:**
 - Sayfa başına TEK orkestre edilmiş hareket anı. Ana sayfada bu an, hero
-  panelinin rozetiyle belirmesidir — yöntemi gösteren hareket odur. Panel
-  üç katmanlı (ıraksama, son düzeltme kaydı, köken zinciri; `lib/hero.ts`)
-  ve hangisi çizilirse hareket ona bağlanır. Kareler `globals.css` içinde
+  panelinin rozetiyle belirmesidir — yöntemi gösteren hareket odur. Panelin
+  konusu içerikteki `hero` işaretçisinden gelir (§3); işaretçi yoksa üç
+  katmanlı geri çekilme devreye girer (ıraksama, son düzeltme kaydı, köken
+  zinciri; `lib/hero.ts`) ve hangisi çizilirse hareket ona bağlanır. Kareler `globals.css` içinde
   tek yerde (`hero-panel`, `hero-reveal`, `hero-lead`); panel başına
   animasyon yazılmaz, yoksa kural sessizce ikiye çıkar. Kademeli giriş
   kaskadları (n öğe, artan gecikme) scroll'da da sayfa yüklemesinde de
@@ -240,7 +281,7 @@ content/
   assets.json             # görsel lisans kaydı
 lib/
   geo.ts                  # jeodezik daire, mesafe
-  hero.ts                 # ana sayfa panelinin konusu — sıralı geri çekilme
+  hero.ts                 # ana sayfa panelinin konusu — işaretçi, sonra geri çekilme
   geometry/               # parça kiti ve ürün tanımları — bkz. §9
     parts.ts              # altı ilkel: body, pod, panel, disc, strut, boom
     panel.ts              # yüzey istasyonları: veçhe, kalınlık, kök ve uç eğrisi

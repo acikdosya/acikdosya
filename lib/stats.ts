@@ -95,6 +95,51 @@ export function specDivergence(
  * Iraksama yoksa undefined doner ve ana sayfa paneli hic cizmez. Uydurma
  * bir ornek satir konmaz — CLAUDE.md §5.7.
  */
+/** Grup + alan + iraksama → ana sayfanin okudugu kayit. */
+function toDivergence(
+  group: SpecGroup,
+  key: SpecKey,
+  divergence: FieldDivergence,
+  list: readonly Measurement[]
+): Divergence {
+  return {
+    ...divergence,
+    key,
+    variantId: group.id,
+    variantLabel: group.label,
+    measurements: list,
+    distinct: distinctCount(list, valueKey),
+    sources: distinctCount(list, (item) => item.source.tr)
+  };
+}
+
+/**
+ * Isaretlenmis alanin iraksamasi — icerikteki `hero` isaretcisi.
+ *
+ * Isaretci hangi grubu kastettigini soylemiyorsa alanin degerini tasiyan
+ * ILK grup secilir. Isaretlenen alan iraksamiyorsa undefined doner;
+ * derleme bu durumu zaten reddediyor (scripts/validate-content.ts), yani
+ * buradaki undefined bir gerileme degil, savunma hattidir.
+ */
+export function markedDivergence(system: System): Divergence | undefined {
+  const marker = system.hero;
+  if (!marker) return undefined;
+
+  for (const group of specGroups(system)) {
+    if (marker.variant && group.id !== marker.variant) continue;
+
+    const list = group.specs[marker.field];
+    if (!list) continue;
+
+    const divergence = groupDivergence(group, marker.field);
+    if (!divergence) continue;
+
+    return toDivergence(group, marker.field, divergence, list);
+  }
+
+  return undefined;
+}
+
 export function findDivergence(system: System): Divergence | undefined {
   let best: Divergence | undefined;
 
@@ -114,15 +159,7 @@ export function findDivergence(system: System): Divergence | undefined {
         if (order === 0 && distinct <= best.distinct) continue;
       }
 
-      best = {
-        ...divergence,
-        key,
-        variantId: group.id,
-        variantLabel: group.label,
-        measurements: list,
-        distinct,
-        sources: distinctCount(list, (item) => item.source.tr)
-      };
+      best = toDivergence(group, key, divergence, list);
     }
   }
 

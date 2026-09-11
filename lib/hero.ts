@@ -7,7 +7,7 @@ import {
   type SpecKey,
   type System
 } from './schema';
-import {findDivergence, type Divergence} from './stats';
+import {findDivergence, markedDivergence, type Divergence} from './stats';
 
 /**
  * Ana sayfa hero panelinin konusu — CLAUDE.md §5.7.
@@ -20,6 +20,9 @@ import {findDivergence, type Divergence} from './stats';
  * Simdi sirali geri cekilme var. Ucu de GERCEK veriden okunur; farazi
  * ornek satir uretilmez:
  *
+ *  0. isaretli alan  Icerikte `hero` isaretcisi varsa panel onu anlatir.
+ *                    Konu artik bir siralama kuralinin ciktisi degil,
+ *                    yazili bir karar.
  *  1. iraksama       Ayni alanda ayrisan degerler. Yontemi en iyi bu anlatir.
  *  2. son duzeltme   Yayimlanmis bir degeri neden degistirdigimiz. Dosyanin
  *                    kendi tarihi — iraksama yoksa gosterilecek en guclu sey.
@@ -103,6 +106,15 @@ function fullestRecord(
 }
 
 export function heroFocus(systems: readonly System[]): HeroFocus | undefined {
+  /*
+   * Isaretci once. Birden fazla dosya isaretlenemez (derlemede sinaniyor),
+   * yani buradaki ilk bulma tek bulmadir.
+   */
+  for (const system of systems) {
+    const marked = markedDivergence(system);
+    if (marked) return {tier: 'divergence', system, divergence: marked};
+  }
+
   for (const system of systems) {
     const divergence = findDivergence(system);
     if (divergence) return {tier: 'divergence', system, divergence};

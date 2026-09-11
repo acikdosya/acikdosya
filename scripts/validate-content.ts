@@ -9,6 +9,7 @@ import {selectMeasurements} from '../lib/geometry/measurements';
 import {partsForSystem} from '../lib/geometry/parts-for';
 import {describeIssue, revisionIssues} from '../lib/revisions';
 import {assetsFileSchema, systemSchema} from '../lib/schema';
+import {markedDivergence} from '../lib/stats';
 
 const ROOT = process.cwd();
 const CONTENT_DIR = join(ROOT, 'content');
@@ -83,6 +84,9 @@ if (systemFiles.length === 0) {
   errors.push('content/systems/\n  en az bir sistem dosyasi bekleniyor');
 }
 
+/** Ana sayfa isaretcisini tasiyan dosyalar — en fazla biri olabilir. */
+const heroMarked: string[] = [];
+
 for (const name of systemFiles) {
   const path = join(systemsDir, name);
   validate(path, systemSchema, (system: z.infer<typeof systemSchema>) => {
@@ -92,6 +96,28 @@ for (const name of systemFiles) {
         relative(ROOT, path),
         `slug "${system.slug}" dosya adi "${expected}" ile uyusmuyor`
       );
+    }
+
+    /*
+     * Ana sayfa isaretcisi gercekten iraksayan bir alani gosteriyor mu.
+     *
+     * Panelin birinci katmani iraksama anlatir; isaret edilen alan
+     * iraksamiyorsa panel o konuyu cizemez ve sessizce baska bir seye
+     * duserdi. Editoryal karar yazili, o yuzden karsiligi da olmali.
+     */
+    if (system.hero) {
+      heroMarked.push(relative(ROOT, path));
+
+      if (!markedDivergence(system)) {
+        const where = system.hero.variant
+          ? `${system.hero.variant} grubunda `
+          : '';
+        fail(
+          relative(ROOT, path),
+          `hero isaretcisi "${system.hero.field}" alanini gosteriyor ama ${where}o alan iraksamiyor\n` +
+            '  panelin birinci katmani iraksama anlatir; gosterecek bir sey yoksa isaretci yaniltir'
+        );
+      }
     }
 
     /*
@@ -141,6 +167,17 @@ for (const name of systemFiles) {
       }
     }
   });
+}
+
+/*
+ * Ana sayfa tek bir konu anlatir. Iki dosya birden isaretlenmisse hangisinin
+ * cizilecegi dosya sirasina kalirdi — yani karar yine koda geri kacardi.
+ */
+if (heroMarked.length > 1) {
+  errors.push(
+    `content/systems/\n  birden fazla dosya hero isaretcisi tasiyor: ${heroMarked.join(', ')}\n` +
+      '  ana sayfa tek konu anlatir, isaretci de tek olmali'
+  );
 }
 
 // --- varlik lisans kaydi ---------------------------------------------------
