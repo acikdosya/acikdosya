@@ -7,8 +7,9 @@ Bu dosya projenin kalıcı bağlamıdır. Her oturumda geçerlidir. Bir karar bu
 
 ## 1. Ürün ne, ne değil
 
-**Ne:** Az sayıda Türk savunma sanayii sistemini (başlangıç: TAYFUN) derinlemesine
-anlatan, animasyonlu ve interaktif bir dijital dosya. "İnteraktif müze vitrini."
+**Ne:** Az sayıda Türk savunma sanayii sistemini derinlemesine anlatan,
+animasyonlu ve interaktif bir dijital dosya. "İnteraktif müze vitrini."
+Yayında üç dosya var: TAYFUN, ATMACA, AKINCI.
 
 **Ne değil:**
 - Ansiklopedi/veri tabanı değil. 300 ürünlük katalog kurmuyoruz — bu alanda
@@ -86,12 +87,36 @@ Yayımlanmış bir değer değişince `revisions` dizisine kayıt düşülür:
 bu projede veri hatasıyla aynı ağırlıkta bir hatadır — okuyucu dün gördüğü
 sayının nereye gittiğini sorabilmeli.
 
+`from` ve `to` serbest metin **değildir**, ayrımlı birliktir:
+
+```ts
+type RevisionValue =
+  | {kind: 'measurement'; value: number; operator?: Operator; unit: string}
+  | {kind: 'removed'}
+  | {kind: 'text'; tr: string; en: string};
+```
+
+- `measurement` dile göre çizilir (`lib/format.ts`), yani İngilizce sayfada
+  `12.3 m`, Türkçe sayfada `12,3 m`. Serbest metin bunu yapamıyordu: dize
+  dosyaya tek dilde yazılıyor ve iki dile de aynı çıkıyordu.
+- `removed` bir değer değil, değerin yokluğudur. "kayıt yok" diye bir metin
+  yazmak o dizeyi her dile ayrı ayrı çevirmek demekti.
+- `text` sayıya sığmayan her şey: iki değerli bir kayıt, varyant ya da güven
+  niteleyicisi taşıyan bir satır, özellik metni. **Sayıya zorlanmaz** —
+  `> 280 km (resmî)` ifadesinin parantezi hangi kaydın ayakta kaldığını
+  söylüyor ve sayıya çevrildiğinde o bilgi kaybolur.
+
 - Kayıt uydurulmaz. Gerçekten yapılmış bir düzeltme yoksa dizi de yoktur.
 - Kayıt yoksa sayfada bölüm hiç çizilmez. Boş bölüm, defterin tutulmadığı
   izlenimini verir.
 - Düzeltme kaydı bir ölçüm değildir: güven rozeti taşımaz.
 - Program takvimi (`timeline`) sistemin tarihidir, `revisions` dosyanın
   tarihi. İkisi birbirinin yerine kullanılmaz.
+- **Defter ile tablo tutmak zorunda.** Bir alanın en son düzeltmesindeki
+  `to` bir ölçümse, o değer dosyada duruyor olmalı; uyuşmazsa derleme
+  düşer (`lib/revisions.ts`, `scripts/validate-content.ts`). Kaldırma
+  kayıtları ve metin kolu kıyaslanmaz — kıyaslanamazlar. Ayrışmış bir
+  defter, tutulmayan defterden daha kötüdür: okuyucuya iki ayrı şey söyler.
 
 Şemanın tek kaynağı `lib/schema.ts`, doldurulmuş örneği
 `content/systems/tayfun.json`. İkinci bir şema kopyası tutulmaz —
@@ -198,8 +223,10 @@ Prototipte oturmuş palet — koru:
 
 ```
 app/[locale]/             # sayfalar
+  kart/<şablon>/route.tsx # paylaşım kartları — sorgu çözer, çizimi lib/cards'a verir
 components/
   scale-silhouette/       # ölçek şeması — parça listesinin ortografik izdüşümü
+    card-geometry.ts      # karışık sınıf tek çarpanda — kart yerleşimi
   model-provenance/       # biçim kaydı: her oranın kökeni, §9
   measure-gap/            # ölçü verisi olmayan varyantın açık kaydı
   spec-table/             # kaynaklı veri tablosu + güven rozetleri
@@ -209,7 +236,7 @@ components/
   revision-log/           # duzeltme defteri — timeline'dan ayri ve daha sade
   model-viewer/           # R3F, dinamik import
 content/
-  systems/tayfun.json
+  systems/*.json          # tayfun, atmaca, akinci
   assets.json             # görsel lisans kaydı
 lib/
   geo.ts                  # jeodezik daire, mesafe
@@ -235,6 +262,16 @@ lib/
     divergence.ts         # iki ölçüm ıraksıyor mu — aralık hesabı, §3
     divergence.test.ts    # birim testleri; pnpm test
     labels.ts             # durum adı ↔ mesaj anahtarı, tek kaynak
+  cards/                  # paylaşım kartları — dört şablon
+    params.ts             # sorgu çözümü; tanımsız değer varsayılana DÜŞMEZ
+    frame.tsx             # kart kabuğu: sabit üst/alt şerit, rozet ve etiket
+    render.tsx            # fontlar, yanıt başlıkları, sade çeviri sözleşmesi
+    <konu>.ts             # veri seçimi — source-chain, value-scope, scale, revision
+    <konu>-card.tsx       # çizim; veriden ayrı ki çeviri bağlamı olmadan sınansın
+    cards.test.tsx        # dördü de gerçekten çiziliyor mu — satori sessiz düşer
+    png.ts                # test için küçük PNG çözücü; uygulama içe aktarmaz
+  revisions.ts            # defter ile tablo tutuyor mu — derlemede sınanır, §3
+  format.ts               # sayı, tarih, ölçüm ve düzeltme değeri biçimlendirme
   messages.test.ts        # mesaj paketi ile kod arasındaki sözleşme
   schema.ts               # zod şemaları — build'de içeriği doğrula
   brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
@@ -245,6 +282,8 @@ lib/
 deploy/
   nginx/acikdosya.org.conf  # vhost, kurulum adımları başında — bkz. §11
 scripts/
+  validate-content.ts     # şema + defter bütünlüğü; prebuild'e bağlı
+  derive-og-font.py       # OG için statik font sürümleri — satori woff2 okumaz
   deploy.sh               # yerelde derle, sunucuya aktar, yenile
 reference/                # dondurulmuş prototipler — shipped kod değil
   prototype.html          # çalışan tek dosya prototip, davranış referansı
@@ -582,9 +621,11 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 
 ### Yayındaki eksikler
 
-1. **Düzeltme kaydı boş.** Şema ve bölüm hazır, `content/systems/*.json`
-   içinde henüz kayıt yok — çünkü uydurulmuş kayıt yazılmaz. İlk gerçek
-   düzeltmede dolar ve bölüm o gün görünür olur.
+1. **Düzeltme defteri tutuluyor ama iki dosyada.** TAYFUN'da on, AKINCI'da
+   üç kayıt var; ATMACA'da henüz düzeltme yapılmadı, dizi boş duruyor ve
+   sayfada bölüm çizilmiyor. Kayıtların çoğu `text` kolunda duruyor: eski
+   değerler varyant ya da güven niteleyicisi taşıyor ve sayıya çevrilemez.
+   Yalnız ölçüm koluna düşen kayıtlar dosyayla karşılaştırılıyor (§3).
 2. **Harita kapsaması bölgesel.** Referans nokta paketin dışına taşınamaz
    (bbox 22,30 – 50,47). Dünyanın herhangi bir yerinden halka çizmek
    isteyen okuyucu bunu yapamaz. Bedel bilinerek kabul edildi: alternatifi

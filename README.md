@@ -23,7 +23,7 @@ pnpm dev          # http://localhost:3000
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm lint` | ESLint |
 | `pnpm validate:content` | `content/` altındaki JSON'ları şemaya sokar |
-| `pnpm test` | `lib/` altındaki birim testleri (`node --test`) |
+| `pnpm test` | `lib/` ve `components/` altındaki birim testleri (`node --test`) |
 | `./scripts/deploy.sh` | Yerelde derler, sunucuya aktarır, yeniler |
 
 `pnpm validate:content` build'e `prebuild` olarak bağlıdır. Şemadan geçmeyen içerik
@@ -36,12 +36,24 @@ Türkçe varsayılan ve öneksiz, İngilizce önekli. Rota adları da çevrilir.
 | Türkçe | İngilizce |
 |---|---|
 | `/` | `/en` |
-| `/sistemler/tayfun` | `/en/systems/tayfun` |
-| `/sistemler/atmaca` | `/en/systems/atmaca` |
-| `/sistemler/akinci` | `/en/systems/akinci` |
+| `/sistemler/<slug>` | `/en/systems/<slug>` |
+| `/yontem` | `/en/method` |
+| `/hakkinda` | `/en/about` |
+
+Yayında üç sistem var: `tayfun`, `atmaca`, `akinci`.
 
 Kök adres tarayıcı diline bakmaz, her zaman Türkçe açılır. Paylaşılan link herkeste
 aynı görünsün diye dil algılama kapalıdır.
+
+**Görsel rotaları çevrilmez.** Paylaşım görselleri ve kartlar dosya sözleşmesinden
+gelir, next-intl'in çeviri haritasından değil: İngilizce kart da `/en/kart/...`
+adresinde durur.
+
+| Rota | Ne üretir |
+|---|---|
+| `/opengraph-image`, `/sistemler/<slug>/opengraph-image` | sayfa paylaşım görseli |
+| `/kart/<şablon>` | paylaşım kartı, sorgu dizesiyle — aşağıda |
+| `/icon/16`, `/icon/32`, `/icons/<varyant>` | favicon ve uygulama ikonları |
 
 ## Dizin yapısı
 
@@ -54,10 +66,12 @@ content/assets.json      görsel lisans kaydı
 i18n/                    next-intl rota ve istek yapılandırması
 lib/schema.ts            zod şeması — veri sözleşmesi
 lib/geo.ts               jeodezik daire ve mesafe
-lib/format.ts            sayı, tarih ve ölçüm biçimlendirme
+lib/format.ts            sayı, tarih, ölçüm ve düzeltme değeri biçimlendirme
 lib/measurement/         iki ölçüm ıraksıyor mu — aralık hesabı ve testleri
+lib/revisions.ts         defter ile tablo tutuyor mu — derlemede sınanır
+lib/cards/               paylaşım kartları: veri seçimi ve çizim
 messages/                arayüz çevirileri
-scripts/                 içerik doğrulayıcı
+scripts/                 içerik doğrulayıcı, font türetici, dağıtım
 reference/               çalışan tek dosya prototip, davranış referansı
 ```
 
@@ -103,16 +117,34 @@ Yayımlanmış bir değeri değiştirince kayıt tutulur. Sessizce düzeltilen b
 ```jsonc
 "revisions": [
   {
-    "date": "2026-09-05",
-    "field": "range_km",              // bilinen anahtar ya da serbest metin
-    "from": "> 500 km",
-    "to": "> 280 km",
+    "date": "2026-09-11",
+    "field": "length_m",              // bilinen anahtar ya da serbest metin
+    "from": {"kind": "measurement", "value": 12.2, "unit": "m"},
+    "to":   {"kind": "measurement", "value": 12.3, "unit": "m"},
     "reason": {"tr": "...", "en": "..."},
     "source": {"tr": "...", "en": "..."},   // opsiyonel
     "source_url": "https://..."             // opsiyonel
   }
 ]
 ```
+
+`from` ve `to` serbest metin **değildir**, üç kollu ayrımlı birliktir:
+
+| kol | ne zaman | nasıl çizilir |
+|---|---|---|
+| `measurement` | tek bir sayı ve birimi | `lib/format.ts`, dile göre: `12,3 m` / `12.3 m` |
+| `removed` | kayıt kaldırıldı | çeviri paketinden: "kayıt yok" / "no record" |
+| `text` | sayıya sığmayan her şey | `tr`/`en` alanları olduğu gibi |
+
+Ölçüm kolu **zorlanmaz**. `> 280 km (resmî)` ifadesinin parantezi hangi kaydın
+ayakta kaldığını söylüyor; sayıya çevrilse o bilgi kaybolurdu. Bugünkü on üç
+kaydın üçü ölçüm kolu taşıyor, kalanı metin ve kaldırma.
+
+**Defter ile tablo tutmak zorunda.** Bir alanın en son düzeltmesindeki `to` bir
+ölçümse, o değer dosyada duruyor olmalı — yoksa `pnpm validate:content` düşer
+(`lib/revisions.ts`). Kaldırma ve metin kolları kıyaslanmaz, kıyaslanamazlar.
+Ayrışmış bir defter tutulmayan defterden daha kötüdür: okuyucuya iki ayrı şey
+söyler ve hangisinin doğru olduğu dışarıdan anlaşılamaz.
 
 Sistem sayfasında ayrı bir bölüm olarak çıkar (`components/revision-log/`).
 Program takvimiyle karıştırılmamalı: takvim sistemin tarihini, düzeltme kaydı
@@ -271,6 +303,85 @@ istemcisi görseli hiç göstermez.
 Görsel rotası **çevrilmez**: İngilizce sistem sayfasının görseli
 `/en/sistemler/<slug>/opengraph-image` adresindedir, sayfanın kendisi
 `/en/systems/<slug>` olsa bile.
+
+#### Türkçe glifler burada patlar
+
+Satori tarayıcı gibi yedekleme yapmaz: hangi font tamponunu verirsen onunla
+çizer. Bizim yazı tipimiz iki alt kümeye bölünmüş ve Türkçe ikiye dağılmış
+durumda — `ı ç ö ü` latin alt kümesinde, `ğ ş İ Ğ Ş` latin-ext'te. Tek alt küme
+yüklemek **boş kutu üretmez**: `@vercel/og` paketinin içinde gömülü bir yedek
+yazı tipi var ve eksik glifler sessizce ona düşer. Yazı okunur kalır, yalnız
+harfler başka bir yazı tipinde çıkar ve genişlik farkı %2 civarındadır.
+
+Bu yüzden `loadOgFonts()` her iki alt kümeyi de ayrı font olarak verir ve
+`lib/og-fonts.test.ts` iki şeye birden bakar: metnin toplam genişliği beklenen
+bantta mı (glif düşmesi) ve `Ğ` gerçekten latin-ext dosyasından mı çiziliyor
+(yedeğe düşme). İkincisi olmadan birincisi bir şey ispat etmez.
+
+Statik font sürümleri `app/_fonts/og/` altında commit'li; `scripts/derive-og-font.py`
+üretir (satori yalnızca ttf/otf/woff okur, sayfanın variable woff2'si geçmez).
+
+### Paylaşım kartları
+
+Dört şablon, `app/[locale]/kart/<şablon>/route.tsx`. Adresler `cardUrl`
+(`lib/urls.ts`) üzerinden kurulur; görsel rotaları gibi **çevrilmez** ve Türkçe
+adres önek almaz. Boyut varsayılan 1200×675, `?format=dikey` ile 1080×1350.
+
+| Şablon | Konu | Parametreler |
+|---|---|---|
+| `kaynak-zinciri` | Tek bir belgeye dayanan değerler | `sistem`, `kaynak` |
+| `deger-kapsam` | Aynı alandaki değerler ve kapsamları | `sistem`, `alan`, `varyant` |
+| `olcek` | 1–3 sistemin ölçekli karşılaştırması | `sistem` (virgülle) |
+| `duzeltme` | Bir değerin neden değiştiği | `sistem`, `kayit` |
+
+Kart içeriği elle yazılmaz, `content/systems/*.json` dosyalarından türer.
+Tanımsız bir değer varsayılana **düşmez**, 404 döner: sessizce başka bir sisteme
+düşen bir kart, paylaşıldıktan sonra kimsenin sorgu dizesine bakmayacağı için
+izsiz yanlış bilgi yayardı.
+
+Rota yalnızca sorguyu çözer ve dili seçer; veri `lib/cards/<konu>.ts`, çizim
+`lib/cards/<konu>-card.tsx` içinde. Ayrım sınanabilirlik için: rota gövdesi
+next-intl istek bağlamı olmadan çağrılamaz, görünüm çağrılabilir. Bu ayrımın
+somut bir bedeli var — satori bir stil değerini çözemediğinde çizimi
+**ortasında düşer** ve Next bunu "failed to pipe response" diye loglar: ne stil
+adı, ne satır numarası. Tip kontrolünden ve lint'ten geçen bir `undefined` stil
+değeri tam olarak böyle kaçtı ve yalnız yatay biçimi bozdu. `lib/cards/cards.test.tsx`
+dört kartı da iki biçimde, Türkçe glif taşıyan metinlerle gerçekten çizdirir.
+
+Her kartta sabit yerde dört şey bulunur: alan adı, verinin kendi tarihi (bugünün
+tarihi değil), kaynak türü rozeti ve çizim varsa "şematik" etiketi. Gerekçe
+kartın dolaşım biçimi: görsel ekran görüntüsü olarak bağlamından kopar.
+
+Birkaç kural tasarımdan değil veriden gelir:
+
+- **Kaynak zinciri ters yönde çalışır.** Claude Design şablonu "bir iddia, N
+  yayın, hepsinin dayandığı tek kaynak" diyordu; şemamızda bir kaydı başka bir
+  yayına bağlayan alan yok ve bugünkü veride aynı alanın değerleri zaten ayrı
+  kaynaklardan geliyor. Olmayan bir bağ uydurulmaz (§5.7). Gerçek olan tersi:
+  ATMACA kataloğu beş değeri, BAYKAR ürün sayfası dokuz değeri tek başına
+  taşıyor. Kart bunu gösterir; okuyucunun gördüğü şey aynıdır — bir kaynak
+  düşerse ne kadarının düştüğü.
+- **Değer-kapsam kartının durumu hesaptan gelir.** Başlık her zaman nötrdür ama
+  durum adı `groupDivergence()` ne dönerse odur ve gerektiğinde "çelişki" yazar.
+  Bugünkü veride üç alan çelişki döndürüyor (AKINCI uzunluğu, ATMACA kütlesi ve
+  harp başlığı ağırlığı). Elle etiketleme yok.
+- **Düzeltme kartında güven rozeti yok.** Düzeltme kaydı bir ölçüm değildir
+  (§3); alt şeritte çerçevesiz bir etiket durur. "Kaldırıldı" durumu da
+  sezilmez — `from`/`to` serbest metin, Türkçe bir dizeye bakarak durum çıkarmak
+  kaydın söylemediği bir şey uydurmak olurdu.
+- **Ölçek kartı görünüş seçerek çözer.** Füzenin baskın ölçüsü uzunluk, İHA'nın
+  kanat açıklığı: AKINCI 12,3 m boyunda ama 20 m açıklıkta. Füze yan görünüşten,
+  İHA üst görünüşten çizilir ve üst görünüş 90° çevrilerek serilir; böylece her
+  satırın geniş kenarı kendi baskın ölçüsüdür ve ikisi **aynı metre çarpanını**
+  paylaşır. Çizim sayfadaki şemayla aynı parça listesinden türer
+  (`components/scale-silhouette/card-geometry.ts`).
+
+Rozet çerçevesi ile etiket ayrı dillerdir. Üç güven durumu çerçeve **deseniyle**
+ayrışır ve dördüncü bir varyantı yoktur; "şematik" ve "düzeltme kaydı" güven
+durumu değildir, bu yüzden çerçeve kullanmazlar (§4).
+
+Kart rotalarına `lib/analytics.ts` sözlüğünden olay eklenmez: bunlar sunucu
+tarafı ve ziyaretçi olayı değil.
 
 ## Dağıtım
 

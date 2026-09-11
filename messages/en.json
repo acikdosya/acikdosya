@@ -27,6 +27,33 @@
     "communications": "Communications",
     "variant_names": "Variation"
   },
+  "Card": {
+    "chainCount": "{count} records",
+    "chainDocument": "document",
+    "chainHeading": "{count} values in this file rest on a single document.",
+    "chainLink": "link on record",
+    "chainNoLink": "no link",
+    "chainOrigin": "the document they all rest on",
+    "chainSampled": "{shown} / {total} records",
+    "computed": "computed: {state}",
+    "correctionDate": "correction {date}",
+    "dataDate": "data {date}",
+    "envelope": "dashed: measurement envelope, not an outline",
+    "field": "field",
+    "outline": "outline, from the part list",
+    "reason": "rationale",
+    "recordLabel": "correction record",
+    "revisionCount": "{count} corrections",
+    "schematic": "schematic",
+    "scopeHeadingMany": "{values} published values, {scopes} different scopes. Without the conditions they were obtained under, the numbers cannot share a ruler.",
+    "scopeHeadingOne": "{values} published values in the same scope. All stay on record; none is picked over the others.",
+    "scopeUnstated": "scope not stated",
+    "source": "source",
+    "template_degerKapsam": "Value and its scope",
+    "template_duzeltme": "Correction record",
+    "template_kaynakZinciri": "Source chain",
+    "template_olcek": "Scale comparison"
+  },
   "Categories": {
     "balistik-fuze": "Ballistic missile",
     "seyir-fuzesi": "Cruise missile",
@@ -276,6 +303,7 @@
   },
   "RevisionLog": {
     "from": "previous value",
+    "removed": "no record",
     "to": "new value"
   },
   "ScaleSilhouette": {

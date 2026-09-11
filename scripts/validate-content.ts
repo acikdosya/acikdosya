@@ -7,6 +7,7 @@ import {join, relative, basename} from 'node:path';
 import {z} from 'zod';
 import {selectMeasurements} from '../lib/geometry/measurements';
 import {partsForSystem} from '../lib/geometry/parts-for';
+import {describeIssue, revisionIssues} from '../lib/revisions';
 import {assetsFileSchema, systemSchema} from '../lib/schema';
 
 const ROOT = process.cwd();
@@ -91,6 +92,17 @@ for (const name of systemFiles) {
         relative(ROOT, path),
         `slug "${system.slug}" dosya adi "${expected}" ile uyusmuyor`
       );
+    }
+
+    /*
+     * Defter ile tablo tutuyor mu — lib/revisions.ts.
+     *
+     * Bir alanin en son duzeltmesi "yeni deger su" diyorsa o deger
+     * dosyada duruyor olmali. Ayrismis bir defter, tutulmayan bir
+     * defterden daha kotudur: okuyucuya iki ayri sey soyler.
+     */
+    for (const issue of revisionIssues(system)) {
+      fail(relative(ROOT, path), describeIssue(issue));
     }
 
     /*

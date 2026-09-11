@@ -1,6 +1,6 @@
 import {useTranslations} from 'next-intl';
 import type {Locale} from '@/i18n/routing';
-import {formatDate} from '@/lib/format';
+import {formatDate, formatRevisionValue} from '@/lib/format';
 import {
   attributeKeys,
   specKeys,
@@ -45,6 +45,10 @@ export function HeroRevision({
     return field;
   }
 
+  /** Kaldirma kaydinin etiketi ceviri paketinden gelir. */
+  const valueText = (value: Revision['from']) =>
+    formatRevisionValue(value, locale) ?? tRevision('removed');
+
   return (
     <figure className={styles.panel}>
       <figcaption className={styles.head}>
@@ -59,12 +63,12 @@ export function HeroRevision({
       <div className={styles.change}>
         <span className={styles.slot}>
           <span className={styles.slotLabel}>{tRevision('from')}</span>
-          <del className={styles.from}>{revision.from}</del>
+          <del className={styles.from}>{valueText(revision.from)}</del>
         </span>
         <span className={styles.lead} aria-hidden="true" />
         <span className={styles.slot}>
           <span className={styles.slotLabel}>{tRevision('to')}</span>
-          <ins className={styles.to}>{revision.to}</ins>
+          <ins className={styles.to}>{valueText(revision.to)}</ins>
         </span>
       </div>
 

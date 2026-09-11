@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E4E5E1; }
+  a { color: #B3131B; text-decoration: none; border-bottom: 1px solid rgba(179,19,27,.35); }
+  a:hover { color: #1C2124; border-bottom-color: #1C2124; }
+</style>
+</helmet>
+
+<div style="position:relative;background:#E4E5E1;color:#1C2124;font-family:'Source Serif 4',Georgia,serif;padding:56px 40px 110px 88px;box-sizing:border-box;min-height:100%">
+
+  <div style="position:absolute;left:28px;top:0;bottom:0;width:26px;background-image:repeating-linear-gradient(to bottom,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to bottom,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:10px 100%,26px 100%;background-repeat:repeat-y;background-position:right top,right top"></div>
+
+  <div style="max-width:1180px;display:flex;flex-direction:column;gap:64px">
+
+    <header style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
+        <svg viewBox="0 0 100 100" width="56" height="56" aria-hidden="true">
+          <rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect>
+          <rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect>
+          <rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect>
+        </svg>
+        <h1 style="font-family:Archivo,sans-serif;font-weight:600;font-size:34px;letter-spacing:-0.025em;margin:0;line-height:1">Paylaşım kartı şablonları</h1>
+      </div>
+      <p style="font-size:18px;line-height:1.62;margin:0;max-width:62ch;text-wrap:pretty">Dört şablon, her biri yatay 1200×675 ve dikey 1080×1350. Kartlar elle dizilmez; veriden üretilir. Bu yüzden her alanın bir uzunluk aralığı, bir taşma davranışı ve sabit bir yeri var. Aşağıdaki örneklerde her şablon en uzun makul içerikle ve en kısa içerikle gösterilir.</p>
+      <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">Share card templates · og image spec · v1 · 12.09.2026</p>
+    </header>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:28px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">01</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Her karttaki sabit alanlar</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Invariant zones</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:16px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Şema</p>
+          <div style="width:100%;aspect-ratio:16/9;border:1px solid #C6C9C3;background:#E4E5E1;display:flex;flex-direction:column;box-sizing:border-box">
+            <div style="border-bottom:1px solid #C6C9C3;background:rgba(179,19,27,.09);padding:8px 10px;display:flex;justify-content:space-between;gap:10px">
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:600;color:#B3131B">şablon adı + sembol</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:600;color:#B3131B">sistem / alan</span>
+            </div>
+            <div style="flex:1;display:flex;align-items:center;justify-content:center">
+              <span style="font-family:Archivo,sans-serif;font-size:12px;color:#5C6367">değişken içerik alanı</span>
+            </div>
+            <div style="border-top:1px solid #C6C9C3;background:rgba(179,19,27,.09);padding:8px 10px;display:flex;justify-content:space-between;gap:10px">
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:600;color:#B3131B">acikdosya.org</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:600;color:#B3131B">veri tarihi · rev.</span>
+              <span style="font-family:Archivo,sans-serif;font-size:11px;font-weight:600;color:#B3131B">kaynak rozeti</span>
+            </div>
+          </div>
+          <p style="font-size:16px;line-height:1.6;margin:0;color:#5C6367">Kırmızı ile işaretli iki şerit içerikten bağımsızdır. Üst şerit 84 px, alt şerit 96 px (yatay kartta); dikeyde aynı ölçüler korunur. Değişken içerik yalnızca ortadaki alanı kullanır ve taşarsa kendi içinde kırpılır — şeritleri asla itmez.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:18px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Neden görselin içinde</p>
+          <div style="display:flex;gap:14px">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:#B3131B;padding-top:3px">1</span>
+            <p style="font-size:18px;line-height:1.62;margin:0">Kart ekran görüntüsü olarak dolaşır ve bağlamından kopar. Tarih ve alan adı görselin içinde değilse altı ay sonra eski bir rakam bize atfedilerek dolaşır.</p>
+          </div>
+          <div style="display:flex;gap:14px">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:#B3131B;padding-top:3px">2</span>
+            <p style="font-size:18px;line-height:1.62;margin:0">Kaynak rozeti kartın dışında bırakılamaz: paylaşılan değerin resmî mi, basın mı, tahmin mi olduğu görselin kendisinde okunmalı.</p>
+          </div>
+          <div style="display:flex;gap:14px">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:#B3131B;padding-top:3px">3</span>
+            <p style="font-size:18px;line-height:1.62;margin:0">Çizim ölçekli değilse "şematik" etiketi görselin üstünde durur; kimse karttan ölçü almaya çalışmasın.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;border-top:1px solid #C6C9C3;padding-top:16px;flex-wrap:wrap">
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #1C2124;padding:4px 10px">resmî</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:4px 10px">basın</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:4px 10px">tahmin</span>
+            <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;border:1px solid #5C6367;color:#5C6367;padding:4px 10px;letter-spacing:.01em">şematik</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:24px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">02</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Şablon 1 — Kaynak zinciri</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Source chain</span>
+      </div>
+      <p style="font-size:18px;line-height:1.62;margin:0 0 26px;max-width:64ch">Bir iddianın kaç bağımsız kaynağa dayandığını gösterir. Yayın sayısı 3–8 arasında değişir; dördü aşınca ikinci kolona döker. Yayın adları tek satırda kırpılır, iddia metni üç satırda durur.</p>
+
+      <div style="display:flex;flex-direction:column;gap:34px">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Kaynak zinciri</span>
+                <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">SİPER Blok-I · azami menzil</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:34px 48px 30px;gap:26px;box-sizing:border-box">
+                <div style="height:150px;overflow:hidden;flex:none">
+                  <p style="font-family:Archivo,sans-serif;font-size:40px;font-weight:600;letter-spacing:-0.025em;line-height:1.22;margin:0;text-wrap:pretty">"Sistemin menzili 150 kilometrenin üzerinde" iddiası, birbirinden bağımsız görünen sekiz yayında geçiyor; sekizi de aynı tek açıklamaya dayanıyor.</p>
+                </div>
+
+                <div style="flex:1;min-height:0;display:flex;align-items:stretch;gap:0">
+                  <div style="flex:1;min-width:0;display:grid;grid-template-rows:repeat(4,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:10px 14px">
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Uluslararası Savunma ve Havacılık Dergisi</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ankara Ekonomi Gazetesi</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Doğu Akdeniz Güvenlik Bülteni</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Teknoloji Haber Ajansı</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Savunma Sanayii Yıllığı 2025</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bölgesel Analiz Enstitüsü notu</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Havacılık Gündemi</span></div>
+                    <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Küresel Silahlanma İzleme Raporu</span></div>
+                  </div>
+
+                  <div style="width:104px;flex:none;position:relative">
+                    <div style="position:absolute;left:0;top:12%;bottom:12%;width:1px;background:#C6C9C3"></div>
+                    <div style="position:absolute;left:0;top:12%;width:34px;height:1px;background:#C6C9C3"></div>
+                    <div style="position:absolute;left:0;bottom:12%;width:34px;height:1px;background:#C6C9C3"></div>
+                    <div style="position:absolute;left:0;top:50%;right:0;height:1px;background:#B3131B"></div>
+                    <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-160%);font-family:Archivo,sans-serif;font-size:18px;color:#5C6367;background:#F3F4F1;padding:0 8px;white-space:nowrap">8 yayın</div>
+                  </div>
+
+                  <div style="width:352px;flex:none;border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#B3131B">hepsinin dayandığı tek kaynak</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:27px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-top:auto">Üretici yetkilisinin 2023 fuar söyleşisinde verdiği sözlü ifade</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367">yazılı teyit yok · sayı yayında tekrar edilmiş</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 3</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:7px 16px;margin-left:auto">basın</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en uzun makul içerik: 8 yayın, üç satırlık iddia, uzun yayın adları</p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start">
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+              <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+                <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                  <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                  <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Kaynak zinciri</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">ATMACA · seyir yüksekliği</span>
+                </div>
+
+                <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:34px 48px 30px;gap:26px;box-sizing:border-box">
+                  <div style="height:150px;overflow:hidden;flex:none;display:flex;align-items:flex-start">
+                    <p style="font-family:Archivo,sans-serif;font-size:40px;font-weight:600;letter-spacing:-0.025em;line-height:1.22;margin:0;text-wrap:pretty">Üç yayın, tek bülten.</p>
+                  </div>
+
+                  <div style="flex:1;min-height:0;display:flex;align-items:stretch;gap:0">
+                    <div style="flex:1;min-width:0;display:grid;grid-template-rows:repeat(3,1fr);gap:10px">
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Deniz Kuvvetleri Dergisi</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Teknoloji Haber Ajansı</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 14px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Savunma Notları</span></div>
+                    </div>
+
+                    <div style="width:104px;flex:none;position:relative">
+                      <div style="position:absolute;left:0;top:16%;bottom:16%;width:1px;background:#C6C9C3"></div>
+                      <div style="position:absolute;left:0;top:16%;width:34px;height:1px;background:#C6C9C3"></div>
+                      <div style="position:absolute;left:0;bottom:16%;width:34px;height:1px;background:#C6C9C3"></div>
+                      <div style="position:absolute;left:0;top:50%;right:0;height:1px;background:#B3131B"></div>
+                      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-160%);font-family:Archivo,sans-serif;font-size:18px;color:#5C6367;background:#F3F4F1;padding:0 8px;white-space:nowrap">3 yayın</div>
+                    </div>
+
+                    <div style="width:352px;flex:none;border:1px solid #1C2124;background:#E4E5E1;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:12px">
+                      <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">hepsinin dayandığı tek kaynak</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:27px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin-top:auto">Üretici basın bülteni, 14.03.2024</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367">yazılı · erişilebilir</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                  <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 1</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">resmî</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en kısa içerik: 3 yayın, tek satırlık iddia. Boşluk büyür, hizalar kaymaz.</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="width:432px;max-width:100%;height:540px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+              <div style="width:1080px;height:1350px;transform:scale(.4);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+                <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:18px;padding:0 44px">
+                  <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                  <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Kaynak zinciri</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:23px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px">SİPER Blok-I · azami menzil</span>
+                </div>
+
+                <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:44px 44px 40px;gap:34px;box-sizing:border-box">
+                  <div style="height:290px;overflow:hidden;flex:none">
+                    <p style="font-family:Archivo,sans-serif;font-size:52px;font-weight:600;letter-spacing:-0.025em;line-height:1.2;margin:0;text-wrap:pretty">"Sistemin menzili 150 kilometrenin üzerinde" iddiası, sekiz yayında geçiyor; sekizi de aynı tek açıklamaya dayanıyor.</p>
+                  </div>
+
+                  <div style="flex:1;min-height:0;display:flex;flex-direction:column;gap:0">
+                    <div style="flex:1;min-height:0;display:grid;grid-template-rows:repeat(8,1fr);gap:12px">
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Uluslararası Savunma ve Havacılık Dergisi</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ankara Ekonomi Gazetesi</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Doğu Akdeniz Güvenlik Bülteni</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Teknoloji Haber Ajansı</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Savunma Sanayii Yıllığı 2025</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Bölgesel Analiz Enstitüsü notu</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Havacılık Gündemi</span></div>
+                      <div style="border:1px solid #C6C9C3;background:#E4E5E1;display:flex;align-items:center;padding:0 18px;min-width:0"><span style="font-family:Archivo,sans-serif;font-size:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Küresel Silahlanma İzleme Raporu</span></div>
+                    </div>
+
+                    <div style="height:78px;flex:none;position:relative">
+                      <div style="position:absolute;left:14%;right:14%;top:0;height:1px;background:#C6C9C3"></div>
+                      <div style="position:absolute;left:14%;top:0;width:1px;height:26px;background:#C6C9C3"></div>
+                      <div style="position:absolute;right:14%;top:0;width:1px;height:26px;background:#C6C9C3"></div>
+                      <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#B3131B"></div>
+                      <div style="position:absolute;left:50%;top:30px;transform:translateX(-50%);font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;background:#F3F4F1;padding:0 12px;white-space:nowrap">8 yayın</div>
+                    </div>
+
+                    <div style="flex:none;border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:26px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#B3131B">hepsinin dayandığı tek kaynak</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;letter-spacing:-0.02em;line-height:1.2">Üretici yetkilisinin 2023 fuar söyleşisinde verdiği sözlü ifade</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:23px;color:#5C6367">yazılı teyit yok</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:26px;padding:0 44px">
+                  <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">12.09.2026 · rev. 3</span>
+                  <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:7px 16px;margin-left:auto">basın</span>
+                </div>
+              </div>
+            </div>
+            <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1080×1350 · dikey varyant, aynı en uzun içerik. Yakınsama yatay eksende döner.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:24px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">03</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Şablon 2 — Değer ve kapsamı</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Value and its scope</span>
+      </div>
+      <p style="font-size:18px;line-height:1.62;margin:0 0 26px;max-width:64ch">Aynı alan için farklı kapsamlardaki değerleri yan yana koyar. Başlık dili nötrdür: kart çelişki iddia etmiyor, ölçüm koşulunun değerle birlikte okunması gerektiğini söylüyor. 2 veya 3 kolon; kolon sayısı azaldığında sütun genişliği büyür.</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Değer ve kapsamı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">HİSAR-O+ · azami angajman menzili</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:30px 48px;gap:22px;box-sizing:border-box">
+                <div style="height:96px;overflow:hidden;flex:none">
+                  <p style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;letter-spacing:-0.02em;line-height:1.24;margin:0;text-wrap:pretty">Üç yayınlanmış değer, üç farklı kapsam. Hangi koşulda ölçüldüğü yazılmadan sayılar karşılaştırılamaz.</p>
+                </div>
+
+                <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                  <div style="border:1px solid #1C2124;background:#E4E5E1;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">beyan</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:56px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1">25 km</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:20px;line-height:1.35;color:#1C2124;overflow:hidden">Üretici kataloğu, 2024 baskısı; koşul belirtilmemiş</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px solid #1C2124;padding:5px 12px;align-self:flex-start;margin-top:auto">resmî</span>
+                  </div>
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">test koşulu</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:56px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;color:#5C6367">18 km</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:20px;line-height:1.35;color:#5C6367;overflow:hidden">Kabul testi haberi; alçak irtifa hedef, tek atış, deniz seviyesi</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:5px 12px;align-self:flex-start;margin-top:auto">basın</span>
+                  </div>
+                  <div style="border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#B3131B">tahmin</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:56px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;color:#B3131B">~21 km</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:20px;line-height:1.35;color:#B3131B;overflow:hidden">Bilinen itki ve kanat yükünden hesap; ±3 km belirsizlik</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px solid #B3131B;color:#B3131B;padding:5px 12px;align-self:flex-start;margin-top:auto;background:#F3F4F1">tahmin</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 5</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367">kapsamlar birlikte okunur</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">resmî + basın + tahmin</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en uzun makul içerik: 3 kolon, iki satırlık başlık, uzun kapsam notları</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Değer ve kapsamı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">KEMANKEŞ · havada kalış</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:30px 48px;gap:22px;box-sizing:border-box">
+                <div style="height:96px;overflow:hidden;flex:none;display:flex;align-items:flex-start">
+                  <p style="font-family:Archivo,sans-serif;font-size:34px;font-weight:600;letter-spacing:-0.02em;line-height:1.24;margin:0">İki değer, iki kapsam.</p>
+                </div>
+
+                <div style="flex:1;min-height:0;display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+                  <div style="border:1px solid #1C2124;background:#E4E5E1;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">beyan</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:64px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1">60 dk</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:20px;line-height:1.35;overflow:hidden">Üretici sayfası</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px solid #1C2124;padding:5px 12px;align-self:flex-start;margin-top:auto">resmî</span>
+                  </div>
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:20px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;min-width:0">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">ölçüm</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:64px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;color:#5C6367">42 dk</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:20px;line-height:1.35;color:#5C6367;overflow:hidden">Tam faydalı yükle</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:5px 12px;align-self:flex-start;margin-top:auto">basın</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 1</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">resmî + basın</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en kısa içerik: 2 kolon, kısa kapsam notu</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:432px;max-width:100%;height:540px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1080px;height:1350px;transform:scale(.4);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:18px;padding:0 44px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Değer ve kapsamı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:23px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px">HİSAR-O+ · menzil</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:40px 44px;gap:32px;box-sizing:border-box">
+                <div style="height:200px;overflow:hidden;flex:none">
+                  <p style="font-family:Archivo,sans-serif;font-size:48px;font-weight:600;letter-spacing:-0.025em;line-height:1.2;margin:0;text-wrap:pretty">Üç yayınlanmış değer, üç farklı kapsam. Hangi koşulda ölçüldüğü yazılmadan sayılar karşılaştırılamaz.</p>
+                </div>
+
+                <div style="flex:1;min-height:0;display:grid;grid-template-rows:repeat(3,1fr);gap:18px">
+                  <div style="border:1px solid #1C2124;background:#E4E5E1;padding:24px 26px;box-sizing:border-box;display:flex;align-items:center;gap:26px;min-width:0">
+                    <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#5C6367">beyan</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:26px;line-height:1.35;overflow:hidden">Üretici kataloğu, 2024; koşul belirtilmemiş</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:5px 12px;align-self:flex-start;margin-top:6px">resmî</span>
+                    </div>
+                    <span style="font-family:Archivo,sans-serif;font-size:72px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;flex:none">25 km</span>
+                  </div>
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:24px 26px;box-sizing:border-box;display:flex;align-items:center;gap:26px;min-width:0">
+                    <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#5C6367">test koşulu</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:26px;line-height:1.35;color:#5C6367;overflow:hidden">Kabul testi haberi; alçak irtifa hedef, tek atış</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:5px 12px;align-self:flex-start;margin-top:6px">basın</span>
+                    </div>
+                    <span style="font-family:Archivo,sans-serif;font-size:72px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;color:#5C6367;flex:none">18 km</span>
+                  </div>
+                  <div style="border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:24px 26px;box-sizing:border-box;display:flex;align-items:center;gap:26px;min-width:0">
+                    <div style="display:flex;flex-direction:column;gap:6px;min-width:0;flex:1">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#B3131B">tahmin</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:26px;line-height:1.35;color:#B3131B;overflow:hidden">İtki ve kanat yükünden hesap; ±3 km</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #B3131B;background:#F3F4F1;color:#B3131B;padding:5px 12px;align-self:flex-start;margin-top:6px">tahmin</span>
+                    </div>
+                    <span style="font-family:Archivo,sans-serif;font-size:72px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;line-height:1;color:#B3131B;flex:none">~21 km</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:26px;padding:0 44px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">12.09.2026 · rev. 5</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">resmî + basın + tahmin</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1080×1350 · dikeyde kolonlar satıra döner, sayı sağda hizalanır</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:24px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">04</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Şablon 3 — Ölçek karşılaştırması</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Scale comparison</span>
+      </div>
+      <p style="font-size:18px;line-height:1.62;margin:0 0 26px;max-width:64ch">Bir ile üç sistem, 1,8 m insan figürüyle aynı ölçekte. Farklı sınıftan sistemler aynı kartta olabilir: her satırın birincil ölçüsü <strong style="font-weight:600">uzunluk</strong> olarak çizilir, tek boyuta sığmayan ölçü (kanat açıklığı, çap) aynı satırda kesikli ikinci bir çizgi olarak eklenir ve kendi etiketini taşır. Kartlar ölçekli çizim değildir; "şematik" etiketi zorunludur.</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Ölçek karşılaştırması</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #5C6367;color:#5C6367;padding:6px 14px;margin-left:auto">şematik</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;padding:28px 48px 24px;gap:28px;box-sizing:border-box">
+                <div style="width:96px;flex:none;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:10px;border-right:1px solid #C6C9C3;padding-right:20px">
+                  <div style="width:26px;height:62px;background:#5C6367"></div>
+                  <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367;font-variant-numeric:tabular-nums">1,8 m</span>
+                </div>
+
+                <div style="flex:1;min-width:0;display:grid;grid-template-rows:repeat(3,1fr);gap:14px">
+                  <div style="display:flex;align-items:center;gap:22px;min-width:0">
+                    <div style="width:250px;flex:none;display:flex;flex-direction:column;gap:4px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BAYRAKTAR AKINCI</span>
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367;font-variant-numeric:tabular-nums">12,2 m / 20,0 m</span>
+                        <span style="font-family:Archivo,sans-serif;font-size:17px;font-weight:500;border:1px solid #1C2124;padding:2px 8px">resmî</span>
+                      </div>
+                    </div>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+                      <div style="height:22px;width:61%;background:#1C2124"></div>
+                      <div style="height:0;width:100%;border-top:2px dashed #5C6367"></div>
+                      <span style="font-family:Archivo,sans-serif;font-size:17px;color:#5C6367">kesikli: kanat açıklığı 20,0 m</span>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;align-items:center;gap:22px;min-width:0">
+                    <div style="width:250px;flex:none;display:flex;flex-direction:column;gap:4px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATMACA</span>
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367;font-variant-numeric:tabular-nums">5,2 m</span>
+                        <span style="font-family:Archivo,sans-serif;font-size:17px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:2px 8px">basın</span>
+                      </div>
+                    </div>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+                      <div style="height:22px;width:26%;background:#5C6367"></div>
+                      <span style="font-family:Archivo,sans-serif;font-size:17px;color:#5C6367">tek boyut: uzunluk</span>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;align-items:center;gap:22px;min-width:0">
+                    <div style="width:250px;flex:none;display:flex;flex-direction:column;gap:4px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SİPER Blok-I mermisi</span>
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367;font-variant-numeric:tabular-nums">~4,0 m</span>
+                        <span style="font-family:Archivo,sans-serif;font-size:17px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:2px 8px">tahmin</span>
+                      </div>
+                    </div>
+                    <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:8px">
+                      <div style="height:22px;width:20%;background:rgba(179,19,27,.09);border:1px solid #B3131B;box-sizing:border-box"></div>
+                      <span style="font-family:Archivo,sans-serif;font-size:17px;color:#B3131B">görüntü ölçümünden çıkarım</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:38px;flex:none;padding:0 48px;display:flex;align-items:center;box-sizing:border-box">
+                <div style="width:417px;flex:none"></div>
+                <div style="flex:1;position:relative;height:100%;border-top:1px solid #C6C9C3;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 34.35px);background-size:100% 10px;background-repeat:no-repeat;background-position:left top">
+                  <span style="position:absolute;left:0;top:12px;font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">0</span>
+                  <span style="position:absolute;left:50%;top:12px;transform:translateX(-50%);font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">10 m</span>
+                  <span style="position:absolute;right:0;top:12px;font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">20 m</span>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 2</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:7px 16px;margin-left:auto">karışık: resmî · basın · tahmin</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en uzun makul içerik: 3 sistem, biri iki boyutlu (kanat açıklığı), üç ayrı rozet</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Ölçek karşılaştırması</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #5C6367;color:#5C6367;padding:6px 14px;margin-left:auto">şematik</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;padding:28px 48px 24px;gap:28px;box-sizing:border-box">
+                <div style="width:96px;flex:none;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:10px;border-right:1px solid #C6C9C3;padding-right:20px">
+                  <div style="width:26px;height:62px;background:#5C6367"></div>
+                  <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367;font-variant-numeric:tabular-nums">1,8 m</span>
+                </div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center">
+                  <div style="display:flex;align-items:center;gap:22px;min-width:0">
+                    <div style="width:250px;flex:none;display:flex;flex-direction:column;gap:6px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:28px;font-weight:600;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATMACA</span>
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="font-family:Archivo,sans-serif;font-size:20px;color:#5C6367;font-variant-numeric:tabular-nums">5,2 m</span>
+                        <span style="font-family:Archivo,sans-serif;font-size:17px;font-weight:500;border:1px solid #1C2124;padding:2px 8px">resmî</span>
+                      </div>
+                    </div>
+                    <div style="flex:1;min-width:0"><div style="height:26px;width:26%;background:#1C2124"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:38px;flex:none;padding:0 48px;display:flex;align-items:center;box-sizing:border-box">
+                <div style="width:417px;flex:none"></div>
+                <div style="flex:1;position:relative;height:100%;border-top:1px solid #C6C9C3">
+                  <span style="position:absolute;left:0;top:12px;font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">0</span>
+                  <span style="position:absolute;left:50%;top:12px;transform:translateX(-50%);font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">10 m</span>
+                  <span style="position:absolute;right:0;top:12px;font-family:Archivo,sans-serif;font-size:17px;color:#5C6367;font-variant-numeric:tabular-nums">20 m</span>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">veri 12.09.2026 · rev. 2</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">resmî</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en kısa içerik: tek sistem, tek boyut. Satır dikeyde ortalanır, cetvel yerinde kalır.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:432px;max-width:100%;height:540px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1080px;height:1350px;transform:scale(.4);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:18px;padding:0 44px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Ölçek karşılaştırması</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #5C6367;color:#5C6367;padding:6px 14px;margin-left:auto">şematik</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:36px 44px 28px;gap:26px;box-sizing:border-box">
+                <div style="flex:1;min-height:0;display:grid;grid-template-rows:repeat(3,1fr);gap:22px">
+                  <div style="display:flex;flex-direction:column;gap:12px;min-width:0;justify-content:center">
+                    <div style="display:flex;align-items:baseline;gap:16px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:32px;font-weight:600;letter-spacing:-0.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BAYRAKTAR AKINCI</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;font-variant-numeric:tabular-nums;margin-left:auto;flex:none">12,2 m / 20,0 m</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #1C2124;padding:3px 10px;flex:none">resmî</span>
+                    </div>
+                    <div style="height:26px;width:61%;background:#1C2124"></div>
+                    <div style="height:0;width:100%;border-top:2px dashed #5C6367"></div>
+                    <span style="font-family:Archivo,sans-serif;font-size:21px;color:#5C6367">kesikli: kanat açıklığı 20,0 m</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:12px;min-width:0;justify-content:center">
+                    <div style="display:flex;align-items:baseline;gap:16px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:32px;font-weight:600;letter-spacing:-0.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">ATMACA</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;font-variant-numeric:tabular-nums;margin-left:auto;flex:none">5,2 m</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:3px 10px;flex:none">basın</span>
+                    </div>
+                    <div style="height:26px;width:26%;background:#5C6367"></div>
+                    <span style="font-family:Archivo,sans-serif;font-size:21px;color:#5C6367">tek boyut: uzunluk</span>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:12px;min-width:0;justify-content:center">
+                    <div style="display:flex;align-items:baseline;gap:16px;min-width:0">
+                      <span style="font-family:Archivo,sans-serif;font-size:32px;font-weight:600;letter-spacing:-0.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">SİPER Blok-I mermisi</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;font-variant-numeric:tabular-nums;margin-left:auto;flex:none">~4,0 m</span>
+                      <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.09);color:#B3131B;padding:3px 10px;flex:none">tahmin</span>
+                    </div>
+                    <div style="height:26px;width:20%;background:rgba(179,19,27,.09);border:1px solid #B3131B;box-sizing:border-box"></div>
+                    <span style="font-family:Archivo,sans-serif;font-size:21px;color:#B3131B">görüntü ölçümünden çıkarım</span>
+                  </div>
+                </div>
+
+                <div style="flex:none;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:flex-end;gap:14px">
+                    <div style="width:30px;height:89px;background:#5C6367"></div>
+                    <span style="font-family:Archivo,sans-serif;font-size:21px;color:#5C6367;font-variant-numeric:tabular-nums">1,8 m · ölçek çubuklarla aynı</span>
+                  </div>
+                  <div style="position:relative;border-top:1px solid #C6C9C3;height:46px">
+                    <span style="position:absolute;left:0;top:14px;font-family:Archivo,sans-serif;font-size:21px;color:#5C6367;font-variant-numeric:tabular-nums">0</span>
+                    <span style="position:absolute;left:50%;top:14px;transform:translateX(-50%);font-family:Archivo,sans-serif;font-size:21px;color:#5C6367;font-variant-numeric:tabular-nums">10 m</span>
+                    <span style="position:absolute;right:0;top:14px;font-family:Archivo,sans-serif;font-size:21px;color:#5C6367;font-variant-numeric:tabular-nums">20 m</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:26px;padding:0 44px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">12.09.2026 · rev. 2</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:7px 16px;margin-left:auto">karışık kaynak</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1080×1350 · insan figürü ve cetvel alta iner, satırlar tam genişliği kullanır</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:24px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">05</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Şablon 4 — Düzeltme kaydı</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Correction record</span>
+      </div>
+      <p style="font-size:18px;line-height:1.62;margin:0 0 26px;max-width:64ch">Bir değerin neden değiştiğini veya neden kaldırıldığını gösterir. Ne özür ne zafer: iki değer eşit ağırlıkta, eskisi üstü çizili, gerekçe tam cümleyle. Vurgu rengi yalnızca kaldırılmış veya tahmine düşmüş değerde görünür.</p>
+
+      <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Düzeltme kaydı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">KIZILELMA · savaş yükü kapasitesi</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;padding:30px 48px;gap:28px;box-sizing:border-box">
+                <div style="width:560px;flex:none;display:flex;flex-direction:column;gap:14px">
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:18px 20px;display:flex;align-items:center;gap:20px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367;width:104px;flex:none">eski</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:44px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;color:#5C6367;text-decoration:line-through;text-decoration-thickness:2px">1500 kg</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:5px 12px;margin-left:auto">basın</span>
+                  </div>
+                  <div style="border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:18px 20px;display:flex;align-items:center;gap:20px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#B3131B;width:104px;flex:none">yeni</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:44px;font-weight:600;letter-spacing:-0.025em;color:#B3131B">kaldırıldı</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px solid #B3131B;background:#F3F4F1;color:#B3131B;padding:5px 12px;margin-left:auto">kaynak yok</span>
+                  </div>
+                  <div style="border-top:1px solid #C6C9C3;padding-top:14px;display:flex;gap:20px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367;width:104px;flex:none">alan</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:22px;line-height:1.35">Savaş yükü kapasitesi · iç istasyon dahil toplam</span>
+                  </div>
+                </div>
+
+                <div style="flex:1;min-width:0;border-left:1px solid #C6C9C3;padding-left:28px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">gerekçe</span>
+                  <div style="flex:1;min-height:0;overflow:hidden">
+                    <p style="font-size:25px;line-height:1.5;margin:0;text-wrap:pretty">Değer, bir fuar sunumunun ekran görüntüsünden alınmıştı. Aynı sunumun üreticinin kendi arşivinde yer almadığı, görüntüdeki tablonun başka bir platforma ait olduğu anlaşıldı. Yerine yazılabilecek doğrulanmış bir değer bulunmadığı için alan boş bırakıldı; yeni bir kaynak çıkana kadar bu dosyada savaş yükü satırı yoktur.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">düzeltme 12.09.2026 · rev. 4</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">kayıt: kaldırma</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en uzun makul içerik: uzun gerekçe (dört satır), "kaldırıldı" durumu</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:600px;max-width:100%;height:338px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1200px;height:675px;transform:scale(.5);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:20px;padding:0 48px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Düzeltme kaydı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:24px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:520px">ATMACA · uzunluk</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;padding:30px 48px;gap:28px;box-sizing:border-box">
+                <div style="width:560px;flex:none;display:flex;flex-direction:column;gap:14px;justify-content:center">
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:18px 20px;display:flex;align-items:center;gap:20px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367;width:104px;flex:none">eski</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:44px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;color:#5C6367;text-decoration:line-through;text-decoration-thickness:2px">5,0 m</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:5px 12px;margin-left:auto">basın</span>
+                  </div>
+                  <div style="border:1px solid #1C2124;background:#E4E5E1;padding:18px 20px;display:flex;align-items:center;gap:20px">
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367;width:104px;flex:none">yeni</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:44px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em">5,2 m</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;border:1px solid #1C2124;padding:5px 12px;margin-left:auto">resmî</span>
+                  </div>
+                </div>
+
+                <div style="flex:1;min-width:0;border-left:1px solid #C6C9C3;padding-left:28px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font-family:Archivo,sans-serif;font-size:19px;font-weight:500;color:#5C6367">gerekçe</span>
+                  <div style="flex:1;min-height:0;overflow:hidden">
+                    <p style="font-size:25px;line-height:1.5;margin:0;text-wrap:pretty">Üretici teknik föyü yayımlandı.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:28px;padding:0 48px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">düzeltme 12.09.2026 · rev. 2</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">kayıt: güncelleme</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1200×675 · en kısa içerik: tek cümlelik gerekçe, rozet yükselmesi (basın → resmî)</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="width:432px;max-width:100%;height:540px;overflow:hidden;background:#F3F4F1;border:1px solid #C6C9C3">
+            <div style="width:1080px;height:1350px;transform:scale(.4);transform-origin:top left;background:#F3F4F1;color:#1C2124;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="height:84px;flex:none;border-bottom:1px solid #C6C9C3;display:flex;align-items:center;gap:18px;padding:0 44px">
+                <svg viewBox="0 0 100 100" width="34" height="34" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#B3131B"></rect></svg>
+                <span style="font-family:Archivo,sans-serif;font-size:26px;font-weight:600;letter-spacing:-0.02em">Düzeltme kaydı</span>
+                <span style="font-family:Archivo,sans-serif;font-size:23px;color:#5C6367;margin-left:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:380px">KIZILELMA · savaş yükü</span>
+              </div>
+
+              <div style="flex:1;min-height:0;display:flex;flex-direction:column;padding:44px;gap:30px;box-sizing:border-box">
+                <div style="flex:none;display:flex;flex-direction:column;gap:16px">
+                  <div style="border:1px solid #C6C9C3;background:#E4E5E1;padding:24px 26px;display:flex;align-items:center;gap:22px">
+                    <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#5C6367;width:112px;flex:none">eski</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:54px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-0.03em;color:#5C6367;text-decoration:line-through;text-decoration-thickness:3px">1500 kg</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px dashed #C6C9C3;color:#5C6367;padding:6px 14px;margin-left:auto">basın</span>
+                  </div>
+                  <div style="border:1px solid #B3131B;background:rgba(179,19,27,.09);padding:24px 26px;display:flex;align-items:center;gap:22px">
+                    <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#B3131B;width:112px;flex:none">yeni</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:54px;font-weight:600;letter-spacing:-0.025em;color:#B3131B">kaldırıldı</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #B3131B;background:#F3F4F1;color:#B3131B;padding:6px 14px;margin-left:auto">kaynak yok</span>
+                  </div>
+                  <div style="display:flex;gap:22px;border-top:1px solid #C6C9C3;padding-top:18px">
+                    <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#5C6367;width:112px;flex:none">alan</span>
+                    <span style="font-family:Archivo,sans-serif;font-size:27px;line-height:1.35">Savaş yükü kapasitesi · iç istasyon dahil toplam</span>
+                  </div>
+                </div>
+
+                <div style="flex:1;min-height:0;border-top:1px solid #C6C9C3;padding-top:24px;display:flex;flex-direction:column;gap:14px">
+                  <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:500;color:#5C6367">gerekçe</span>
+                  <div style="flex:1;min-height:0;overflow:hidden">
+                    <p style="font-size:32px;line-height:1.5;margin:0;text-wrap:pretty">Değer, bir fuar sunumunun ekran görüntüsünden alınmıştı. Aynı sunumun üreticinin kendi arşivinde yer almadığı, görüntüdeki tablonun başka bir platforma ait olduğu anlaşıldı. Yerine yazılabilecek doğrulanmış bir değer bulunmadığı için alan boş bırakıldı.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height:96px;flex:none;border-top:1px solid #C6C9C3;display:flex;align-items:center;gap:26px;padding:0 44px">
+                <span style="font-family:Archivo,sans-serif;font-size:24px;font-weight:600;letter-spacing:-0.01em">acikdosya.org</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;color:#5C6367;font-variant-numeric:tabular-nums">12.09.2026 · rev. 4</span>
+                <span style="font-family:Archivo,sans-serif;font-size:22px;font-weight:500;border:1px solid #1C2124;padding:7px 16px;margin-left:auto">kayıt: kaldırma</span>
+              </div>
+            </div>
+          </div>
+          <p style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin:0">1080×1350 · gerekçe alta, iki değer üste; dikeyde satır sırası değişmez</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section>
+      <div style="display:flex;align-items:baseline;gap:16px;border-top:1px solid #C6C9C3;padding-top:14px;margin-bottom:28px">
+        <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:#B3131B">06</span>
+        <h2 style="font-family:Archivo,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.02em;margin:0">Üretim kuralları</h2>
+        <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">Generation rules</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;align-items:start">
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Taşma davranışı</p>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.5">
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Sistem / alan adı</span><span style="font-family:Archivo,sans-serif;color:#5C6367">tek satır, üç nokta</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>İddia metni</span><span style="font-family:Archivo,sans-serif;color:#5C6367">sabit yükseklik, 3 satır</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Yayın adı</span><span style="font-family:Archivo,sans-serif;color:#5C6367">tek satır, üç nokta</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Kapsam notu</span><span style="font-family:Archivo,sans-serif;color:#5C6367">2 satır, kırpılır</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px"><span>Gerekçe</span><span style="font-family:Archivo,sans-serif;color:#5C6367">alan sonunda kırpılır</span></div>
+          </div>
+          <p style="font-size:15px;line-height:1.5;margin:0;color:#5C6367">Kırpılan metin kartın tamamını temsil etmez; kart her zaman dosya sayfasına bağlanır. Metin küçültülerek sığdırılmaz — en küçük punto 34 px (yatay) ve 40 px (dikey) altına inmez.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Sayı ve nicelik</p>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.5">
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Şablon 1 · yayın</span><span style="font-family:Archivo,sans-serif;color:#5C6367;font-variant-numeric:tabular-nums">3–8</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Şablon 2 · kolon</span><span style="font-family:Archivo,sans-serif;color:#5C6367;font-variant-numeric:tabular-nums">2–3</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #C6C9C3;padding-bottom:8px"><span>Şablon 3 · sistem</span><span style="font-family:Archivo,sans-serif;color:#5C6367;font-variant-numeric:tabular-nums">1–3</span></div>
+            <div style="display:flex;justify-content:space-between;gap:14px"><span>Şablon 4 · değer</span><span style="font-family:Archivo,sans-serif;color:#5C6367;font-variant-numeric:tabular-nums">her zaman 2</span></div>
+          </div>
+          <p style="font-size:15px;line-height:1.5;margin:0;color:#5C6367">Aralığın üstüne çıkan veri kart üretmez; dosya sayfasına bağlanır. Sekizden fazla yayın varsa kart "8 yayın ve dahası" değil, en eski üç yayın + sayaç ile üretilir.</p>
+        </div>
+
+        <div style="background:#F3F4F1;border:1px solid #C6C9C3;padding:26px;display:flex;flex-direction:column;gap:14px">
+          <p style="font-family:Archivo,sans-serif;font-size:13px;font-weight:500;color:#5C6367;margin:0">Rozet ve dil</p>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.55">
+            <p style="margin:0">Alt şeritte tek rozet durur. Kartta birden çok kaynak türü varsa rozet birleşik yazılır: "resmî + basın + tahmin". Uydurma bir dördüncü durum yoktur.</p>
+            <p style="margin:0">Şablon 2 başlığı kapsam dilini kullanır; "çelişki", "yanlış", "ifşa" gibi kelimeler şablonda yasaktır.</p>
+            <p style="margin:0">Şablon 4 başlığı "düzeltme kaydı"dır; "hata" ya da "doğrusu şu" değildir.</p>
+            <p style="margin:0">İngilizce ikincil satır yalnızca şablon adına eklenir, gövdeye çevrilmez.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer style="border-top:1px solid #C6C9C3;padding-top:18px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367">Açık Dosya · paylaşım kartı şablonları</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">v1 · 12.09.2026</span>
+    </footer>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

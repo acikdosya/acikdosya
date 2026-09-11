@@ -1,11 +1,12 @@
 import {useTranslations} from 'next-intl';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, sourceHost} from '@/lib/analytics';
-import {formatDate} from '@/lib/format';
+import {formatDate, formatRevisionValue} from '@/lib/format';
 import {
   attributeKeys,
   specKeys,
   type AttributeKey,
+  type Revision,
   type SpecKey,
   type System
 } from '@/lib/schema';
@@ -49,12 +50,19 @@ export function RevisionLog({system, locale}: Props) {
     return field;
   }
 
+  /**
+   * Kaldirma kaydinin etiketi ceviri paketinden gelir; bicimlendirme
+   * katmani bir dize uydurmaz (lib/format.ts formatRevisionValue).
+   */
+  const valueText = (value: Revision['from']) =>
+    formatRevisionValue(value, locale) ?? t('removed');
+
   return (
     <ol className={styles.list}>
-      {entries.map((revision) => (
+      {entries.map((revision, index) => (
         <li
           className={styles.item}
-          key={`${revision.date}-${revision.field}-${revision.to}`}
+          key={`${revision.date}-${revision.field}-${index}`}
         >
           <time className={styles.date} dateTime={revision.date}>
             {formatDate(revision.date, locale)}
@@ -66,14 +74,14 @@ export function RevisionLog({system, locale}: Props) {
               <span className={styles.values}>
                 <del className={styles.from}>
                   <span className={styles.srOnly}>{t('from')} </span>
-                  {revision.from}
+                  {valueText(revision.from)}
                 </del>
                 <span aria-hidden className={styles.arrow}>
                   {'→'}
                 </span>
                 <ins className={styles.to}>
                   <span className={styles.srOnly}>{t('to')} </span>
-                  {revision.to}
+                  {valueText(revision.to)}
                 </ins>
               </span>
             </p>

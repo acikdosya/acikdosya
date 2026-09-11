@@ -27,6 +27,33 @@
     "communications": "Haberleşme",
     "variant_names": "Varyasyon"
   },
+  "Card": {
+    "chainCount": "{count} kayıt",
+    "chainDocument": "belge",
+    "chainHeading": "Bu dosyadaki {count} değer tek bir belgeye dayanıyor.",
+    "chainLink": "bağlantı kayıtta",
+    "chainNoLink": "bağlantı yok",
+    "chainOrigin": "hepsinin dayandığı belge",
+    "chainSampled": "{shown} / {total} kayıt",
+    "computed": "hesap: {state}",
+    "correctionDate": "düzeltme {date}",
+    "dataDate": "veri {date}",
+    "envelope": "kesikli: ölçü zarfı, dış hat değil",
+    "field": "alan",
+    "outline": "dış hat, parça listesinden",
+    "reason": "gerekçe",
+    "recordLabel": "düzeltme kaydı",
+    "revisionCount": "{count} düzeltme",
+    "schematic": "şematik",
+    "scopeHeadingMany": "{values} yayımlanmış değer, {scopes} farklı kapsam. Hangi koşulda elde edildiği yazılmadan sayılar aynı cetvele konamaz.",
+    "scopeHeadingOne": "Aynı kapsamda {values} yayımlanmış değer. Hepsi kayıtta duruyor; biri seçilip ötekiler gizlenmiyor.",
+    "scopeUnstated": "kapsam belirtilmemiş",
+    "source": "kaynak",
+    "template_degerKapsam": "Değer ve kapsamı",
+    "template_duzeltme": "Düzeltme kaydı",
+    "template_kaynakZinciri": "Kaynak zinciri",
+    "template_olcek": "Ölçek karşılaştırması"
+  },
   "Categories": {
     "balistik-fuze": "Balistik füze",
     "seyir-fuzesi": "Seyir füzesi",
@@ -276,6 +303,7 @@
   },
   "RevisionLog": {
     "from": "eski değer",
+    "removed": "kayıt yok",
     "to": "yeni değer"
   },
   "ScaleSilhouette": {

@@ -373,8 +373,16 @@
     {
       "date": "2026-09-10",
       "field": "range_km",
-      "from": "> 280 km (resmî) ve > 500 km (basın)",
-      "to": "> 280 km (resmî)",
+      "from": {
+        "kind": "text",
+        "tr": "> 280 km (resmî) ve > 500 km (basın)",
+        "en": "> 280 km (official) and > 500 km (press)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "> 280 km (resmî)",
+        "en": "> 280 km (official)"
+      },
       "reason": {
         "tr": "“> 500 km” değeri tek bir yayın adı, tarih ve bağlantı taşımıyordu; “basın derlemesi” bir kaynak değil, kaynağın yokluğudur. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
         "en": "The “> 500 km” figure carried no publication name, date or link; a “press compilation” is the absence of a source, not a source. Removed from the record until a concrete source is found."
@@ -383,8 +391,14 @@
     {
       "date": "2026-09-10",
       "field": "diameter_mm",
-      "from": "~ 938 mm (TAYFUN BLOK-4, basın)",
-      "to": "kayıt yok",
+      "from": {
+        "kind": "text",
+        "tr": "~ 938 mm (TAYFUN BLOK-4, basın)",
+        "en": "~ 938 mm (TAYFUN BLOK-4, press)"
+      },
+      "to": {
+        "kind": "removed"
+      },
       "reason": {
         "tr": "Kaynak “basın derlemesi” idi: yayın adı, tarih ve bağlantı yok. Değerin uzunluk ölçüsüyle aynı IDEF 2025 ölçümünden geldiğine dair bir kaydımız da yok, bu yüzden kaynaklar birleştirilmedi. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
         "en": "The source was a “press compilation”: no publication name, date or link. We also have no record that the figure came from the same IDEF 2025 measurement as the length, so the sources were not merged. Removed from the record until a concrete source is found."
@@ -393,8 +407,14 @@
     {
       "date": "2026-09-10",
       "field": "mass_kg",
-      "from": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
-      "to": "kayıt yok",
+      "from": {
+        "kind": "text",
+        "tr": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
+        "en": "~ 7,200 kg (TAYFUN BLOK-4, press)"
+      },
+      "to": {
+        "kind": "removed"
+      },
       "reason": {
         "tr": "Kaynak “basın derlemesi” idi: yayın adı, tarih ve bağlantı yok. Kütle bir fuar sergilemesinde ölçülemez, dolayısıyla ölçüme dayandığı da varsayılamaz. Somut bir kaynak bulunana kadar kayıttan çıkarıldı.",
         "en": "The source was a “press compilation”: no publication name, date or link. Mass cannot be measured from a trade show display, so it cannot be assumed to rest on a measurement either. Removed from the record until a concrete source is found."
@@ -403,8 +423,16 @@
     {
       "date": "2026-09-11",
       "field": "source",
-      "from": "MSB / ROKETSAN açık veri; MSB resmî açıklaması",
-      "to": "ROKETSAN TAYFUN ürün kartı, 2024 kataloğu",
+      "from": {
+        "kind": "text",
+        "tr": "MSB / ROKETSAN açık veri; MSB resmî açıklaması",
+        "en": "MoND / ROKETSAN open data; Turkish MoND official statement"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "ROKETSAN TAYFUN ürün kartı, 2024 kataloğu",
+        "en": "ROKETSAN TAYFUN product card, 2024 catalogue"
+      },
       "reason": {
         "tr": "Uzunluk, çap, kütle, menzil ve CEP değerlerinin kaynağı MSB açıklaması diye yazılmıştı. Birincil belge bulundu: değerlerin beşi de ROKETSAN'ın TAYFUN ürün kartında birebir geçiyor. Atıf belgeye bağlandı, belge sürümü ve erişim tarihi kayda eklendi.",
         "en": "Length, diameter, mass, range and CEP were attributed to a Turkish MoND statement. The primary document was found: all five figures appear verbatim on ROKETSAN's TAYFUN product card. The attribution now points at the document, with its version and our access date on the record."
@@ -413,8 +441,16 @@
     {
       "date": "2026-09-11",
       "field": "range_km",
-      "from": "> 280 km (resmî)",
-      "to": "> 280 km (resmî, beyan) ve 561 km (basın, test)",
+      "from": {
+        "kind": "text",
+        "tr": "> 280 km (resmî)",
+        "en": "> 280 km (official)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "> 280 km (resmî, beyan) ve 561 km (basın, test)",
+        "en": "> 280 km (official, declared) and 561 km (press, measured in a test)"
+      },
       "reason": {
         "tr": "2022 test atışında kat edilen mesafe kayda eklendi. Beyan edilen azami menzille aynı şeyi ölçmediği için çelişki değil, farklı kapsam olarak işaretleniyor. Resmî teyidi yok.",
         "en": "The distance covered in the 2022 test launch was added to the record. It does not measure the same thing as the declared maximum range, so it is marked as different scope rather than a contradiction. It carries no official confirmation."
@@ -423,8 +459,16 @@
     {
       "date": "2026-09-11",
       "field": "guidance",
-      "from": "GNSS / INS",
-      "to": "Koordinata güdüm sistemi; karıştırmaya karşı dayanıklı",
+      "from": {
+        "kind": "text",
+        "tr": "GNSS / INS",
+        "en": "GNSS / INS"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "Koordinata güdüm sistemi; karıştırmaya karşı dayanıklı",
+        "en": "Coordinate guidance system; resistant to jamming"
+      },
       "reason": {
         "tr": "“GNSS / INS” ifadesi ürün kartında geçmiyor; resmî rozetiyle yayımlanmış bir atıf hatasıydı. Değer kartın kendi diliyle değiştirildi.",
         "en": "The phrase “GNSS / INS” does not appear on the product card; it was an attribution error published under the official badge. The value now uses the card's own wording."
@@ -433,8 +477,16 @@
     {
       "date": "2026-09-11",
       "field": "length_m",
-      "from": "~ 10 m (TAYFUN BLOK-4, basın ölçümü)",
-      "to": "~ 10 m (TAYFUN BLOK-4, IDEF 2025 tanıtımı)",
+      "from": {
+        "kind": "text",
+        "tr": "~ 10 m (TAYFUN BLOK-4, basın ölçümü)",
+        "en": "~ 10 m (TAYFUN BLOK-4, press measurement)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "~ 10 m (TAYFUN BLOK-4, IDEF 2025 tanıtımı)",
+        "en": "~ 10 m (TAYFUN BLOK-4, IDEF 2025 presentation)"
+      },
       "reason": {
         "tr": "Değer fuarda ölçülmüş gibi kaydedilmişti. Tanıtımda açıklanan bir rakam; kapsam “dışarıdan ölçüm”den “beyan”a düzeltildi.",
         "en": "The figure was recorded as if measured at the trade show. It was a figure announced during the presentation; the scope was corrected from third-party measurement to declared."
@@ -443,8 +495,14 @@
     {
       "date": "2026-09-11",
       "field": "diameter_mm",
-      "from": "kayıt yok",
-      "to": "~ 938 mm (TAYFUN BLOK-4, basın)",
+      "from": {
+        "kind": "removed"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "~ 938 mm (TAYFUN BLOK-4, basın)",
+        "en": "~ 938 mm (TAYFUN BLOK-4, press)"
+      },
       "reason": {
         "tr": "Değer, kaynağı “basın derlemesi” olduğu için çıkarılmıştı. Somut bir olaya bağlandı: IDEF 2025 tanıtımı. Tek bir yayın adı ve bağlantı hâlâ eksik, bu yüzden güven “basın”.",
         "en": "The figure had been removed because its source was a “press compilation”. It is now tied to a concrete event, the IDEF 2025 presentation. A single publication name and link are still missing, so the confidence stays at press."
@@ -453,8 +511,14 @@
     {
       "date": "2026-09-11",
       "field": "mass_kg",
-      "from": "kayıt yok",
-      "to": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
+      "from": {
+        "kind": "removed"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "~ 7.200 kg (TAYFUN BLOK-4, basın)",
+        "en": "~ 7,200 kg (TAYFUN BLOK-4, press)"
+      },
       "reason": {
         "tr": "Aynı gerekçeyle çıkarılmıştı, aynı olaya bağlanarak geri alındı. Kaynaklar 7.200, 7.300 ve “7 tonun üzerinde” arasında değişiyor; “~” bandı bu dağılımı kapsıyor.",
         "en": "Removed for the same reason and restored against the same event. Sources vary between 7,200, 7,300 and “over 7 tonnes”; the “~” band covers that spread."
@@ -463,8 +527,14 @@
     {
       "date": "2026-09-11",
       "field": "range_km",
-      "from": "≤ 1000 km (TAYFUN BLOK-4, tahmin)",
-      "to": "kayıt yok",
+      "from": {
+        "kind": "text",
+        "tr": "≤ 1000 km (TAYFUN BLOK-4, tahmin)",
+        "en": "≤ 1,000 km (TAYFUN BLOK-4, estimate)"
+      },
+      "to": {
+        "kind": "removed"
+      },
       "reason": {
         "tr": "Dolaşımdaki tek bağımsız tahmin bu değildi: 3000 km'ye kadar uzanan değerlendirmeler ve “açıklanmadı” diyen kaynaklar da var. Bir tahmini seçip diğerlerini gizlemek, bu dosyanın kurulduğu kuralın ihlali. Hepsi kaynağıyla girilene kadar alan boş.",
         "en": "This was not the only independent estimate in circulation: assessments reaching up to 3,000 km exist, as do sources that say the figure was not disclosed. Picking one estimate and hiding the rest breaks the rule this file is built on. The field stays empty until all of them can be entered with their sources."

@@ -403,8 +403,16 @@
     {
       "date": "2026-09-11",
       "field": "cruise_speed_ktas",
-      "from": "150 – 240 ktas",
-      "to": "150 ktas",
+      "from": {
+        "kind": "text",
+        "tr": "150 – 240 ktas",
+        "en": "150 – 240 ktas"
+      },
+      "to": {
+        "kind": "measurement",
+        "value": 150,
+        "unit": "ktas"
+      },
       "reason": {
         "tr": "Üretici ürün sayfasında seyir ve azami hızı tek aralık olarak veriyordu; bu yüzden tek kayda aralık olarak yazılmıştı. Ürün broşürü ikisini ayrı satırda veriyor, kayıt da ayrıldı.",
         "en": "The product page gave cruise and maximum speed as a single range, so it was recorded as one range. The product brochure states them on separate lines, so the record was split."
@@ -418,8 +426,14 @@
     {
       "date": "2026-09-11",
       "field": "max_speed_ktas",
-      "from": "—",
-      "to": "240 ktas",
+      "from": {
+        "kind": "removed"
+      },
+      "to": {
+        "kind": "measurement",
+        "value": 240,
+        "unit": "ktas"
+      },
       "reason": {
         "tr": "Azami hız, seyir hızından ayrılan kaydın ikinci yarısı olarak eklendi.",
         "en": "Maximum speed was added as the second half of the record split from cruise speed."
@@ -433,8 +447,16 @@
     {
       "date": "2026-09-11",
       "field": "length_m",
-      "from": "12,2 m",
-      "to": "12,3 m",
+      "from": {
+        "kind": "measurement",
+        "value": 12.2,
+        "unit": "m"
+      },
+      "to": {
+        "kind": "measurement",
+        "value": 12.3,
+        "unit": "m"
+      },
       "reason": {
         "tr": "Ürün broşürü uzunluğu 12,3 m veriyor, ürün sayfası 12,2 m. İkisi de üreticinin kendi beyanı; broşür daha yeni ve tarihli olduğu için birincil değer o oldu. Eski değer ikinci ölçüm olarak kayıtta duruyor, tabloda çelişki görünür.",
         "en": "The product brochure gives the length as 12.3 m, the product page as 12.2 m. Both are the manufacturer's own statements; the brochure is newer and dated, so it became the primary value. The older value remains recorded as a second measurement and the divergence is visible in the table."

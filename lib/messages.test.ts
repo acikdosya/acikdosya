@@ -2,8 +2,10 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import en from '../messages/en.json';
 import tr from '../messages/tr.json';
+import {templateKey} from './cards/templates';
 import {KIND_MESSAGE_KEY, KIND_ORDER, SCOPES} from './measurement/labels';
 import {categorySchema, specKeys} from './schema';
+import {CARD_TEMPLATES} from './urls';
 
 /**
  * Mesaj paketi ile kod arasindaki sozlesme.
@@ -226,4 +228,19 @@ test('ucak sema aciklamasi artik "kontur cizilmez" demiyor', () => {
   );
   assert.ok(caption.includes('izdüşüm'), 'izdusum anlatilmamis');
   assert.ok(caption.includes('zarf'), 'zarfin ne zaman cizildigi yazilmamis');
+});
+
+test('her paylasim karti sablonunun basligi var', () => {
+  /*
+   * Sablon adi bir dosya yolu (app/[locale]/kart/<sablon>/route.tsx),
+   * baslik ise bir mesaj anahtari. Yeni bir sablon eklenip mesaji
+   * yazilmazsa kart adsiz cizilirdi ve bunu typecheck goremez: mesaj
+   * anahtarlari calisma zamaninda cozuluyor.
+   */
+  for (const [name, bundle] of bundles) {
+    for (const template of CARD_TEMPLATES) {
+      const key = templateKey(template);
+      assert.ok(bundle.Card[key], `${name}: Card.${key} eksik (${template})`);
+    }
+  }
 });

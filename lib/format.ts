@@ -3,6 +3,7 @@ import type {
   Confidence,
   LocalizedText,
   Measurement,
+  RevisionValue,
   SpecKey
 } from './schema';
 import type {Locale} from '@/i18n/routing';
@@ -82,6 +83,31 @@ export function formatValue(
   return measurement.operator
     ? `${measurement.operator} ${lower}`
     : lower;
+}
+
+/**
+ * Duzeltme kaydindaki eski/yeni deger — CLAUDE.md §3.
+ *
+ * Olcum kolu dile gore cizilir: Turkce ondalik virgul, Ingilizce nokta.
+ * Onceki surumde from/to serbest metindi ve tek dilde yaziliyordu, yani
+ * Ingilizce sayfada "12,2 m" duruyordu.
+ *
+ * 'removed' icin undefined doner ve etiketi CAGIRAN verir. Buradan bir
+ * dize dondurmek, ceviriyi bicimlendirme katmanina tasimak olurdu;
+ * "kayit yok" bir deger degil, degerin yoklugu.
+ */
+export function formatRevisionValue(
+  value: RevisionValue,
+  locale: Locale
+): string | undefined {
+  switch (value.kind) {
+    case 'measurement':
+      return `${formatValue(value, locale)} ${value.unit}`;
+    case 'text':
+      return value[locale];
+    case 'removed':
+      return undefined;
+  }
 }
 
 /**

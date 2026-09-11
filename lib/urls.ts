@@ -64,6 +64,41 @@ export function alternates(locale: Locale, href: Href) {
  * degisince adres degismiyor. Paylasim istemcileri onbelleklerini zaten
  * kendi takvimlerine gore tazeliyor; dogru adres bundan onemli.
  */
+export const CARD_TEMPLATES = [
+  'kaynak-zinciri',
+  'deger-kapsam',
+  'olcek',
+  'duzeltme'
+] as const;
+export type CardTemplate = (typeof CARD_TEMPLATES)[number];
+
+/**
+ * Paylasim kartinin adresi.
+ *
+ * Gorsel rotasi gibi CEVRILMEZ ve elle birlestirilmez. Ingilizce kart
+ * /en/kart/olcek adresinde durur — sablon adi bir dosya yolu, bir
+ * icerik degil. Cevrilseydi next-intl'in pathnames haritasina girmesi
+ * gerekirdi; girmedigi icin cevrilmis bir yol 404 olurdu.
+ *
+ * TR onek ALMAZ: localePrefix 'as-needed' oldugu icin /tr/kart/... 307
+ * ile oneksize doner ve yonlendirmeyi izlemeyen bir paylasim istemcisi
+ * gorseli hic gostermez. ogImage ile ayni gerekce.
+ */
+export function cardUrl(
+  locale: Locale,
+  template: CardTemplate,
+  params: Record<string, string>
+): string {
+  const prefix = locale === routing.defaultLocale ? '' : `/${locale}`;
+  const url = new URL(`${prefix}/kart/${template}`, SITE_URL);
+
+  for (const [key, value] of Object.entries(params)) {
+    url.searchParams.set(key, value);
+  }
+
+  return url.toString();
+}
+
 export function ogImage(locale: Locale, segment = '') {
   const prefix = locale === routing.defaultLocale ? '' : `/${locale}`;
 

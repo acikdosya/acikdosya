@@ -35,6 +35,13 @@ type OgFont = {
   style: 'normal';
 };
 
+/**
+ * Iki aile: Archivo baslik, sayi ve arayuz; Source Serif 4 govde metni.
+ * Sayfadaki ayrimin aynisi (CLAUDE.md §4). Serif, paylasim kartlarindaki
+ * okunacak metinler icin geldi — duzeltme gerekcesi gibi.
+ */
+export const OG_SERIF_FAMILY = 'SourceSerif, SourceSerifExt';
+
 let fontCache: OgFont[] | undefined;
 
 async function readFont(file: string): Promise<ArrayBuffer> {
@@ -52,14 +59,18 @@ async function readFont(file: string): Promise<ArrayBuffer> {
  */
 export async function loadOgFonts(): Promise<OgFont[]> {
   if (!fontCache) {
-    const [latin, latinExt] = await Promise.all([
+    const [latin, latinExt, serif, serifExt] = await Promise.all([
       readFont('archivo-600-latin.ttf'),
-      readFont('archivo-600-latin-ext.ttf')
+      readFont('archivo-600-latin-ext.ttf'),
+      readFont('source-serif-400-latin.ttf'),
+      readFont('source-serif-400-latin-ext.ttf')
     ]);
 
     fontCache = [
       {name: 'Archivo', data: latin, weight: 600, style: 'normal'},
-      {name: 'ArchivoExt', data: latinExt, weight: 600, style: 'normal'}
+      {name: 'ArchivoExt', data: latinExt, weight: 600, style: 'normal'},
+      {name: 'SourceSerif', data: serif, weight: 400, style: 'normal'},
+      {name: 'SourceSerifExt', data: serifExt, weight: 400, style: 'normal'}
     ];
   }
 
@@ -267,11 +278,27 @@ function badgeFrame(
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 }
 
+/**
+ * Metnin yaklasik genisligi.
+ *
+ * satori cizilen metnin genisligini bize soylemiyor ve rozet cercevesi
+ * SVG zemin gorseli oldugu icin kutunun olcusu onceden bilinmeli. Carpan
+ * olculerek secildi: Archivo 600'de karisik Turkce metin 48 px puntoda
+ * karakter basina ~0,55 em yer kapliyor (lib/og-fonts.test.ts ayni metni
+ * ciziyor). Yukari yuvarliyoruz — genis bir kutu bosluk birakir, dar bir
+ * kutu metni keser.
+ */
+const AVERAGE_ADVANCE = 0.56;
+
+export function badgeWidth(label: string, size: number, padding = 16): number {
+  return Math.round(label.length * size * AVERAGE_ADVANCE) + padding * 2;
+}
+
 export function OgBadge({
   confidence,
   label,
   size = 24,
-  width = 150
+  width = badgeWidth(label, size)
 }: {
   confidence: Confidence;
   label: string;

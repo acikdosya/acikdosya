@@ -376,6 +376,49 @@ export type TimelineEvent = z.infer<typeof timelineEventSchema>;
  * Takvim (timeline) ile karistirilmamali: orada sistemin kendi tarihi
  * anlatilir, burada BIZIM dosyamizin tarihi.
  */
+/**
+ * Duzeltme kaydindaki eski/yeni deger.
+ *
+ * Onceki surumde ikisi de SERBEST METINDI ve yalnizca Turkce yaziliyordu:
+ * Ingilizce sayfada "12,2 m" diye, Turkce ondalik ayraciyla duruyordu.
+ * Daha kotusu, bir sayi ile bir cumle sema duzeyinde ayirt edilemiyordu —
+ * "12,2 m" ile "GNSS / INS" ayni tipteydi, yani hicbir kontrol degerin
+ * dosyadaki olcumle tutup tutmadigini soramiyordu.
+ *
+ * Uc kol var ve ucu de gercek bir durumu karsiliyor:
+ *
+ *  measurement  Tek bir sayi ve birimi. Dile gore lib/format.ts cizer,
+ *               yani kart ve sayfa ayni bicimi kullanir.
+ *  removed      Kayit kaldirildi. "kayit yok" diye bir METIN yazmak, o
+ *               dizeyi her dile ayri ayri cevirmek demekti; durum bir
+ *               deger degil, degerin yoklugu.
+ *  text         Sayiya sigmayan her sey: iki degerli bir kayit, varyant
+ *               ya da guven niteleyicisi tasiyan bir satir, ozellik
+ *               metni. Sayiya ZORLANMAZ — "> 280 km (resmî)" ifadesinin
+ *               parantezi hangi kaydin ayakta kaldigini soyluyor ve
+ *               sayiya cevrildiginde o bilgi kaybolurdu.
+ */
+export const revisionValueSchema = z.discriminatedUnion('kind', [
+  z.strictObject({
+    kind: z.literal('measurement'),
+    value: z.number().finite(),
+    operator: operatorSchema.optional(),
+    /**
+     * Birim, alan adinin icindeki birimle AYNI olmali (lib/format.ts
+     * SPEC_UNITS). Sema bunu dogrulayamaz cunku alan adi serbest metin
+     * de olabilir; kontrol scripts/validate-content.ts icinde.
+     */
+    unit: z.string().min(1)
+  }),
+  z.strictObject({kind: z.literal('removed')}),
+  z.strictObject({
+    kind: z.literal('text'),
+    tr: z.string().min(1),
+    en: z.string().min(1)
+  })
+]);
+export type RevisionValue = z.infer<typeof revisionValueSchema>;
+
 export const revisionSchema = z.strictObject({
   /** Duzeltmenin yapildigi gun. */
   date: isoDateSchema,
@@ -385,9 +428,9 @@ export const revisionSchema = z.strictObject({
    * sema disinda kalan yerler de duzeltilir.
    */
   field: z.string().min(1),
-  /** Eski ve yeni deger, okunabilir bicimde. Bos birakilamaz: */
-  from: z.string().min(1),
-  to: z.string().min(1),
+  /** Eski ve yeni deger. Ikisi de ayni ayrimli birlik. */
+  from: revisionValueSchema,
+  to: revisionValueSchema,
   /** Neden degisti. Tek cumle yeter, ama zorunlu. */
   reason: localizedTextSchema,
   /** Duzeltmenin dayandigi kaynak. Kaynaksiz duzeltme de olur (hesap hatasi). */
