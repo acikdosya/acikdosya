@@ -43,6 +43,9 @@ function buildModelVariants(
     ariaLabel: (name: string) => string;
   }
 ): ModelVariant[] {
+  // ilk surumde ucak icin 3B/AR uretilmiyor — dis profil kaniti yeterli degil.
+  if (system.category === 'insansiz-hava-araci') return [];
+
   return system.variants
     .map((variant) => {
       const length = variant.specs.length_m;
@@ -122,6 +125,7 @@ export default async function SystemPage({params}: Props) {
   const tModel = await getTranslations('ModelViewer');
   const tConfidence = await getTranslations('Confidence');
   const tSpecs = await getTranslations('Specs');
+  const tSpecTable = await getTranslations('SpecTable');
 
   /*
    * Yapisal veri sayfanin kendisinden turer: Article sayfayi, Dataset
@@ -135,6 +139,7 @@ export default async function SystemPage({params}: Props) {
     labels: {
       spec: (key) => tSpecs(key),
       confidence: (level) => tConfidence(level),
+      familyLabel: tSpecTable('familyLabel'),
       datasetName: t('datasetName', {name: system.name[lang]}),
       datasetDescription: t('datasetDescription')
     }

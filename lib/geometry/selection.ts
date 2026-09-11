@@ -14,11 +14,12 @@ export function specFor(systemSlug: string): Partial<MissileSpec> {
     case 'atmaca':
       return ATMACA_PROFILE;
     case 'tayfun':
-    default:
       return {
         noseRatio: 0.22,
         boattail: 0.94,
         finCount: 4
       };
+    default:
+      throw new Error(`bilinmeyen sistem profili: ${systemSlug}`);
   }
 }

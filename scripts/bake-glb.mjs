@@ -19,6 +19,7 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, draco, prune, weld } from '@gltf-transform/functions';
 import draco3d from 'draco3dgltf';
 import { buildModel } from '../lib/geometry/model.ts';
+import { systemKind } from '../lib/geometry/measurements.ts';
 
 /**
  * three'nin GLTFExporter'ı ikili çıktıyı FileReader üzerinden topluyor;
@@ -86,6 +87,11 @@ async function main() {
 
   for (const file of files) {
     const system = JSON.parse(await readFile(path.join(CONTENT, file), 'utf8'));
+
+    if (systemKind(system) === 'aircraft') {
+      console.log(`atlandı  ${system.slug} — ilk sürümde İHA modeli üretilmiyor`);
+      continue;
+    }
 
     for (const variant of system.variants ?? []) {
       const lengthM = num(variant.specs?.length_m);

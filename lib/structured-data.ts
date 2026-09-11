@@ -1,6 +1,7 @@
 import type {Locale} from '@/i18n/routing';
 import {SITE_URL} from './config';
 import {SPEC_UNITS} from './format';
+import {specGroups} from './measurement/groups';
 import {
   specKeys,
   type Confidence,
@@ -41,6 +42,13 @@ export function lastModified(system: System): string | undefined {
  * bir kesinlik iddia etmemek icin deger buna gore yerlestirilir.
  */
 function bounded(measurement: Measurement): Record<string, number> {
+  if (measurement.upper_value !== undefined) {
+    return {
+      minValue: measurement.value,
+      maxValue: measurement.upper_value
+    };
+  }
+
   switch (measurement.operator) {
     case '>':
     case '≥':
@@ -56,6 +64,7 @@ function bounded(measurement: Measurement): Record<string, number> {
 type Labels = {
   spec: (key: SpecKey) => string;
   confidence: (level: Confidence) => string;
+  familyLabel: string;
   /** "TAYFUN — teknik veri" gibi; sayfa basligini tekrar etmez. */
   datasetName: string;
   datasetDescription: string;
@@ -87,33 +96,41 @@ export function systemJsonLd({
    * veride farkli davranmak okuyucuya bir sey, makineye baskasini
    * soylemek olurdu.
    */
-  const variableMeasured = system.variants.flatMap((variant) =>
+  const variableMeasured = specGroups(system).flatMap((group) =>
     specKeys.flatMap((key) =>
-      (variant.specs[key] ?? []).map((measurement) => ({
-        '@type': 'PropertyValue',
-        name: `${labels.spec(key)} — ${variant.label}`,
-        unitText: SPEC_UNITS[key],
-        ...bounded(measurement),
-        description: `${labels.confidence(measurement.confidence)} · ${
-          measurement.source[locale]
-        }`,
-        ...(measurement.source_url ? {url: measurement.source_url} : {})
-      }))
+      (group.specs[key] ?? []).map((measurement) => {
+        const groupLabel =
+          group.kind === 'family' ? labels.familyLabel : group.label;
+        return {
+          '@type': 'PropertyValue',
+          name: `${labels.spec(key)} — ${groupLabel}`,
+          unitText: SPEC_UNITS[key],
+          ...bounded(measurement),
+          description: `${labels.confidence(measurement.confidence)} · ${
+            measurement.source[locale]
+          }`,
+          ...(measurement.source_url ? {url: measurement.source_url} : {})
+        };
+      })
     )
   );
 
   /** Kaynak adresleri: yayimlanmis her kaynak, bir kez. */
   const citation = [
     ...new Set(
-      system.variants
-        .flatMap((variant) => [
-          ...specKeys.flatMap((key) =>
-            (variant.specs[key] ?? []).map((item) => item.source_url)
-          ),
-          ...Object.values(variant.attributes).map(
-            (attribute) => attribute?.source_url
+      specGroups(system)
+        .flatMap((group) =>
+          specKeys.flatMap((key) =>
+            (group.specs[key] ?? []).map((item) => item.source_url)
           )
-        ])
+        )
+        .concat(
+          system.variants.flatMap((variant) =>
+            Object.values(variant.attributes).map(
+              (attribute) => attribute?.source_url
+            )
+          )
+        )
         .concat(system.timeline.map((event) => event.source_url))
         .concat((system.revisions ?? []).map((revision) => revision.source_url))
         .filter((href) => href !== undefined)

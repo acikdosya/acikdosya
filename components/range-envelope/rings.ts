@@ -18,6 +18,9 @@ export type Ring = {
 export function buildRings(system: System): Ring[] {
   const rings: Ring[] = [];
 
+  // İHA kategorisi için menzil zarfı üretilmiyor (§7).
+  if (system.category === 'insansiz-hava-araci') return rings;
+
   for (const variant of system.variants) {
     const measurements = variant.specs.range_km;
     if (!measurements) continue;

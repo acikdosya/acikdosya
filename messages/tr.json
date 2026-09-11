@@ -30,14 +30,17 @@
     "skipToContent": "İçeriğe geç"
   },
   "ScaleSilhouette": {
-    "caption": "Ölçekli karşılaştırma — siluetler yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
+    "caption": "Ölçekli karşılaştırma — şematik görseller yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
     "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
+    "ariaLabelAircraft": "{names} üst görünüşleri, {height} metrelik insan figürüne göre ölçekli",
     "humanLabel": "{height} m",
-    "lengthLabel": "{value} m"
+    "lengthLabel": "{value} m",
+    "familyLabel": "Aile düzeyindeki beyanlar"
   },
   "MeasureGap": {
     "absent": "doğrulanmış ölçü verisi yok",
-    "invite": "Bu varyantın uzunluk veya çap verisi için kaynağı gösterilebilir bir ölçü bilmiyorsak siluet ve model üretilmiyor. Elinizde yayın adı, tarih ve bağlantı taşıyan bir kaynak varsa <link>bize gönderin</link>."
+    "familyLabel": "Aile düzeyindeki beyanlar",
+    "invite": "Bu sistem için gerekli boyut verilerinin kaynağı gösterilebilir bir ölçüsünü bilmiyorsak şematik görsel ve model üretilmiyor. Elinizde yayın adı, tarih ve bağlantı taşıyan bir kaynak varsa <link>bize gönderin</link>."
   },
   "SpecTable": {
     "caption": "Çelişen değerler gizlenmez, aynı hücrede alt alta gösterilir.",
@@ -46,7 +49,8 @@
     "methodLink": "Güven seviyeleri ne anlama geliyor?",
     "accessed": "erişim {date}",
     "archive": "arşiv kopyası",
-    "digest": "özet {value}…"
+    "digest": "özet {value}…",
+    "familyLabel": "Aile düzeyindeki beyanlar"
   },
   "Specs": {
     "length_m": "Uzunluk",
@@ -54,7 +58,17 @@
     "mass_kg": "Kütle",
     "range_km": "Menzil",
     "cep_m": "Dairesel sapma (CEP)",
-    "warhead_weight_kg": "Harp başlığı ağırlığı"
+    "warhead_weight_kg": "Harp başlığı ağırlığı",
+    "wingspan_m": "Kanat açıklığı",
+    "height_m": "Yükseklik",
+    "mtow_kg": "Azami kalkış ağırlığı",
+    "payload_kg": "Faydalı yük kapasitesi",
+    "endurance_h": "Havada kalış",
+    "service_ceiling_ft": "Servis tavanı",
+    "operating_altitude_ft": "Operasyonel irtifa",
+    "cruise_speed_ktas": "Seyir hızı",
+    "max_speed_ktas": "Azami hız",
+    "operational_range_km": "Operasyonel menzil"
   },
   "Attributes": {
     "guidance": "Güdüm",
@@ -117,7 +131,8 @@
   },
   "Categories": {
     "balistik-fuze": "Balistik füze",
-    "seyir-fuzesi": "Seyir füzesi"
+    "seyir-fuzesi": "Seyir füzesi",
+    "insansiz-hava-araci": "İnsansız hava aracı"
   },
   "Status": {
     "gelistirme": "Geliştirme",

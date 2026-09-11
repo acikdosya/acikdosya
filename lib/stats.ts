@@ -1,5 +1,10 @@
 import {SPEC_UNITS} from './format';
 import {
+  allMeasurements,
+  specGroups,
+  type SpecGroup
+} from './measurement/groups';
+import {
   fieldDivergence,
   PAIR_ORDER,
   type FieldDivergence
@@ -9,8 +14,7 @@ import {
   type Confidence,
   type Measurement,
   type SpecKey,
-  type System,
-  type Variant
+  type System
 } from './schema';
 
 /**
@@ -32,7 +36,11 @@ export type Divergence = FieldDivergence & {
 
 /** Operator degerin parcasi: "> 280" ile "280" ayni sayi degildir. */
 function valueKey(measurement: Measurement): string {
-  return `${measurement.operator ?? ''}${measurement.value}`;
+  const upper =
+    measurement.upper_value !== undefined
+      ? `-${measurement.upper_operator ?? ''}${measurement.upper_value}`
+      : '';
+  return `${measurement.operator ?? ''}${measurement.value}${upper}`;
 }
 
 function distinctCount<T>(items: readonly T[], key: (item: T) => string): number {
@@ -44,17 +52,25 @@ function distinctCount<T>(items: readonly T[], key: (item: T) => string): number
  * ikinci bir kopya tutmak, iki dosyanin ayri ayri degismesine izin verirdi.
  */
 
-/** Tek bir varyantin tek bir alanindaki iraksama. */
+/** Tek bir grubun (aile veya varyant) tek bir alanindaki iraksama. */
+export function groupDivergence(
+  group: SpecGroup,
+  key: SpecKey
+): FieldDivergence | undefined {
+  return fieldDivergence(group.specs[key], SPEC_UNITS[key]);
+}
+
+/** @deprecated groupDivergence kullan. */
 export function variantDivergence(
-  variant: Variant,
+  variant: {specs: SpecGroup['specs']},
   key: SpecKey
 ): FieldDivergence | undefined {
   return fieldDivergence(variant.specs[key], SPEC_UNITS[key]);
 }
 
 /**
- * Tablo satirinin iraksamasi. Satir varyantlari yan yana dizdigi icin
- * en agir durum satiri temsil eder.
+ * Tablo satirinin iraksamasi. Satir butun gruplari (aile + varyantlar)
+ * yan yana dizdigi icin en agir durum satiri temsil eder.
  */
 export function specDivergence(
   system: System,
@@ -62,8 +78,8 @@ export function specDivergence(
 ): FieldDivergence | undefined {
   let best: FieldDivergence | undefined;
 
-  for (const variant of system.variants) {
-    const found = variantDivergence(variant, key);
+  for (const group of specGroups(system)) {
+    const found = groupDivergence(group, key);
     if (!found) continue;
     if (!best || PAIR_ORDER[found.kind] < PAIR_ORDER[best.kind]) best = found;
   }
@@ -83,11 +99,11 @@ export function findDivergence(system: System): Divergence | undefined {
   let best: Divergence | undefined;
 
   for (const key of specKeys) {
-    for (const variant of system.variants) {
-      const list = variant.specs[key];
+    for (const group of specGroups(system)) {
+      const list = group.specs[key];
       if (!list) continue;
 
-      const divergence = variantDivergence(variant, key);
+      const divergence = groupDivergence(group, key);
       if (!divergence) continue;
 
       const distinct = distinctCount(list, valueKey);
@@ -101,8 +117,8 @@ export function findDivergence(system: System): Divergence | undefined {
       best = {
         ...divergence,
         key,
-        variantId: variant.id,
-        variantLabel: variant.label,
+        variantId: group.id,
+        variantLabel: group.label,
         measurements: list,
         distinct,
         sources: distinctCount(list, (item) => item.source.tr)
@@ -147,14 +163,16 @@ export function systemStats(system: System): SystemStats {
     if (date && (!verifiedAt || date > verifiedAt)) verifiedAt = date;
   };
 
-  for (const variant of system.variants) {
-    for (const key of specKeys) {
-      for (const measurement of variant.specs[key] ?? []) {
-        values += 1;
-        note(measurement.confidence, measurement.source.tr, measurement.verified_at);
-      }
-    }
+  for (const {group, measurement} of allMeasurements(system)) {
+    values += 1;
+    note(measurement.confidence, measurement.source.tr, measurement.verified_at);
 
+    if (group.kind === 'variant') {
+      // attributes yalnizca varyantlarda tanimlidir.
+    }
+  }
+
+  for (const variant of system.variants) {
     for (const attribute of Object.values(variant.attributes)) {
       if (!attribute) continue;
       note(attribute.confidence, attribute.source?.tr, attribute.verified_at);

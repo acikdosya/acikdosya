@@ -8,6 +8,7 @@ import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, sourceHost} from '@/lib/analytics';
 import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
+import {specGroups} from '@/lib/measurement/groups';
 import {
   attributeKeys,
   specKeys,
@@ -228,8 +229,9 @@ export function SpecTable({system, locale}: Props) {
   const tSpec = useTranslations('Specs');
   const tAttribute = useTranslations('Attributes');
 
+  const groups = specGroups(system);
   const usedSpecs = specKeys.filter((key: SpecKey) =>
-    system.variants.some((variant) => variant.specs[key])
+    groups.some((group) => group.specs[key])
   );
   const usedAttributes = attributeKeys.filter((key: AttributeKey) =>
     system.variants.some((variant) => variant.attributes[key])
@@ -244,9 +246,9 @@ export function SpecTable({system, locale}: Props) {
             <th scope="col" className={styles.field}>
               {t('field')}
             </th>
-            {system.variants.map((variant) => (
-              <th scope="col" key={variant.id}>
-                {variant.label}
+            {groups.map((group) => (
+              <th scope="col" key={group.id}>
+                {group.kind === 'family' ? t('familyLabel') : group.label}
               </th>
             ))}
           </tr>
@@ -275,10 +277,10 @@ export function SpecTable({system, locale}: Props) {
                     <DivergenceLabel kind={divergence.kind} />
                   ) : null}
                 </th>
-                {system.variants.map((variant) => (
+                {groups.map((group) => (
                   <MeasurementCell
-                    key={variant.id}
-                    list={variant.specs[key]}
+                    key={group.id}
+                    list={group.specs[key]}
                     unit={SPEC_UNITS[key]}
                     locale={locale}
                     variants={system.variants}
@@ -294,6 +296,14 @@ export function SpecTable({system, locale}: Props) {
               <th scope="row" className={styles.field}>
                 {tAttribute(key)}
               </th>
+              {groups.map((group) =>
+                group.kind === 'family' ? (
+                  <td key={group.id}>
+                    <span data-state="absent">{'—'}</span>
+                    <span className={styles.srOnly}>{t('absent')}</span>
+                  </td>
+                ) : null
+              )}
               {system.variants.map((variant) => (
                 <AttributeCell
                   key={variant.id}

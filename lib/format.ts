@@ -18,7 +18,17 @@ export const SPEC_UNITS: Record<SpecKey, SpecUnit> = {
   mass_kg: 'kg',
   range_km: 'km',
   cep_m: 'm',
-  warhead_weight_kg: 'kg'
+  warhead_weight_kg: 'kg',
+  wingspan_m: 'm',
+  height_m: 'm',
+  mtow_kg: 'kg',
+  payload_kg: 'kg',
+  endurance_h: 'h',
+  service_ceiling_ft: 'ft',
+  operating_altitude_ft: 'ft',
+  cruise_speed_ktas: 'ktas',
+  max_speed_ktas: 'ktas',
+  operational_range_km: 'km'
 };
 
 /** Guven siralamasi — dusuk sayi daha guvenilir. */

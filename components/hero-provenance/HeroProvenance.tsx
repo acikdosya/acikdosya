@@ -3,6 +3,7 @@ import {ConfidenceBadge} from '@/components/confidence-badge/ConfidenceBadge';
 import {ScopeNote} from '@/components/divergence-note/DivergenceNote';
 import type {Locale} from '@/i18n/routing';
 import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
+import type {SpecGroup} from '@/lib/measurement/groups';
 import type {Measurement, SpecKey, Variant} from '@/lib/schema';
 import styles from './HeroProvenance.module.css';
 
@@ -19,20 +20,24 @@ import styles from './HeroProvenance.module.css';
 export function HeroProvenance({
   measurement,
   specKey,
-  variant,
+  group,
   variants,
   systemName,
   locale
 }: {
   measurement: Measurement;
   specKey: SpecKey;
-  variant: Variant;
+  group: SpecGroup;
   variants: readonly Variant[];
   systemName: string;
   locale: Locale;
 }) {
   const t = useTranslations('Hero');
   const tSpec = useTranslations('Specs');
+  const tSpecTable = useTranslations('SpecTable');
+
+  const groupLabel =
+    group.kind === 'family' ? tSpecTable('familyLabel') : group.label;
 
   return (
     <figure className={styles.panel}>
@@ -40,7 +45,7 @@ export function HeroProvenance({
         <span className={styles.field}>
           {systemName} — {tSpec(specKey).toLocaleLowerCase(locale)}
         </span>
-        <span className={styles.variant}>{variant.label}</span>
+        <span className={styles.variant}>{groupLabel}</span>
       </figcaption>
 
       <dl className={styles.chain}>

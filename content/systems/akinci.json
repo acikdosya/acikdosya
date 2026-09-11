@@ -1,0 +1,278 @@
+{
+  "$schema_version": "0.1",
+  "id": "akinci",
+  "slug": "akinci",
+  "name": {
+    "tr": "Bayraktar AKINCI",
+    "en": "Bayraktar AKINCI"
+  },
+  "category": "insansiz-hava-araci",
+  "manufacturer": {
+    "id": "baykar",
+    "name": "BAYKAR"
+  },
+  "status": "envanterde",
+  "summary": {
+    "tr": "BAYKAR'ın çift motorlu taarruzi insansız hava aracı ailesi.",
+    "en": "BAYKAR's twin-engine unmanned combat aerial vehicle family."
+  },
+  "specs": {
+    "length_m": [
+      {
+        "value": 12.2,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "wingspan_m": [
+      {
+        "value": 20,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "height_m": [
+      {
+        "value": 4.1,
+        "confidence": "official",
+        "scope": "beyan",
+        "context_note": {
+          "tr": "İniş takımı konfigürasyonu sayfada belirtilmemiş.",
+          "en": "Landing gear configuration is not stated on the page."
+        },
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "mtow_kg": [
+      {
+        "value": 6000,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "payload_kg": [
+      {
+        "value": 1500,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "endurance_h": [
+      {
+        "value": 24,
+        "operator": ">",
+        "confidence": "official",
+        "scope": "beyan",
+        "context_note": {
+          "tr": "Kaynakta '24+ saat' ifadesi kullanılıyor; operatör olarak '>' seçildi.",
+          "en": "The source uses '24+ hours'; '>' was chosen as the operator."
+        },
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "service_ceiling_ft": [
+      {
+        "value": 40000,
+        "confidence": "official",
+        "scope": "beyan",
+        "context_note": {
+          "tr": "Teknik özellikler tablosundaki değer. Sayfa üst banner'ında 'Maksimum İrtifa 45.118 Feet' ifadesi de geçiyor; ikisi arasındaki ilişki açıklanmamış.",
+          "en": "Value from the technical specifications table. The top banner also states 'Maximum Altitude 45,118 Feet'; the relationship is not explained."
+        },
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "operating_altitude_ft": [
+      {
+        "value": 30000,
+        "confidence": "official",
+        "scope": "beyan",
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "cruise_speed_ktas": [
+      {
+        "value": 150,
+        "upper_value": 240,
+        "confidence": "official",
+        "scope": "beyan",
+        "context_note": {
+          "tr": "Kaynak 'Seyir - Azami Hız 150 - 240 KTAS' şeklinde tek aralık veriyor; seyir ve azami hız ayrı değerler olarak belirtilmemiş.",
+          "en": "The source gives a single range 'Cruise - Maximum Speed 150 - 240 KTAS'; cruise and maximum speed are not stated as separate values."
+        },
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ],
+    "operational_range_km": [
+      {
+        "value": 6000,
+        "confidence": "official",
+        "scope": "beyan",
+        "context_note": {
+          "tr": "Üreticinin 'operasyonel menzil' terimi; görev yarıçapı veya tek yön erişim olarak yorumlanmamıştır.",
+          "en": "The manufacturer's 'operational range' term; not interpreted as mission radius or one-way reach."
+        },
+        "source": {
+          "tr": "BAYKAR AKINCI ürün sayfası",
+          "en": "BAYKAR AKINCI product page"
+        },
+        "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
+        "accessed_at": "2026-09-11",
+        "verified_at": "2026-09-11"
+      }
+    ]
+  },
+  "variants": [
+    {
+      "id": "akinci",
+      "label": "AKINCI",
+      "introduced": 2021,
+      "specs": {},
+      "attributes": {},
+      "annotations": [],
+      "_todo": [
+        "A/B/C varyant adlari uretici sayfasinda geciyor ama varyanta ozgu kaynakli sayi henuz yok; aile duzeyindeki beyanlar yukarida."
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2017",
+      "title": {
+        "tr": "Proje başlangıcı",
+        "en": "Project start"
+      },
+      "body": {
+        "tr": "BAYKAR, AKINCI geliştirme çalışmalarına başladı.",
+        "en": "BAYKAR started AKINCI development work."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 12 Eylül 2021",
+        "en": "BAYKAR press bulletin, 12 Sep 2021"
+      },
+      "source_url": "https://baykartech.com/tr/press/bayraktar-akinci-tiha-envantere-girdi/"
+    },
+    {
+      "date": "2019-09-01",
+      "title": {
+        "tr": "İlk motor testi",
+        "en": "First engine test"
+      },
+      "body": {
+        "tr": "AKINCI ilk motor çalıştırma testini gerçekleştirdi.",
+        "en": "AKINCI conducted its first engine run test."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "TRT Haber, 6 Aralık 2019",
+        "en": "TRT Haber, 6 Dec 2019"
+      },
+      "source_url": "https://www.trthaber.com/haber/turkiye/bayraktar-akinci-tiha-ilk-kez-gokyuzuyle-bulustu-445048.html"
+    },
+    {
+      "date": "2019-12-06",
+      "title": {
+        "tr": "İlk uçuş",
+        "en": "First flight"
+      },
+      "body": {
+        "tr": "Çorlu'da ilk uçuş testini 16 dakika havada kalarak tamamladı.",
+        "en": "Completed its first flight test in Çorlu, remaining airborne for 16 minutes."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "TRT Haber, 6 Aralık 2019",
+        "en": "TRT Haber, 6 Dec 2019"
+      },
+      "source_url": "https://www.trthaber.com/haber/turkiye/bayraktar-akinci-tiha-ilk-kez-gokyuzuyle-bulustu-445048.html"
+    },
+    {
+      "date": "2021-08-29",
+      "title": {
+        "tr": "Güvenlik güçlerine ilk teslimat",
+        "en": "First delivery to security forces"
+      },
+      "body": {
+        "tr": "Çorlu'daki törenle Türk Silahlı Kuvvetleri envanterine girdi.",
+        "en": "Entered Turkish Armed Forces inventory with a ceremony in Çorlu."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 12 Eylül 2021",
+        "en": "BAYKAR press bulletin, 12 Sep 2021"
+      },
+      "source_url": "https://baykartech.com/tr/press/bayraktar-akinci-tiha-envantere-girdi/"
+    }
+  ],
+  "revisions": [],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
+  },
+  "_todo": [
+    "Servis tavanı (40.000 ft) ile sayfa banner'ındaki maksimum irtifa (45.118 ft) arasındaki ilişki açıklığa kavuşturulacak.",
+    "Seyir/azami hız tek aralık olarak kaydedildi; üretici ayrı değerler verirse alanlar bölünecek.",
+    "A/B/C varyantlarına özgü kaynaklı ölçüler eklenecek.",
+    "Dış görünüş / siluet için lisansı açık referans aranacak; şimdiki şema gövde kalınlığını kanat açıklığı oranından türetiyor.",
+    "Üretici sayfasının üçüncü taraf arşiv kopyası alınacak."
+  ]
+}

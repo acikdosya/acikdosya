@@ -9,6 +9,10 @@ import {
 import type {Confidence} from './schema';
 import {PALETTE} from './tokens';
 import {
+  layoutAircrafts,
+  type AircraftItem
+} from '@/components/scale-silhouette/aircraft-geometry';
+import {
   layoutSilhouettes,
   type SilhouetteItem
 } from '@/components/scale-silhouette/geometry';
@@ -158,6 +162,47 @@ export function silhouetteDataUri(
   const margin = 6;
   const left = Math.min(...layout.rows.map((row) => row.dimension.x1)) - margin;
   const right = Math.max(...layout.rows.map((row) => row.dimension.x2)) + margin;
+  const top = 14;
+  const width = right - left;
+  const height = layout.groundY - top;
+
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${left} ${top} ${width} ${height}">` +
+    shapes +
+    '</svg>';
+
+  return {
+    src: `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`,
+    width,
+    height
+  };
+}
+
+/**
+ * Ucak boyut semasi, veri URI'si olarak.
+ *
+ * Fuzedekiyle ayni ilke: geometri sayfadaki cizimle ayni fonksiyondan
+ * gelir, etiketler metin katmaninda. Govde kalinligi kanat acikliginin
+ * sabit oranidir; bu ayrinti degil, sema.
+ */
+export function aircraftDataUri(
+  items: readonly AircraftItem[]
+): {src: string; width: number; height: number} | undefined {
+  const layout = layoutAircrafts(items);
+  if (!layout) return undefined;
+
+  const shapes = layout.rows
+    .map((row, index) => {
+      const stroke = index === 0 ? PALETTE.ink : PALETTE.signal;
+      return `<path d="${row.topView}" fill="none" stroke="${stroke}" stroke-width="2" stroke-linejoin="round"/>`;
+    })
+    .join('');
+
+  const margin = 6;
+  const left =
+    Math.min(...layout.rows.map((row) => row.dimension.x1)) - margin;
+  const right =
+    Math.max(...layout.rows.map((row) => row.dimension.x2)) + margin;
   const top = 14;
   const width = right - left;
   const height = layout.groundY - top;

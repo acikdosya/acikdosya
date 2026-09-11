@@ -30,14 +30,17 @@
     "skipToContent": "Skip to content"
   },
   "ScaleSilhouette": {
-    "caption": "Scaled comparison — silhouettes are derived from published dimensions, not technical drawings.",
+    "caption": "Scaled comparison — schematic drawings are derived from published dimensions, not technical drawings.",
     "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
+    "ariaLabelAircraft": "Top views of {names}, scaled against a {height} m human figure",
     "humanLabel": "{height} m",
-    "lengthLabel": "{value} m"
+    "lengthLabel": "{value} m",
+    "familyLabel": "Family-level statements"
   },
   "MeasureGap": {
     "absent": "no verified dimensional data",
-    "invite": "When we have no sourceable figure for a variant's length or diameter, no silhouette and no model are produced. If you have a source that carries a publication name, a date and a link, <link>send it to us</link>."
+    "familyLabel": "Family-level statements",
+    "invite": "When we have no sourceable dimensional data for this system, no schematic drawing and no model are produced. If you have a source that carries a publication name, a date and a link, <link>send it to us</link>."
   },
   "SpecTable": {
     "caption": "Conflicting values are not hidden; they appear stacked in the same cell.",
@@ -46,7 +49,8 @@
     "methodLink": "What do the confidence levels mean?",
     "accessed": "accessed {date}",
     "archive": "archived copy",
-    "digest": "digest {value}…"
+    "digest": "digest {value}…",
+    "familyLabel": "Family-level statements"
   },
   "Specs": {
     "length_m": "Length",
@@ -54,7 +58,17 @@
     "mass_kg": "Mass",
     "range_km": "Range",
     "cep_m": "Circular error probable (CEP)",
-    "warhead_weight_kg": "Warhead weight"
+    "warhead_weight_kg": "Warhead weight",
+    "wingspan_m": "Wingspan",
+    "height_m": "Height",
+    "mtow_kg": "Maximum take-off weight",
+    "payload_kg": "Payload capacity",
+    "endurance_h": "Endurance",
+    "service_ceiling_ft": "Service ceiling",
+    "operating_altitude_ft": "Operational altitude",
+    "cruise_speed_ktas": "Cruise speed",
+    "max_speed_ktas": "Maximum speed",
+    "operational_range_km": "Operational range"
   },
   "Attributes": {
     "guidance": "Guidance",
@@ -117,7 +131,8 @@
   },
   "Categories": {
     "balistik-fuze": "Ballistic missile",
-    "seyir-fuzesi": "Cruise missile"
+    "seyir-fuzesi": "Cruise missile",
+    "insansiz-hava-araci": "Unmanned aerial vehicle"
   },
   "Status": {
     "gelistirme": "In development",

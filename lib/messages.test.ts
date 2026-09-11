@@ -3,6 +3,7 @@ import {test} from 'node:test';
 import en from '../messages/en.json';
 import tr from '../messages/tr.json';
 import {KIND_MESSAGE_KEY, KIND_ORDER, SCOPES} from './measurement/labels';
+import {categorySchema, specKeys} from './schema';
 
 /**
  * Mesaj paketi ile kod arasindaki sozlesme.
@@ -72,5 +73,36 @@ test('her scope degerinin etiketi var', () => {
         `${name}: Divergence.scope_${scope} eksik`
       );
     }
+  }
+});
+
+test('her olcum alaninin etiketi var', () => {
+  for (const [name, bundle] of bundles) {
+    for (const key of specKeys) {
+      assert.ok(
+        bundle.Specs[key],
+        `${name}: Specs.${key} eksik`
+      );
+    }
+  }
+});
+
+test('her kategorinin etiketi var', () => {
+  for (const [name, bundle] of bundles) {
+    for (const category of categorySchema.options) {
+      assert.ok(
+        bundle.Categories[category],
+        `${name}: Categories.${category} eksik`
+      );
+    }
+  }
+});
+
+test('aile duzeyi tablo etiketi var', () => {
+  for (const [name, bundle] of bundles) {
+    assert.ok(
+      bundle.SpecTable.familyLabel,
+      `${name}: SpecTable.familyLabel eksik`
+    );
   }
 });

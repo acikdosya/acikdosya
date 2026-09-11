@@ -98,7 +98,7 @@ export default async function HomePage({params}: Props) {
               <HeroProvenance
                 measurement={focus.measurement}
                 specKey={focus.key}
-                variant={focus.variant}
+                group={focus.group}
                 variants={focus.system.variants}
                 systemName={focus.system.name[lang]}
                 locale={lang}

@@ -4,6 +4,13 @@ import type {Locale} from '@/i18n/routing';
 import {getSystem, getSystemSlugs} from '@/lib/content';
 import {formatValue, primary, SPEC_UNITS} from '@/lib/format';
 import {
+  type AircraftDimensions,
+  type MissileDimensions,
+  selectMeasurements,
+  systemKind
+} from '@/lib/geometry/measurements';
+import {
+  aircraftDataUri,
   BrandLockupImage,
   MeasureRailImage,
   OgBadge,
@@ -72,30 +79,48 @@ export default async function OpengraphImage({
     );
   }
 
-  const items = system.variants
-    .map((variant) => {
-      const length = variant.specs.length_m;
-      const diameter = variant.specs.diameter_mm;
-      if (!length || !diameter) return undefined;
+  const kind = systemKind(system);
+  const selections = selectMeasurements(system);
 
-      return {
-        id: variant.id,
-        label: variant.label,
-        lengthM: primary(length).value,
-        diameterMm: primary(diameter).value
-      };
-    })
-    .filter((item) => item !== undefined);
-
-  const silhouette = silhouetteDataUri(items);
+  let silhouette;
+  if (kind === 'missile') {
+    const items = selections
+      .filter((selection) => selection.dimensions.kind === 'missile')
+      .map((selection) => {
+        const dims = selection.dimensions as MissileDimensions;
+        return {
+          id: selection.group.id,
+          label: selection.group.label,
+          lengthM: dims.lengthM,
+          diameterMm: dims.diameterMm
+        };
+      });
+    silhouette = silhouetteDataUri(items);
+  } else {
+    const items = selections
+      .filter((selection) => selection.dimensions.kind === 'aircraft')
+      .map((selection) => {
+        const dims = selection.dimensions as AircraftDimensions;
+        return {
+          id: selection.group.id,
+          label: selection.group.label,
+          lengthM: dims.lengthM,
+          wingspanM: dims.wingspanM,
+          heightM: dims.heightM
+        };
+      });
+    silhouette = aircraftDataUri(items);
+  }
 
   /*
    * Rozet, cizimin dayandigi olcunun rozeti: siluet uzunluk verisinden
    * turedigi icin gorselin tasidigi guven de o degerin guveni.
    */
-  const lengthList = system.variants.find((variant) => variant.specs.length_m)
-    ?.specs.length_m;
-  const lengthValue = lengthList ? primary(lengthList) : undefined;
+  const allLengths = [
+    ...(system.specs?.length_m ?? []),
+    ...system.variants.flatMap((variant) => variant.specs.length_m ?? [])
+  ];
+  const lengthValue = allLengths.length > 0 ? primary(allLengths) : undefined;
 
   return new ImageResponse(
     (

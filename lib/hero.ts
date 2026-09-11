@@ -1,11 +1,11 @@
 import {primary} from './format';
+import {specGroups, type SpecGroup} from './measurement/groups';
 import {
   specKeys,
   type Measurement,
   type Revision,
   type SpecKey,
-  type System,
-  type Variant
+  type System
 } from './schema';
 import {findDivergence, type Divergence} from './stats';
 
@@ -34,7 +34,7 @@ export type HeroFocus =
   | {
       tier: 'provenance';
       system: System;
-      variant: Variant;
+      group: SpecGroup;
       key: SpecKey;
       measurement: Measurement;
     };
@@ -85,8 +85,8 @@ function fullestRecord(
 
   for (const system of systems) {
     for (const key of specKeys) {
-      for (const variant of system.variants) {
-        const list = variant.specs[key];
+      for (const group of specGroups(system)) {
+        const list = group.specs[key];
         if (!list) continue;
 
         const measurement = primary(list);
@@ -94,7 +94,7 @@ function fullestRecord(
         if (score <= bestScore) continue;
 
         bestScore = score;
-        best = {tier: 'provenance', system, variant, key, measurement};
+        best = {tier: 'provenance', system, group, key, measurement};
       }
     }
   }

@@ -148,6 +148,12 @@ export const measurementSchema = z.strictObject({
    * yine ulasir.
    */
   archive_url: z.url().optional(),
+  /**
+   * Varyant, yuk veya uçuş koşulu belirsizliğini açıklayan kısa not.
+   * Tek kayıt olsa da okuyucunun aynı kapsamda olup olmadığını anlamasına
+   * yarar; `scope` ve `variant_id`nin yerine geçmez.
+   */
+  context_note: localizedTextSchema.optional(),
   /** "Bu sayi 6 ay sonra nereden geldi" sorusunun cevabi. */
   verified_at: isoDateSchema
 })
@@ -218,7 +224,17 @@ export const specKeys = [
   'mass_kg',
   'range_km',
   'cep_m',
-  'warhead_weight_kg'
+  'warhead_weight_kg',
+  'wingspan_m',
+  'height_m',
+  'mtow_kg',
+  'payload_kg',
+  'endurance_h',
+  'service_ceiling_ft',
+  'operating_altitude_ft',
+  'cruise_speed_ktas',
+  'max_speed_ktas',
+  'operational_range_km'
 ] as const;
 export type SpecKey = (typeof specKeys)[number];
 
@@ -228,7 +244,17 @@ export const specsSchema = z.strictObject({
   mass_kg: measurementListSchema.optional(),
   range_km: measurementListSchema.optional(),
   cep_m: measurementListSchema.optional(),
-  warhead_weight_kg: measurementListSchema.optional()
+  warhead_weight_kg: measurementListSchema.optional(),
+  wingspan_m: measurementListSchema.optional(),
+  height_m: measurementListSchema.optional(),
+  mtow_kg: measurementListSchema.optional(),
+  payload_kg: measurementListSchema.optional(),
+  endurance_h: measurementListSchema.optional(),
+  service_ceiling_ft: measurementListSchema.optional(),
+  operating_altitude_ft: measurementListSchema.optional(),
+  cruise_speed_ktas: measurementListSchema.optional(),
+  max_speed_ktas: measurementListSchema.optional(),
+  operational_range_km: measurementListSchema.optional()
 });
 export type Specs = z.infer<typeof specsSchema>;
 
@@ -348,7 +374,11 @@ export const revisionSchema = z.strictObject({
 export type Revision = z.infer<typeof revisionSchema>;
 
 /** Yeni kategori eklerken bilincli karar olsun diye enum. */
-export const categorySchema = z.enum(['balistik-fuze', 'seyir-fuzesi']);
+export const categorySchema = z.enum([
+  'balistik-fuze',
+  'seyir-fuzesi',
+  'insansiz-hava-araci'
+]);
 
 export const statusSchema = z.enum([
   'gelistirme',
@@ -371,6 +401,8 @@ export const systemSchema = z
     status: statusSchema,
     /** Hero altindaki kisa tanim. */
     summary: localizedTextSchema.optional(),
+    /** Aile duzeyindeki beyanlar — varyantlara otomatik kopyalanmaz. */
+    specs: specsSchema.optional(),
     variants: z.array(variantSchema).min(1),
     timeline: z.array(timelineEventSchema),
     /**
@@ -384,8 +416,12 @@ export const systemSchema = z
     _todo: todoSchema.optional()
   })
   .refine(
-    (system) =>
-      system.variants.some((variant) => variant.specs.range_km !== undefined),
+    (system) => {
+      if (system.category === 'insansiz-hava-araci') return true;
+      return system.variants.some(
+        (variant) => variant.specs.range_km !== undefined
+      );
+    },
     {
       error: 'en az bir varyantta range_km olmali — menzil zarfi buna dayaniyor',
       path: ['variants']

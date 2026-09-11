@@ -15,9 +15,9 @@ import type {Measurement, Operator} from '../schema';
  */
 
 /** Alan adinin icindeki birim — lib/format.ts SPEC_UNITS ile ayni kume. */
-export type SpecUnit = 'm' | 'mm' | 'km' | 'kg';
+export type SpecUnit = 'm' | 'mm' | 'km' | 'kg' | 'ft' | 'h' | 'ktas';
 
-type Dimension = 'uzunluk' | 'kutle';
+type Dimension = 'uzunluk' | 'kutle' | 'sure' | 'hiz';
 
 /**
  * Taban birim: uzunluk metre, kutle kilogram.
@@ -31,7 +31,10 @@ const UNITS: Record<SpecUnit, {dimension: Dimension; toBase: number}> = {
   mm: {dimension: 'uzunluk', toBase: 0.001},
   m: {dimension: 'uzunluk', toBase: 1},
   km: {dimension: 'uzunluk', toBase: 1000},
-  kg: {dimension: 'kutle', toBase: 1}
+  kg: {dimension: 'kutle', toBase: 1},
+  ft: {dimension: 'uzunluk', toBase: 0.3048},
+  h: {dimension: 'sure', toBase: 1},
+  ktas: {dimension: 'hiz', toBase: 1}
 };
 
 /**

@@ -3,7 +3,7 @@
 [![CI](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml/badge.svg)](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml)
 
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
-dijital dosya. Yayında: https://acikdosya.org — şimdilik tek sistem, TAYFUN.
+dijital dosya. Yayında: https://acikdosya.org — şu anda üç sistem: TAYFUN, ATMACA ve AKINCI.
 
 Projenin kalıcı bağlamı ve pazarlık dışı editoryal kuralları [CLAUDE.md](./CLAUDE.md)
 dosyasındadır. Bir karar o dosyayla çelişiyorsa önce konuşulur.
@@ -37,6 +37,8 @@ Türkçe varsayılan ve öneksiz, İngilizce önekli. Rota adları da çevrilir.
 |---|---|
 | `/` | `/en` |
 | `/sistemler/tayfun` | `/en/systems/tayfun` |
+| `/sistemler/atmaca` | `/en/systems/atmaca` |
+| `/sistemler/akinci` | `/en/systems/akinci` |
 
 Kök adres tarayıcı diline bakmaz, her zaman Türkçe açılır. Paylaşılan link herkeste
 aynı görünsün diye dil algılama kapalıdır.
@@ -122,7 +124,11 @@ bizim dosyamızın tarihini anlatır. Kayıt yoksa bölüm hiç çizilmez — bo
 1. `content/systems/<slug>.json` oluştur. Dosya adı `slug` alanıyla birebir aynı olmalı.
 2. Yeni bir kategori gerekiyorsa `lib/schema.ts` içindeki `categorySchema` enumuna ekle.
    Bilinçli karar olsun diye enum dar tutuluyor.
-3. `pnpm validate:content` çalıştır.
+3. Kategoriye göre özel davranışları gözden geçir:
+   - Füzelerde `range_km` zorunludur ve menzil zarfı çizilir.
+   - İHA'larda (`insansiz-hava-araci`) menzil zarfı ve 3D model üretilmez;
+     `wingspan_m` gibi uçak ölçüleri kullanılır.
+4. `pnpm validate:content` çalıştır.
 
 Sayfa `generateStaticParams` ile kendiliğinden üretilir.
 
@@ -218,7 +224,9 @@ nginx ve Caddy karşılıkları `deploy/nginx/acikdosya.org.conf` sonunda örnek
 duruyor — kurulu değil.
 
 Menzil halkaları `range_km` verisinden türer, kodda sabit değer yoktur. Halkalar
-büyük daire yöntemiyle çizilir; Turf eklenmez.
+büyük daire yöntemiyle çizilir; Turf eklenmez. Menzil zarfı yalnızca füze
+kategorilerinde (`balistik-fuze`, `seyir-fuzesi`) çizilir; `insansiz-hava-araci`
+kategorisi için çizilmez.
 
 **Sürüm kısıtı:** `maplibre-gl` 5.x'te sabitlenmiştir. 6.9 sürümünde harita kuruluyor
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.
