@@ -56,6 +56,7 @@ function buildModelVariants(
         label: variant.label,
         lengthM: primaryLength.value,
         diameterMm: primary(diameter).value,
+        systemSlug: system.slug,
         confidence: primaryLength.confidence,
         confidenceLabel: labels.confidence(primaryLength.confidence),
         annotations: (variant.annotations ?? []).map((annotation) => ({

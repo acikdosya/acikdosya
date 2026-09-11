@@ -183,9 +183,30 @@
       "acquired_at": "2026-09-10",
       "used_in": [
         "components/model-viewer/MissileViewer.tsx",
-        "scripts/bake-glb.mjs"
+        "scripts/bake-glb.mjs",
+        "lib/geometry/model.ts",
+        "lib/geometry/selection.ts"
       ],
       "notes": "Dosya değil, üretici kod. Geometri içerik verisinden türer, hiçbir hazır modelden türetilmedi. Bu kayıt kasıtlı: kökeni sorulduğunda cevabı burada."
+    },
+    {
+      "id": "geometry-parametric-atmaca",
+      "file": "lib/geometry/atmaca.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-09-11",
+      "used_in": [
+        "lib/geometry/selection.ts"
+      ],
+      "notes": "ATMACA'ya ozel dis profil sabitleri. Yapisal olcu degildir; kanatcik/burun profili icin lisansli referans bulunana kadar genel seyir fuzesi oranlarina gore secilmistir."
     },
     {
       "id": "models-baked",

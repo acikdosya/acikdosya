@@ -70,32 +70,92 @@ export type Interval = {
 /**
  * Operatoru araliga cevirir. Operatorsuz deger tek noktadir — kaynak
  * sinir degil rakam vermistir, boyle kaydedilir.
+ *
+ * upper_value varsa tek deger yerine aralik doner; ROKETSAN web
+ * sayfasindaki "4,3-5,2 m" gibi kaynaklar icin.
  */
 export function toInterval(
   value: number,
-  operator: Operator | undefined
+  operator: Operator | undefined,
+  upper_value?: number,
+  upper_operator?: Operator | undefined
 ): Interval {
+  let min: number;
+  let max: number;
+  let minClosed: boolean;
+  let maxClosed: boolean;
+
   switch (operator) {
     case '>':
-      return {min: value, max: Infinity, minClosed: false, maxClosed: false};
+      min = value;
+      max = Infinity;
+      minClosed = false;
+      maxClosed = false;
+      break;
     case '≥':
-      return {min: value, max: Infinity, minClosed: true, maxClosed: false};
+      min = value;
+      max = Infinity;
+      minClosed = true;
+      maxClosed = false;
+      break;
     case '<':
-      return {min: -Infinity, max: value, minClosed: false, maxClosed: false};
+      min = -Infinity;
+      max = value;
+      minClosed = false;
+      maxClosed = false;
+      break;
     case '≤':
-      return {min: -Infinity, max: value, minClosed: false, maxClosed: true};
+      min = -Infinity;
+      max = value;
+      minClosed = false;
+      maxClosed = true;
+      break;
     case '~': {
       const band = Math.abs(value) * TOLERANCE_RATIO;
-      return {
-        min: value - band,
-        max: value + band,
-        minClosed: true,
-        maxClosed: true
-      };
+      min = value - band;
+      max = value + band;
+      minClosed = true;
+      maxClosed = true;
+      break;
     }
     default:
-      return {min: value, max: value, minClosed: true, maxClosed: true};
+      min = value;
+      max = value;
+      minClosed = true;
+      maxClosed = true;
   }
+
+  if (upper_value !== undefined) {
+    switch (upper_operator) {
+      case '<':
+        max = upper_value;
+        maxClosed = false;
+        break;
+      case '≤':
+        max = upper_value;
+        maxClosed = true;
+        break;
+      case '>':
+        min = upper_value;
+        minClosed = false;
+        break;
+      case '≥':
+        min = upper_value;
+        minClosed = true;
+        break;
+      case '~': {
+        const band = Math.abs(upper_value) * TOLERANCE_RATIO;
+        max = upper_value + band;
+        maxClosed = true;
+        break;
+      }
+      default:
+        max = upper_value;
+        maxClosed = true;
+    }
+  }
+
+  return {min, max, minClosed, maxClosed};
 }
 
 /** Olcum ve birimi birlikte — birim alan adindan gelir, degerin parcasidir. */
@@ -113,7 +173,12 @@ function unitOf(unit: SpecUnit) {
 /** Olcumu taban birime tasinmis aralik olarak verir. */
 function intervalOf({measurement, unit}: Sized): Interval {
   const {toBase} = unitOf(unit);
-  const raw = toInterval(measurement.value, measurement.operator);
+  const raw = toInterval(
+    measurement.value,
+    measurement.operator,
+    measurement.upper_value,
+    measurement.upper_operator
+  );
 
   return {
     min: raw.min === -Infinity ? -Infinity : raw.min * toBase,

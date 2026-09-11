@@ -53,7 +53,8 @@
     "diameter_mm": "Çap",
     "mass_kg": "Kütle",
     "range_km": "Menzil",
-    "cep_m": "Dairesel sapma (CEP)"
+    "cep_m": "Dairesel sapma (CEP)",
+    "warhead_weight_kg": "Harp başlığı ağırlığı"
   },
   "Attributes": {
     "guidance": "Güdüm",
@@ -115,7 +116,8 @@
     "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir."
   },
   "Categories": {
-    "balistik-fuze": "Balistik füze"
+    "balistik-fuze": "Balistik füze",
+    "seyir-fuzesi": "Seyir füzesi"
   },
   "Status": {
     "gelistirme": "Geliştirme",

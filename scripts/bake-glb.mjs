@@ -18,7 +18,7 @@ import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { dedup, draco, prune, weld } from '@gltf-transform/functions';
 import draco3d from 'draco3dgltf';
-import { buildMissile } from '../lib/geometry/missile.ts';
+import { buildModel } from '../lib/geometry/model.ts';
 
 /**
  * three'nin GLTFExporter'ı ikili çıktıyı FileReader üzerinden topluyor;
@@ -96,7 +96,7 @@ async function main() {
         continue; // uydurma değer üretme (CLAUDE.md §7)
       }
 
-      const { group, dispose } = buildMissile({ lengthM, diameterMm, radialSegments: 64 });
+      const { group, dispose } = buildModel({ systemSlug: system.slug, lengthM, diameterMm, radialSegments: 64 });
       stripLines(group);
       const raw = await exportGlb(group);
       const glb = await optimize(raw);

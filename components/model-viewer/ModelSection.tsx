@@ -20,6 +20,8 @@ export interface ModelVariant {
   /** Olcu verisi — geometri yalnizca bunlardan turer. */
   lengthM: number;
   diameterMm: number;
+  /** Sistem slug'i — hangi dis profilin uygulanacagini belirler. */
+  systemSlug: string;
   /** Olcu verisinin guven seviyesi; butondaki chip bunu gosterir. */
   confidence: Confidence;
   confidenceLabel: string;
@@ -153,7 +155,9 @@ export function ModelSection({
     <div ref={wrapper} className={styles.wrapper}>
       {inView ? (
         <MissileViewer
-          spec={{lengthM: active.lengthM, diameterMm: active.diameterMm}}
+          systemSlug={active.systemSlug}
+          lengthM={active.lengthM}
+          diameterMm={active.diameterMm}
           annotations={active.annotations}
           focusT={view.t}
           fallback={fallback}

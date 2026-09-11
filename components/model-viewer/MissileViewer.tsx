@@ -13,10 +13,9 @@ import * as THREE from 'three';
 import {ContactShadows, Html, OrbitControls} from '@react-three/drei';
 import {
   annotationPosition,
-  buildMissile,
-  SCHEMATIC,
-  type MissileSpec
+  SCHEMATIC
 } from '@/lib/geometry/missile';
+import {buildModel} from '@/lib/geometry/model';
 import type {Confidence} from '@/lib/schema';
 
 export interface ViewerAnnotation {
@@ -33,7 +32,9 @@ export interface ViewerAnnotation {
 }
 
 interface Props {
-  spec: MissileSpec;
+  systemSlug: string;
+  lengthM: number;
+  diameterMm: number;
   annotations: ViewerAnnotation[];
   /**
    * Odaklanilacak bolumun govde orani. null ise genel gorunum.
@@ -53,26 +54,27 @@ interface Props {
 }
 
 function Missile({
-  spec,
+  systemSlug,
+  lengthM,
+  diameterMm,
   annotations
-}: Pick<Props, 'spec' | 'annotations'>) {
+}: Pick<Props, 'systemSlug' | 'lengthM' | 'diameterMm' | 'annotations'>) {
   // CSS pikseli, cihaz pikseli degil: mobil 48, masaustu 72 segment.
   const width = useThree((state) => state.size.width);
   const invalidate = useThree((state) => state.invalidate);
   const isMobile = width < 700;
 
-  const {lengthM, diameterMm} = spec;
-
-  // Bagimliliklar primitif: sayfa her render'da yeni spec nesnesi verse bile
+  // Bagimliliklar primitif: sayfa her render'da yeni nesne verse bile
   // olcu degismedikce geometri yeniden kurulmaz.
   const {group, dimensions, dispose} = useMemo(
     () =>
-      buildMissile({
+      buildModel({
+        systemSlug,
         lengthM,
         diameterMm,
         radialSegments: isMobile ? 48 : 72
       }),
-    [lengthM, diameterMm, isMobile]
+    [systemSlug, lengthM, diameterMm, isMobile]
   );
 
   // Varyant degisince onceki geometri ve materyal bellekten duser.
@@ -245,7 +247,9 @@ function supportsWebGL2(): boolean {
  * Model dekoratiftir: buradaki her bilgi spec tablosunda da vardir.
  */
 export default function MissileViewer({
-  spec,
+  systemSlug,
+  lengthM,
+  diameterMm,
   annotations,
   focusT,
   fallback,
@@ -264,7 +268,7 @@ export default function MissileViewer({
 
   // Kendi kendine donus yalnizca genel gorunumde, kullanici dokunana kadar.
   const autoRotate = !reduce && !grabbed && focusT === null;
-  const radius = spec.diameterMm / 2000;
+  const radius = diameterMm / 2000;
 
   if (!webgl) return <>{fallback}</>;
 
@@ -284,7 +288,7 @@ export default function MissileViewer({
           fov: 38,
           near: 0.1,
           far: 200,
-          position: [0, spec.lengthM * 0.18, spec.lengthM * 1.35]
+          position: [0, lengthM * 0.18, lengthM * 1.35]
         }}
         gl={{antialias: true, alpha: true}}
         // Hareket azaltilmissa kare yalnizca kullanici etkilesiminde uretilir.
@@ -294,18 +298,23 @@ export default function MissileViewer({
         <directionalLight position={[3, 6, 5]} intensity={1.5} />
         <directionalLight position={[-4, -2, -3]} intensity={0.5} />
         <Framing
-          lengthM={spec.lengthM}
-          diameterMm={spec.diameterMm}
+          lengthM={lengthM}
+          diameterMm={diameterMm}
           focusT={focusT}
           reduce={reduce}
         />
         <Suspense fallback={null}>
-          <Missile spec={spec} annotations={annotations} />
+          <Missile
+            systemSlug={systemSlug}
+            lengthM={lengthM}
+            diameterMm={diameterMm}
+            annotations={annotations}
+          />
           {/* Govdeyi zemine oturtan yumusak golge: isik kurgusu degil,
               derinlik ipucu. Yuzey mat kalir, yansima yok. */}
           <ContactShadows
             position={[0, -radius * 1.9, 0]}
-            scale={spec.lengthM * 1.5}
+            scale={lengthM * 1.5}
             resolution={256}
             far={radius * 4}
             blur={2.6}
@@ -319,7 +328,7 @@ export default function MissileViewer({
           autoRotate={autoRotate}
           autoRotateSpeed={0.5}
           minDistance={radius * 2.5}
-          maxDistance={spec.lengthM * 5}
+          maxDistance={lengthM * 5}
           makeDefault
         />
       </Canvas>
@@ -327,4 +336,3 @@ export default function MissileViewer({
   );
 }
 
-export type {MissileSpec};

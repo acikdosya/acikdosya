@@ -80,6 +80,12 @@ export type Scope = z.infer<typeof scopeSchema>;
 export const measurementSchema = z.strictObject({
   value: z.number().finite(),
   operator: operatorSchema.optional(),
+  /**
+   * Aralikli degerler icin ust sinir. ROKETSAN web sayfasindaki
+   * "4,3-5,2 m" gibi tek kaynakta iki deger varsa burada tutulur.
+   */
+  upper_value: z.number().finite().optional(),
+  upper_operator: operatorSchema.optional(),
   confidence: confidenceSchema,
   /**
    * Deger neyi olcuyor. Iki sayi kiyaslanmadan once bu sorulur: test
@@ -179,6 +185,22 @@ export const measurementSchema = z.strictObject({
       error: 'stated_at verified_at\'ten sonra olamaz — kaynak biz baktiktan sonra konusmus gorunuyor',
       path: ['stated_at']
     }
+  )
+  .refine(
+    (measurement) =>
+      measurement.upper_value === undefined || measurement.upper_value >= measurement.value,
+    {
+      error: 'upper_value value\'dan kucuk olamaz',
+      path: ['upper_value']
+    }
+  )
+  .refine(
+    (measurement) =>
+      measurement.upper_operator === undefined || measurement.upper_value !== undefined,
+    {
+      error: 'upper_operator upper_value olmadan yazilmaz',
+      path: ['upper_operator']
+    }
   );
 export type Measurement = z.infer<typeof measurementSchema>;
 
@@ -195,7 +217,8 @@ export const specKeys = [
   'diameter_mm',
   'mass_kg',
   'range_km',
-  'cep_m'
+  'cep_m',
+  'warhead_weight_kg'
 ] as const;
 export type SpecKey = (typeof specKeys)[number];
 
@@ -204,7 +227,8 @@ export const specsSchema = z.strictObject({
   diameter_mm: measurementListSchema.optional(),
   mass_kg: measurementListSchema.optional(),
   range_km: measurementListSchema.optional(),
-  cep_m: measurementListSchema.optional()
+  cep_m: measurementListSchema.optional(),
+  warhead_weight_kg: measurementListSchema.optional()
 });
 export type Specs = z.infer<typeof specsSchema>;
 
@@ -324,7 +348,7 @@ export const revisionSchema = z.strictObject({
 export type Revision = z.infer<typeof revisionSchema>;
 
 /** Yeni kategori eklerken bilincli karar olsun diye enum. */
-export const categorySchema = z.enum(['balistik-fuze']);
+export const categorySchema = z.enum(['balistik-fuze', 'seyir-fuzesi']);
 
 export const statusSchema = z.enum([
   'gelistirme',

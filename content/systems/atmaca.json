@@ -1,0 +1,411 @@
+{
+  "$schema_version": "0.1",
+  "id": "atmaca",
+  "slug": "atmaca",
+  "name": {
+    "tr": "ATMACA",
+    "en": "ATMACA"
+  },
+  "category": "seyir-fuzesi",
+  "manufacturer": {
+    "id": "roketsan",
+    "name": "ROKETSAN"
+  },
+  "status": "seri-uretim",
+  "summary": {
+    "tr": "ROKETSAN'ın gemisavar seyir füzesi.",
+    "en": "ROKETSAN's anti-ship cruise missile."
+  },
+  "variants": [
+    {
+      "id": "atmaca",
+      "label": "ATMACA",
+      "introduced": 2019,
+      "specs": {
+        "length_m": [
+          {
+            "value": 4.3,
+            "upper_value": 5.2,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA ürün web sayfası",
+              "en": "ROKETSAN ATMACA product web page"
+            },
+            "source_url": "https://www.roketsan.com.tr/tr/urunler/atmaca-gemisavar-fuzesi",
+            "accessed_at": "2026-09-11",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 5.2,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA PDF kataloğu",
+              "en": "ROKETSAN ATMACA PDF catalogue"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+            "verified_at": "2026-09-11"
+          }
+        ],
+        "diameter_mm": [
+          {
+            "value": 370,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA PDF kataloğu",
+              "en": "ROKETSAN ATMACA PDF catalogue"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+            "verified_at": "2026-09-11"
+          }
+        ],
+        "mass_kg": [
+          {
+            "value": 750,
+            "operator": "<",
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA ürün web sayfası",
+              "en": "ROKETSAN ATMACA product web page"
+            },
+            "source_url": "https://www.roketsan.com.tr/tr/urunler/atmaca-gemisavar-fuzesi",
+            "accessed_at": "2026-09-11",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 750,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA PDF kataloğu",
+              "en": "ROKETSAN ATMACA PDF catalogue"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 800,
+            "operator": "<",
+            "confidence": "press",
+            "scope": "beyan",
+            "stated_at": "2019",
+            "source": {
+              "tr": "Savunma Sanayi, 4 Kasım 2019",
+              "en": "Savunma Sanayi, 4 Nov 2019"
+            },
+            "source_url": "https://savunmasanayi.org/2019/11/04/kinaliada-atmaca-test/",
+            "accessed_at": "2026-09-11",
+            "verified_at": "2026-09-11"
+          }
+        ],
+        "range_km": [
+          {
+            "value": 250,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA PDF kataloğu",
+              "en": "ROKETSAN ATMACA PDF catalogue"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 200,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "test",
+            "stated_at": "2020-07-01",
+            "source": {
+              "tr": "SSB Başkanı İsmail Demir açıklaması, 4 Temmuz 2020",
+              "en": "SSB Chair Ismail Demir statement, 4 Jul 2020"
+            },
+            "source_url": "https://savunmasanayi.org/2020/07/04/roketsanin-atmacasi-200-km-otedeki-hedefi-tam-on-ikiden-imha-etti/",
+            "accessed_at": "2026-09-11",
+            "verified_at": "2026-09-11"
+          }
+        ],
+        "warhead_weight_kg": [
+          {
+            "value": 220,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "ROKETSAN ATMACA PDF kataloğu",
+              "en": "ROKETSAN ATMACA PDF catalogue"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+            "document_version": {
+              "tr": "2024 kataloğu",
+              "en": "2024 catalogue"
+            },
+            "accessed_at": "2026-09-11",
+            "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+            "verified_at": "2026-09-11"
+          },
+          {
+            "value": 250,
+            "confidence": "press",
+            "scope": "beyan",
+            "stated_at": "2021-02",
+            "source": {
+              "tr": "Naval News, 5 Şubat 2021",
+              "en": "Naval News, 5 Feb 2021"
+            },
+            "source_url": "https://www.navalnews.com/naval-news/2021/02/video-turkeys-new-atmaca-missile-aces-latest-tests-achieves-ioc",
+            "accessed_at": "2026-09-11",
+            "verified_at": "2026-09-11"
+          }
+        ]
+      },
+      "attributes": {
+        "guidance": {
+          "value": {
+            "tr": "Ataletsel navigasyon, karıştırmaya dayanıklı küresel konumlama, barometrik ve radar altimetre; aktif radar arayıcı",
+            "en": "Inertial navigation, anti-jam GNSS, barometric and radar altimeter; active radar seeker"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "ROKETSAN ATMACA PDF kataloğu",
+            "en": "ROKETSAN ATMACA PDF catalogue"
+          },
+          "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595374_atmaca.pdf",
+          "document_version": {
+            "tr": "2024 kataloğu",
+            "en": "2024 catalogue"
+          },
+          "accessed_at": "2026-09-11",
+          "source_sha256": "c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4",
+          "verified_at": "2026-09-11"
+        },
+        "propellant": {
+          "value": {
+            "tr": "Turbojet (Kale KTJ-3200)",
+            "en": "Turbojet (Kale KTJ-3200)"
+          },
+          "confidence": "press",
+          "source": {
+            "tr": "TRT World, 10 Mart 2024",
+            "en": "TRT World, 10 Mar 2024"
+          },
+          "source_url": "https://www.trtworld.com/turkiye/atmacas-first-test-firing-with-turkish-turbojet-engine-hits-target-17303637",
+          "accessed_at": "2026-09-11",
+          "verified_at": "2026-09-11"
+        }
+      },
+      "annotations": [
+        {
+          "id": "nose",
+          "t": 0.1,
+          "angle": 90,
+          "label": {
+            "tr": "Burun bölümü",
+            "en": "Nose section"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "body",
+          "t": 0.52,
+          "angle": 90,
+          "label": {
+            "tr": "Gövde",
+            "en": "Body"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "tail-fin",
+          "t": 0.93,
+          "angle": 200,
+          "label": {
+            "tr": "Kuyruk kanatçığı",
+            "en": "Tail fin"
+          },
+          "confidence": "press"
+        }
+      ],
+      "_todo": [
+        "Kanatcik profili ve dis gorunum icin lisansli referans araniyor; su anki model generic missile profili kullaniyor.",
+        "Web sayfasindaki 4,3-5,2 m araligi ile PDF'deki 5,2 m tek degeri arasindaki konfigurasyon iliskisi acikliga kavusturulacak.",
+        "Web < 750 kg ile PDF 750 kg arasindaki iliski acikliga kavusturulacak; simdilik celiski olarak gorunuyor.",
+        "2024-03-10 Kale KTJ-3200 motorlu test icin orijinal TRT/AA kaynagi dogrulanacak."
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2009",
+      "title": {
+        "tr": "Proje başlangıcı",
+        "en": "Project start"
+      },
+      "body": {
+        "tr": "Deniz Kuvvetleri Komutanlığı'nın yüzeyden yüzeye seyir füzesi ihtiyacıyla ROKETSAN önderliğinde başladı.",
+        "en": "Started under ROKETSAN to meet the Turkish Naval Forces' surface-to-surface cruise missile requirement."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Daily Sabah, 5 Temmuz 2020",
+        "en": "Daily Sabah, 5 Jul 2020"
+      },
+      "source_url": "https://www.dailysabah.com/business/defense/turkeys-1st-maritime-missile-atmaca-successfully-passes-latest-test"
+    },
+    {
+      "date": "2018-11-02",
+      "title": {
+        "tr": "Seri üretim sözleşmesi",
+        "en": "Serial production contract"
+      },
+      "body": {
+        "tr": "SSB ile ROKETSAN arasında seri üretim anlaşması imzalandı.",
+        "en": "Serial production contract signed between SSB and ROKETSAN."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "Naval News, 5 Şubat 2021",
+        "en": "Naval News, 5 Feb 2021"
+      },
+      "source_url": "https://www.navalnews.com/naval-news/2021/02/video-turkeys-new-atmaca-missile-aces-latest-tests-achieves-ioc"
+    },
+    {
+      "date": "2019-11-03",
+      "title": {
+        "tr": "İlk denizden test atışı",
+        "en": "First ship-launched test"
+      },
+      "body": {
+        "tr": "TCG Kınalıada'dan hedefe atış yapıldı.",
+        "en": "Test firing conducted from TCG Kınalıada."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "Savunma Sanayi, 4 Kasım 2019",
+        "en": "Savunma Sanayi, 4 Nov 2019"
+      },
+      "source_url": "https://savunmasanayi.org/2019/11/04/kinaliada-atmaca-test/"
+    },
+    {
+      "date": "2020-07-01",
+      "title": {
+        "tr": "200 km ötesindeki hedefe tam isabet",
+        "en": "200 km-plus target hit"
+      },
+      "body": {
+        "tr": "Karadeniz'de gerçekleştirilen atışta 200 km ötesindeki hedef vuruldu.",
+        "en": "A launch in the Black Sea hit a target beyond 200 km."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "SSB Başkanı İsmail Demir açıklaması, 4 Temmuz 2020",
+        "en": "SSB Chair Ismail Demir statement, 4 Jul 2020"
+      },
+      "source_url": "https://savunmasanayi.org/2020/07/04/roketsanin-atmacasi-200-km-otedeki-hedefi-tam-on-ikiden-imha-etti/"
+    },
+    {
+      "date": "2021-02-04",
+      "title": {
+        "tr": "IOC testi",
+        "en": "IOC test"
+      },
+      "body": {
+        "tr": "Canlı harp başlığıyla yapılan testle ilk operasyonel yetenek kazanıldı.",
+        "en": "Initial operational capability achieved with a live-warhead test."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Naval News, 5 Şubat 2021",
+        "en": "Naval News, 5 Feb 2021"
+      },
+      "source_url": "https://www.navalnews.com/naval-news/2021/02/video-turkeys-new-atmaca-missile-aces-latest-tests-achieves-ioc"
+    },
+    {
+      "date": "2021-08",
+      "title": {
+        "tr": "Seri üretime geçiş",
+        "en": "Serial production started"
+      },
+      "body": {
+        "tr": "ROKETSAN CEO'su Murat İkinci, 2021'in ilk yarısında seri üretime başlandığını açıkladı.",
+        "en": "ROKETSAN CEO Murat İkinci announced that serial production began in the first half of 2021."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "ROKETSan, 17 Ağustos 2021",
+        "en": "ROKETSAN, 17 Aug 2021"
+      },
+      "source_url": "https://www.roketsan.com.tr/en/media/news/turkeys-rocket-and-missile-center-roketsan-ready-idef21-new-products"
+    },
+    {
+      "date": "2022-07-02",
+      "title": {
+        "tr": "Kara konuşlu test atışı",
+        "en": "Land-based test launch"
+      },
+      "body": {
+        "tr": "Karadan denizdeki hedefe ateşlendi; KARA ATMACA geliştirmesinin ilk adımı olarak değerlendirildi.",
+        "en": "Fired from land against a sea target; treated as the first step toward KARA ATMACA."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "DefenceTurk, 2 Temmuz 2022",
+        "en": "DefenceTurk, 2 Jul 2022"
+      },
+      "source_url": "https://www.defenceturk.net/kara-konuslu-atmaca-gemisavar-fuzesinin-test-atisi-yapildi"
+    },
+    {
+      "date": "2025-03-12",
+      "title": {
+        "tr": "Denizaltıdan ilk atış",
+        "en": "First submarine launch"
+      },
+      "body": {
+        "tr": "TCG Preveze (S-353) denizaltısından kapsüllü fırlatma testi yapıldı.",
+        "en": "Encapsulated launch test conducted from TCG Preveze (S-353)."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Naval News, 13 Mart 2025",
+        "en": "Naval News, 13 Mar 2025"
+      },
+      "source_url": "https://www.navalnews.com/naval-news/2025/03/turkish-navy-test-fires-submarine-launched-version-of-atmaca-missile-for-the-first-time"
+    }
+  ],
+  "revisions": [],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
+  },
+  "_todo": [
+    "ROKETSAN web/PDF sayfalarinin ucuncu taraf arsiv kopyasi alinacak.",
+    "PDF'nin gercek yayinlanma tarihi/surumu dogrulanacak.",
+    "Dis gorunus ve kanatcik profili icin lisansli referans bulunacak."
+  ]
+}

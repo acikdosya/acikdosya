@@ -17,7 +17,8 @@ export const SPEC_UNITS: Record<SpecKey, SpecUnit> = {
   diameter_mm: 'mm',
   mass_kg: 'kg',
   range_km: 'km',
-  cep_m: 'm'
+  cep_m: 'm',
+  warhead_weight_kg: 'kg'
 };
 
 /** Guven siralamasi — dusuk sayi daha guvenilir. */
@@ -51,15 +52,26 @@ export function formatNumber(
   return new Intl.NumberFormat(locale, options).format(value);
 }
 
-/** "> 280" — operator degerin onunde, ince bosluk ile. */
+/** "> 280" veya "4,3 – 5,2" — operator degerin onunde, araliklar en-dash ile. */
 export function formatValue(
-  measurement: Pick<Measurement, 'value' | 'operator'>,
+  measurement: Pick<
+    Measurement,
+    'value' | 'operator' | 'upper_value' | 'upper_operator'
+  >,
   locale: Locale
 ): string {
-  const number = formatNumber(measurement.value, locale);
+  const lower = formatNumber(measurement.value, locale);
+
+  if (measurement.upper_value !== undefined) {
+    const upper = formatNumber(measurement.upper_value, locale);
+    const lowerOp = measurement.operator ? `${measurement.operator} ` : '';
+    const upperOp = measurement.upper_operator ? `${measurement.upper_operator} ` : '';
+    return `${lowerOp}${lower} – ${upperOp}${upper}`;
+  }
+
   return measurement.operator
-    ? `${measurement.operator} ${number}`
-    : number;
+    ? `${measurement.operator} ${lower}`
+    : lower;
 }
 
 /**

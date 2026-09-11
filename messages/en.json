@@ -53,7 +53,8 @@
     "diameter_mm": "Diameter",
     "mass_kg": "Mass",
     "range_km": "Range",
-    "cep_m": "Circular error probable (CEP)"
+    "cep_m": "Circular error probable (CEP)",
+    "warhead_weight_kg": "Warhead weight"
   },
   "Attributes": {
     "guidance": "Guidance",
@@ -115,7 +116,8 @@
     "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation."
   },
   "Categories": {
-    "balistik-fuze": "Ballistic missile"
+    "balistik-fuze": "Ballistic missile",
+    "seyir-fuzesi": "Cruise missile"
   },
   "Status": {
     "gelistirme": "In development",
