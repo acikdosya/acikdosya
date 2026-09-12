@@ -6,6 +6,7 @@ import {
   OgBadge,
   OG_FONT_FAMILY,
   OG_SIZE,
+  X_TITLE_OVERLAY,
   loadOgFonts
 } from '@/lib/og';
 import {routing} from '@/i18n/routing';
@@ -54,7 +55,16 @@ export default async function OpengraphImage({
           width: '100%',
           height: '100%',
           background: PALETTE.ground,
-          padding: '64px 72px',
+          /*
+           * Alt bosluk X'in baslik etiketini temizliyor (X_TITLE_OVERLAY).
+           * Uzun yazim kullaniliyor: satori uc degerli padding kisayolunu
+           * dogru okumuyor, alt bosluk sessizce uygulanmiyordu.
+           * onizlemede etiket rozet satirinin uzerine biniyordu.
+           */
+          paddingTop: 64,
+          paddingLeft: 72,
+          paddingRight: 72,
+          paddingBottom: X_TITLE_OVERLAY.height + 16,
           fontFamily: OG_FONT_FAMILY
         }}
       >

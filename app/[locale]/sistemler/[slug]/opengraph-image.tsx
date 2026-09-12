@@ -16,6 +16,7 @@ import {
   OgBadge,
   OG_FONT_FAMILY,
   OG_SIZE,
+  X_TITLE_OVERLAY,
   loadOgFonts,
   silhouetteDataUri
 } from '@/lib/og';
@@ -33,11 +34,17 @@ export const contentType = 'image/png';
 export const alt = 'Açık Dosya';
 
 /*
- * Siluetin genisligi. 1200x630 tuvalde ad, kunye ve olcu satiri icin yer
- * kaldiktan sonra kalan yukseklige gore secildi; buyutulurse alttaki
- * rozet satiri disari tasar.
+ * Cizime ayrilan KUTU. Onceki surumde yalnizca genislik sabitti (620 px)
+ * ve yukseklik oranla belirleniyordu. Fuzede sorun cikmiyordu — yan
+ * gorunusun orani 0,46, yani genisletince alcak kaliyor. Ucakta ayni
+ * oran 1,6: AKINCI'nin zarfi 620 px genislikte 994 px yuksekligine
+ * cikiyor ve 630 px'lik tuvali tasiyordu. Yayindaki gorselde cizimin
+ * ucte ikisi, olcu satiri ve rozet tuvalin disinda kaliyordu.
+ *
+ * Artik iki kenara birden sigdiriliyor: hangisi once dolarsa olcek onu
+ * izler. Portre oranli bir zarf kucuk cizilir, ama tam cizilir.
  */
-const SILHOUETTE_WIDTH = 620;
+const DRAWING_BOX = {width: 620, height: 240};
 
 export function generateStaticParams() {
   return getSystemSlugs().map((slug) => ({slug}));
@@ -130,6 +137,14 @@ export default async function OpengraphImage({
   const dimensionValue =
     dimensionList.length > 0 ? primary(dimensionList) : undefined;
 
+  /* Kutuya sigdirma carpani: iki kenardan dar olani belirler. */
+  const fit = silhouette
+    ? Math.min(
+        DRAWING_BOX.width / silhouette.width,
+        DRAWING_BOX.height / silhouette.height
+      )
+    : 0;
+
   return new ImageResponse(
     (
       <div
@@ -141,7 +156,17 @@ export default async function OpengraphImage({
           width: '100%',
           height: '100%',
           background: PALETTE.ground,
-          padding: '56px 72px',
+          /*
+           * Alt bosluk X'in baslik etiketini temizliyor (X_TITLE_OVERLAY).
+           * Uzun yazim kullaniliyor: satori uc degerli padding kisayolunu
+           * dogru okumuyor, alt bosluk sessizce uygulanmiyordu.
+           * onizlemede etiket olcu satirinin uzerine biniyordu ve
+           * "Uzunluk 6,5 m · resmî" yarisindan kapaniyordu.
+           */
+          paddingTop: 56,
+          paddingLeft: 72,
+          paddingRight: 72,
+          paddingBottom: X_TITLE_OVERLAY.height + 16,
           fontFamily: OG_FONT_FAMILY
         }}
       >
@@ -187,8 +212,8 @@ export default async function OpengraphImage({
           <div style={{display: 'flex', paddingLeft: 96}}>
             <img
               src={silhouette.src}
-              width={SILHOUETTE_WIDTH}
-              height={(SILHOUETTE_WIDTH / silhouette.width) * silhouette.height}
+              width={Math.round(silhouette.width * fit)}
+              height={Math.round(silhouette.height * fit)}
               alt=""
             />
           </div>

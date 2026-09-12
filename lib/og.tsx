@@ -28,6 +28,24 @@ import {
 
 export const OG_SIZE = {width: 1200, height: 630} as const;
 
+/**
+ * X'in BAG ONIZLEMESINDE gorselin sol alt kosesine bindirdigi baslik
+ * etiketi. Bizim denetimimizde degil, engellenemiyor; tek yapabilecegimiz
+ * o koseye okunmasi gereken bir sey koymamak.
+ *
+ * Olcu tahmin degil: onizlemeden olculdu. Etiket goruntuleme pikselinde
+ * ~12 px icerden basliyor ve ~28 px yuksekliginde, ama kart 1200 px
+ * uretilip yaklasik 500 px'te gosteriliyor — yani gorsel uzayindaki
+ * karsiligi 2,4 kat buyuk. Kisa bir baslikta ("TAYFUN") kapladigi alan
+ * x 33–209, alttan 92 px cikti. Baslik uzadikca etiket YATAYDA buyur,
+ * dikeyde buyumez; bu yuzden pay genislikte bol, yukseklikte dar.
+ *
+ * Kart rotalari bu kisitin DISINDA: kartlar gonderiye medya olarak
+ * yukleniyor ve yuklenen medyaya X etiket bindirmiyor. Etiket yalnizca
+ * og:image'den uretilen bag onizlemesinde cikiyor.
+ */
+export const X_TITLE_OVERLAY = {width: 280, height: 100} as const;
+
 type OgFont = {
   name: string;
   data: ArrayBuffer;

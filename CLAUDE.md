@@ -101,6 +101,17 @@ Kaynak belirsizliği kendisi yazıyorsa ölçüme `uncertainty` alanı eklenir
 kılar**; açık uçlu operatörle ya da aralıklı kayıtla birlikte yazılamaz, şema
 orada reddeder. Bugün hiçbir kayıtta dolu değil.
 
+### Tekrar zinciri — henüz yok, yeri belli
+
+Bir iddianın kaç yayında tekrarlandığını ve hepsinin tek bir kökene
+dayandığını göstermek için şemada alan yok. Geldiğinde **ölçüme değil
+kaynağa** eklenecek: tekrarlanan şey iddia değil, belgedir. Kaynak zaten
+kimlikli bir varlık (`lib/cards/params.ts` sourceKey).
+
+Bu alan dolmadan "N yayın tek kaynağı tekrarlıyor" cümlesi hiçbir yerde
+kurulamaz — ne kartta, ne gönderide (§5.10). Paylaşım kartı bugün ters
+yönde çalışıyor: tek belge, ona dayanan N değer.
+
 ### Ana sayfa panelinin konusu
 
 Hangi dosyanın hangi alanının anlatıldığı **içerikte** yazar:
@@ -247,6 +258,27 @@ Prototipte oturmuş palet — koru:
    alan konmaz; makineye söylediğimizle okuyucuya söylediğimiz aynı olmalı.
    Operatör değerin parçasıdır: `> 280` schema.org'da `minValue`'dur,
    `value` değil.
+9. **Üretilmiş görselde etiketli harita kesiti yok.** Etkileşimli harita yer
+   adlarını taşır ve bu §5.1'in ihlali değildir: kural *bizim* hedef
+   etiketlememizi yasaklar, genel amaçlı bir altlığın şehir adı basması
+   harita olmasının gereğidir. Çizgi üretilmiş görselde: paylaşım görselleri
+   ve kartlar ekran görüntüsü olarak dolaşır ve bağlamından kopar. Menzil
+   halkasının Halep ya da Tebriz üzerinden geçtiği tek bir kare, sekiz aydır
+   korunan sınırı deler. Harita gerekiyorsa siluete veya veri satırına
+   çevrilir.
+10. **Sosyal medya metinleri de bu kurallara tabidir.** Bir gönderinin olgu
+    olarak söylediği her şey `content/` altında kayıtlı olmalı: kaynak adı,
+    tarih, bağlantı, güven seviyesi. Kayıtlı değilse ya önce kaydedilir ya
+    gönderiden çıkar.
+
+    Bu madde bir olaydan sonra yazıldı. İlk paylaşım taslağı "beş büyük
+    yayın" ve iki ayrı uçuş süresi iddia ediyordu; ikisi de dosyada yoktu,
+    bir sohbetin arama sonuçlarından gelmişti. Gönderinin kendi konusu
+    doğrulanmamış tekrarın tehlikesiydi.
+
+    Tehlike yapısal: gönderi metni koddan geçmez, hiçbir doğrulayıcı ona
+    bakmaz, şema onu reddedemez. Tek savunma hattı yayından önce her cümleyi
+    `content/` ile karşılaştırmak.
 
 ---
 

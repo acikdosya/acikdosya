@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<meta name="design_doc_mode" content="canvas">
+<style>
+  body { margin: 0; background: #E4E5E1; }
+  a { color: #B3131B; text-decoration: none; }
+  a:hover { color: #1C2124; }
+</style>
+</helmet>
+
+<div style="background:#E4E5E1;color:#1C2124;font-family:'Source Serif 4',Georgia,serif;padding:64px;box-sizing:border-box;display:flex;flex-direction:column;gap:72px;align-items:flex-start">
+
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <span style="font-family:Archivo,sans-serif;font-size:13px;font-weight:600;color:#B3131B">01</span>
+    <h1 style="font-family:Archivo,sans-serif;font-weight:600;font-size:30px;letter-spacing:-0.025em;margin:0">Sosyal medya kapakları</h1>
+    <p style="font-size:17px;line-height:1.6;margin:0;max-width:60ch;color:#5C6367;text-wrap:pretty">Tek yerleşim, üç tuval. Üst kenarda yatay ölçü cetveli; solda kelime markası ve tek satır tanım; sağda güven rozetlerinin lejantı — üç durum desenle ayrışır. Sol alt çeyrek ve tuvalin alt beşte biri boş bırakıldı.</p>
+  </div>
+
+  <!-- ============ X · 1500 × 500 ============ -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:baseline;gap:14px;width:1500px;border-top:1px solid #C6C9C3;padding-top:12px">
+      <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">X</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">1500 × 500</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">akışta ~500 px genişlikte okunur</span>
+    </div>
+
+    <div style="position:relative;width:1500px;height:500px;background:#E4E5E1;overflow:hidden;flex:none">
+      <div style="position:absolute;left:0;top:0;width:100%;height:26px;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to right,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:100% 10px,100% 26px;background-repeat:repeat-x;background-position:left top,left top"></div>
+
+      <div style="position:absolute;left:88px;top:62px;display:flex;flex-direction:column;gap:18px">
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:84px;letter-spacing:-0.04em;line-height:1;color:#1C2124">AÇIK DOSYA</span>
+        <span style="font-size:27px;line-height:1.35;color:#5C6367;max-width:34ch">Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları</span>
+      </div>
+
+      <sc-if value="{{ badges }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;right:88px;top:62px;display:flex;flex-direction:column;align-items:flex-end;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #1C2124;color:#1C2124;padding:7px 16px">resmî</span>
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:7px 16px">basın</span>
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.10);color:#B3131B;padding:7px 16px">tahmin</span>
+        </div>
+      </sc-if>
+
+      <div style="position:absolute;right:88px;top:332px;display:flex;align-items:center;gap:14px">
+        <sc-if value="{{ mark }}" hint-placeholder-val="{{ true }}">
+          <svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#1C2124"></rect></svg>
+        </sc-if>
+        <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367">acikdosya.org</span>
+      </div>
+
+      <sc-if value="{{ guides }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;bottom:0;width:100%;height:100px;background:rgba(179,19,27,.05);border-top:1px dashed #B3131B"></div>
+        <div style="position:absolute;left:0;bottom:0;width:375px;height:250px;border-right:1px dashed #B3131B;border-top:1px dashed #B3131B;background:rgba(179,19,27,.05)"></div>
+        <div style="position:absolute;left:44px;bottom:-40px;width:200px;height:200px;border:1px dashed #1C2124;border-radius:50%;background:rgba(28,33,36,.06)"></div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- ============ Bluesky · 3000 × 1000 ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:14px;width:3000px;border-top:1px solid #C6C9C3;padding-top:12px">
+      <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">Bluesky</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">3000 × 1000</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">aynı yerleşim, 2× ölçek</span>
+    </div>
+
+    <div style="position:relative;width:3000px;height:1000px;background:#E4E5E1;overflow:hidden;flex:none">
+      <div style="position:absolute;left:0;top:0;width:100%;height:52px;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 2px,transparent 2px,transparent 40px),repeating-linear-gradient(to right,#1C2124 0,#1C2124 2px,transparent 2px,transparent 200px);background-size:100% 20px,100% 52px;background-repeat:repeat-x;background-position:left top,left top"></div>
+
+      <div style="position:absolute;left:176px;top:124px;display:flex;flex-direction:column;gap:36px">
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:168px;letter-spacing:-0.04em;line-height:1;color:#1C2124">AÇIK DOSYA</span>
+        <span style="font-size:54px;line-height:1.35;color:#5C6367;max-width:34ch">Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları</span>
+      </div>
+
+      <sc-if value="{{ badges }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;right:176px;top:124px;display:flex;flex-direction:column;align-items:flex-end;gap:28px">
+          <span style="font-family:Archivo,sans-serif;font-size:40px;font-weight:500;border:2px solid #1C2124;color:#1C2124;padding:14px 32px">resmî</span>
+          <span style="font-family:Archivo,sans-serif;font-size:40px;font-weight:500;border:2px dashed #5C6367;color:#5C6367;padding:14px 32px">basın</span>
+          <span style="font-family:Archivo,sans-serif;font-size:40px;font-weight:500;border:2px solid #B3131B;background:rgba(179,19,27,.10);color:#B3131B;padding:14px 32px">tahmin</span>
+        </div>
+      </sc-if>
+
+      <div style="position:absolute;right:176px;top:664px;display:flex;align-items:center;gap:28px">
+        <sc-if value="{{ mark }}" hint-placeholder-val="{{ true }}">
+          <svg viewBox="0 0 100 100" width="52" height="52" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#1C2124"></rect></svg>
+        </sc-if>
+        <span style="font-family:Archivo,sans-serif;font-size:38px;color:#5C6367">acikdosya.org</span>
+      </div>
+
+      <sc-if value="{{ guides }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;bottom:0;width:100%;height:200px;background:rgba(179,19,27,.05);border-top:2px dashed #B3131B"></div>
+        <div style="position:absolute;left:0;bottom:0;width:750px;height:500px;border-right:2px dashed #B3131B;border-top:2px dashed #B3131B;background:rgba(179,19,27,.05)"></div>
+        <div style="position:absolute;left:88px;bottom:-80px;width:400px;height:400px;border:2px dashed #1C2124;border-radius:50%;background:rgba(28,33,36,.06)"></div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- ============ NSosyal · 3000 × 1000, geniş güvenli alan ============ -->
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;align-items:baseline;gap:14px;width:3000px;border-top:1px solid #C6C9C3;padding-top:12px">
+      <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">NSosyal</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">3000 × 1000</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;margin-left:auto">ölçü bilinmiyor: içerik orta bantta, her yönden geniş pay</span>
+    </div>
+
+    <div style="position:relative;width:3000px;height:1000px;background:#E4E5E1;overflow:hidden;flex:none">
+      <div style="position:absolute;left:0;top:0;width:100%;height:52px;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 2px,transparent 2px,transparent 40px),repeating-linear-gradient(to right,#1C2124 0,#1C2124 2px,transparent 2px,transparent 200px);background-size:100% 20px,100% 52px;background-repeat:repeat-x;background-position:left top,left top"></div>
+
+      <div style="position:absolute;left:340px;top:228px;display:flex;flex-direction:column;gap:32px">
+        <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:148px;letter-spacing:-0.04em;line-height:1;color:#1C2124">AÇIK DOSYA</span>
+        <span style="font-size:50px;line-height:1.35;color:#5C6367;max-width:44ch">Bağımsız teknik dosya · acikdosya.org</span>
+      </div>
+
+      <sc-if value="{{ badges }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;right:340px;top:240px;display:flex;flex-direction:column;align-items:flex-end;gap:26px">
+          <span style="font-family:Archivo,sans-serif;font-size:38px;font-weight:500;border:2px solid #1C2124;color:#1C2124;padding:13px 30px">resmî</span>
+          <span style="font-family:Archivo,sans-serif;font-size:38px;font-weight:500;border:2px dashed #5C6367;color:#5C6367;padding:13px 30px">basın</span>
+          <span style="font-family:Archivo,sans-serif;font-size:38px;font-weight:500;border:2px solid #B3131B;background:rgba(179,19,27,.10);color:#B3131B;padding:13px 30px">tahmin</span>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ mark }}" hint-placeholder-val="{{ true }}">
+        <svg viewBox="0 0 100 100" width="48" height="48" style="position:absolute;right:340px;top:140px" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#1C2124"></rect></svg>
+      </sc-if>
+
+      <sc-if value="{{ guides }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:0;bottom:0;width:100%;height:200px;background:rgba(179,19,27,.05);border-top:2px dashed #B3131B"></div>
+        <div style="position:absolute;left:0;bottom:0;width:750px;height:500px;border-right:2px dashed #B3131B;border-top:2px dashed #B3131B;background:rgba(179,19,27,.05)"></div>
+        <div style="position:absolute;left:160px;bottom:-80px;width:400px;height:400px;border:2px dashed #1C2124;border-radius:50%;background:rgba(28,33,36,.06)"></div>
+        <div style="position:absolute;left:240px;right:240px;top:120px;bottom:220px;border:2px dashed #5C6367"></div>
+      </sc-if>
+    </div>
+  </div>
+
+  <!-- ============ X kapağı akışta · küçük boyut denetimi ============ -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div style="display:flex;align-items:baseline;gap:14px;width:500px;border-top:1px solid #C6C9C3;padding-top:12px">
+      <span style="font-family:Archivo,sans-serif;font-size:14px;font-weight:600">Denetim</span>
+      <span style="font-family:Archivo,sans-serif;font-size:13px;color:#5C6367;font-variant-numeric:tabular-nums">500 × 167</span>
+    </div>
+    <div style="width:500px;height:167px;overflow:hidden;flex:none">
+      <div style="width:1500px;height:500px;transform:scale(0.3333);transform-origin:left top;position:relative;background:#E4E5E1">
+        <div style="position:absolute;left:0;top:0;width:100%;height:26px;background-image:repeating-linear-gradient(to right,#C6C9C3 0,#C6C9C3 1px,transparent 1px,transparent 20px),repeating-linear-gradient(to right,#1C2124 0,#1C2124 1px,transparent 1px,transparent 100px);background-size:100% 10px,100% 26px;background-repeat:repeat-x;background-position:left top,left top"></div>
+        <div style="position:absolute;left:88px;top:62px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-family:Archivo,sans-serif;font-weight:600;font-size:84px;letter-spacing:-0.04em;line-height:1;color:#1C2124">AÇIK DOSYA</span>
+          <span style="font-size:27px;line-height:1.35;color:#5C6367;max-width:34ch">Türk savunma sanayii sistemlerinin kaynaklı teknik dosyaları</span>
+        </div>
+        <div style="position:absolute;right:88px;top:62px;display:flex;flex-direction:column;align-items:flex-end;gap:14px">
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #1C2124;color:#1C2124;padding:7px 16px">resmî</span>
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px dashed #5C6367;color:#5C6367;padding:7px 16px">basın</span>
+          <span style="font-family:Archivo,sans-serif;font-size:20px;font-weight:500;border:1px solid #B3131B;background:rgba(179,19,27,.10);color:#B3131B;padding:7px 16px">tahmin</span>
+        </div>
+        <div style="position:absolute;right:88px;top:332px;display:flex;align-items:center;gap:14px">
+          <svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true"><rect x="10" y="8" width="22" height="84" fill="#1C2124"></rect><rect x="32" y="8" width="30" height="20" fill="#1C2124"></rect><rect x="32" y="72" width="30" height="20" fill="#1C2124"></rect><rect x="46" y="40" width="44" height="20" fill="#1C2124"></rect></svg>
+          <span style="font-family:Archivo,sans-serif;font-size:19px;color:#5C6367">acikdosya.org</span>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:16px;line-height:1.55;margin:0;max-width:56ch;color:#5C6367;text-wrap:pretty">Küçük boyutta kelime markası ve rozet desenleri ayrışıyor; tanım satırı okunmasa da yerleşim bozulmuyor. Vurgu rengi tek yerde: tahmin rozeti.</p>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;guides&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Kapak&quot;},&quot;badges&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Kapak&quot;},&quot;mark&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Kapak&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      guides: this.props.guides ?? false,
+      badges: this.props.badges ?? true,
+      mark: this.props.mark ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
