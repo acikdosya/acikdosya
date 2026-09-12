@@ -7,11 +7,16 @@
     "en": "ATMACA"
   },
   "category": "seyir-fuzesi",
-  "manufacturer": {
-    "id": "roketsan",
-    "name": "ROKETSAN"
-  },
+  "manufacturer": [
+    {
+      "id": "roketsan",
+      "name": "ROKETSAN"
+    }
+  ],
   "status": "seri-uretim",
+  "range_ring": {
+    "field": "range_km"
+  },
   "summary": {
     "tr": "ROKETSAN'ın gemisavar seyir füzesi.",
     "en": "ROKETSAN's anti-ship cruise missile."

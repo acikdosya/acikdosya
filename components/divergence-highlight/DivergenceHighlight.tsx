@@ -8,6 +8,7 @@ import type {Locale} from '@/i18n/routing';
 import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
 import type {Variant} from '@/lib/schema';
 import type {Divergence} from '@/lib/stats';
+import {UnitMark} from '@/components/unit-mark/UnitMark';
 import styles from './DivergenceHighlight.module.css';
 
 /**
@@ -49,7 +50,7 @@ export function DivergenceHighlight({divergence, variants, locale}: Props) {
           <li className={styles.row} key={`${measurement.value}-${index}`}>
             <span className={styles.value} data-confidence={measurement.confidence}>
               {formatValue(measurement, locale)}
-              <small>{unit}</small>
+              <UnitMark unit={unit} />
             </span>
             <span className={styles.lead} aria-hidden="true" />
             <span className={styles.badge}>

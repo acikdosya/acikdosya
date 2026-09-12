@@ -32,7 +32,7 @@ function system(overrides?: {
     slug: 'test',
     name: {tr: 'Test', en: 'Test'},
     category: 'balistik-fuze',
-    manufacturer: {id: 'test', name: 'TEST'},
+    manufacturer: [{id: 'test', name: 'TEST'}],
     status: 'test',
     summary: {tr: 'Özet', en: 'Summary'},
     variants: overrides?.variants ?? [variant('v1')],

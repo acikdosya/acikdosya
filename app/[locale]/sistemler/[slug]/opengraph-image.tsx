@@ -2,7 +2,13 @@ import {ImageResponse} from 'next/og';
 import {getTranslations} from 'next-intl/server';
 import type {Locale} from '@/i18n/routing';
 import {getSystem, getSystemSlugs} from '@/lib/content';
-import {formatValue, primary, SPEC_UNITS} from '@/lib/format';
+import {
+  formatValue,
+  manufacturerNames,
+  primary,
+  SPEC_UNITS,
+  withUnit
+} from '@/lib/format';
 import {
   type AircraftDimensions,
   type MissileDimensions,
@@ -102,7 +108,11 @@ export default async function OpengraphImage({
           lengthM: dims.lengthM,
           diameterMm: dims.diameterMm,
           // Sayfadaki semayla ayni parca listesi, ayni izdusum.
-          parts: partsForSystem(system.slug, selection.dimensions)
+          parts: partsForSystem(
+            system.slug,
+            selection.group.id,
+            selection.dimensions
+          )
         };
       });
     silhouette = silhouetteDataUri(items);
@@ -117,7 +127,11 @@ export default async function OpengraphImage({
           lengthM: dims.lengthM,
           wingspanM: dims.wingspanM,
           heightM: dims.heightM,
-          parts: partsForSystem(system.slug, selection.dimensions)
+          parts: partsForSystem(
+            system.slug,
+            selection.group.id,
+            selection.dimensions
+          )
         };
       });
     silhouette = aircraftDataUri(items);
@@ -204,7 +218,8 @@ export default async function OpengraphImage({
               letterSpacing: '0.02em'
             }}
           >
-            {tCategory(system.category)} · {system.manufacturer.name}
+            {tCategory(system.category)} ·{' '}
+            {manufacturerNames(system.manufacturer, lang)}
           </div>
         </div>
 
@@ -234,7 +249,7 @@ export default async function OpengraphImage({
               {tSpec(dimensionKey)}
             </div>
             <div style={{display: 'flex'}}>
-              {formatValue(dimensionValue, lang)} {SPEC_UNITS[dimensionKey]}
+              {withUnit(formatValue(dimensionValue, lang), SPEC_UNITS[dimensionKey])}
             </div>
             <OgBadge
               confidence={dimensionValue.confidence}

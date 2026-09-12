@@ -501,6 +501,40 @@
       "acquired_at": "2026-09-11",
       "used_in": [],
       "notes": "Pistte duran PT-1'in uzaktan, uzun objektifle çekilmiş yan görünüşe YAKIN fotoğrafı. Bakıldı, repoya kopyalanmadı. ORAN ÇIKARILMADI ama bu kare ötekilerden daha umut verici: uzun objektif derinlik sıkışmasını azaltıyor ve karede İKİ bilinen ölçü birden görünüyor (12,3 m uzunluk, 4,1 m yükseklik). Kaba bir tutarlılık sınaması iki eksenin ölçeğini %2,3 içinde uyumlu buldu; uçak hafifçe yalpalı olduğu için eksen boyu ölçüler kısa okunuyor. Dikkatli bir landmark çalışması yapılırsa lib/geometry/akinci.ts içindeki eksen boyu 'reading' oranları 'measured'a yükseltilebilir. Kaynak adresi yer tutucu."
+    },
+    {
+      "id": "siper-urun-1-drawing-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-12",
+      "used_in": [],
+      "notes": "ROKETSAN SİPER ürün broşüründeki Ürün-1 çizgi görünüşü. Oran çıkarmak için bakıldı; repoya kopyalanmadı, yayımlanmadı. İZDÜŞÜM SINAVI GEÇİLMEDİ. İç tutarlılık geçti: gövde eni kanatsız bölgelerde 50,0 px, eksen boyunca sapma yok. Dış uyum DÜŞTÜ: çizilen L/D 20,30 iken yayımlanan 5,4 m / 370 mm oranı 14,59, fark %39. İtici hipotezi de tutmuyor (geçiş konisinin önü 16,71, arka kanadın önü 17,11). Bu yüzden lib/geometry/siper-urun-1.ts oranlarının okunabilenleri \"reading\"; kalınlık ve kuyruk daralması çizgi görünüşten okunamadığı için \"chosen\". Broşürde hedef tipi ve harp başlığı alanları da var, ikisi de alınmadı (CLAUDE.md §5.2, §5.3)."
+    },
+    {
+      "id": "siper-urun-2-drawing-ref",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-09-12",
+      "used_in": [],
+      "notes": "ROKETSAN SİPER ürün broşüründeki Ürün-2 çizgi görünüşü. Oran çıkarmak için bakıldı; repoya kopyalanmadı. İZDÜŞÜM SINAVI İKİ KOŞULDA DA GEÇİLDİ. İç tutarlılık: gövde eni kanatsız bölgelerde 69,0 px, sapma 0,37 px (%0,5), ATMACA için kabul edilen %1,4 ölçütünün altında. Dış uyum: çizilen L/D 15,58, yayımlanan 6,3 m / 420 mm oranı 15,00, fark %3,9 — çizgi kalınlığı mertebesinde. lib/geometry/siper-urun-2.ts oranlarının okunabilenleri bu yüzden \"measured\". Çizim Ürün-1'den farklı bir düzen gösteriyor: ayrılabilir itici ve orta kanat yok, gövde boyu strake var. Broşürdeki hedef tipi ve harp başlığı alanları alınmadı (§5.2, §5.3)."
     }
   ],
   "rejected": [
@@ -515,6 +549,30 @@
       "source_url": "https://commons.wikimedia.org/…",
       "reason": "Commons'ta ama lisans etiketi 'fair use' — Commons'taki her dosya serbest değil. Ticari kullanıma uygun değil.",
       "date": "2026-09-10"
+    },
+    {
+      "id": "roketsan-siper-brochure",
+      "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+      "reason": "Birincil veri kaynağı olarak bağlantı veriliyor, dosya alınmıyor. PDF ve içindeki görseller için açık yeniden kullanım lisansı bulunamadı; erişilebilir olmak serbest olmak değildir.",
+      "date": "2026-09-12"
+    },
+    {
+      "id": "aselsan-siper-brochure",
+      "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+      "reason": "Sistem verileri için birincil kaynak; bağlantı veriliyor, dosya alınmıyor. Açık lisans bulunamadı ve üretici markası taşıyor.",
+      "date": "2026-09-12"
+    },
+    {
+      "id": "commons-roketsan-missiles-category",
+      "source_url": "https://commons.wikimedia.org/wiki/Category:Missiles_of_Roketsan",
+      "reason": "Kategori lisansı içindeki her dosya için aynı garantiyi vermez. SİPER’e ait, dosya bazında açık lisansı doğrulanabilen fotoğraf bu taramada bulunamadı.",
+      "date": "2026-09-12"
+    },
+    {
+      "id": "turdef-siper-representative-image",
+      "source_url": "https://turdef.com/article/siper-a-and-siper-4-as-counters-to-ballistic-missile-threats",
+      "reason": "Haberdeki görsel temsilî; gerçek ürün fotoğrafı değil ve sitede haklar saklı bildirimi var. Teknik ölçüm kaynağı da sayılmadı.",
+      "date": "2026-09-12"
     }
   ]
 }

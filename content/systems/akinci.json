@@ -7,10 +7,12 @@
     "en": "Bayraktar AKINCI"
   },
   "category": "insansiz-hava-araci",
-  "manufacturer": {
-    "id": "baykar",
-    "name": "BAYKAR"
-  },
+  "manufacturer": [
+    {
+      "id": "baykar",
+      "name": "BAYKAR"
+    }
+  ],
   "status": "envanterde",
   "summary": {
     "tr": "BAYKAR'ın çift motorlu taarruzi insansız hava aracı ailesi.",

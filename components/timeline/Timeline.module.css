@@ -28,12 +28,31 @@
   font-variant-numeric: var(--num);
 }
 
+.dateCell {
+  padding-top: 3px;
+}
+
 .date {
+  display: block;
   font-family: var(--font-display);
   font-size: var(--size-label);
   font-weight: var(--weight-semibold);
-  padding-top: 3px;
   font-variant-numeric: var(--num);
+}
+
+/* Sutundaki sayinin ne oldugu: olay gunu degil, duyuru gunu. */
+.dateKind {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+}
+
+/* Olay gunu sutunda duruyor; duyuru gunu burada, olayla karismasin. */
+.announced {
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  margin: 3px 0 0;
 }
 
 .title {

@@ -1,4 +1,9 @@
-import {scopeSchema, type Scope} from '../schema';
+import {
+  measurementObjectSchema,
+  scopeSchema,
+  type MeasurementObject,
+  type Scope
+} from '../schema';
 import type {DivergenceKind} from './divergence';
 
 /**
@@ -30,3 +35,11 @@ export const KIND_ORDER = [
 ] as const satisfies readonly DivergenceKind[];
 
 export const SCOPES = scopeSchema.options satisfies readonly Scope[];
+
+/**
+ * Nesne ekseninin degerleri. SCOPES ile ayni sozlesme: mesaj paketinde
+ * karsiligi olmayan bir deger arayuzde ham anahtar olarak cikardi ve
+ * typecheck bunu goremezdi (lib/messages.test.ts).
+ */
+export const OBJECTS =
+  measurementObjectSchema.options satisfies readonly MeasurementObject[];

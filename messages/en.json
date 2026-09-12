@@ -57,7 +57,8 @@
   "Categories": {
     "balistik-fuze": "Ballistic missile",
     "seyir-fuzesi": "Cruise missile",
-    "insansiz-hava-araci": "Unmanned aerial vehicle"
+    "insansiz-hava-araci": "Unmanned aerial vehicle",
+    "hava-savunma-sistemi": "Air defence system"
   },
   "Confidence": {
     "official": "official",
@@ -82,7 +83,10 @@
     "statedAt": "{year} statement",
     "unknownScope": "scope not stated",
     "onRecord": "{count} values on record",
-    "note": "These rows come from the file itself, not from a sample."
+    "note": "These rows come from the file itself, not from a sample.",
+    "object_fuze": "missile",
+    "object_sistem": "system",
+    "object_atici": "launcher"
   },
   "Footer": {
     "heading": "Independent publication",
@@ -205,7 +209,8 @@
     "loading": "Loading model…",
     "note": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cutaway, no exploded view and no internal component layout, because we have no sourced data on internal geometry. Labels name external sections only and each carries its own confidence level. The model is scaled from the published length and diameter; the proportions of the body and fins are not published figures, and the origin of each is set out in the shape record below. This is not a technical drawing.",
     "noteAircraft": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cutaway, no exploded view and no internal component layout, because we have no sourced data on internal geometry. The model is scaled from three published figures: body length, wingspan and height. The landing gear length derives from the last of these, so the model's ground-to-fin-tip measurement is exactly the height value in the table. Fuselage width, wing chord, nacelle position and tail proportions are not published figures; which of them were measured, which are unchecked readings and which were chosen for readability is set out one by one in the shape record below. Load stations are drawn as bare pylons; carried stores are not modelled.",
-    "overview": "Overview"
+    "overview": "Overview",
+    "noteAirDefence": "The schematic look is deliberate: a photorealistic render would claim an accuracy we do not have. There is no cutaway, no exploded view and no internal component layout, because we have no sourced data on internal geometry. Only the missile is modelled: the launcher vehicle, the canister and the search and fire-control radars are not drawn, because we hold no sourced measurements for any of them. The aft section of Product-1 is drawn wider; whether that section SEPARATES cannot be told from the model, as the manufacturer drawing shows only the outline. The model is scaled from published length and diameter; the ratios are not published figures and the origin of each is set out in the shape record below. It is not a technical drawing."
   },
   "Nav": {
     "primary": "Primary navigation",
@@ -226,7 +231,8 @@
     "latitude": "Latitude",
     "longitude": "Longitude",
     "loading": "Loading map…",
-    "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation."
+    "legend": "Rings are drawn along great circles — a flat circle on a Mercator projection introduces serious error at high latitudes. The figures come from public statements and contradict each other: a dashed ring is press-sourced, a red ring is an estimate with no official confirmation.",
+    "altitudeNote": "The ring shows horizontal reach only. Where a system intercept altitude is recorded, a flat circle does not carry it; the altitude value sits in the specification table."
   },
   "RangeScale": {
     "caption": "Distance scale — the published range statement is drawn against the scale of the Earth. No ring is drawn on a map: a ring asserts a radius, while this value is the manufacturer's own term.",
@@ -299,7 +305,39 @@
     "wingSpanRatio": "Wing span",
     "wingTaper": "Wing taper",
     "wingThicknessRatio": "Wing thickness",
-    "wingTrailingT": "Wing trailing-edge position"
+    "wingTrailingT": "Wing trailing-edge position",
+    "stepT": "Forward end of the transition",
+    "stepRadiusRatio": "Radius at the transition front",
+    "boosterT": "Where the booster reaches full diameter",
+    "boosterRadiusRatio": "Booster radius",
+    "finAftCount": "Aft fin count",
+    "finAftChordRatio": "Aft fin root chord",
+    "finAftTaper": "Aft fin taper",
+    "finAftSpanRatio": "Aft fin span",
+    "finAftRakeDeg": "Aft fin trailing-edge rake",
+    "finAftTrailingT": "Aft fin trailing-edge position",
+    "finAftThicknessRatio": "Aft fin thickness",
+    "finControlCount": "Control surface count",
+    "finControlChordRatio": "Control surface root chord",
+    "finControlTaper": "Control surface taper",
+    "finControlSpanRatio": "Control surface span",
+    "finControlRakeDeg": "Control surface trailing-edge rake",
+    "finControlTrailingT": "Control surface trailing-edge position",
+    "finControlThicknessRatio": "Control surface thickness",
+    "wingMidCount": "Mid wing count",
+    "wingMidChordRatio": "Mid wing root chord",
+    "wingMidTaper": "Mid wing taper",
+    "wingMidSpanRatio": "Mid wing span",
+    "wingMidRakeDeg": "Mid wing trailing-edge rake",
+    "wingMidTrailingT": "Mid wing trailing-edge position",
+    "wingMidThicknessRatio": "Mid wing thickness",
+    "strakeCount": "Strake count",
+    "strakeChordRatio": "Strake root chord",
+    "strakeTaper": "Strake taper",
+    "strakeSpanRatio": "Strake span",
+    "strakeRakeDeg": "Strake trailing-edge rake",
+    "strakeTrailingT": "Strake trailing-edge position",
+    "strakeThicknessRatio": "Strake thickness"
   },
   "RevisionLog": {
     "from": "previous value",
@@ -348,7 +386,14 @@
     "operating_altitude_ft": "Operational altitude",
     "cruise_speed_ktas": "Cruise speed",
     "max_speed_ktas": "Maximum speed",
-    "operational_range_km": "Operational range"
+    "operational_range_km": "Operational range",
+    "intercept_range_km": "System intercept range",
+    "intercept_altitude_km": "Intercept altitude",
+    "azimuth_coverage_deg": "Azimuth coverage",
+    "tracking_capacity": "Tracking capacity",
+    "engagement_capacity": "Engagement capacity",
+    "missile_control_capacity": "Missile control capacity",
+    "launcher_capacity": "Launcher missile capacity"
   },
   "Status": {
     "gelistirme": "In development",
@@ -373,6 +418,20 @@
     "revisions": "Correction log",
     "datasetName": "{name} — technical data",
     "datasetDescription": "Measurement record compiled from public sources. Every figure carries its confidence level and source; conflicting figures are kept, not resolved.",
-    "rangeDistance": "Range scale"
+    "rangeDistance": "Range scale",
+    "programAuthority": "Programme authority: {name}",
+    "origins": "Origin chain"
+  },
+  "Timeline": {
+    "announcementDate": "announcement date",
+    "announcedOn": "Announced: {date}"
+  },
+  "OriginChain": {
+    "intro": "One document and the outlets that carried it. Many news reports do not mean many independent measurements: the same figure may have been stated once and repeated many times.",
+    "notAccessed": "The original text could not be read directly. The outlet we cite does not stand in for the origin; it is one of the carriers itself.",
+    "carriedBy": "{count, plural, one {# outlet carries this document} other {# outlets carry this document}}",
+    "independent": "{count, plural, =0 {no independent publisher} one {# independent publisher} other {# independent publishers}}",
+    "samePublisher": "same publisher",
+    "auditNote": "The count covers outlets whose link to the origin was verified in this survey. It is not a worldwide total, and the absence of a record does not mean there were no repeats."
   }
 }

@@ -91,7 +91,7 @@ function MissileSilhouette({
          * Parca listesi varsa kontur cizilir, yoksa kesikli olcu zarfi.
          * Urun tanimi olmayan sisteme varsayilan bir bicim verilmez.
          */
-        parts: partsForSystem(system.slug, dims)
+        parts: partsForSystem(system.slug, selection.group.id, dims)
       };
     });
 
@@ -205,7 +205,7 @@ function AircraftSilhouette({
         lengthM: dims.lengthM,
         wingspanM: dims.wingspanM,
         heightM: dims.heightM,
-        parts: partsForSystem(system.slug, dims)
+        parts: partsForSystem(system.slug, selection.group.id, dims)
       };
     });
 

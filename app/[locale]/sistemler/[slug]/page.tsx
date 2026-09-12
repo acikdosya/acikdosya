@@ -8,6 +8,7 @@ import {
 } from '@/components/model-viewer/ModelSection';
 import {MeasureGap} from '@/components/measure-gap/MeasureGap';
 import {ModelProvenance} from '@/components/model-provenance/ModelProvenance';
+import {OriginChain} from '@/components/origin-chain/OriginChain';
 import {RangeEnvelope} from '@/components/range-envelope/RangeEnvelope';
 import {RangeScale} from '@/components/range-scale/RangeScale';
 import {RevisionLog} from '@/components/revision-log/RevisionLog';
@@ -19,13 +20,29 @@ import {Timeline} from '@/components/timeline/Timeline';
 import type {Locale} from '@/i18n/routing';
 import {SITE_URL} from '@/lib/config';
 import {getSystem, getSystemSlugs} from '@/lib/content';
-import {primary} from '@/lib/format';
-import {selectMeasurements, systemKind} from '@/lib/geometry/measurements';
+import {manufacturerNames, primary} from '@/lib/format';
+import {selectMeasurements} from '@/lib/geometry/measurements';
 import {specGroups} from '@/lib/measurement/groups';
-import type {Confidence, System} from '@/lib/schema';
+import type {Category, Confidence, System} from '@/lib/schema';
 import {systemJsonLd} from '@/lib/structured-data';
 import {absoluteUrl, alternates, ogImage} from '@/lib/urls';
 import styles from './page.module.css';
+
+/**
+ * Model aciklamasinin mesaj anahtari — kategoriye gore.
+ *
+ * Metin her sistemde ayni seyi soylemiyor: ucakta inis takimi ve yuk
+ * istasyonu anlatiliyor, hava savunma sisteminde ATICI VE KANISTERIN
+ * cizilmedigi. Record<Category, ...> exhaustive: semaya yeni bir kategori
+ * eklenip buraya satir yazilmazsa derleme duser ve yeni sistem baska bir
+ * sistemin aciklamasiyla cikmaz.
+ */
+const MODEL_NOTE_KEY: Record<Category, string> = {
+  'balistik-fuze': 'note',
+  'seyir-fuzesi': 'note',
+  'insansiz-hava-araci': 'noteAircraft',
+  'hava-savunma-sistemi': 'noteAirDefence'
+};
 
 type Props = {params: Promise<{locale: string; slug: string}>};
 
@@ -107,7 +124,9 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
   const description =
     system.summary?.[lang] ??
-    t('metaFallback', {manufacturer: system.manufacturer.name});
+    t('metaFallback', {
+      manufacturer: manufacturerNames(system.manufacturer, lang)
+    });
 
   return {
     title: system.name[lang],
@@ -141,6 +160,7 @@ export default async function SystemPage({params}: Props) {
   const tConfidence = await getTranslations('Confidence');
   const tSpecs = await getTranslations('Specs');
   const tSpecTable = await getTranslations('SpecTable');
+  const tDivergence = await getTranslations('Divergence');
 
   /*
    * Yapisal veri sayfanin kendisinden turer: Article sayfayi, Dataset
@@ -153,6 +173,7 @@ export default async function SystemPage({params}: Props) {
     url: absoluteUrl(lang, {pathname: '/sistemler/[slug]', params: {slug}}),
     labels: {
       spec: (key) => tSpecs(key),
+      object: (value) => tDivergence(`object_${value}`),
       confidence: (level) => tConfidence(level),
       familyLabel: tSpecTable('familyLabel'),
       datasetName: t('datasetName', {name: system.name[lang]}),
@@ -160,22 +181,34 @@ export default async function SystemPage({params}: Props) {
     }
   });
 
-  const kind = systemKind(system);
-  const rings = buildRings(system);
   /*
-   * Ucakta menzil halkasi cizilmiyor. Gerekcesi iki katli ve
-   * components/range-scale/geometry.ts basinda yazili: halka bir
-   * yaricap iddiasi, "operasyonel menzil" ise oyle yorumlanmadi;
-   * ustelik alti bin kilometrelik bir halka harita paketinin
-   * kapsamina girmiyor (CLAUDE.md §11). Yerine mesafe cetveli.
+   * Aile grubunun varyant adi yok; etiketi ceviri paketinden gelir.
+   * rings.ts cevirmez — orasi React ve mesaj paketi ice aktarmaz.
+   */
+  const rings = buildRings(system).map((ring) =>
+    ring.isFamily ? {...ring, variantLabel: tSpecTable('familyLabel')} : ring
+  );
+  /*
+   * Halka cizilemeyen menzil beyani kaybolmaz, mesafe cetveline duser.
+   *
+   * Kosul artik kategori degil KAYIT: `range_ring` yoksa halka yok ve
+   * sayfa sebebini cetvelin altyazisinda soyler. Gerekce
+   * components/range-scale/geometry.ts basinda — halka bir yaricap
+   * iddiasi, ucaktaki "operasyonel menzil" oyle yorumlanmadi; ustelik
+   * alti bin kilometrelik bir halka harita paketinin kapsamina
+   * girmiyor (CLAUDE.md §11).
    */
   const hasRangeStatement =
-    kind === 'aircraft' &&
+    rings.length === 0 &&
     specGroups(system).some(
       (group) =>
         group.specs.operational_range_km !== undefined ||
         group.specs.range_km !== undefined
     );
+  /* Halka yatay uzanimi cizer; dosyada irtifa varsa bunu lejant soyler. */
+  const hasInterceptAltitude = specGroups(system).some(
+    (group) => group.specs.intercept_altitude_km !== undefined
+  );
   const modelVariants = buildModelVariants(system, lang, {
     confidence: tConfidence,
     ariaLabel: (name) => tModel('ariaLabel', {name}),
@@ -229,7 +262,7 @@ export default async function SystemPage({params}: Props) {
             }}
           />
           <p className={styles.note}>
-            {tModel(kind === 'missile' ? 'note' : 'noteAircraft')}
+            {tModel(MODEL_NOTE_KEY[system.category])}
           </p>
           {/*
             Bicim kaydi: modelin oranlari nereden geldi. Sayfadaki her sayi
@@ -254,6 +287,19 @@ export default async function SystemPage({params}: Props) {
       body: <Timeline system={system} locale={lang} />
     }
   );
+
+  /*
+   * Koken zinciri yalnizca kayit varsa. Kayit yoklugu "tekrar yok"
+   * demek degil, "bu dosyada tekrar denetimi yapilmadi" demek; bos bir
+   * bolum ikisini karistirirdi.
+   */
+  if ((system.origins ?? []).length > 0) {
+    sections.push({
+      id: 'origins',
+      title: t('origins'),
+      body: <OriginChain system={system} locale={lang} />
+    });
+  }
 
   /*
    * Duzeltme gecmisi yalnizca kayit varsa. Bos bir "Duzeltme gecmisi"
@@ -286,6 +332,14 @@ export default async function SystemPage({params}: Props) {
               latitude: tRange('latitude'),
               longitude: tRange('longitude'),
               legend: tRange('legend'),
+              /*
+                Dikey bilesen yalnizca kayitliysa anlatilir. Kaydi
+                olmayan bir dosyada "irtifayi gostermiyor" demek,
+                olmayan bir veriye isaret etmek olurdu.
+              */
+              ...(hasInterceptAltitude
+                ? {altitudeNote: tRange('altitudeNote')}
+                : {}),
               confidence: {
                 official: tConfidence('official'),
                 press: tConfidence('press'),
@@ -325,9 +379,19 @@ export default async function SystemPage({params}: Props) {
         <p className={styles.eyebrow}>{t('badge')}</p>
         <h1 className={styles.title}>{system.name[lang]}</h1>
         <p className={styles.meta}>
-          {tCategory(system.category)} · {system.manufacturer.name} ·{' '}
-          {tStatus(system.status)}
+          {tCategory(system.category)} ·{' '}
+          {manufacturerNames(system.manufacturer, lang)} · {tStatus(system.status)}
         </p>
+        {/*
+          Program yurutucusu gelistiriciden ayri bir rol: SIPER'de SSB
+          programi yurutuyor, uc kurulus gelistiriyor. Ayni satira
+          karistirmak rol bilgisini silerdi.
+        */}
+        {system.program_authority ? (
+          <p className={styles.meta}>
+            {t('programAuthority', {name: system.program_authority.name})}
+          </p>
+        ) : null}
         {system.summary ? (
           <p className={styles.summary}>{system.summary[lang]}</p>
         ) : null}

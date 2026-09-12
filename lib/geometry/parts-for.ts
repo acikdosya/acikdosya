@@ -30,14 +30,22 @@ export function dimensionFields(dimensions: SelectedDimensions) {
       };
 }
 
-/** Urun tanimi ya da olcu eksikse undefined — varsayilan bicim yok. */
+/**
+ * Urun tanimi ya da olcu eksikse undefined — varsayilan bicim yok.
+ *
+ * Varyant kimligi ZORUNLU DEGIL ama verilmelidir: kayit once varyantin
+ * kendi tanimini arar, bulamazsa sistem tanimina duser. Kimlik hic
+ * verilmezse varyant tanimi olan bir sistem sessizce ortak tanimla
+ * cizilirdi (specs/variant-geometry).
+ */
 export function partsForSystem(
   systemSlug: string,
+  variantId: string | undefined,
   dimensions: SelectedDimensions
 ): Part[] | undefined {
-  const product = productFor(systemSlug);
-  if (!product) return undefined;
-  return buildParts(product, dimensionFields(dimensions));
+  const match = productFor(systemSlug, variantId);
+  if (!match) return undefined;
+  return buildParts(match.product, dimensionFields(dimensions));
 }
 
 /**
@@ -50,10 +58,11 @@ export function partsForSystem(
  */
 export function focusPointFor(
   systemSlug: string,
+  variantId: string | undefined,
   dimensions: SelectedDimensions,
   target: {part: string; t: number; angle?: number}
 ): Vec3 | undefined {
-  const parts = partsForSystem(systemSlug, dimensions);
+  const parts = partsForSystem(systemSlug, variantId, dimensions);
   if (!parts) return undefined;
 
   const part = findPart(parts, target.part);

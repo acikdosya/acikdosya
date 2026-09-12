@@ -44,7 +44,7 @@ function system(
     slug: overrides?.slug ?? 'tayfun',
     name: {tr: 'Test', en: 'Test'},
     category,
-    manufacturer: {id: 'test', name: 'TEST'},
+    manufacturer: [{id: 'test', name: 'TEST'}],
     status: 'test',
     summary: {tr: 'Özet', en: 'Summary'},
     variants: overrides?.variants ?? [variant('v1')],

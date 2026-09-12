@@ -77,6 +77,27 @@ const todoSchema = z.array(z.string().min(3)).min(1);
 export const scopeSchema = z.enum(['beyan', 'test', 'olcum', 'tahmin']);
 export type Scope = z.infer<typeof scopeSchema>;
 
+/**
+ * Deger NEYI olcuyor — hangi fiziksel nesneyi tarif ediyor.
+ *
+ * scope ile DIK EKSEN. scope degerin NASIL elde edildigini soyler, bu
+ * alan NEYI olctugunu. Bir deger ayni anda 'beyan' (ureticinin kendi
+ * karti) ve 'sistem' (fuzenin degil, sistemin menzili) olabilir.
+ *
+ * Bilesik bir dosyada ayni ad farkli nesneleri anlatir: fuze menzili
+ * ile sistem onleme menzili, fuze uzunlugu ile kanister boyutu. Ikisini
+ * ayni cetvele koymak, projenin duzeltmeye calistigi hatanin ta kendisi.
+ *
+ * KAPALI KUME. Yeni bir nesne eklemek bilincli bir karar olsun diye
+ * enum; taninmayan bir ad sema duzeyinde reddedilir.
+ *
+ * Tek urunlu dosyalarda BOS KALIR ve o zaman eksen gorunmezdir:
+ * iki taraf da bossa lib/measurement/divergence.ts ekseni atlar,
+ * kiyas sonuclari degismez.
+ */
+export const measurementObjectSchema = z.enum(['fuze', 'sistem', 'atici']);
+export type MeasurementObject = z.infer<typeof measurementObjectSchema>;
+
 export const measurementSchema = z.strictObject({
   value: z.number().finite(),
   operator: operatorSchema.optional(),
@@ -108,6 +129,18 @@ export const measurementSchema = z.strictObject({
    */
   scope: scopeSchema.optional(),
   /**
+   * Deger hangi nesneyi tarif ediyor — fuze, sistem, atici.
+   *
+   * Bilesik sistemlerde zorunlu okuma: ROKETSAN'in "100+ km" fuze
+   * menzili ile ASELSAN'in "70+ km" sistem onleme menzili ayni alan
+   * adini tasisa bile ayni seyi olcmez, dolayisiyla CELISEMEZLER.
+   *
+   * Alan adi nicelige, bu alan nesneye bakar. Ikisi birden gerekiyor:
+   * ayni nesnenin iki ayri alani da olabilir, iki nesnenin ayni adli
+   * alani da.
+   */
+  object: measurementObjectSchema.optional(),
+  /**
    * Deger hangi varyanta ait. Olcum zaten bir varyantin icinde durur;
    * bu alan kaydin BASKA bir varyanti tarif ettigi durumu isaretler
    * (kaynak "TAYFUN" dedi ama sayi BLOK-4'e ait gibi).
@@ -120,6 +153,19 @@ export const measurementSchema = z.strictObject({
    * olabilir; kiyaslanmalari icin once bu ayrim gorunur olmali.
    */
   stated_at: partialIsoDateSchema.optional(),
+  /**
+   * Degerin cikitigi KOKEN belgenin kimligi — sistem dosyasindaki
+   * `origins` kaydini gosterir.
+   *
+   * `source` ile karistirilmamali: source BIZIM okudugumuz yayin, bu
+   * alan o yayinin aktardigi belge. Cogu kez ikisi ayni degil — ozgun
+   * paylasima erisilemedigi icin onu aktaran haberi gosteriyoruz ve o
+   * haber de tekrarlardan biri.
+   *
+   * Tekrar sayisi BURAYA YAZILMAZ. Tekrarlanan sey iddia degil belge;
+   * liste kokende durur (CLAUDE.md §3).
+   */
+  origin_id: slugSchema.optional(),
   /** Insan okuyabilir kaynak adi. Ikincil hedef kitle yabanci okuyucu, bu yuzden cift dilli. */
   source: localizedTextSchema,
   source_url: z.url().optional(),
@@ -277,7 +323,27 @@ export const specKeys = [
   'operating_altitude_ft',
   'cruise_speed_ktas',
   'max_speed_ktas',
-  'operational_range_km'
+  'operational_range_km',
+  /*
+   * SISTEM DUZEYI ALANLAR — bilesik sistemler icin.
+   *
+   * Fuzenin alanlarini paylasmazlar. `range_km` fuzenin ucus erisimi,
+   * `intercept_range_km` sistemin her yone gecerli angajman yaricapi;
+   * ayni alana konsalardi iki farkli nicelik tek cetvele girerdi.
+   * Nesneyi olcumdeki `object` alani soyler, nicelik ise alan adinda.
+   *
+   * Kapasite alanlarinda BIRIM SONEKI YOK. Sonek m/mm karisikligini
+   * onlemek icin var; sayimda karisacak ikinci bir birim yok, "capacity"
+   * zaten sayim demek. Birimsiz basildiklari icin sonek yazmak alan adini
+   * sayfada gorunmeyen bir seyle uzatirdi (lib/format.ts UNIT_LABELS).
+   */
+  'intercept_range_km',
+  'intercept_altitude_km',
+  'azimuth_coverage_deg',
+  'tracking_capacity',
+  'engagement_capacity',
+  'missile_control_capacity',
+  'launcher_capacity'
 ] as const;
 export type SpecKey = (typeof specKeys)[number];
 
@@ -297,7 +363,14 @@ export const specsSchema = z.strictObject({
   operating_altitude_ft: measurementListSchema.optional(),
   cruise_speed_ktas: measurementListSchema.optional(),
   max_speed_ktas: measurementListSchema.optional(),
-  operational_range_km: measurementListSchema.optional()
+  operational_range_km: measurementListSchema.optional(),
+  intercept_range_km: measurementListSchema.optional(),
+  intercept_altitude_km: measurementListSchema.optional(),
+  azimuth_coverage_deg: measurementListSchema.optional(),
+  tracking_capacity: measurementListSchema.optional(),
+  engagement_capacity: measurementListSchema.optional(),
+  missile_control_capacity: measurementListSchema.optional(),
+  launcher_capacity: measurementListSchema.optional()
 });
 export type Specs = z.infer<typeof specsSchema>;
 
@@ -398,14 +471,65 @@ export const variantSchema = z.strictObject({
 });
 export type Variant = z.infer<typeof variantSchema>;
 
-export const timelineEventSchema = z.strictObject({
-  date: partialIsoDateSchema,
-  title: localizedTextSchema,
-  body: localizedTextSchema.optional(),
-  confidence: confidenceSchema,
-  source: localizedTextSchema.optional(),
-  source_url: z.url().optional()
-});
+/**
+ * `date` alani neyi tarif ediyor.
+ *
+ * Cok sayida kayitta olayin kendi gunu BILINMIYOR ama duyurunun gunu
+ * biliniyor: "kesin atis gunu bilinmiyor, sonuc 30.12.2022'de
+ * duyuruldu" gibi. Tek bir tarih alani bu satirlari ya duyuru gununu
+ * olay gunu yaparak ya da olayi hic kaydetmeyerek karsilardi; ikisi de
+ * kayit hatasi.
+ *
+ * Varsayilan 'event' — yayindaki dosyalarin tarihleri olay tarihi ve
+ * anlamlari degismiyor.
+ */
+export const dateKindSchema = z.enum(['event', 'announcement']);
+export type DateKind = z.infer<typeof dateKindSchema>;
+
+export const timelineEventSchema = z
+  .strictObject({
+    date: partialIsoDateSchema,
+    /** `date` olayin gunu mu, duyurunun gunu mu. Yazilmazsa olay gunu. */
+    date_kind: dateKindSchema.optional(),
+    /**
+     * Duyurunun gunu — olay gunu AYRICA biliniyorsa.
+     *
+     * Ikisi de bilindiginde `date` olayin, bu alan duyurunun gunudur:
+     * test 12.09.2024'te yapildi, 15.09.2024'te duyuruldu. Yalniz duyuru
+     * biliniyorsa bu alan yazilmaz, `date_kind` 'announcement' olur —
+     * ayni gunu iki alana yazmak, olmayan bir olay tarihi uydururdu.
+     */
+    announced_at: partialIsoDateSchema.optional(),
+    title: localizedTextSchema,
+    body: localizedTextSchema.optional(),
+    confidence: confidenceSchema,
+    /** Olayin cikitigi koken belge — olcumdeki ile ayni kayit. */
+    origin_id: slugSchema.optional(),
+    source: localizedTextSchema.optional(),
+    source_url: z.url().optional()
+  })
+  /*
+   * Duyuru tarihli bir kaydin ayrica duyuru tarihi olmaz: `date` zaten
+   * odur. Ikisini birlikte yazmak, olay tarihini bildigimiz izlenimini
+   * verirdi.
+   */
+  .refine(
+    (event) =>
+      event.announced_at === undefined || event.date_kind !== 'announcement',
+    {
+      error:
+        'date_kind "announcement" ise announced_at yazilmaz — date zaten duyuru gunudur',
+      path: ['announced_at']
+    }
+  )
+  /*
+   * Duyuru olaydan once olamaz. Kismi tarih ISO'da bastan siralanir,
+   * dize kiyasi dogru cevabi verir.
+   */
+  .refine((event) => !event.announced_at || event.announced_at >= event.date, {
+    error: 'announced_at olay tarihinden once olamaz',
+    path: ['announced_at']
+  });
 export type TimelineEvent = z.infer<typeof timelineEventSchema>;
 
 /**
@@ -482,11 +606,103 @@ export const revisionSchema = z.strictObject({
 });
 export type Revision = z.infer<typeof revisionSchema>;
 
+/**
+ * KOKEN KAYDI — bir belge ve o belgeyi tasiyan yayinlar.
+ *
+ * Neden ayri bir kayit: cok sayida haber, cok sayida bagimsiz teyit
+ * DEMEK DEGILDIR. 30.12.2022'deki ">100 km" ifadesi alti yayincida
+ * bulunuyor ve altisi da ayni paylasimi aktariyor. Ayrim yazili olmadan
+ * veri oldugundan saglam gorunur.
+ *
+ * Neden olcumun icinde degil: tekrarlanan sey iddia degil BELGEDIR
+ * (CLAUDE.md §3). Ayni koken hem bir menzil degerini hem bir takvim
+ * olayini besliyorsa tekrar listesi tek yerde durmali; her degerin
+ * altina kopyalanirsa iki liste birbirinden ayrisirdi.
+ *
+ * Sayac alani YOK. Rapor "bilinmiyor" ile "denetlenmis 5" arasinda ayrim
+ * yapiyordu; liste tutuldugunda ikisi de bedava gelir: kayit yoksa
+ * bilinmiyor, kayit varsa uzunlugu sayidir. Ayri bir sayac, listeyle
+ * ayrisabilen ikinci bir gercek uretirdi.
+ */
+const publicationSchema = z.strictObject({
+  /**
+   * Yayinci KURULUS adi. Yazar adi buraya girmez: ayni yayincinin iki
+   * yazisi iki farkli yazardan cikabilir ve yine ayni yayincidir.
+   */
+  publisher: z.string().min(1),
+  /** Yayinin kendi basligi — ayni yayincinin iki yazisini ayirir. */
+  title: z.string().min(1).optional(),
+  url: z.url().optional(),
+  date: partialIsoDateSchema.optional()
+});
+export type Publication = z.infer<typeof publicationSchema>;
+
+export const originSchema = z
+  .strictObject({
+    id: slugSchema,
+    /** Kokenin kendisi: aciklama, paylasim ya da belge. */
+    document: localizedTextSchema,
+    /** Kokeni ilk yayimlayan kurulus ya da kisi. */
+    publisher: z.string().min(1),
+    url: z.url().optional(),
+    date: partialIsoDateSchema.optional(),
+    /**
+     * Kokenin OZGUN metnine dogrudan erisilebildi mi.
+     *
+     * Cogu kez erisilemiyor: paylasim silinmis, bulten kalici bag
+     * tasimiyor. O zaman iddiayi aktaran bir yayini kaynak gosteriyoruz —
+     * ama o yayin kokenin YERINE GECMEZ, kendisi de tekrarlardan biridir.
+     * Bu alan o ayrimi acik tutar.
+     */
+    accessed: z.boolean(),
+    /**
+     * Kokeni tasiyan yayinlar. Alintiladigimiz yayin da buraya girer:
+     * o da bir tekrardir, kokenin kendisi degil.
+     *
+     * BOS OLAMAZ. Sifir tekrar bir IDDIADIR ve denetlenmeden kurulamaz;
+     * tekrar aranmadiysa koken kaydi hic yazilmaz.
+     */
+    carried_by: z.array(publicationSchema).min(1)
+  })
+  /*
+   * Ayni yayinin ikinci kopyasi (AMP sayfasi, guncellenmis surum) ayri
+   * bir tekrar degildir. Ayni adres iki kez yazilirsa sayi sisirilir.
+   */
+  .refine(
+    (origin) => {
+      const urls = origin.carried_by
+        .map((item) => item.url)
+        .filter((url) => url !== undefined);
+      return new Set(urls).size === urls.length;
+    },
+    {
+      error:
+        'ayni adres iki tekrar kaydinda gecemez — AMP kopyasi ve guncellenmis surum ayri yayin degildir',
+      path: ['carried_by']
+    }
+  );
+export type Origin = z.infer<typeof originSchema>;
+
+/**
+ * Bir tekrar, kokeni yayimlayanin KENDI sonraki yazisi mi.
+ *
+ * Bir aciklamanin alti ayri yayincida gorunmesi dolasimin genisligini
+ * gosterir; bir yazarin tahmininin ayni sitenin sonraki yazisinda
+ * yeniden cikmasi hicbir sey gostermez. Ikisi ayni agirlikta sayilamaz.
+ *
+ * Bayrak olarak DEGIL, yayinci adindan turetiliyor: elle yazilan bir
+ * bayrak adlarla ayrisabilir ve hangisinin dogru oldugu belirsiz kalirdi.
+ */
+export function isSamePublisher(origin: Origin, item: Publication): boolean {
+  return item.publisher === origin.publisher;
+}
+
 /** Yeni kategori eklerken bilincli karar olsun diye enum. */
 export const categorySchema = z.enum([
   'balistik-fuze',
   'seyir-fuzesi',
-  'insansiz-hava-araci'
+  'insansiz-hava-araci',
+  'hava-savunma-sistemi'
 ]);
 /**
  * Kategori listesi geometri tarafinda da exhaustive kullanilir; buraya
@@ -522,6 +738,33 @@ export const heroMarkerSchema = z.strictObject({
 });
 export type HeroMarker = z.infer<typeof heroMarkerSchema>;
 
+/**
+ * Menzil halkasini HANGI ALAN cizer — ACIK KAYIT.
+ *
+ * Halka bir YARICAP iddiasidir: "buradan her yone su kadar"
+ * (components/range-scale/geometry.ts). Her menzil alani bu cumleyi
+ * karsilamaz. Fuzenin menzili tek yon ucus erisimi; bir hava savunma
+ * sisteminin onleme menzili ise gercekten her yone gecerli bir yaricap.
+ *
+ * Onceki surumde secimi kod yapiyordu: "IHA degilse range_km ciz". Yani
+ * yeni bir kategori eklemek halkayi kendiliginden actiriyordu ve hangi
+ * sayinin cizildigi kimseye sorulmuyordu. Editoryal karar artik
+ * editoryal bir yerde duruyor — `hero` isaretcisiyle ayni gerekce.
+ *
+ * Kayit yoksa halka cizilmez. Bu bir eksiklik degil, mesru bir karar:
+ * yaricap iddiasi tasimayan bir deger mesafe cetveline duser.
+ */
+export const rangeRingSchema = z.strictObject({
+  /** Halkayi cizen olcu alani. */
+  field: z.enum(specKeys),
+  /**
+   * Alanin hangi nesnesi cizilir. Ayni alanda iki nesnenin kaydi varsa
+   * gereklidir; yazilmazsa alandaki butun kayitlar cizilir.
+   */
+  object: measurementObjectSchema.optional()
+});
+export type RangeRing = z.infer<typeof rangeRingSchema>;
+
 export const systemSchema = z
   .strictObject({
     $schema_version: z.literal('0.1'),
@@ -529,18 +772,59 @@ export const systemSchema = z
     slug: slugSchema,
     name: localizedTextSchema,
     category: categorySchema,
-    manufacturer: z.strictObject({
-      id: slugSchema,
-      name: z.string().min(1)
-    }),
+    /**
+     * Gelistiren kuruluslar. DIZI, cunku ortak gelistirilen programlar var:
+     * SIPER'de ASELSAN, ROKETSAN ve TUBITAK SAGE birlikte aniliyor ve
+     * incelenen kaynaklar is paketi dagilimini VERMIYOR. Birini secip
+     * "ureticisi bu" demek, kaynagin soylemedigini iddia etmek olurdu
+     * (CLAUDE.md §5.7).
+     *
+     * Sira dosyada yazildigi gibi korunur; kod bir onem sirasi uydurmaz.
+     */
+    manufacturer: z
+      .array(
+        z.strictObject({
+          id: slugSchema,
+          name: z.string().min(1)
+        })
+      )
+      .min(1)
+      .refine(
+        (list) => new Set(list.map((item) => item.id)).size === list.length,
+        {error: 'uretici idleri benzersiz olmali'}
+      ),
+    /**
+     * Programi yuruten kamu kurumu — gelistiriciden AYRI ROL.
+     *
+     * SIPER'de SSB programi yurutuyor, uc kurulus gelistiriyor. Dorduncu
+     * kurumu uretici dizisine karistirmak rol bilgisini silerdi: bir
+     * program otoritesi ile bir uretici ayni sey degil.
+     */
+    program_authority: z
+      .strictObject({
+        id: slugSchema,
+        name: z.string().min(1)
+      })
+      .optional(),
     status: statusSchema,
     /** Hero altindaki kisa tanim. */
     summary: localizedTextSchema.optional(),
     /** Ana sayfa paneli bu dosyayi anlatiyorsa hangi alani anlattigi. */
     hero: heroMarkerSchema.optional(),
+    /** Menzil halkasini cizen alan. Kayit yoksa halka cizilmez. */
+    range_ring: rangeRingSchema.optional(),
     /** Aile duzeyindeki beyanlar — varyantlara otomatik kopyalanmaz. */
     specs: specsSchema.optional(),
     variants: z.array(variantSchema).min(1),
+    /**
+     * Koken kayitlari. Olcumler ve takvim olaylari `origin_id` ile
+     * gosterir; kayit tek yerde durur.
+     *
+     * Alan yoksa "bu dosyada tekrar denetimi yapilmadi" demektir.
+     * Bos dizi de ayni anlama gelir — ikisi de "tekrar yok" IDDIASI
+     * degildir.
+     */
+    origins: z.array(originSchema).optional(),
     timeline: z.array(timelineEventSchema),
     /**
      * Duzeltme gecmisi. Alan yoksa da olur; bos dizi de gecerlidir ve
@@ -570,6 +854,43 @@ export const systemSchema = z
       return new Set(ids).size === ids.length;
     },
     {error: 'varyant idleri benzersiz olmali', path: ['variants']}
+  )
+  .refine(
+    (system) => {
+      const ids = (system.origins ?? []).map((origin) => origin.id);
+      return new Set(ids).size === ids.length;
+    },
+    {error: 'koken idleri benzersiz olmali', path: ['origins']}
+  )
+  /*
+   * Gosterilen koken gercekten tanimli mi.
+   *
+   * Yazim hatasi sessizce "kokeni yok" uretirdi: kayit kaynak
+   * gosteriyormus gibi durur, tekrar zinciri hic cizilmez ve kimse
+   * fark etmez. Annotation parcalarinin aksine bunu SEMA dogrulayabilir,
+   * cunku koken listesi ayni nesnenin icinde.
+   */
+  .refine(
+    (system) => {
+      const ids = new Set((system.origins ?? []).map((origin) => origin.id));
+      const referenced = [
+        ...system.variants.flatMap((variant) =>
+          specKeys.flatMap((key) =>
+            (variant.specs[key] ?? []).map((item) => item.origin_id)
+          )
+        ),
+        ...specKeys.flatMap((key) =>
+          (system.specs?.[key] ?? []).map((item) => item.origin_id)
+        ),
+        ...system.timeline.map((event) => event.origin_id)
+      ].filter((id) => id !== undefined);
+
+      return referenced.every((id) => ids.has(id));
+    },
+    {
+      error: 'origin_id sistemde tanimli bir koken kaydini gostermeli',
+      path: ['origins']
+    }
   )
   /*
    * variant_id yazim hatasi sessizce "farkli kapsam" uretirdi: iki deger

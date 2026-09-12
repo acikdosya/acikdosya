@@ -1,11 +1,12 @@
 import type {Locale} from '@/i18n/routing';
 import {SITE_URL} from './config';
-import {SPEC_UNITS} from './format';
+import {SPEC_UNITS, unitLabel} from './format';
 import {specGroups} from './measurement/groups';
 import {
   specKeys,
   type Confidence,
   type Measurement,
+  type MeasurementObject,
   type SpecKey,
   type System
 } from './schema';
@@ -63,6 +64,8 @@ function bounded(measurement: Measurement): Record<string, number> {
 
 type Labels = {
   spec: (key: SpecKey) => string;
+  /** Olcumun tarif ettigi nesne — sayfadaki kapsam notuyla ayni kelime. */
+  object: (value: MeasurementObject) => string;
   confidence: (level: Confidence) => string;
   familyLabel: string;
   /** "TAYFUN — teknik veri" gibi; sayfa basligini tekrar etmez. */
@@ -101,10 +104,25 @@ export function systemJsonLd({
       (group.specs[key] ?? []).map((measurement) => {
         const groupLabel =
           group.kind === 'family' ? labels.familyLabel : group.label;
+        /*
+         * Nesne ada giriyor. Sayfada her degerin altinda yaziyor
+         * (ScopeNote); yapisal veride kaybolsaydi makineye okuyucuya
+         * soyledigimizden AZINI soylemis olurduk ve ayni alandaki iki
+         * ayri nicelik tek ad altinda yigilirdi (CLAUDE.md §5.8).
+         */
+        const objectLabel = measurement.object
+          ? ` (${labels.object(measurement.object)})`
+          : '';
         return {
           '@type': 'PropertyValue',
-          name: `${labels.spec(key)} — ${groupLabel}`,
-          unitText: SPEC_UNITS[key],
+          name: `${labels.spec(key)}${objectLabel} — ${groupLabel}`,
+          /*
+           * Birimsiz buyuklukte unitText HIC YAZILMAZ. Bos bir dize,
+           * "birimi var ama bilmiyoruz" der; oysa sayimin birimi yok.
+           */
+          ...(unitLabel(SPEC_UNITS[key])
+            ? {unitText: unitLabel(SPEC_UNITS[key])}
+            : {}),
           ...bounded(measurement),
           description: `${labels.confidence(measurement.confidence)} · ${
             measurement.source[locale]

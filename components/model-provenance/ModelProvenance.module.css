@@ -13,6 +13,25 @@
   padding-top: 20px;
 }
 
+/* Varyant basina blok; birden fazla tanim varsa aralarinda nefes olsun. */
+.block {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.block + .block {
+  padding-top: var(--s-4);
+  border-top: var(--border-w) solid var(--rule);
+}
+
+/* Blok basligi yalnizca birden fazla tanim varken cizilir. */
+.blockLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+}
+
 .intro {
   margin: 0 0 8px;
   max-width: 62ch;

@@ -5,6 +5,7 @@ import type {Locale} from '@/i18n/routing';
 import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
 import type {SpecGroup} from '@/lib/measurement/groups';
 import type {Measurement, SpecKey, Variant} from '@/lib/schema';
+import {UnitMark} from '@/components/unit-mark/UnitMark';
 import styles from './HeroProvenance.module.css';
 
 /**
@@ -54,7 +55,7 @@ export function HeroProvenance({
           <dd>
             <span className={styles.value}>
               {formatValue(measurement, locale)}
-              <small>{SPEC_UNITS[specKey]}</small>
+              <UnitMark unit={SPEC_UNITS[specKey]} />
             </span>
           </dd>
         </div>

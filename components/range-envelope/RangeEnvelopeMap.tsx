@@ -453,6 +453,9 @@ export default function RangeEnvelopeMap({rings, locale, copy}: Props) {
       </div>
 
       <p className={styles.legend}>{copy.legend}</p>
+      {copy.altitudeNote ? (
+        <p className={styles.legend}>{copy.altitudeNote}</p>
+      ) : null}
     </div>
   );
 }

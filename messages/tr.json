@@ -57,7 +57,8 @@
   "Categories": {
     "balistik-fuze": "Balistik füze",
     "seyir-fuzesi": "Seyir füzesi",
-    "insansiz-hava-araci": "İnsansız hava aracı"
+    "insansiz-hava-araci": "İnsansız hava aracı",
+    "hava-savunma-sistemi": "Hava savunma sistemi"
   },
   "Confidence": {
     "official": "resmî",
@@ -82,7 +83,10 @@
     "statedAt": "{year} açıklaması",
     "unknownScope": "kapsam belirtilmemiş",
     "onRecord": "kayıtta {count} değer",
-    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir."
+    "note": "Bu satırlar dosyanın kendisinden alınmıştır, örnek değildir.",
+    "object_fuze": "füze",
+    "object_sistem": "sistem",
+    "object_atici": "atıcı"
   },
   "Footer": {
     "heading": "Bağımsız yayın",
@@ -205,7 +209,8 @@
     "loading": "Model yükleniyor…",
     "note": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Etiketler yalnızca dış bölümleri adlandırır ve kendi güven seviyelerini taşır. Modelin ölçeği yayımlanmış uzunluk ve çap değerlerinden gelir; gövdenin ve kanatçıkların oranları ise yayımlanmış sayı değildir ve her birinin kökeni aşağıdaki biçim kaydında yazılı. Teknik çizim değildir.",
     "noteAircraft": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Modelin ölçeği üç yayımlanmış sayıdan gelir: gövde uzunluğu, kanat açıklığı ve yükseklik. İniş takımının boyu sonuncusundan türetilir; bu yüzden modelin zeminden dikey stabilize ucuna ölçüsü, tabloda yazan yükseklik değerinin ta kendisidir. Gövde eni, kanat veçhesi, gondol yeri ve kuyruk oranları yayımlanmış sayı değildir; hangisinin ölçüldüğü, hangisinin sınanmamış bir okuma olduğu ve hangisinin okunabilirlik için seçildiği aşağıdaki biçim kaydında tek tek yazılı. Yük istasyonları çıplak pilon olarak çizilir; taşınan mühimmat modellenmez.",
-    "overview": "Genel görünüm"
+    "overview": "Genel görünüm",
+    "noteAirDefence": "Şematik görünüm kasıtlı: fotogerçekçi bir render, sahip olmadığımız bir doğruluk iddiası anlamına gelirdi. Kesit, patlatılmış görünüm ve iç bileşen yerleşimi yok — iç geometriye dair kaynaklı verimiz yok. Modellenen şey yalnızca füzedir: atıcı araç, kanister, arama ve atış kontrol radarları çizilmez, çünkü hiçbiri için kaynaklı ölçü kaydımız yok. Ürün-1’in arka bölümü daha kalın çizilir; bu bölümün AYRILABİLİR olup olmadığı modelden anlaşılmaz, üreticinin çizimi yalnızca dış hattı gösteriyor. Modelin ölçeği yayımlanmış uzunluk ve çap değerlerinden gelir; oranlar ise yayımlanmış sayı değildir ve her birinin kökeni aşağıdaki biçim kaydında yazılı. Teknik çizim değildir."
   },
   "Nav": {
     "primary": "Ana gezinme",
@@ -226,7 +231,8 @@
     "latitude": "Enlem",
     "longitude": "Boylam",
     "loading": "Harita yükleniyor…",
-    "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir."
+    "legend": "Halkalar büyük daire (jeodezik) yöntemiyle çizilir — Mercator izdüşümünde düz daire çizmek yüksek enlemlerde ciddi hata verir. Değerler kamuya açık beyanlardan alınmıştır ve birbirleriyle çelişmektedir: kesikli halka basın kaynaklı, kırmızı halka resmî teyidi olmayan tahmindir.",
+    "altitudeNote": "Halka yatay uzanımı gösterir. Sistemin önleme irtifası kayıtlıysa düz daire onu taşımaz; irtifa değeri ölçü tablosunda durur."
   },
   "RangeScale": {
     "caption": "Mesafe cetveli — yayımlanmış menzil beyanı yer ölçeğine göre çizilir. Harita üzerinde halka çizilmez: halka bir yarıçap iddiasıdır, bu değer ise üreticinin kendi terimidir.",
@@ -299,7 +305,39 @@
     "wingSpanRatio": "Kanat açıklığı",
     "wingTaper": "Kanat incelmesi",
     "wingThicknessRatio": "Kanat kalınlığı",
-    "wingTrailingT": "Kanat firar kenarı konumu"
+    "wingTrailingT": "Kanat firar kenarı konumu",
+    "stepT": "Geçişin ön ucu",
+    "stepRadiusRatio": "Geçiş önünde yarıçap",
+    "boosterT": "İticinin tam çapa ulaştığı nokta",
+    "boosterRadiusRatio": "İtici yarıçapı",
+    "finAftCount": "Arka kanat sayısı",
+    "finAftChordRatio": "Arka kanat kök veçhesi",
+    "finAftTaper": "Arka kanat incelmesi",
+    "finAftSpanRatio": "Arka kanat açıklığı",
+    "finAftRakeDeg": "Arka kanat firar kenarı eğimi",
+    "finAftTrailingT": "Arka kanat firar kenarı yeri",
+    "finAftThicknessRatio": "Arka kanat kalınlığı",
+    "finControlCount": "Kontrol yüzeyi sayısı",
+    "finControlChordRatio": "Kontrol yüzeyi kök veçhesi",
+    "finControlTaper": "Kontrol yüzeyi incelmesi",
+    "finControlSpanRatio": "Kontrol yüzeyi açıklığı",
+    "finControlRakeDeg": "Kontrol yüzeyi firar kenarı eğimi",
+    "finControlTrailingT": "Kontrol yüzeyi firar kenarı yeri",
+    "finControlThicknessRatio": "Kontrol yüzeyi kalınlığı",
+    "wingMidCount": "Orta kanat sayısı",
+    "wingMidChordRatio": "Orta kanat kök veçhesi",
+    "wingMidTaper": "Orta kanat incelmesi",
+    "wingMidSpanRatio": "Orta kanat açıklığı",
+    "wingMidRakeDeg": "Orta kanat firar kenarı eğimi",
+    "wingMidTrailingT": "Orta kanat firar kenarı yeri",
+    "wingMidThicknessRatio": "Orta kanat kalınlığı",
+    "strakeCount": "Strake sayısı",
+    "strakeChordRatio": "Strake kök veçhesi",
+    "strakeTaper": "Strake incelmesi",
+    "strakeSpanRatio": "Strake açıklığı",
+    "strakeRakeDeg": "Strake firar kenarı eğimi",
+    "strakeTrailingT": "Strake firar kenarı yeri",
+    "strakeThicknessRatio": "Strake kalınlığı"
   },
   "RevisionLog": {
     "from": "eski değer",
@@ -348,7 +386,14 @@
     "operating_altitude_ft": "Operasyonel irtifa",
     "cruise_speed_ktas": "Seyir hızı",
     "max_speed_ktas": "Azami hız",
-    "operational_range_km": "Operasyonel menzil"
+    "operational_range_km": "Operasyonel menzil",
+    "intercept_range_km": "Sistem önleme menzili",
+    "intercept_altitude_km": "Önleme irtifası",
+    "azimuth_coverage_deg": "Yanca kapsama",
+    "tracking_capacity": "İzleme kapasitesi",
+    "engagement_capacity": "Angajman kapasitesi",
+    "missile_control_capacity": "Güdülebilen füze kapasitesi",
+    "launcher_capacity": "Atıcı füze kapasitesi"
   },
   "Status": {
     "gelistirme": "Geliştirme",
@@ -373,6 +418,20 @@
     "revisions": "Düzeltme geçmişi",
     "datasetName": "{name} — teknik veri",
     "datasetDescription": "Kamuya açık kaynaklardan derlenmiş ölçüm kaydı. Her değer güven seviyesi ve kaynağıyla birlikte tutulur; çelişen değerler ayıklanmaz.",
-    "rangeDistance": "Menzil ölçeği"
+    "rangeDistance": "Menzil ölçeği",
+    "programAuthority": "Program yürütücüsü: {name}",
+    "origins": "Köken zinciri"
+  },
+  "Timeline": {
+    "announcementDate": "duyuru tarihi",
+    "announcedOn": "Duyuru: {date}"
+  },
+  "OriginChain": {
+    "intro": "Bir belge ve onu aktaran yayınlar. Çok sayıda haber, çok sayıda bağımsız ölçüm demek değildir: aynı sayı bir kez söylenmiş, birçok kez aktarılmış olabilir.",
+    "notAccessed": "Özgün metne doğrudan erişilemedi. Kaynak gösterdiğimiz yayın kökenin yerine geçmez; kendisi de aktaranlardan biridir.",
+    "carriedBy": "{count, plural, one {# yayın bu belgeyi aktarıyor} other {# yayın bu belgeyi aktarıyor}}",
+    "independent": "{count, plural, =0 {bağımsız yayıncı yok} one {# bağımsız yayıncı} other {# bağımsız yayıncı}}",
+    "samePublisher": "aynı yayıncı",
+    "auditNote": "Sayı, bu taramada köken bağlantısı doğrulanan yayınları gösterir. Dünya çapındaki toplam değildir ve kaydın bulunmaması tekrar olmadığı anlamına gelmez."
   }
 }

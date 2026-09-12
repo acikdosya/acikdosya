@@ -114,6 +114,11 @@
   margin-left: 0.28em;
 }
 
+/* Sayiya bitisik yazilan simge (°) sol boslugunu birakir — lib/format.ts. */
+.value small[data-tight] {
+  margin-left: 0;
+}
+
 .attributeValue {
   font-size: var(--size-ui);
   margin-right: var(--s-2);

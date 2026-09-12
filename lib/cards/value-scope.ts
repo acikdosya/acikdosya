@@ -1,6 +1,6 @@
 import {SPEC_UNITS} from '../format';
 import type {SpecGroup} from '../measurement/groups';
-import type {DivergenceKind} from '../measurement/divergence';
+import type {DivergenceKind, SpecUnit} from '../measurement/divergence';
 import type {Confidence, Measurement, SpecKey, System} from '../schema';
 import {groupDivergence} from '../stats';
 
@@ -26,7 +26,7 @@ export type ValueScopeCard = {
   system: System;
   group: SpecGroup;
   key: SpecKey;
-  unit: string;
+  unit: SpecUnit;
   /** Dosyadaki sirayla. Siralamiyoruz: sira bir siralama ima ederdi. */
   columns: Measurement[];
   /** Hesabin verdigi durum. Alan ayrismiyorsa undefined. */

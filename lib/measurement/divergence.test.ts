@@ -475,3 +475,138 @@ test('kapsami ayrisan iki esit sayi uyusma sayilmaz', () => {
 
   assert.equal(result?.kind, 'farkli-kapsam');
 });
+
+/*
+ * NESNE EKSENI — bilesik sistemler.
+ *
+ * Ornekler SIPER'in gercek kayitlarindan: ROKETSAN fuzenin menzilini
+ * "100+ km", ASELSAN sistemin onleme menzilini "70+ km" veriyor. Ikisi
+ * de ureticinin kendi karti (scope 'beyan'), yani kapsam ekseni bunlari
+ * ayiramaz. Ayrisan sey deger degil, NESNE.
+ */
+
+test('farkli nesne kapsam farkidir, aralik hesabina girilmez', () => {
+  const result = fieldDivergence(
+    [
+      m({value: 100, operator: '≥', scope: 'beyan', object: 'fuze'}),
+      m({value: 70, operator: '≥', scope: 'beyan', object: 'sistem'})
+    ],
+    'km'
+  );
+
+  assert.equal(result?.kind, 'farkli-kapsam');
+  assert.deepEqual(result?.differences, [
+    {axis: 'object', a: 'fuze', b: 'sistem'}
+  ]);
+});
+
+test('farkli nesne, ayrik sayilar — yine de celiski DEGIL', () => {
+  /*
+   * Fuze uzunlugu 5,4 m ile kanister benzeri bir sistem olcusu ayni
+   * alanda bulunsa bile kiyaslanmaz. Aralik hesabi calissaydi iki nokta
+   * deger ayrik oldugu icin 'celiski' cikardi.
+   */
+  const result = fieldDivergence(
+    [
+      m({value: 5.4, scope: 'beyan', object: 'fuze'}),
+      m({value: 6.45, scope: 'beyan', object: 'sistem'})
+    ],
+    'm'
+  );
+
+  assert.equal(result?.kind, 'farkli-kapsam');
+});
+
+test('tek tarafta nesne varsa sonuc belirsiz, asla celiski', () => {
+  const result = fieldDivergence(
+    [m({value: 100, object: 'sistem'}), m({value: 150})],
+    'km'
+  );
+
+  assert.equal(result?.kind, 'belirsiz');
+  assert.deepEqual(result?.differences, []);
+  assert.deepEqual(result?.unknownAxes, ['object']);
+});
+
+test('iki tarafta da nesne bossa eksen atlanir, hesap calisir', () => {
+  /*
+   * Tek urunlu dosyalarin hali. Eksen gorunmez olmali: sonuc, eksen
+   * eklenmeden onceki sonucun ta kendisi.
+   */
+  const ayrik = fieldDivergence([m({value: 280}), m({value: 500})], 'km');
+  assert.equal(ayrik?.kind, 'celiski');
+  assert.deepEqual(ayrik?.unknownAxes, []);
+
+  const kesisen = fieldDivergence(
+    [m({value: 280, operator: '>'}), m({value: 500, operator: '>'})],
+    'km'
+  );
+  assert.equal(kesisen?.kind, 'farkli-aciklama');
+  assert.deepEqual(kesisen?.unknownAxes, []);
+});
+
+test('ayni nesne, farkli kapsam — kapsam ekseni yine ayirir', () => {
+  const result = fieldDivergence(
+    [
+      m({value: 70, operator: '≥', scope: 'beyan', object: 'sistem'}),
+      m({value: 100, operator: '>', scope: 'test', object: 'sistem'})
+    ],
+    'km'
+  );
+
+  assert.equal(result?.kind, 'farkli-kapsam');
+  assert.deepEqual(result?.differences, [
+    {axis: 'scope', a: 'beyan', b: 'test'}
+  ]);
+});
+
+test('ayni nesne ve ayni kapsam — aralik hesabi calisir', () => {
+  const result = fieldDivergence(
+    [
+      m({value: 100, operator: '≥', scope: 'beyan', object: 'fuze'}),
+      m({value: 150, operator: '≥', scope: 'beyan', object: 'fuze'})
+    ],
+    'km'
+  );
+
+  assert.equal(result?.kind, 'farkli-aciklama');
+  assert.deepEqual(result?.differences, []);
+});
+
+test('nesne ve kapsam birlikte ayrisirsa ikisi de kayda gecer', () => {
+  const result = fieldDivergence(
+    [
+      m({value: 100, scope: 'beyan', object: 'fuze'}),
+      m({value: 70, scope: 'tahmin', object: 'sistem'})
+    ],
+    'km'
+  );
+
+  assert.equal(result?.kind, 'farkli-kapsam');
+  assert.equal(result?.differences.length, 2);
+});
+
+test('sayim ve aci ayri boyutlardir, birbiriyle kiyaslanmaz', () => {
+  const sayim = sized(m({value: 360}), 'count');
+  const aci = sized(m({value: 360}), 'deg');
+
+  assert.throws(() => compareIntervals(sayim, aci), /farkli boyut/);
+});
+
+test('sayim ile kutle kiyaslanmaz', () => {
+  assert.throws(
+    () => compareIntervals(sized(m({value: 6}), 'count'), sized(m({value: 6}), 'kg')),
+    /farkli boyut/
+  );
+});
+
+test('ayni boyuttaki iki sayim kiyaslanir', () => {
+  // ASELSAN 20, kaynaksiz bir tablo 20 — ayni sayi, iraksama yok.
+  assert.equal(fieldDivergence([m({value: 20}), m({value: 20})], 'count'), undefined);
+
+  // Ayrik iki tam sayi: bant yok, celiski.
+  assert.equal(
+    fieldDivergence([m({value: 10}), m({value: 20})], 'count')?.kind,
+    'celiski'
+  );
+});

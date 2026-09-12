@@ -1,5 +1,7 @@
 import {useTranslations} from 'next-intl';
 import type {Locale} from '@/i18n/routing';
+import {selectMeasurements} from '@/lib/geometry/measurements';
+import type {AnyProduct} from '@/lib/geometry/product';
 import {productFor} from '@/lib/geometry/registry';
 import type {Ratio, RatioBasis} from '@/lib/geometry/ratio';
 import type {System} from '@/lib/schema';
@@ -16,6 +18,11 @@ import styles from './ModelProvenance.module.css';
  * yasakliyor; bu yuzden burada rozet CERCEVESI kullanilmaz. Uc durum
  * alt cizgi DESENIYLE ayrisir (duz / kesik / noktali), boylece renk
  * korlugu ve siyah beyaz ciktida da okunur.
+ *
+ * VARYANT BASINA. Bir ailenin varyantlari ayri bicim tanimi tasiyabilir
+ * (specs/variant-geometry) ve o zaman oranlari da ayridir. Ayni tanimi
+ * paylasan varyantlar tek blokta toplanir — ayni tabloyu iki kez yazmak
+ * okuyucuya iki ayri kayit varmis gibi gorunurdu.
  */
 
 const ORDER: RatioBasis[] = ['measured', 'reading', 'chosen'];
@@ -28,11 +35,59 @@ export function ModelProvenance({
   locale: Locale;
 }) {
   const t = useTranslations('ModelProvenance');
-  const labels = useTranslations('RatioLabels');
+  const tTable = useTranslations('SpecTable');
 
-  const product = productFor(system.slug);
-  // Urun tanimi yoksa model de yok; bos bir bolum acilmaz.
-  if (!product) return null;
+  /*
+   * Yalnizca modeli cizilen gruplar. Bicimi olmayan bir grup icin koken
+   * kaydi yazmak, olmayan bir modelin kaynagini gostermek olurdu.
+   */
+  const blocks = new Map<string, {label: string; product: AnyProduct}>();
+  for (const selection of selectMeasurements(system)) {
+    if (!selection.canModel) continue;
+    const match = productFor(system.slug, selection.group.id);
+    if (!match) continue;
+    const label =
+      selection.group.kind === 'family'
+        ? tTable('familyLabel')
+        : selection.group.label;
+    const existing = blocks.get(match.key);
+    if (existing) {
+      // Ayni tanimi paylasan varyantlar tek baslikta birlesir.
+      existing.label = `${existing.label}, ${label}`;
+      continue;
+    }
+    blocks.set(match.key, {label, product: match.product});
+  }
+
+  if (blocks.size === 0) return null;
+
+  return (
+    <div className={styles.wrap}>
+      <p className={styles.intro}>{t('intro')}</p>
+      {[...blocks.entries()].map(([key, block]) => (
+        <ProvenanceBlock
+          key={key}
+          label={blocks.size > 1 ? block.label : undefined}
+          product={block.product}
+          locale={locale}
+        />
+      ))}
+    </div>
+  );
+}
+
+/** Tek bir bicim taniminin oran listesi. */
+function ProvenanceBlock({
+  label,
+  product,
+  locale
+}: {
+  label?: string;
+  product: AnyProduct;
+  locale: Locale;
+}) {
+  const t = useTranslations('ModelProvenance');
+  const labels = useTranslations('RatioLabels');
 
   const entries = Object.entries(product.ratios) as Array<[string, Ratio]>;
   if (entries.length === 0) return null;
@@ -46,8 +101,8 @@ export function ModelProvenance({
   );
 
   return (
-    <div className={styles.wrap}>
-      <p className={styles.intro}>{t('intro')}</p>
+    <div className={styles.block}>
+      {label ? <h4 className={styles.blockLabel}>{label}</h4> : null}
       <p className={styles.summary}>
         {t('summary', {
           measured: counts.measured,

@@ -91,6 +91,11 @@
   margin-left: 0.28em;
 }
 
+/* Sayiya bitisik yazilan simge (°) sol boslugunu birakir — lib/format.ts. */
+.value small[data-tight] {
+  margin-left: 0;
+}
+
 /* Hareket ani: guven rozeti belirir — iraksama panelindeki anla ayni. */
 .badge {
   composes: hero-reveal from global;

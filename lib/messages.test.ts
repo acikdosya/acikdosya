@@ -3,7 +3,12 @@ import {test} from 'node:test';
 import en from '../messages/en.json';
 import tr from '../messages/tr.json';
 import {templateKey} from './cards/templates';
-import {KIND_MESSAGE_KEY, KIND_ORDER, SCOPES} from './measurement/labels';
+import {
+  KIND_MESSAGE_KEY,
+  KIND_ORDER,
+  OBJECTS,
+  SCOPES
+} from './measurement/labels';
 import {categorySchema, specKeys} from './schema';
 import {CARD_TEMPLATES} from './urls';
 
@@ -73,6 +78,17 @@ test('her scope degerinin etiketi var', () => {
       assert.ok(
         bundle.Divergence[`scope_${scope}`],
         `${name}: Divergence.scope_${scope} eksik`
+      );
+    }
+  }
+});
+
+test('her nesne degerinin etiketi var', () => {
+  for (const [name, bundle] of bundles) {
+    for (const object of OBJECTS) {
+      assert.ok(
+        bundle.Divergence[`object_${object}`],
+        `${name}: Divergence.object_${object} eksik`
       );
     }
   }
@@ -242,5 +258,33 @@ test('her paylasim karti sablonunun basligi var', () => {
       const key = templateKey(template);
       assert.ok(bundle.Card[key], `${name}: Card.${key} eksik (${template})`);
     }
+  }
+});
+
+test('olcu alani etiketleri her iki yazi tipi alt kumesini de kullanir', () => {
+  /*
+   * Specs bloğu tabloda, paylasim kartinda ve OG gorselinde ayni metni
+   * ciziyor. Turkce bu blokta iki alt kumeye dagiliyor:
+   *
+   *   latin      ı ç ö ü
+   *   latin-ext  İ ğ ş
+   *
+   * Biri yuklenmezse bos kutu CIKMAZ; harfler sessizce yedek yazi
+   * tipine duser (lib/og-fonts.test.ts). Bu test yalnizca metnin iki
+   * kumeye de bagimli oldugunu sabitler — bagimlilik kaybolursa alt
+   * kume degisikligi fark edilmeden gecerdi.
+   */
+  const labels = Object.values(
+    (tr as Record<string, Record<string, string>>).Specs
+  ).join(' ');
+
+  for (const char of ['ı', 'ç', 'ö', 'ü']) {
+    assert.ok(labels.includes(char), `${char} (latin) hicbir olcu etiketinde yok`);
+  }
+  for (const char of ['İ', 'ğ', 'ş']) {
+    assert.ok(
+      labels.includes(char),
+      `${char} (latin-ext) hicbir olcu etiketinde yok`
+    );
   }
 });

@@ -31,7 +31,13 @@ export type SystemKind = 'missile' | 'aircraft';
 const CATEGORY_KIND: Record<Category, SystemKind> = {
   'balistik-fuze': 'missile',
   'seyir-fuzesi': 'missile',
-  'insansiz-hava-araci': 'aircraft'
+  'insansiz-hava-araci': 'aircraft',
+  /*
+   * Olcu ailesi FUZENIN ailesi: uzunluk + cap. Dosyadaki sistem duzeyi
+   * alanlar (onleme menzili, irtifa, kapasiteler) bir bicim tarif etmez,
+   * bu yuzden model secimine girmezler.
+   */
+  'hava-savunma-sistemi': 'missile'
 };
 
 export function systemKind(system: System): SystemKind {
@@ -81,16 +87,17 @@ export type MeasurementSelection = {
  */
 function canModel(
   slug: string,
+  variantId: string | undefined,
   available: Dimensions
 ): {canModel: boolean; reason?: string} {
-  const product = productFor(slug);
-  if (!product) {
+  const match = productFor(slug, variantId);
+  if (!match) {
     return {
       canModel: false,
       reason: 'Bu sistem icin dis profil tanimlanmamis.'
     };
   }
-  if (!resolveDimensions(product.requires, available)) {
+  if (!resolveDimensions(match.product.requires, available)) {
     return {
       canModel: false,
       reason: 'Modelin istedigi olcu alanlari bu grupta eksik.'
@@ -121,7 +128,7 @@ export function selectMeasurements(
       if (!diameterList) continue;
       const diameter = primary(diameterList);
 
-      const modelable = canModel(system.slug, {
+      const modelable = canModel(system.slug, group.id, {
         length_m: length.value,
         diameter_mm: diameter.value
       });
@@ -146,7 +153,7 @@ export function selectMeasurements(
     const heightList = group.specs.height_m;
     const height = heightList ? primary(heightList) : undefined;
 
-    const modelable = canModel(system.slug, {
+    const modelable = canModel(system.slug, group.id, {
       length_m: length.value,
       wingspan_m: wingspan.value,
       height_m: height?.value

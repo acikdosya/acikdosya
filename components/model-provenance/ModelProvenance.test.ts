@@ -92,7 +92,7 @@ test('koken gosterimi guven rozetinin cerceve dilini kullanmaz', () => {
 });
 
 test('AKINCI kaydi uc durumu birden gosterir', () => {
-  const product = productFor('akinci');
+  const product = productFor('akinci')?.product;
   assert.ok(product);
   const seen = new Set(
     Object.values(product.ratios).map((ratio) => ratio.basis)

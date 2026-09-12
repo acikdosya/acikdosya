@@ -15,9 +15,18 @@ import type {Measurement, Operator} from '../schema';
  */
 
 /** Alan adinin icindeki birim — lib/format.ts SPEC_UNITS ile ayni kume. */
-export type SpecUnit = 'm' | 'mm' | 'km' | 'kg' | 'ft' | 'h' | 'ktas';
+export type SpecUnit =
+  | 'm'
+  | 'mm'
+  | 'km'
+  | 'kg'
+  | 'ft'
+  | 'h'
+  | 'ktas'
+  | 'count'
+  | 'deg';
 
-type Dimension = 'uzunluk' | 'kutle' | 'sure' | 'hiz';
+type Dimension = 'uzunluk' | 'kutle' | 'sure' | 'hiz' | 'sayi' | 'aci';
 
 /**
  * Taban birim: uzunluk metre, kutle kilogram.
@@ -34,7 +43,19 @@ const UNITS: Record<SpecUnit, {dimension: Dimension; toBase: number}> = {
   kg: {dimension: 'kutle', toBase: 1},
   ft: {dimension: 'uzunluk', toBase: 0.3048},
   h: {dimension: 'sure', toBase: 1},
-  ktas: {dimension: 'hiz', toBase: 1}
+  ktas: {dimension: 'hiz', toBase: 1},
+  /*
+   * Sayim ve aci BIRIMSIZ buyukluklerdir: donusum carpani yok, taban
+   * kendileridir. Tabloda durmalarinin sebebi kiyas: "izleme kapasitesi
+   * 100" ile "angajman kapasitesi 10" ayni boyutta oldugu icin
+   * kiyaslanabilir, bir kutle degeriyle kiyaslanmasi ise hata atar.
+   *
+   * Ayri boyut olmalari da onemli: sayim ile aci birbirine cevrilmez.
+   * 360 derecelik bir kapsama ile 360 adetlik bir kapasite ayni sayidir
+   * ve boyut ayrimi olmadan sessizce kiyaslanirlardi.
+   */
+  count: {dimension: 'sayi', toBase: 1},
+  deg: {dimension: 'aci', toBase: 1}
 };
 
 /**
@@ -279,8 +300,19 @@ function sameInterval(a: Interval, b: Interval): boolean {
 /**
  * KIYASLANABILIRLIK EKSENLERI.
  *
- * Iki alan: deger nasil elde edildi (scope) ve hangi varyanti tarif ediyor
- * (variant_id). Ikisi de ayni degilse sayilar ayni cetvele konamaz.
+ * Uc alan: deger nasil elde edildi (scope), NEYI olcuyor (object) ve
+ * hangi varyanti tarif ediyor (variant_id). Uclu de ayni degilse
+ * sayilar ayni cetvele konamaz.
+ *
+ * object EKSENI BILESIK SISTEMLER ICIN. Ayni dosyada hem bir fuze hem
+ * onu firlatan sistem anlatiliyorsa, "100+ km fuze menzili" ile
+ * "70+ km sistem onleme menzili" ayni sayi ailesinde gorunur ama ayni
+ * seyi olcmez. Alan adi nicelige bakar, bu eksen nesneye; ikisi birden
+ * gerekiyor cunku ayni nesnenin iki alani da olabilir, iki nesnenin
+ * ayni adli alani da.
+ *
+ * Tek urunlu dosyalarda eksen iki tarafta da bostur, atlanir ve
+ * sonuclar eksen eklenmeden onceki haliyle birebir ayni kalir.
  *
  * stated_at BU LISTEDE YOK ve karara girmez. Bir beyanin 2022'de, otekinin
  * 2025'te yapilmis olmasi tek basina onlari kiyaslanamaz yapmaz: ayni
@@ -291,7 +323,7 @@ function sameInterval(a: Interval, b: Interval): boolean {
  * yeni bir beyanin eskisini gecersiz kilmasi (supersession). O geldiginde
  * stated_at karara girer; simdi girmiyor.
  */
-export const COMPARISON_AXES = ['scope', 'variant_id'] as const;
+export const COMPARISON_AXES = ['scope', 'object', 'variant_id'] as const;
 export type ComparisonAxis = (typeof COMPARISON_AXES)[number];
 
 export type DivergenceKind =
@@ -322,6 +354,8 @@ function axisValue(
   switch (axis) {
     case 'scope':
       return measurement.scope;
+    case 'object':
+      return measurement.object;
     case 'variant_id':
       return measurement.variant_id;
   }

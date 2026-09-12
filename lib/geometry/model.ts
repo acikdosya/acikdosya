@@ -8,6 +8,13 @@ import type {ModelFrame, ModelResult} from './result';
 export interface ModelSpec {
   /** content/systems/*.json'daki slug. */
   systemSlug: string;
+  /**
+   * Olcu grubunun kimligi — varyant id'si ya da aile grubu.
+   *
+   * Bicim kaydi once bununla aranir. Yazilmazsa sistem tanimina dusulur
+   * ve varyanta ozgu bir bicim varsa KACIRILIR.
+   */
+  variantId?: string;
   /** Ortak olcu seciminden gelen boyutlar — lib/geometry/measurements.ts. */
   dimensions: SelectedDimensions;
   /** Lathe segment sayisi; mobil 48, masaustu 72. */
@@ -51,7 +58,7 @@ export function frameFromParts(parts: readonly Part[]): ModelFrame {
 }
 
 function partsFor(spec: ModelSpec): Part[] | undefined {
-  return partsForSystem(spec.systemSlug, spec.dimensions);
+  return partsForSystem(spec.systemSlug, spec.variantId, spec.dimensions);
 }
 
 /**
@@ -68,16 +75,18 @@ function partsFor(spec: ModelSpec): Part[] | undefined {
  */
 export function buildModel({
   systemSlug,
+  variantId,
   dimensions,
   radialSegments
 }: ModelSpec): ModelResult | undefined {
-  const parts = partsFor({systemSlug, dimensions, radialSegments});
+  const parts = partsFor({systemSlug, variantId, dimensions, radialSegments});
   if (!parts) return undefined;
 
   const scene = buildGroup(parts, {
     segments: radialSegments ? {body: radialSegments} : undefined,
     dimensionOffsetRatio:
-      productFor(systemSlug)?.dimensionOffsetRatio ?? DEFAULT_DIMENSION_OFFSET
+      productFor(systemSlug, variantId)?.product.dimensionOffsetRatio ??
+      DEFAULT_DIMENSION_OFFSET
   });
 
   return {
@@ -97,8 +106,9 @@ export function buildModel({
  */
 export function modelBounds({
   systemSlug,
+  variantId,
   dimensions
 }: Omit<ModelSpec, 'radialSegments'>): ModelFrame | undefined {
-  const parts = partsFor({systemSlug, dimensions});
+  const parts = partsFor({systemSlug, variantId, dimensions});
   return parts ? frameFromParts(parts) : undefined;
 }

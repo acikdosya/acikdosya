@@ -103,6 +103,8 @@ async function main() {
 
       const built = buildModel({
         systemSlug: system.slug,
+        // Biçim kaydı önce varyantın kendi tanımında aranır.
+        variantId: specGroup.id,
         dimensions,
         radialSegments: 64,
       });

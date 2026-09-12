@@ -16,7 +16,15 @@ export type CategoryCoverage = 'modelled' | 'no-model-yet';
 export const CATEGORY_COVERAGE: Record<Category, CategoryCoverage> = {
   'balistik-fuze': 'modelled',
   'seyir-fuzesi': 'modelled',
-  'insansiz-hava-araci': 'modelled'
+  'insansiz-hava-araci': 'modelled',
+  /*
+   * Hava savunma sisteminde MODELLENEN SEY FUZEDIR. Atici arac, radar ve
+   * komuta unsurlari icin olcu kaydimiz yok; parca kiti onlari cizemez
+   * ve cizmeye calismak kaynaksiz bir bicim uretirdi (CLAUDE.md §9).
+   * Fuze varyantlarinin uzunluk ve capi yayimlanmis, model o ikisinden
+   * olcekleniyor.
+   */
+  'hava-savunma-sistemi': 'modelled'
 };
 
 export function coverageFor(category: Category): CategoryCoverage {

@@ -1,0 +1,858 @@
+{
+  "$schema_version": "0.1",
+  "id": "siper",
+  "slug": "siper",
+  "name": {
+    "tr": "SİPER",
+    "en": "SİPER"
+  },
+  "category": "hava-savunma-sistemi",
+  "manufacturer": [
+    {
+      "id": "aselsan",
+      "name": "ASELSAN"
+    },
+    {
+      "id": "roketsan",
+      "name": "ROKETSAN"
+    },
+    {
+      "id": "tubitak-sage",
+      "name": "TÜBİTAK SAGE"
+    }
+  ],
+  "program_authority": {
+    "id": "ssb",
+    "name": "Savunma Sanayii Başkanlığı"
+  },
+  "status": "seri-uretim",
+  "summary": {
+    "tr": "Uzun menzilli hava ve füze savunma sistemi. Aynı ad hem sistemi hem füze ürünlerini anlatıyor; bu dosyada ikisi ayrı tutuluyor.",
+    "en": "A long-range air and missile defence system. The same name covers both the system and its missile products; this file keeps the two apart."
+  },
+  "range_ring": {
+    "field": "intercept_range_km",
+    "object": "sistem"
+  },
+  "variants": [
+    {
+      "id": "siper-urun-1",
+      "label": "SİPER Ürün-1",
+      "introduced": 2024,
+      "specs": {
+        "length_m": [
+          {
+            "value": 5.4,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "diameter_mm": [
+          {
+            "value": 370,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "range_km": [
+          {
+            "value": 100,
+            "operator": "≥",
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 100,
+            "operator": ">",
+            "confidence": "press",
+            "scope": "test",
+            "object": "fuze",
+            "stated_at": "2022-12-30",
+            "origin_id": "demir-2022-12-30",
+            "source": {
+              "tr": "Savunma Sanayii Başkanı Demir: SİPER füzesi 100 kilometre menzili aştı",
+              "en": "Defence Industry Agency head Demir: SİPER missile exceeded 100 kilometres"
+            },
+            "source_url": "https://www.aa.com.tr/tr/gundem/savunma-sanayii-baskani-demir-siper-fuzesi-100-kilometre-menzili-asti/2776534",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 100,
+            "operator": ">",
+            "confidence": "press",
+            "scope": "test",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER BLOK I Füzesi Hedefi Aştı",
+              "en": "SİPER BLOCK I missile exceeded its target"
+            },
+            "source_url": "https://www.savunmasanayist.com/siper-blok-i-fuzesi-hedefi-asti/",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 70,
+            "upper_value": 100,
+            "confidence": "estimate",
+            "scope": "tahmin",
+            "object": "fuze",
+            "stated_at": "2023-11-12",
+            "origin_id": "kula-2023-11-12",
+            "source": {
+              "tr": "Türkiye’nin Millî Katmanlı Hava Savunma Projeksiyonu",
+              "en": "Turkey’s National Layered Air Defence Projection"
+            },
+            "source_url": "https://www.defenceturk.net/turkiyenin-milli-katmanli-hava-savunma-projeksiyonu",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 100,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "Millî Savunma Bakanı Yaşar Güler’in TBMM Plan ve Bütçe Komisyonu cevapları",
+              "en": "Defence Minister Yaşar Güler’s answers at the Parliamentary Planning and Budget Committee"
+            },
+            "source_url": "https://www.msb.gov.tr/SlaytHaber/e4934c06d8fb44b2ba744ec96d7416d3",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "intercept_range_km": [
+          {
+            "value": 70,
+            "operator": "≥",
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "intercept_altitude_km": [
+          {
+            "value": 20,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "azimuth_coverage_deg": [
+          {
+            "value": 360,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "tracking_capacity": [
+          {
+            "value": 100,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "engagement_capacity": [
+          {
+            "value": 10,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "missile_control_capacity": [
+          {
+            "value": 20,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "launcher_capacity": [
+          {
+            "value": 6,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "atici",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ]
+      },
+      "attributes": {},
+      "annotations": []
+    },
+    {
+      "id": "siper-urun-2",
+      "label": "SİPER Ürün-2",
+      "specs": {
+        "length_m": [
+          {
+            "value": 6.3,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "diameter_mm": [
+          {
+            "value": 420,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "range_km": [
+          {
+            "value": 150,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "fuze",
+            "source": {
+              "tr": "SİPER — ROKETSAN Türkçe ürün broşürü",
+              "en": "SİPER — ROKETSAN Turkish product brochure"
+            },
+            "source_url": "https://www.roketsan.com.tr/uploads/docs/kataloglar/TR/2024/1726595695_siper.pdf",
+            "accessed_at": "2026-09-12",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 120,
+            "upper_value": 140,
+            "confidence": "estimate",
+            "scope": "tahmin",
+            "object": "fuze",
+            "stated_at": "2023-11-12",
+            "origin_id": "kula-2023-11-12",
+            "source": {
+              "tr": "Türkiye’nin Millî Katmanlı Hava Savunma Projeksiyonu",
+              "en": "Turkey’s National Layered Air Defence Projection"
+            },
+            "source_url": "https://www.defenceturk.net/turkiyenin-milli-katmanli-hava-savunma-projeksiyonu",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 150,
+            "confidence": "press",
+            "scope": "beyan",
+            "object": "sistem",
+            "stated_at": "2024-11-26",
+            "source": {
+              "tr": "SİPER hava savunma sisteminde 180 km menzil hedefi",
+              "en": "A 180 km range target for the SİPER air defence system"
+            },
+            "source_url": "https://www.defenceturk.net/siper-hava-savunma-sisteminde-180-km-menzil-hedefi",
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "intercept_range_km": [
+          {
+            "value": 150,
+            "operator": "≥",
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "intercept_altitude_km": [
+          {
+            "value": 30,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "azimuth_coverage_deg": [
+          {
+            "value": 360,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "tracking_capacity": [
+          {
+            "value": 100,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "engagement_capacity": [
+          {
+            "value": 10,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "missile_control_capacity": [
+          {
+            "value": 20,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "sistem",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ],
+        "launcher_capacity": [
+          {
+            "value": 6,
+            "confidence": "official",
+            "scope": "beyan",
+            "object": "atici",
+            "source": {
+              "tr": "SİPER 1, SİPER 2 — ASELSAN ürün broşürü",
+              "en": "SİPER 1, SİPER 2 — ASELSAN product brochure"
+            },
+            "source_url": "https://wwwcdn.aselsan.com/api/file/SST_SIPER_1_2_TR.pdf",
+            "document_version": {
+              "tr": "05.2025 iç baskı kodu",
+              "en": "Internal print code 05.2025"
+            },
+            "accessed_at": "2026-09-12",
+            "context_note": {
+              "tr": "ASELSAN broşürü belge genelinde ±%10 tolerans belirtiyor. Eşikler bu toleransla yeniden hesaplanmadı.",
+              "en": "The ASELSAN brochure states a ±10% tolerance across the document. Thresholds were not recalculated with it."
+            },
+            "verified_at": "2026-09-12"
+          }
+        ]
+      },
+      "attributes": {},
+      "annotations": []
+    },
+    {
+      "id": "siper-urun-3",
+      "label": "SİPER Ürün-3",
+      "specs": {
+        "range_km": [
+          {
+            "value": 180,
+            "confidence": "press",
+            "scope": "beyan",
+            "object": "sistem",
+            "stated_at": "2024-11-26",
+            "source": {
+              "tr": "SİPER hava savunma sisteminde 180 km menzil hedefi",
+              "en": "A 180 km range target for the SİPER air defence system"
+            },
+            "source_url": "https://www.defenceturk.net/siper-hava-savunma-sisteminde-180-km-menzil-hedefi",
+            "verified_at": "2026-09-12"
+          },
+          {
+            "value": 180,
+            "operator": "≥",
+            "confidence": "estimate",
+            "scope": "tahmin",
+            "object": "fuze",
+            "stated_at": "2023-11-12",
+            "origin_id": "kula-2023-11-12",
+            "source": {
+              "tr": "Türkiye’nin Millî Katmanlı Hava Savunma Projeksiyonu",
+              "en": "Turkey’s National Layered Air Defence Projection"
+            },
+            "source_url": "https://www.defenceturk.net/turkiyenin-milli-katmanli-hava-savunma-projeksiyonu",
+            "verified_at": "2026-09-12"
+          }
+        ]
+      },
+      "attributes": {
+        "variant_names": {
+          "value": {
+            "tr": "SİPER Ürün-3 (Blok-3). Programda ayrıca SİPER-A ve SİPER-4 adları duyuruldu; ikisi için üretici teknik kartı bulunamadı.",
+            "en": "SİPER Product-3 (Block-3). The names SİPER-A and SİPER-4 were also announced for the programme; no manufacturer data sheet was found for either."
+          },
+          "confidence": "press",
+          "source": {
+            "tr": "Defence Turkey ve Anadolu Ajansı aktarımları",
+            "en": "Defence Turkey and Anadolu Agency reports"
+          },
+          "source_url": "https://defenceturkey.com/news/hava-savunma-sistemleri-ilave-seri-uretim-sozlesmeleri-imzalandi",
+          "verified_at": "2026-09-12"
+        }
+      }
+    }
+  ],
+  "origins": [
+    {
+      "id": "demir-2022-12-30",
+      "document": {
+        "tr": "SİPER Ürün-1 test sonucunun duyurulduğu paylaşım",
+        "en": "The post announcing the SİPER Product-1 test result"
+      },
+      "publisher": "Savunma Sanayii Başkanı, resmî görev hesabı",
+      "url": "https://twitter.com/IsmailDemirSSB/status/1608888054894428160",
+      "date": "2022-12-30",
+      "accessed": false,
+      "carried_by": [
+        {
+          "publisher": "Anadolu Ajansı",
+          "url": "https://www.aa.com.tr/tr/gundem/savunma-sanayii-baskani-demir-siper-fuzesi-100-kilometre-menzili-asti/2776534",
+          "date": "2022-12-30"
+        },
+        {
+          "publisher": "TRT Haber",
+          "url": "https://www.trthaber.com/haber/gundem/siperden-yeni-yil-hediyesi-100-kilometre-menzili-asti-734681.html",
+          "date": "2022-12-30"
+        },
+        {
+          "publisher": "SavunmaTR",
+          "url": "https://www.savunmatr.com/siper-blok-1-100-kilometre-menzili-asti/",
+          "date": "2022-12-31"
+        },
+        {
+          "publisher": "DonanımHaber",
+          "url": "https://www.donanimhaber.com/roketsan-imzali-siper-urun-1-100-kilometreyi-asan-hedefini-vurdu--158789",
+          "date": "2022-12-30"
+        },
+        {
+          "publisher": "Hürriyet",
+          "url": "https://www.hurriyet.com.tr/gundem/savunma-sanayiinden-yeni-yil-mujdesi-siper-fuzesi-100-km-menzili-asti-42196338",
+          "date": "2022-12-30"
+        },
+        {
+          "publisher": "Ekonomim",
+          "url": "https://www.ekonomim.com/ekonomi/demir-siper-100-kilometre-menzili-asti-haberi-678465",
+          "date": "2022-12-30"
+        }
+      ]
+    },
+    {
+      "id": "kula-2023-11-12",
+      "document": {
+        "tr": "Türkiye’nin Millî Katmanlı Hava Savunma Projeksiyonu — bağımsız değerlendirme",
+        "en": "Turkey’s National Layered Air Defence Projection — independent assessment"
+      },
+      "publisher": "DefenceTurk",
+      "url": "https://www.defenceturk.net/turkiyenin-milli-katmanli-hava-savunma-projeksiyonu",
+      "date": "2023-11-12",
+      "accessed": true,
+      "carried_by": [
+        {
+          "publisher": "DefenceTurk",
+          "title": "SİPER hava savunma sistemi Hava Kuvvetleri envanterine giriyor!",
+          "url": "https://www.defenceturk.net/siper-hava-savunma-sistemi-hava-kuvvetleri-envanterine-giriyor",
+          "date": "2023-11-23"
+        }
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2018-10-31",
+      "title": {
+        "tr": "SİPER adı kamuya duyuruldu",
+        "en": "The SİPER name was announced publicly"
+      },
+      "body": {
+        "tr": "Açılış konuşmasının basın aktarımı. O tarihte belirtilen 2021 sonu teslimat hedefi bir plandır.",
+        "en": "Press account of an opening speech. The end-2021 delivery target stated then was a plan."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Stratejik Düşünce Enstitüsü, haber bölümü",
+        "en": "Strategic Thought Institute, news section"
+      },
+      "source_url": "https://www.sde.org.tr/haber/erdogan-milli-hava-savunma-sistemi-siperi-acikladi-haberi-7992"
+    },
+    {
+      "date": "2021-11-06",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "İlk kamuya gösterilen atış duyuruldu",
+        "en": "The first publicly shown firing was announced"
+      },
+      "body": {
+        "tr": "Atışın kesin günü incelenen kaynaklarda yok. Programdaki mutlak ilk test olduğu doğrulanamıyor.",
+        "en": "The exact firing day is not in the sources examined. It cannot be confirmed as the programme’s first test."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "TURDEF",
+        "en": "TURDEF"
+      },
+      "source_url": "https://turdef.com/article/test-fire-from-siper"
+    },
+    {
+      "date": "2022-12-30",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Ürün-1 testinde 100 km eşiğinin aşıldığı duyuruldu",
+        "en": "A test of Product-1 was announced to have passed 100 km"
+      },
+      "body": {
+        "tr": "Atışın yapıldığı gün bilinmiyor. Aynı açıklama bu taramada altı yayıncıda bulundu.",
+        "en": "The day of the firing is unknown. The same statement was found in six outlets in this survey."
+      },
+      "confidence": "press",
+      "origin_id": "demir-2022-12-30",
+      "source": {
+        "tr": "Anadolu Ajansı",
+        "en": "Anadolu Agency"
+      },
+      "source_url": "https://www.aa.com.tr/tr/gundem/savunma-sanayii-baskani-demir-siper-fuzesi-100-kilometre-menzili-asti/2776534"
+    },
+    {
+      "date": "2023-08-26",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Ürün-2’nin ilk atışlı testi duyuruldu",
+        "en": "The first firing test of Product-2 was announced"
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "TRT Haber / AA",
+        "en": "TRT Haber / AA"
+      },
+      "source_url": "https://www.trthaber.com/haber/gundem/siper-urun-2den-ilk-atisli-test-791244.html"
+    },
+    {
+      "date": "2023-12-15",
+      "title": {
+        "tr": "Ürün-1 seri üretim sözleşmesi imza töreni",
+        "en": "Signing ceremony for the Product-1 serial production contract"
+      },
+      "body": {
+        "tr": "Kabul faaliyetlerinin başladığı ve teslimatın 2024 ortasında planlandığı açıklandı. Başlama tamamlanma değildir.",
+        "en": "Acceptance activities were said to have begun and delivery was planned for mid-2024. Starting is not completing."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "Millî Savunma Bakanlığı",
+        "en": "Ministry of National Defence"
+      },
+      "source_url": "https://www.msb.gov.tr/SlaytHaber/b3649214bafd4750b22a457905ac6ec2"
+    },
+    {
+      "date": "2024-09-12",
+      "announced_at": "2024-09-15",
+      "title": {
+        "tr": "Ürün-2 test atışı",
+        "en": "Product-2 test firing"
+      },
+      "body": {
+        "tr": "Kaynak olay gününü ayrıca veriyor; yayın günüyle karıştırılmadı.",
+        "en": "The source gives the event day separately; it was not confused with the publication day."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "DefenceTurk",
+        "en": "DefenceTurk"
+      },
+      "source_url": "https://www.defenceturk.net/celik-kubbenin-caydirici-gucu-siper-urun-2den-test-atisi"
+    },
+    {
+      "date": "2024-10-28",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Ürün-1’in envantere girdiği duyuruldu",
+        "en": "Product-1 was announced as having entered service"
+      },
+      "body": {
+        "tr": "Haber tarihi kabul tutanağının tarihi değildir; devir günü bilinmiyor.",
+        "en": "The news date is not the date of the acceptance record; the handover day is unknown."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı",
+        "en": "Anadolu Agency"
+      },
+      "source_url": "https://www.aa.com.tr/tr/savunma-sanayisi/celik-kubbenin-caydirici-gucu-siper-urun-1-sistemi-envantere-girdi/3377216"
+    },
+    {
+      "date": "2025-07-30",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Ürün-1 seri imalat kabul testlerinin tamamlandığı duyuruldu",
+        "en": "Serial production acceptance tests for Product-1 were announced as complete"
+      },
+      "body": {
+        "tr": "Önceki envantere giriş duyurusunu geçersiz kılmaz; ikisi ayrı olaydır.",
+        "en": "This does not invalidate the earlier entry-into-service announcement; they are separate events."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı",
+        "en": "Anadolu Agency"
+      },
+      "source_url": "https://www.aa.com.tr/tr/savunma-sanayisi/siper-urun-1-fuzesinin-seri-imalat-kabul-testleri-basariyla-tamamlandi/3646648"
+    },
+    {
+      "date": "2026-05-06",
+      "title": {
+        "tr": "İlave seri üretim sözleşmeleri töreni",
+        "en": "Ceremony for additional serial production contracts"
+      },
+      "body": {
+        "tr": "SİPER-A ve SİPER-4 adları bu törenin basın aktarımında geçiyor. Sözleşmelerin asılları görülmedi.",
+        "en": "The names SİPER-A and SİPER-4 appear in press accounts of this ceremony. The contracts themselves were not seen."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Defence Turkey",
+        "en": "Defence Turkey"
+      },
+      "source_url": "https://defenceturkey.com/news/hava-savunma-sistemleri-ilave-seri-uretim-sozlesmeleri-imzalandi"
+    },
+    {
+      "date": "2026-06-16",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Ürün-2 testi haber olarak duyuruldu",
+        "en": "A Product-2 test was reported"
+      },
+      "body": {
+        "tr": "Sayısal uçuş mesafesi ve irtifa verisi verilmedi. ASELSAN aynı haftaki paylaşımında testin başarısını niteliksel olarak teyit etti.",
+        "en": "No numeric flight distance or altitude was given. ASELSAN confirmed the test qualitatively in its weekly post that week."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "TURDEF",
+        "en": "TURDEF"
+      },
+      "source_url": "https://turdef.com/article/siper-2-long-range-air-defence-missile-hits-evading-target"
+    }
+  ],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticilerle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturers."
+  },
+  "_todo": [
+    "Kanister boyutları (6450 × 850 × 800 mm) alınmadı: kaynak hangi boyutun uzunluk olduğunu söylemiyor, eksen eşlemesi yapılamıyor.",
+    "Füze kütlesi ve hızı incelenen teknik tablolarda yok; boyuttan hesaplanmadı.",
+    "SİPER-A ve SİPER-4 için üretici teknik kartı bulunamadı; yalnız ad kaydı var.",
+    "Radar model adları (ALP 310-G, PUSAT 1000-G) tek bir basın kaydında geçiyor; her konfigürasyonun eşlemesi doğrulanmadı.",
+    "Ürün-1 seri üretim sözleşmesi için iki tarih var: MSB töreni 15.12.2023, sonraki haber 01.12.2023. Sözleşmenin aslı görülmedi.",
+    "ASELSAN broşürünün açıklanma günü bilinmiyor; iç baskı kodu 05.2025 olarak kayıtlı ve stated_at yazılmadı.",
+    "Ürün-1 için yayımlanan 5,4 m uzunluğun ayrılabilir iticiyi kapsayıp kapsamadığı bilinmiyor. Üreticinin çizgi görünüşü çizilen L/D 20,30 verirken katalog 14,59 diyor; fark %39 ve itici hipotezi sayıyla da tutmuyor. Çözülürse modelin oranları \"okuma\"dan \"ölçülmüş\"e geçebilir."
+  ]
+}

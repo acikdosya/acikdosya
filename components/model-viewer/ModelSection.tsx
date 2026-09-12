@@ -168,6 +168,7 @@ export function ModelSection({
       {inView ? (
         <ModelViewer
           systemSlug={active.systemSlug}
+          variantId={active.id}
           dimensions={active.dimensions}
           annotations={active.annotations}
           view={view.spec}

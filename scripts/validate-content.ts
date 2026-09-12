@@ -8,7 +8,8 @@ import {z} from 'zod';
 import {selectMeasurements} from '../lib/geometry/measurements';
 import {partsForSystem} from '../lib/geometry/parts-for';
 import {describeIssue, revisionIssues} from '../lib/revisions';
-import {assetsFileSchema, systemSchema} from '../lib/schema';
+import {SPEC_UNITS} from '../lib/format';
+import {assetsFileSchema, specKeys, systemSchema} from '../lib/schema';
 import {markedDivergence} from '../lib/stats';
 
 const ROOT = process.cwd();
@@ -17,9 +18,22 @@ const PUBLIC_DIR = join(ROOT, 'public');
 
 const errors: string[] = [];
 const todos: string[] = [];
+/**
+ * Derlemeyi DUSURMEYEN bulgular.
+ *
+ * Bazi eksiklikler mesru bir karar olabilir: menzil beyani tasiyan bir
+ * dosyanin halka kaydi tasimamasi "unutuldu" da demek olabilir, "bu
+ * deger yaricap iddiasi tasimiyor" da. Ikisini ayirt edemeyiz, o yuzden
+ * hata degil uyari veriyoruz — gorunur olsun ama derlemeyi kesmesin.
+ */
+const warnings: string[] = [];
 
 function fail(file: string, message: string) {
   errors.push(`${file}\n  ${message.replace(/\n/g, '\n  ')}`);
+}
+
+function warn(file: string, message: string) {
+  warnings.push(`${file}\n  ${message.replace(/\n/g, '\n  ')}`);
 }
 
 function readJson(path: string): unknown {
@@ -121,6 +135,47 @@ for (const name of systemFiles) {
     }
 
     /*
+     * Menzil beyani var ama halka kaydi yok.
+     *
+     * Iki mesru okuma var ve ayirt edemiyoruz: deger yaricap iddiasi
+     * tasimiyor olabilir (AKINCI'nin operasyonel menzili boyle), ya da
+     * kayit yazilmasi unutulmus olabilir. Bu yuzden HATA DEGIL uyari —
+     * halka cizmemek bir karar, sessiz kalmak degil.
+     */
+    const rangeFields = specKeys.filter((key) => SPEC_UNITS[key] === 'km');
+    const carriesRange = [
+      system.specs,
+      ...system.variants.map((variant) => variant.specs)
+    ].some((specs) =>
+      rangeFields.some((key) => specs?.[key] !== undefined)
+    );
+    if (carriesRange && !system.range_ring) {
+      warn(
+        relative(ROOT, path),
+        'menzil beyani var ama halka kaydi (range_ring) yok — halka cizilmeyecek\n' +
+          '  yaricap iddiasi tasimayan bir deger icin bu dogru karardir, yazilmasi unutulduysa degil'
+      );
+    }
+
+    /*
+     * Hava savunma sisteminde halka fuzenin menzilinden cizilemez.
+     *
+     * Fuze menzili tek yon ucus erisimi; sistemin onleme menzili ise her
+     * yone gecerli angajman yaricapi. Buyuk olani cizmek sistemin
+     * yapabildiginden fazlasini iddia eder (specs/range-envelope).
+     */
+    if (
+      system.category === 'hava-savunma-sistemi' &&
+      system.range_ring?.field === 'range_km'
+    ) {
+      fail(
+        relative(ROOT, path),
+        'hava savunma sisteminde halka range_km alanindan cizilemez\n' +
+          '  fuze menzili tek yon ucus erisimi; halka sistem onleme menzilinden cizilir'
+      );
+    }
+
+    /*
      * Defter ile tablo tutuyor mu — lib/revisions.ts.
      *
      * Bir alanin en son duzeltmesi "yeni deger su" diyorsa o deger
@@ -146,7 +201,11 @@ for (const name of systemFiles) {
       const annotations = variant?.annotations ?? [];
       if (annotations.length === 0) continue;
 
-      const parts = partsForSystem(system.slug, selection.dimensions);
+      const parts = partsForSystem(
+        system.slug,
+        selection.group.id,
+        selection.dimensions
+      );
       if (!parts) {
         fail(
           relative(ROOT, path),
@@ -246,6 +305,11 @@ for (const entry of readdirSync(CONTENT_DIR, {withFileTypes: true})) {
 if (todos.length > 0) {
   console.log(`\n${todos.length} eksik alan (_todo):`);
   for (const todo of todos) console.log(`  · ${todo}`);
+}
+
+if (warnings.length > 0) {
+  console.log(`\n${warnings.length} uyari:`);
+  for (const warning of warnings) console.log(`  ! ${warning}`);
 }
 
 if (errors.length > 0) {

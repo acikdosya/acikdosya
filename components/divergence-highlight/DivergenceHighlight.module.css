@@ -83,6 +83,11 @@
   margin-left: 0.28em;
 }
 
+/* Sayiya bitisik yazilan simge (°) sol boslugunu birakir — lib/format.ts. */
+.value small[data-tight] {
+  margin-left: 0;
+}
+
 /* Sayiyi rozetine baglayan kilavuz cizgi. */
 .lead {
   composes: hero-lead from global;

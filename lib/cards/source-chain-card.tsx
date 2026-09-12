@@ -1,5 +1,5 @@
 import type {Locale} from '@/i18n/routing';
-import {formatDate, formatValue, SPEC_UNITS} from '../format';
+import {formatDate, formatValue, SPEC_UNITS, withUnit} from '../format';
 import type {Confidence} from '../schema';
 import {PALETTE} from '../tokens';
 import {
@@ -121,7 +121,7 @@ export function SourceChainCardImage({
           textOverflow: 'ellipsis'
         }}
       >
-        {`${tSpec(key)} ${formatValue(measurement, locale)} ${SPEC_UNITS[key]}`}
+        {`${tSpec(key)} ${withUnit(formatValue(measurement, locale), SPEC_UNITS[key])}`}
       </div>
     </div>
   );

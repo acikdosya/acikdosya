@@ -5,7 +5,7 @@ import {
   type ScaleCardRow
 } from '@/components/scale-silhouette/card-geometry';
 import {HUMAN_HEIGHT_M} from '@/components/scale-silhouette/geometry';
-import {formatDate, formatNumber, formatValue, SPEC_UNITS} from '../format';
+import {formatDate, formatNumber, formatValue, SPEC_UNITS, withUnit} from '../format';
 import type {Confidence, SpecKey} from '../schema';
 import {PALETTE} from '../tokens';
 import {
@@ -131,7 +131,7 @@ export function ScaleCardImage({
   if (!layout) return null;
 
   const named = (key: SpecKey, value: string) =>
-    `${tSpec(key)} ${value} ${SPEC_UNITS[key]}`;
+    `${tSpec(key)} ${withUnit(value, SPEC_UNITS[key])}`;
 
   /** Ad, iki olcu ve rozet. Iki yerlesimde de ayni sira. */
   const labelBlock = (row: ScaleRow, drawing: ScaleCardRow) => {

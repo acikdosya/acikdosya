@@ -1,0 +1,128 @@
+/*
+ * Koken zinciri, duzeltme defteriyle ayni sadelikte duruyor: rozet yok,
+ * numara yok. Bir tekrar kaydi olcum degil, denetim notu — sayfada
+ * olculerle ayni agirlikta gorunmemeli (§4).
+ *
+ * Tek gorsel ayrim ayni yayinci tekrari: solundaki cizgi soluklasir,
+ * yani "bu satir otekiler kadar sey soylemiyor" demek. Renkle degil
+ * desenle ayrisiyor, siyah beyaz ciktida da okunur.
+ */
+
+.wrap {
+  display: grid;
+  gap: var(--s-4);
+}
+
+.intro {
+  margin: 0;
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border-w) solid var(--rule);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  border-bottom: var(--border-w) solid var(--rule);
+}
+
+@media (max-width: 720px) {
+  .item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-3);
+  }
+}
+
+.document {
+  font-family: var(--font-display);
+  font-size: var(--size-ui);
+  font-weight: var(--weight-semibold);
+  margin: 0 0 3px;
+}
+
+.meta {
+  margin: 0;
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  font-variant-numeric: var(--num);
+}
+
+/* Ozgun metin okunamadi — alintiladigimiz yayin kokenin yerine gecmez. */
+.unread {
+  margin: var(--s-2) 0 0;
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  padding-left: var(--s-3);
+  border-left: var(--border-w) dashed var(--rule);
+}
+
+.count {
+  margin: 0 0 var(--s-2);
+  font-family: var(--font-display);
+  font-size: var(--size-label);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: var(--num);
+}
+
+.independent {
+  display: block;
+  font-weight: var(--weight-regular);
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+}
+
+.publications {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.publication {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-size: var(--size-micro);
+  padding-left: var(--s-3);
+  border-left: var(--border-w) solid var(--ink-2);
+}
+
+/* Ayni yayincinin kendi devam yazisi: bagimsiz dolasim degil. */
+.publication[data-same-publisher] {
+  border-left-style: dotted;
+  color: var(--ink-2);
+}
+
+.publisher {
+  font-family: var(--font-display);
+}
+
+.publicationDate {
+  color: var(--ink-2);
+  font-variant-numeric: var(--num);
+}
+
+.sameMark {
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.auditNote {
+  margin: 0;
+  font-size: var(--size-micro);
+  color: var(--ink-2);
+  max-width: 62ch;
+}

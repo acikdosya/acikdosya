@@ -8,6 +8,7 @@ import {Link} from '@/i18n/navigation';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, sourceHost} from '@/lib/analytics';
 import {formatDate, formatValue, SPEC_UNITS} from '@/lib/format';
+import type {SpecUnit} from '@/lib/measurement/divergence';
 import {specGroups} from '@/lib/measurement/groups';
 import {
   attributeKeys,
@@ -20,6 +21,7 @@ import {
   type Variant
 } from '@/lib/schema';
 import {specDivergence} from '@/lib/stats';
+import {UnitMark} from '@/components/unit-mark/UnitMark';
 import styles from './SpecTable.module.css';
 
 type Props = {
@@ -137,7 +139,7 @@ function MeasurementCell({
   showScope
 }: {
   list: readonly Measurement[] | undefined;
-  unit: string;
+  unit: SpecUnit;
   locale: Locale;
   variants: readonly Variant[];
   showScope: boolean;
@@ -159,7 +161,7 @@ function MeasurementCell({
         <span className={styles.entry} key={`${measurement.value}-${index}`}>
           <span className={styles.value}>
             {formatValue(measurement, locale)}
-            <small>{unit}</small>
+            <UnitMark unit={unit} />
           </span>
           <ConfidenceBadge confidence={measurement.confidence} />
           <SourceLine

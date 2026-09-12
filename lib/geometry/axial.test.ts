@@ -8,6 +8,7 @@ import {buildModel, frameFromParts} from './model';
 import {buildParts} from './product';
 import {chosen} from './ratio';
 import {TAYFUN} from './tayfun';
+import {projectParts} from './project2d';
 
 /**
  * Eksenel govdenin altin degerleri.
@@ -158,10 +159,25 @@ test('kanatcik plakasi govdeye DIK degil, veche govde ekseni boyunca', () => {
   const single = axialProduct({
     slug: 'tek-kanatcik',
     category: 'balistik-fuze',
-    ratios: {
-      ...TAYFUN.ratios,
-      finCount: chosen(1, {note: {tr: 'test', en: 'test'}})
-    }
+    body: {
+      noseRatio: TAYFUN.ratios.noseRatio,
+      shoulderT: TAYFUN.ratios.shoulderT,
+      boattail: TAYFUN.ratios.boattail
+    },
+    groups: [
+      {
+        id: 'fin',
+        ratios: {
+          count: chosen(1, {note: {tr: 'test', en: 'test'}}),
+          chordRatio: TAYFUN.ratios.finChordRatio,
+          taper: TAYFUN.ratios.finTaper,
+          spanRatio: TAYFUN.ratios.finSpanRatio,
+          rakeDeg: TAYFUN.ratios.finRakeDeg,
+          trailingT: TAYFUN.ratios.finTrailingT,
+          thicknessRatio: TAYFUN.ratios.finThicknessRatio
+        }
+      }
+    ]
   });
   const parts = buildParts(single, {length_m: 6.5, diameter_mm: 610});
   assert.ok(parts);
@@ -301,4 +317,261 @@ test('ATMACA modeli cizimin govde yuzeyindeki vechesini yeniden uretir', () => {
   // Cizimde olculen: kanatcik 73 px, kanat 229 px.
   assert.ok(Math.abs(fin - 73) < 3, `kanatcik yuzey vechesi ${fin.toFixed(1)} px`);
   assert.ok(Math.abs(wing - 229) < 5, `kanat yuzey vechesi ${wing.toFixed(1)} px`);
+});
+
+/*
+ * YUZEY GRUBU LISTESI — specs/system-geometry.
+ *
+ * Grup sayisi sabit bir ust sinira bagli degil ve parca kimlikleri grup
+ * adindan turuyor. Kimlik onemli: etiketler ona baglaniyor
+ * (content/systems/*.json annotations) ve kadraj onu tutamak olarak
+ * okuyor, yani sessizce degismemeli.
+ */
+
+const TEST_SURFACE = {
+  count: chosen(4, {note: {tr: 'test', en: 'test'}}),
+  chordRatio: chosen(0.1, {note: {tr: 'test', en: 'test'}}),
+  taper: chosen(0.5, {note: {tr: 'test', en: 'test'}}),
+  spanRatio: chosen(1.5, {note: {tr: 'test', en: 'test'}}),
+  rakeDeg: chosen(0, {note: {tr: 'test', en: 'test'}}),
+  trailingT: chosen(1, {note: {tr: 'test', en: 'test'}}),
+  thicknessRatio: chosen(0.03, {note: {tr: 'test', en: 'test'}})
+};
+
+const TEST_BODY = {
+  noseRatio: chosen(0.2, {note: {tr: 'test', en: 'test'}}),
+  shoulderT: chosen(0.9, {note: {tr: 'test', en: 'test'}}),
+  boattail: chosen(0.95, {note: {tr: 'test', en: 'test'}})
+};
+
+test('parca kimlikleri grup adindan turer', () => {
+  const product = axialProduct({
+    slug: 'uc-grup',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    groups: [
+      {id: 'fin-aft', ratios: {...TEST_SURFACE}},
+      {id: 'fin-control', ratios: {...TEST_SURFACE}},
+      {id: 'wing-mid', ratios: {...TEST_SURFACE}}
+    ]
+  });
+
+  const parts = buildParts(product, {length_m: 5.4, diameter_mm: 370});
+  assert.ok(parts);
+  const ids = parts.map((part) => part.id);
+
+  assert.ok(ids.includes('body'));
+  for (const group of ['fin-aft', 'fin-control', 'wing-mid']) {
+    for (let i = 1; i <= 4; i++) {
+      assert.ok(ids.includes(`${group}-${i}`), `${group}-${i} uretilmedi`);
+    }
+  }
+  // govde + uc grup x dort yuzey
+  assert.equal(parts.length, 13);
+});
+
+test('grup sayisi ikiyle sinirli degil', () => {
+  const product = axialProduct({
+    slug: 'dort-grup',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    groups: [
+      {id: 'a', ratios: {...TEST_SURFACE}},
+      {id: 'b', ratios: {...TEST_SURFACE}},
+      {id: 'c', ratios: {...TEST_SURFACE}},
+      {id: 'd', ratios: {...TEST_SURFACE}}
+    ]
+  });
+  const parts = buildParts(product, {length_m: 5, diameter_mm: 400});
+  assert.equal(parts?.length, 17);
+});
+
+test('grupsuz urun yalniz govde cizer', () => {
+  const product = axialProduct({
+    slug: 'govde-tek',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    groups: []
+  });
+  const parts = buildParts(product, {length_m: 5, diameter_mm: 400});
+  assert.deepEqual(parts?.map((part) => part.id), ['body']);
+});
+
+test('oran anahtarlari grup onekiyle benzersiz kalir', () => {
+  const product = axialProduct({
+    slug: 'onek',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    groups: [
+      {id: 'fin-aft', prefix: 'finAft', ratios: {...TEST_SURFACE}},
+      {id: 'fin-control', prefix: 'finControl', ratios: {...TEST_SURFACE}}
+    ]
+  });
+
+  const keys = Object.keys(product.ratios);
+  assert.ok(keys.includes('finAftCount'));
+  assert.ok(keys.includes('finControlSpanRatio'));
+  assert.equal(new Set(keys).size, keys.length, 'oran anahtari tekrarlandi');
+});
+
+test('ayni onekli iki grup tanim zamaninda reddedilir', () => {
+  /*
+   * Sessizce ustune yazmak, bir grubun oranlarini otekinin kokeniyle
+   * gostermek olurdu — koken kaydinin en sinsi bozulmasi.
+   */
+  assert.throws(
+    () =>
+      axialProduct({
+        slug: 'cakisma',
+        category: 'hava-savunma-sistemi',
+        body: TEST_BODY,
+        groups: [
+          {id: 'fin', ratios: {...TEST_SURFACE}},
+          {id: 'fin-2', prefix: 'fin', ratios: {...TEST_SURFACE}}
+        ]
+      }),
+    /iki kez tanimli/
+  );
+});
+
+/*
+ * KADEMELI GOVDE — specs/system-geometry.
+ *
+ * Ayrilabilir itici tasiyan bir fuzede arka bolum ana govdeden kalin.
+ * Onceki surumde govde tek capliydi ve bu bicim ifade edilemiyordu.
+ */
+
+const station = (t: number, radiusRatio: number) => ({
+  t: chosen(t, {note: {tr: 'test', en: 'test'}}),
+  radiusRatio: chosen(radiusRatio, {note: {tr: 'test', en: 'test'}})
+});
+
+function bodyProfile(product: ReturnType<typeof axialProduct>) {
+  const parts = buildParts(product, {length_m: 10, diameter_mm: 1000});
+  assert.ok(parts);
+  const body = parts.find((part) => part.id === 'body');
+  assert.ok(body && body.kind === 'body');
+  return body.spec.stations;
+}
+
+test('kademeli govde iki capi ve aralarindaki gecisi tasir', () => {
+  const product = axialProduct({
+    slug: 'kademeli',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    stations: [
+      // 'shoulder' kullanilamaz: govdenin shoulderT anahtariyla cakisir.
+      {id: 'step', ratios: station(0.6, 1)},
+      {id: 'booster', ratios: station(0.7, 1.25)}
+    ],
+    groups: []
+  });
+
+  const profile = bodyProfile(product);
+  // R = 0,5 m; kademe 1,25 katinda.
+  const at = (y: number) =>
+    profile.find((s) => Math.abs(s.y - y) < 1e-9)?.radius;
+
+  assert.equal(at(6), 0.5, 'gecisin basi anma yaricapinda degil');
+  assert.equal(at(7), 0.625, 'gecisin sonu kademe yaricapinda degil');
+  // Kuyruk son istasyonun yaricapindan daralir, anma yaricapindan degil.
+  assert.equal(at(10), 0.625 * TEST_BODY.boattail.value);
+});
+
+test('istasyon bildirilince shoulderT devreye girmez', () => {
+  /*
+   * Ikisi birlikte uygulansaydi govde kademeden sonra anma capina geri
+   * sicrardi — bildirilen bicimin tersi.
+   */
+  const product = axialProduct({
+    slug: 'omuzsuz',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    stations: [{id: 'booster', ratios: station(0.8, 1.2)}],
+    groups: []
+  });
+
+  const profile = bodyProfile(product);
+  const shoulderY = 10 * TEST_BODY.shoulderT.value;
+  const stray = profile.filter(
+    (s) => Math.abs(s.y - shoulderY) < 1e-9 && Math.abs(s.radius - 0.5) < 1e-9
+  );
+  assert.equal(stray.length, 0, 'shoulderT istasyonu da eklenmis');
+});
+
+test('istasyonlar tanim sirasindan bagimsiz, burundan kuyruga siralanir', () => {
+  const product = axialProduct({
+    slug: 'sirasiz',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    stations: [
+      {id: 'gec', ratios: station(0.8, 1.2)},
+      {id: 'erken', ratios: station(0.6, 1)}
+    ],
+    groups: []
+  });
+
+  const ys = bodyProfile(product).map((s) => s.y);
+  assert.deepEqual([...ys].sort((a, b) => a - b), ys, 'profil sirali degil');
+});
+
+test('istasyonsuz urun eskisi gibi tek capli kalir', () => {
+  const stepped = axialProduct({
+    slug: 'tek-cap',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    groups: []
+  });
+  const profile = bodyProfile(stepped);
+  assert.equal(profile.at(-1)?.radius, 0.5 * TEST_BODY.boattail.value);
+  assert.ok(
+    profile.some((s) => Math.abs(s.y - 10 * TEST_BODY.shoulderT.value) < 1e-9),
+    'shoulderT istasyonu kayboldu'
+  );
+});
+
+test('istasyon oranlari koken kaydina girer', () => {
+  const product = axialProduct({
+    slug: 'koken',
+    category: 'hava-savunma-sistemi',
+    body: TEST_BODY,
+    stations: [{id: 'booster', ratios: station(0.7, 1.25)}],
+    groups: []
+  });
+
+  const keys = Object.keys(product.ratios);
+  assert.ok(keys.includes('boosterT'));
+  assert.ok(keys.includes('boosterRadiusRatio'));
+});
+
+test('bolumlu burun istasyonu ortografik izdusumde de gorunur', () => {
+  /*
+   * URUN-2'nin radomu ayri bir bolum olarak ciziliyor. Bolum siniri
+   * govde profilinde bir istasyon; iki boyutlu sema ayni parca
+   * listesinden turedigi icin kontur orada da kirilmali
+   * (specs/system-silhouette).
+   */
+  const product = axialProduct({
+    slug: 'radom',
+    category: 'hava-savunma-sistemi',
+    body: {
+      ...TEST_BODY,
+      noseRatio: chosen(0.3, {note: {tr: 'test', en: 'test'}})
+    },
+    stations: [{id: 'radome', ratios: station(0.18, 0.62)}],
+    groups: []
+  });
+
+  const parts = buildParts(product, {length_m: 10, diameter_mm: 1000});
+  assert.ok(parts);
+
+  const outline = projectParts(parts, 'side');
+  assert.ok(outline.length > 0, 'izdusum bos');
+
+  // Istasyonun bulundugu y'de konturun yaricapi bildirilen orana esit.
+  const body = parts.find((part) => part.id === 'body');
+  assert.ok(body && body.kind === 'body');
+  const at = body.spec.stations.find((s) => Math.abs(s.y - 1.8) < 1e-9);
+  assert.ok(at, 'radom istasyonu profile girmedi');
+  assert.equal(at.radius, 0.31);
 });

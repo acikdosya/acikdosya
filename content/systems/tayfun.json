@@ -7,10 +7,12 @@
     "en": "TAYFUN"
   },
   "category": "balistik-fuze",
-  "manufacturer": {
-    "id": "roketsan",
-    "name": "ROKETSAN"
-  },
+  "manufacturer": [
+    {
+      "id": "roketsan",
+      "name": "ROKETSAN"
+    }
+  ],
   "status": "seri-uretim",
   "summary": {
     "tr": "ROKETSAN'ın balistik füze ailesi.",
@@ -19,6 +21,9 @@
   "hero": {
     "field": "range_km",
     "variant": "tayfun"
+  },
+  "range_ring": {
+    "field": "range_km"
   },
   "variants": [
     {

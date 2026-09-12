@@ -44,6 +44,8 @@ export interface ViewerAnnotation {
 
 interface Props {
   systemSlug: string;
+  /** Olcu grubunun kimligi — bicim kaydi once bununla aranir. */
+  variantId: string;
   /** Ortak ölçü seçiminden gelen boyutlar — geometri yalnızca bundan türer. */
   dimensions: SelectedDimensions;
   annotations: ViewerAnnotation[];
@@ -67,9 +69,10 @@ interface Props {
 
 function Model({
   systemSlug,
+  variantId,
   dimensions,
   annotations
-}: Pick<Props, 'systemSlug' | 'dimensions' | 'annotations'>) {
+}: Pick<Props, 'systemSlug' | 'variantId' | 'dimensions' | 'annotations'>) {
   // CSS pikseli, cihaz pikseli degil: mobil 48, masaustu 72 segment.
   const width = useThree((state) => state.size.width);
   const invalidate = useThree((state) => state.invalidate);
@@ -82,10 +85,11 @@ function Model({
     () =>
       buildModel({
         systemSlug,
+        variantId,
         dimensions,
         radialSegments: isMobile ? 48 : 72
       }),
-    [systemSlug, dimensions, isMobile]
+    [systemSlug, variantId, dimensions, isMobile]
   );
 
   // Varyant degisince onceki geometri ve materyal bellekten duser.
@@ -231,6 +235,7 @@ function supportsWebGL2(): boolean {
  */
 export default function ModelViewer({
   systemSlug,
+  variantId,
   dimensions,
   annotations,
   view,
@@ -246,17 +251,17 @@ export default function ModelViewer({
 
   // Sahne kurulmadan once olculer: kadraj, golge ve zoom sinirlari.
   const frame = useMemo(
-    () => modelBounds({systemSlug, dimensions}),
-    [systemSlug, dimensions]
+    () => modelBounds({systemSlug, variantId, dimensions}),
+    [systemSlug, variantId, dimensions]
   );
 
   // Odak noktasi parca uzerinde cozulur; sahne kurulmadan biliniyor.
   const focus = useMemo(
     () =>
       view.kind === 'focus'
-        ? focusPointFor(systemSlug, dimensions, view)
+        ? focusPointFor(systemSlug, variantId, dimensions, view)
         : undefined,
-    [systemSlug, dimensions, view]
+    [systemSlug, variantId, dimensions, view]
   );
 
   useEffect(() => {
@@ -301,6 +306,7 @@ export default function ModelViewer({
         <Suspense fallback={null}>
           <Model
             systemSlug={systemSlug}
+            variantId={variantId}
             dimensions={dimensions}
             annotations={annotations}
           />

@@ -1,5 +1,5 @@
 import type {Locale} from '@/i18n/routing';
-import {formatDate, formatValue} from '../format';
+import {formatDate, formatValue, withUnit} from '../format';
 import {KIND_MESSAGE_KEY} from '../measurement/labels';
 import type {Confidence, Measurement} from '../schema';
 import {PALETTE} from '../tokens';
@@ -72,7 +72,7 @@ export function ValueScopeCardImage({
 
   const column = (measurement: Measurement, index: number) => {
     const skin = COLUMN[measurement.confidence];
-    const value = `${formatValue(measurement, locale)} ${card.unit}`;
+    const value = withUnit(formatValue(measurement, locale), card.unit);
 
     return (
       <div

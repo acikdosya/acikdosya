@@ -47,7 +47,7 @@ function rowFor(system: System): ScaleRow | undefined {
   if (!selection) return undefined;
 
   const {group, dimensions} = selection;
-  const parts = partsForSystem(system.slug, dimensions);
+  const parts = partsForSystem(system.slug, group.id, dimensions);
 
   /*
    * Olculer secim sonucundan degil gruptan yeniden okunuyor: karta

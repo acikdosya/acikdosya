@@ -33,9 +33,15 @@ export function DivergenceLabel({kind}: {kind: DivergenceKind}) {
 }
 
 /**
- * Tek bir degerin kapsami: nasil elde edildi, hangi varyanta ait, ne zaman
- * aciklandi. Uc alan da bosken "kapsam belirtilmemis" yazar — bilinmeyen
- * ile bilinip yazilmayan ayni gorunmemeli.
+ * Tek bir degerin kapsami: NEYI olcuyor, nasil elde edildi, hangi varyanta
+ * ait, ne zaman aciklandi. Dort alan da bosken "kapsam belirtilmemis"
+ * yazar — bilinmeyen ile bilinip yazilmayan ayni gorunmemeli.
+ *
+ * Nesne ILK SIRADA. Bilesik bir dosyada ayni alanda hem fuzenin hem
+ * sistemin kaydi bulunur ve ikisi de "resmi · beyan" gorunur; hangisinin
+ * neyi olctugu yazilmazsa okuyucu iki ayri niceligi tek satir sanir.
+ * Kiyas hesabi farki zaten biliyor (lib/measurement/divergence.ts), ama
+ * bilip soylememek bu projede kaydin kendisini bozmakla ayni sey.
  *
  * Tarihten yalnizca yil aliniyor: kaynak bazen yalnizca yil veriyor ve
  * satirda tasinan bilgi "hangi donemin aciklamasi" sorusunun cevabi.
@@ -49,6 +55,8 @@ export function ScopeNote({
 }) {
   const t = useTranslations('Divergence');
   const parts: string[] = [];
+
+  if (measurement.object) parts.push(t(`object_${measurement.object}`));
 
   if (measurement.scope) parts.push(t(`scope_${measurement.scope}`));
 

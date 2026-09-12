@@ -28,7 +28,7 @@ function build(specs: Specs, revisions: Revision[]): System {
     name: {tr: 'Örnek', en: 'Example'},
     /* IHA secildi: fuze kategorisi her varyantta range_km istiyor. */
     category: 'insansiz-hava-araci',
-    manufacturer: {id: 'uretici', name: 'Üretici'},
+    manufacturer: [{id: 'uretici', name: 'Üretici'}],
     status: 'envanterde',
     variants: [{id: 'temel', label: 'Temel', specs, attributes: {}}],
     timeline: [],
@@ -217,7 +217,7 @@ test('deger baska bir grupta bulunabilir', () => {
     slug: 'ornek',
     name: {tr: 'Örnek', en: 'Example'},
     category: 'insansiz-hava-araci',
-    manufacturer: {id: 'uretici', name: 'Üretici'},
+    manufacturer: [{id: 'uretici', name: 'Üretici'}],
     status: 'envanterde',
     specs: {length_m: [measurement(12.3)]},
     variants: [{id: 'temel', label: 'Temel', specs: {}, attributes: {}}],
