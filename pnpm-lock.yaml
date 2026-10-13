@@ -40,8 +40,8 @@ importers:
         version: 4.6.1
     devDependencies:
       '@gltf-transform/core':
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 4.5.1
+        version: 4.5.1
       '@gltf-transform/extensions':
         specifier: 4.5.0
         version: 4.5.0
@@ -398,8 +398,8 @@ packages:
   '@formatjs/intl-localematcher@0.8.14':
     resolution: {integrity: sha512-8O7V38QmbB11+ryJ3KM/znrzXtiqgpXzqNoqDsndHZZ5/zDKTTL+cf5F0mzXkQEwhx8IlWnqYvEovf2S5EwLTw==}
 
-  '@gltf-transform/core@4.5.0':
-    resolution: {integrity: sha512-JlvShvnB4AtfGZqjnESS/wfPJbpVnyHhTwJBbWN4qXqkB3C5HIoxxpu/orwGBge6Pc0zObeWj70lVf+4gbuu0A==}
+  '@gltf-transform/core@4.5.1':
+    resolution: {integrity: sha512-OWgBYssKHKoXMIrMb2N20jXqWRnMP9HdtcTFQBEAJtz4P+OOxx5fozl5eAeK7nktIs5uDE/lu4NbkE5VCZaR9g==}
 
   '@gltf-transform/extensions@4.5.0':
     resolution: {integrity: sha512-J4cKzrmEr75YkrtdI4cKosBg2vDC4rT56aq/QoijW7GT1Y9gSEMJbqyFO9xcFO3FNpZaZiDrHWUqE5Okrl5nOQ==}
@@ -3142,18 +3142,18 @@ snapshots:
     dependencies:
       '@formatjs/fast-memoize': 3.1.7
 
-  '@gltf-transform/core@4.5.0':
+  '@gltf-transform/core@4.5.1':
     dependencies:
       property-graph: 4.1.0
 
   '@gltf-transform/extensions@4.5.0':
     dependencies:
-      '@gltf-transform/core': 4.5.0
+      '@gltf-transform/core': 4.5.1
       ktx-parse: 1.1.0
 
   '@gltf-transform/functions@4.5.0(@types/node@20.19.43)':
     dependencies:
-      '@gltf-transform/core': 4.5.0
+      '@gltf-transform/core': 4.5.1
       '@gltf-transform/extensions': 4.5.0
       ktx-parse: 1.1.0
       ndarray: 1.1.1
