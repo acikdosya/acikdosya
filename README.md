@@ -126,7 +126,10 @@ olmalı — ikisini de `pnpm validate:content` sınar. İşaretçi yoksa
 kaydı, tek değerin tam kaydı.
 
 **Bir sayının kaynağını bulamıyorsan alanı boş bırak.** Placeholder sayı üretmek bu
-projedeki en tehlikeli hatadır. Eksik alanı `_todo` dizisine yaz:
+projedeki en tehlikeli hatadır. Aynısı metinsel özellik ve takvim olayı için de
+geçerli: güven seviyesi taşıyan her kayıt kaynak adı ister, kaynaksız kayıt
+derlenmez. "Açıklanmadı" gibi bir yokluk ifadesi de değer olarak yazılmaz. Eksik
+alanı `_todo` dizisine yaz:
 
 ```jsonc
 "_todo": ["cep_m icin acik kaynak bulunamadi — alan bos birakildi"]

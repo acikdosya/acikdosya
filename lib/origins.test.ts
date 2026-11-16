@@ -210,7 +210,9 @@ test('takvim olayi da ayni koken kaydini gosterebilir', () => {
           date_kind: 'announcement',
           title: {tr: 'Test duyurusu', en: 'Test announcement'},
           confidence: 'press',
-          origin_id: 'demir-2022-12-30'
+          origin_id: 'demir-2022-12-30',
+          // Koken kaynak adinin yerine gecmez — lib/attribution.test.ts.
+          source: {tr: 'Anadolu Ajansı', en: 'Anadolu Agency'}
         }
       ]
     })

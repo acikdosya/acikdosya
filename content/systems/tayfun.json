@@ -165,14 +165,14 @@
             "tr": "Katı yakıt",
             "en": "Solid propellant"
           },
-          "confidence": "official"
-        },
-        "stages": {
-          "value": {
-            "tr": "Tek kademe",
-            "en": "Single stage"
+          "confidence": "press",
+          "source": {
+            "tr": "Türkiye Gazetesi, 27 Mayıs 2023: SSB Başkanı İsmail Demir'in sözleri (CNN Türk'ten)",
+            "en": "Türkiye Gazetesi, 27 May 2023: remarks by SSB head İsmail Demir (via CNN Türk)"
           },
-          "confidence": "official"
+          "source_url": "https://www.turkiyegazetesi.com.tr/teknoloji/tayfun-kasip-kavuracak-noktasal-hedef-vurma-ozelligine-sahip-967253",
+          "archive_url": "https://web.archive.org/web/20230527222045/https://www.turkiyegazetesi.com.tr/teknoloji/tayfun-kasip-kavuracak-noktasal-hedef-vurma-ozelligine-sahip-967253",
+          "verified_at": "2026-11-16"
         }
       },
       "annotations": [
@@ -211,7 +211,8 @@
       ],
       "_todo": [
         "561 km kaydinin source_url'i yok. Ayni DHA bulteninden tureyen haberlerde ucus suresi 458 ve 456 saniye olarak celisiyor; kaynak zinciri zayif, resmi teyit yok.",
-        "attributes.propellant ve attributes.stages 'official' tasiyor ama kaynaksiz. Urun kartinda ikisi de GECMIYOR; ya kaynak bulunacak ya confidence dusurulecek.",
+        "propellant basın kaydıyla duruyor (SSB Başkanı Demir'in sözleri, haberden okundu). Resmî rozet için SSB'nin ya da ROKETSAN'ın kendi kanalında yakıt türünü söyleyen bir belge gerekir; ürün kartında geçmiyor.",
+        "stages kaldırıldı (16.11.2026): ürün kartında yok, kademe sayısını veren bir kaynak bulunamadı. Okunanlar: ROKETSAN ürün kartı, Türkiye Gazetesi 27.05.2023, A Haber 23.05.2023, AA 22.07.2025.",
         "urun kartindaki harp basligi tipi ve hedef tipi alanlari bilerek alinmadi — CLAUDE.md §5.2 ve §5.3, yontem sayfasinda yazili."
       ]
     },
@@ -263,29 +264,7 @@
           }
         ]
       },
-      "attributes": {
-        "guidance": {
-          "value": {
-            "tr": "Açıklanmadı",
-            "en": "Not disclosed"
-          },
-          "confidence": "estimate"
-        },
-        "propellant": {
-          "value": {
-            "tr": "Katı yakıt",
-            "en": "Solid propellant"
-          },
-          "confidence": "press"
-        },
-        "stages": {
-          "value": {
-            "tr": "Açıklanmadı",
-            "en": "Not disclosed"
-          },
-          "confidence": "estimate"
-        }
-      },
+      "attributes": {},
       "annotations": [
         {
           "id": "nose",
@@ -324,7 +303,9 @@
         "BLOK-4 range_km bosaltildi: dolasimda birden fazla bagimsiz tahmin var (≤1000 km ve 3000 km'ye kadar uzananlar) ve 'aciklanmadi' diyen kaynaklar da var. Tek tahmini gosterip otekileri gizlemek kendi kuralimizin ihlali olurdu. Ya hepsi kaynagiyla girilecek ya alan bos kalacak.",
         "BLOK-4 olculeri icin tek bir somut yayin adi ve baglanti yok — IDEF 2025 tanitimi bir olay, yayin degil.",
         "mass_kg kaynaklarda 7.200 / 7.300 / '7 tonun uzerinde' olarak degisiyor; ~ bandi bu dagilimi kapsiyor. Ayri kayitlar olarak girilmesi gerekip gerekmedigi acik soru.",
-        "cep_m icin acik kaynak bulunamadi — alan bos birakildi"
+        "cep_m icin acik kaynak bulunamadi — alan bos birakildi",
+        "BLOK-4 özelliklerinin üçü de kaldırıldı (16.11.2026). propellant ve stages için kaynak bulunamadı; okunanlar: AA 22.07.2025, Ekonomist 22.07.2025, Türkiye Gazetesi 22.07.2025, AA/Memurlar 26.07.2025, TWZ 28.07.2025. EDR Magazine ve Defence Blog sayfaları 403 döndü, okunamadı. Bir arama özeti BLOK-4 için 'iki aşamalı' diyen bir Türkçe habere işaret etti ama o yayın bulunamadı; bulunursa kaynağıyla girilir.",
+        "guidance ve stages 'Açıklanmadı' değeri taşıyordu. Kaynağın değeri açıklamadığını söylemesi değer olarak yazılmaz (CLAUDE.md §4); hücre tire ile gösterilir."
       ]
     }
   ],
@@ -339,43 +320,46 @@
         "tr": "Rize-Artvin Havalimanı'ndan gerçekleştirildi.",
         "en": "Conducted from Rize-Artvin Airport."
       },
-      "confidence": "official"
-    },
-    {
-      "date": "2025-07-01",
-      "title": {
-        "tr": "BLOK-4 duyurusu",
-        "en": "BLOK-4 announced"
+      "confidence": "press",
+      "source": {
+        "tr": "A Haber, 23 Mayıs 2023",
+        "en": "A Haber, 23 May 2023"
       },
-      "body": {
-        "tr": "IDEF 2025'te ailenin büyük gövdeli versiyonu duyuruldu.",
-        "en": "The larger-bodied version of the family was announced at IDEF 2025."
-      },
-      "confidence": "press"
+      "source_url": "https://www.ahaber.com.tr/gundem/2023/05/23/tayfun-fuzesinde-ikinci-test-2nci-kez-test-ateslendi"
     },
     {
       "date": "2025-07-22",
       "title": {
-        "tr": "Kamuya tanıtım",
-        "en": "Public unveiling"
+        "tr": "BLOK-4 tanıtımı",
+        "en": "BLOK-4 unveiled"
       },
       "body": {
-        "tr": "Sistem ilk kez kamuoyuna açık olarak tanıtıldı.",
-        "en": "The system was presented to the public for the first time."
+        "tr": "ROKETSAN, IDEF 2025'te ilk kez sergilediği ürünler arasında BLOK-4'ü tanıttı.",
+        "en": "ROKETSAN presented BLOK-4 among the products it exhibited for the first time at IDEF 2025."
       },
-      "confidence": "official"
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı, 22 Temmuz 2025",
+        "en": "Anadolu Agency, 22 Jul 2025"
+      },
+      "source_url": "https://www.aa.com.tr/tr/idef-2025/roketsan-idef-2025te-ilk-kez-sergiledigi-6-yeni-urununu-tanitti/3638954"
     },
     {
       "date": "2026-04-07",
       "title": {
-        "tr": "Teslimat töreni",
-        "en": "Delivery ceremony"
+        "tr": "ROKETSAN tesis açılışı",
+        "en": "ROKETSAN facility opening"
       },
       "body": {
-        "tr": "ROKETSAN tesis açılışında BLOK-4 sergilendi.",
-        "en": "BLOK-4 was displayed at a ROKETSAN facility opening."
+        "tr": "Lalahan'daki tesis açılışı töreninde Cumhurbaşkanı Erdoğan bir BLOK-4 füzesini imzaladı.",
+        "en": "At the facility opening ceremony in Lalahan, President Erdoğan signed a BLOK-4 missile."
       },
-      "confidence": "press"
+      "confidence": "press",
+      "source": {
+        "tr": "Türkgün / AA, 7 Nisan 2026",
+        "en": "Türkgün / AA, 7 Apr 2026"
+      },
+      "source_url": "https://www.turkgun.com/gundem/uretim-tesislerinde-inceleme-cumhurbaskani-erdogandan-tayfun-blok-4-fuzesine-imza/368332"
     }
   ],
   "revisions": [
@@ -548,6 +532,162 @@
         "tr": "Dolaşımdaki tek bağımsız tahmin bu değildi: 3000 km'ye kadar uzanan değerlendirmeler ve “açıklanmadı” diyen kaynaklar da var. Bir tahmini seçip diğerlerini gizlemek, bu dosyanın kurulduğu kuralın ihlali. Hepsi kaynağıyla girilene kadar alan boş.",
         "en": "This was not the only independent estimate in circulation: assessments reaching up to 3,000 km exist, as do sources that say the figure was not disclosed. Picking one estimate and hiding the rest breaks the rule this file is built on. The field stays empty until all of them can be entered with their sources."
       }
+    },
+    {
+      "date": "2026-11-16",
+      "field": "propellant",
+      "from": {
+        "kind": "text",
+        "tr": "Katı yakıt (resmî)",
+        "en": "Solid propellant (official)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "Katı yakıt (basın)",
+        "en": "Solid propellant (press)"
+      },
+      "reason": {
+        "tr": "Değer resmî rozetle ama kaynaksız yayımlanmıştı; ROKETSAN ürün kartında geçmiyor. SSB Başkanı İsmail Demir'in sözlerini aktaran bir haber bulundu. Açıklamayı kurumun kendi kanalından değil haberden okuduğumuz için güven “basın”.",
+        "en": "The value was published under the official badge with no source; it does not appear on the ROKETSAN product card. A news report quoting SSB head İsmail Demir was found. We read the remark in a news report, not on the agency's own channel, so the confidence is press."
+      },
+      "source": {
+        "tr": "Türkiye Gazetesi, 27 Mayıs 2023",
+        "en": "Türkiye Gazetesi, 27 May 2023"
+      },
+      "source_url": "https://www.turkiyegazetesi.com.tr/teknoloji/tayfun-kasip-kavuracak-noktasal-hedef-vurma-ozelligine-sahip-967253"
+    },
+    {
+      "date": "2026-11-16",
+      "field": "stages",
+      "from": {
+        "kind": "text",
+        "tr": "Tek kademe (resmî)",
+        "en": "Single stage (official)"
+      },
+      "to": {
+        "kind": "removed"
+      },
+      "reason": {
+        "tr": "Değer resmî rozetle ama kaynaksız yayımlanmıştı; ROKETSAN ürün kartında geçmiyor ve kademe sayısını veren bir kaynak bulunamadı. Kaynak bulunana kadar kayıttan çıkarıldı.",
+        "en": "The value was published under the official badge with no source; it does not appear on the ROKETSAN product card and no source giving the number of stages was found. Removed from the record until a source is found."
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "field": "propellant",
+      "from": {
+        "kind": "text",
+        "tr": "Katı yakıt (TAYFUN BLOK-4, basın)",
+        "en": "Solid propellant (TAYFUN BLOK-4, press)"
+      },
+      "to": {
+        "kind": "removed"
+      },
+      "reason": {
+        "tr": "Değer basın rozetiyle ama yayın adı olmadan yayımlanmıştı. IDEF 2025 tanıtımını aktaran haberlerde BLOK-4'ün yakıtı geçmiyor. Kaynak bulunana kadar kayıttan çıkarıldı.",
+        "en": "The value was published under the press badge with no publication named. Reports of the IDEF 2025 presentation do not mention BLOK-4's propellant. Removed from the record until a source is found."
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "field": "guidance",
+      "from": {
+        "kind": "text",
+        "tr": "Açıklanmadı (TAYFUN BLOK-4, tahmin)",
+        "en": "Not disclosed (TAYFUN BLOK-4, estimate)"
+      },
+      "to": {
+        "kind": "removed"
+      },
+      "reason": {
+        "tr": "“Açıklanmadı” bir değer değil, değerin yokluğu. Tahmin rozetiyle çizilmesi veri yokluğunu dördüncü bir güven durumu gibi gösteriyordu. Hücre artık rozetsiz tire ile gösteriliyor.",
+        "en": "“Not disclosed” is not a value but the absence of one. Drawing it under the estimate badge presented missing data as a fourth confidence state. The cell now shows a dash with no badge."
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "field": "stages",
+      "from": {
+        "kind": "text",
+        "tr": "Açıklanmadı (TAYFUN BLOK-4, tahmin)",
+        "en": "Not disclosed (TAYFUN BLOK-4, estimate)"
+      },
+      "to": {
+        "kind": "removed"
+      },
+      "reason": {
+        "tr": "“Açıklanmadı” bir değer değil, değerin yokluğu. Tahmin rozetiyle çizilmesi veri yokluğunu dördüncü bir güven durumu gibi gösteriyordu. Hücre artık rozetsiz tire ile gösteriliyor.",
+        "en": "“Not disclosed” is not a value but the absence of one. Drawing it under the estimate badge presented missing data as a fourth confidence state. The cell now shows a dash with no badge."
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "field": "timeline",
+      "from": {
+        "kind": "text",
+        "tr": "18 Ekim 2022, İlk test atışı (resmî)",
+        "en": "18 Oct 2022, First test launch (official)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "18 Ekim 2022, İlk test atışı (basın)",
+        "en": "18 Oct 2022, First test launch (press)"
+      },
+      "reason": {
+        "tr": "Olay resmî rozetle ama kaynaksız yayımlanmıştı. Tarih, yer ve “ilk” ifadesi bir haberde bulundu; SSB'nin ya da ROKETSAN'ın kendi açıklaması bulunamadığı için güven “basın”.",
+        "en": "The event was published under the official badge with no source. The date, place and the word “first” were found in a news report; no statement from SSB or ROKETSAN itself was found, so the confidence is press."
+      },
+      "source": {
+        "tr": "A Haber, 23 Mayıs 2023",
+        "en": "A Haber, 23 May 2023"
+      },
+      "source_url": "https://www.ahaber.com.tr/gundem/2023/05/23/tayfun-fuzesinde-ikinci-test-2nci-kez-test-ateslendi"
+    },
+    {
+      "date": "2026-11-16",
+      "field": "timeline",
+      "from": {
+        "kind": "text",
+        "tr": "1 Temmuz 2025, BLOK-4 duyurusu (basın) ve 22 Temmuz 2025, Kamuya tanıtım (resmî)",
+        "en": "1 Jul 2025, BLOK-4 announced (press) and 22 Jul 2025, Public unveiling (official)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "22 Temmuz 2025, BLOK-4 tanıtımı (basın)",
+        "en": "22 Jul 2025, BLOK-4 unveiled (press)"
+      },
+      "reason": {
+        "tr": "İki olay da kaynaksızdı ve aynı tanıtımı anlatıyordu: BLOK-4'ün IDEF 2025'te tanıtılması. “1 Temmuz” bir kaynağa dayanmıyordu; eski not yalnız “Temmuz 2025” diyordu. Anadolu Ajansı tanıtımı 22 Temmuz 2025 tarihli haberinde “bugün” diye veriyor. Sistemin o gün ilk kez kamuya tanıtıldığını söyleyen bir kaynak bulunamadı. İki olay ajansın verdiği tek olayda birleştirildi.",
+        "en": "Both events lacked a source and described the same presentation: BLOK-4 being unveiled at IDEF 2025. “1 July” rested on no source; the old note only said “July 2025”. Anadolu Agency reports the presentation as happening “today” in its 22 July 2025 story. No source was found saying the system was shown to the public for the first time that day. The two events were merged into the single event the agency reports."
+      },
+      "source": {
+        "tr": "Anadolu Ajansı, 22 Temmuz 2025",
+        "en": "Anadolu Agency, 22 Jul 2025"
+      },
+      "source_url": "https://www.aa.com.tr/tr/idef-2025/roketsan-idef-2025te-ilk-kez-sergiledigi-6-yeni-urununu-tanitti/3638954"
+    },
+    {
+      "date": "2026-11-16",
+      "field": "timeline",
+      "from": {
+        "kind": "text",
+        "tr": "7 Nisan 2026, Teslimat töreni: ROKETSAN tesis açılışında BLOK-4 sergilendi (basın)",
+        "en": "7 Apr 2026, Delivery ceremony: BLOK-4 was displayed at a ROKETSAN facility opening (press)"
+      },
+      "to": {
+        "kind": "text",
+        "tr": "7 Nisan 2026, ROKETSAN tesis açılışı: Cumhurbaşkanı Erdoğan bir BLOK-4 füzesini imzaladı (basın)",
+        "en": "7 Apr 2026, ROKETSAN facility opening: President Erdoğan signed a BLOK-4 missile (press)"
+      },
+      "reason": {
+        "tr": "Olay kaynaksızdı ve başlığı bir teslimat iddia ediyordu. Bulunan kaynak törende bir BLOK-4 füzesinin imzalandığını söylüyor; TAYFUN'un ya da BLOK-4'ün teslim edildiğini söyleyen bir kaynak bulunamadı. Başlık ve metin kaynağın söylediğine indirildi.",
+        "en": "The event had no source and its title claimed a delivery. The source found says a BLOK-4 missile was signed at the ceremony; no source was found saying TAYFUN or BLOK-4 was delivered. The title and text were cut back to what the source says."
+      },
+      "source": {
+        "tr": "Türkgün / AA, 7 Nisan 2026",
+        "en": "Türkgün / AA, 7 Apr 2026"
+      },
+      "source_url": "https://www.turkgun.com/gundem/uretim-tesislerinde-inceleme-cumhurbaskani-erdogandan-tayfun-blok-4-fuzesine-imza/368332"
     }
   ],
   "disclaimer": {
@@ -557,8 +697,7 @@
   "_todo": [
     "urun kartinin ucuncu taraf arsiv kopyasi (archive_url) yok: roketsan.com.tr Wayback Machine'den haric tutulmus ('This URL has been excluded', 16.11.2026 kontrolu); archive.today bu agdan erisilemedi. Belge ozeti (source_sha256) kayitta duruyor; baska bir agdan kopya alinirsa baytlari ozetle tutmali, tutmazsa okudugumuz belge degildir ve eklenmez.",
     "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
-    "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
-    "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",
+    "7 Nisan 2026 töreninde Bakan Güler (AA, haberler.com) ve Cumhurbaşkanı Erdoğan (Yeni Asır) TAYFUN'u teslim edilecek sistemler arasında, blok belirtmeden ve gelecek zamanla saydı. Teslimin gerçekleştiğini söyleyen bir kaynak okunmadı; bulunursa takvime ayrı olay olarak girilir.",
     "Blok-4 gövdesi fuar fotoğraflarında dönel değil, sırtı çıkıntılı bir biçim gösteriyor; model onu şimdilik TAYFUN'un dairesel gövdesiyle çiziyor. Ortografik bir kaynak bulunana kadar Blok-4'e ayrı bir ürün tanımı yazılmadı."
   ]
 }

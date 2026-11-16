@@ -63,6 +63,14 @@ sorusunun cevabı.
 
 Kurallar:
 - `confidence` alanı olmayan sayı UI'a **çıkmaz**. İstisnası yok.
+- Kaynak adı olmayan rozet de çıkmaz. Ölçüm, özellik ve takvim olayı aynı
+  asgari atfı taşır; alanlar `lib/schema.ts`'te, şemadan geçmeyen kayıt
+  derlenmez. Köken kimliği (`origin_id`) kaynak adının yerine geçmez. Kural
+  TAYFUN'un dokuz rozeti kaynaksız yayımlamasından sonra şemaya girdi;
+  önceden dikkatte duruyordu.
+- "Açıklanmadı", "bilinmiyor" gibi bir yokluk ifadesi değer olarak yazılmaz:
+  alan boş kalır, tablo rozetsiz tire çizer (§4). Şema bunu dize olarak
+  yakalamaz; incelemede bakılır.
 - Aynı alanda birden fazla değer varsa UI çelişkiyi görünür kılar (rozet + alt satır).
 - `official` = kurumun/bakanlığın kendi açıklaması. Haber sitesinin "resmî kaynaklara
   göre" demesi `press`'tir.
@@ -595,8 +603,8 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 
 ### Yayındaki eksikler
 
-1. **Düzeltme defteri tutuluyor ama iki dosyada.** TAYFUN'da on, AKINCI'da
-   üç kayıt var; ATMACA ve SİPER'de henüz düzeltme yapılmadı ve sayfada
+1. **Düzeltme defteri tutuluyor ama iki dosyada.** TAYFUN'da on sekiz,
+   AKINCI'da üç kayıt var; ATMACA ve SİPER'de henüz düzeltme yapılmadı ve sayfada
    bölüm çizilmiyor. Kayıtların çoğu `text` kolunda duruyor: eski
    değerler varyant ya da güven niteleyicisi taşıyor ve sayıya çevrilemez.
    Yalnız ölçüm koluna düşen kayıtlar dosyayla karşılaştırılıyor (§3).

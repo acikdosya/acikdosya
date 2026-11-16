@@ -151,7 +151,7 @@
     "term_verified": "Verified on",
     "termBody_verified": "When the record was last checked. Six months from now, this field answers the question of where a figure came from.",
     "recordUnits": "The unit lives inside the field name rather than in a field of its own. Confusing metres with millimetres is therefore impossible.",
-    "recordMissing": "Where there is no data, a dash is shown and screen readers hear \"no data\". Missing data is not a fourth confidence state; it says the record is empty there.",
+    "recordMissing": "Where there is no data, a dash is shown and screen readers hear \"no data\". Missing data is not a fourth confidence state; it says the record is empty there. A field whose source says the value was not disclosed is shown the same way: “not disclosed” is not a value but the absence of one.",
     "conflictHeading": "Why we do not hide conflicts",
     "conflictIntro": "Open-source figures diverge from each other. Picking one and deleting the rest means making an editorial decision the reader cannot see. Instead they all sit stacked in the same cell, each carrying its own source.",
     "conflictPick": "Where only one figure fits, such as the scaled silhouette and the 3D model, the most reliable value is used: official, then press, then estimate. That choice affects the drawing, not the record — the table keeps showing all of them.",
@@ -342,7 +342,9 @@
   "RevisionLog": {
     "from": "previous value",
     "removed": "no record",
-    "to": "new value"
+    "to": "new value",
+    "section_timeline": "Programme timeline",
+    "section_source": "Source"
   },
   "ScaleSilhouette": {
     "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",

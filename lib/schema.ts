@@ -374,19 +374,36 @@ export const specsSchema = z.strictObject({
 });
 export type Specs = z.infer<typeof specsSchema>;
 
-/** Sayisal olmayan, metinsel ozellik. Yine de guven seviyesi zorunlu. */
+/**
+ * Sayisal olmayan, metinsel ozellik.
+ *
+ * Olcumle ayni asgari atfi tasir: guven seviyesi, kaynak adi, kontrol
+ * tarihi. Rozet bir iddianin sahibini gosterir; sahibi yazilmamis rozet
+ * sahip olmadigimiz bir kesinlik iddia eder. Eskiden `source` ve
+ * `verified_at` istege bagliydi ve TAYFUN dokuz rozeti kaynaksiz
+ * yayimladi — kural dikkatte duruyordu, semada degil.
+ *
+ * "Aciklanmadi" gibi bir yokluk ifadesi deger olarak YAZILMAZ: alan hic
+ * yazilmaz, tablo hucreyi rozetsiz tireyle cizer (CLAUDE.md §4, veri yok
+ * bir guven durumu degildir).
+ */
 export const attributeSchema = z
   .strictObject({
     value: localizedTextSchema,
     confidence: confidenceSchema,
-    source: localizedTextSchema.optional(),
+    /** Okudugumuz yayinin adi. Olcumdeki gibi zorunlu. */
+    source: localizedTextSchema,
     source_url: z.url().optional(),
     /** Olcumdeki ile ayni anlam — atif bicimi alan turune gore degismez. */
     document_version: localizedTextSchema.optional(),
     accessed_at: isoDateSchema.optional(),
     source_sha256: sha256Schema.optional(),
     archive_url: z.url().optional(),
-    verified_at: isoDateSchema.optional()
+    /**
+     * Kaynagi en son kontrol ettigimiz gun. Yalniz kaynak gercekten
+     * acilip okundugu gun yazilir; bakmadan yazilan tarih uydurmadir.
+     */
+    verified_at: isoDateSchema
   })
   .refine(
     (attribute) =>
@@ -505,7 +522,16 @@ export const timelineEventSchema = z
     confidence: confidenceSchema,
     /** Olayin cikitigi koken belge — olcumdeki ile ayni kayit. */
     origin_id: slugSchema.optional(),
-    source: localizedTextSchema.optional(),
+    /**
+     * Okudugumuz yayinin adi — zorunlu, olcumde ve ozellikte oldugu gibi.
+     *
+     * `origin_id` bunun yerine GECMEZ: koken, okunan yayinin aktardigi
+     * belgedir; okuyucuya bizim hangi yayini okudugumuzu soylemez.
+     *
+     * `verified_at` burada henuz yok. Eklemek her olayin kaynagini
+     * yeniden acmayi gerektiriyor; bakmadan yazilan tarih uydurma olurdu.
+     */
+    source: localizedTextSchema,
     source_url: z.url().optional()
   })
   /*

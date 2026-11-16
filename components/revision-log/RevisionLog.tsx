@@ -1,15 +1,9 @@
 import {useTranslations} from 'next-intl';
 import type {Locale} from '@/i18n/routing';
 import {EVENTS, sourceHost} from '@/lib/analytics';
+import {revisionFieldLabel} from '@/lib/cards/revision';
 import {formatDate, formatRevisionValue} from '@/lib/format';
-import {
-  attributeKeys,
-  specKeys,
-  type AttributeKey,
-  type Revision,
-  type SpecKey,
-  type System
-} from '@/lib/schema';
+import type {Revision, System} from '@/lib/schema';
 import styles from './RevisionLog.module.css';
 
 type Props = {
@@ -39,16 +33,12 @@ export function RevisionLog({system, locale}: Props) {
   /* En yeni ustte: duzeltme defteri son degisiklikten okunur. */
   const entries = [...revisions].sort((a, b) => b.date.localeCompare(a.date));
 
-  /** Bilinen alan anahtarlari cevrilir; serbest metin oldugu gibi kalir. */
-  function fieldLabel(field: string): string {
-    if ((specKeys as readonly string[]).includes(field)) {
-      return tSpec(field as SpecKey);
-    }
-    if ((attributeKeys as readonly string[]).includes(field)) {
-      return tAttribute(field as AttributeKey);
-    }
-    return field;
-  }
+  /**
+   * Bilinen alan anahtarlari cevrilir; serbest metin oldugu gibi kalir.
+   * Cozum kartla ortak (lib/cards/revision.ts) — iki liste tutulmaz.
+   */
+  const fieldLabel = (field: string) =>
+    revisionFieldLabel(field, {tSpec, tAttribute, tLog: t});
 
   /**
    * Kaldirma kaydinin etiketi ceviri paketinden gelir; bicimlendirme

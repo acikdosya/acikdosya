@@ -6,7 +6,7 @@ import {CardFrame, CardLabel, CARD_SCALE} from './frame';
 import type {CardFormat} from './params';
 import type {Translator} from './render';
 import type {Revision} from '../schema';
-import {revisionField, type RevisionCard} from './revision';
+import {revisionFieldLabel, type RevisionCard} from './revision';
 import {templateKey} from './templates';
 
 /**
@@ -36,13 +36,11 @@ export function RevisionCardImage({
   tLog: Translator;
 }) {
   const {revision} = card;
-  const field = revisionField(revision.field);
-  const fieldLabel =
-    field.kind === 'spec'
-      ? tSpec(field.key)
-      : field.kind === 'attribute'
-        ? tAttribute(field.key)
-        : field.value;
+  const fieldLabel = revisionFieldLabel(revision.field, {
+    tSpec,
+    tAttribute,
+    tLog
+  });
 
   const scale = CARD_SCALE[format];
   const vertical = format === 'dikey';

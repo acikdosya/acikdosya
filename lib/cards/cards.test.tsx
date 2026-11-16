@@ -8,7 +8,7 @@ import type {Confidence, System} from '../schema';
 import {CARD_FORMATS, CARD_SIZE, type CardFormat} from './params';
 import {decodePng, inkBox} from './png';
 import type {Translator} from './render';
-import {revisionCard} from './revision';
+import {revisionCard, revisionFieldLabel} from './revision';
 import {RevisionCardImage} from './revision-card';
 import {scaleCard} from './scale';
 import {ScaleCardImage} from './scale-card';
@@ -145,6 +145,38 @@ for (const format of CARD_FORMATS) {
     );
   });
 }
+
+test('takvim duzeltmesi bolum adiyla cizilir, ham anahtarla degil', async () => {
+  /*
+   * Eskiden kart yalniz olcum ve ozellik anahtarini taniyordu; `timeline`
+   * ve `source` kayitlari karta ham Ingilizce anahtar olarak dusuyordu.
+   * Etiket defterle ayni fonksiyondan gelir.
+   */
+  const tayfun = system('tayfun');
+  const index = (tayfun.revisions ?? []).findIndex(
+    (revision) => revision.field === 'timeline'
+  );
+  assert.ok(index >= 0, 'TAYFUN defterinde takvim duzeltmesi yok');
+
+  const card = revisionCard(tayfun, index);
+  assert.ok(card);
+  const label = revisionFieldLabel(card.revision.field, COMMON);
+  assert.ok(label.startsWith('Log.section_timeline'), label);
+  assert.notEqual(label, 'timeline');
+
+  assert.ok(
+    revisionFieldLabel('source', COMMON).startsWith('Log.section_source')
+  );
+  /* Bilinmeyen serbest metin oldugu gibi kalir — uydurma baslik yok. */
+  assert.equal(revisionFieldLabel('Sayfa başlığı', COMMON), 'Sayfa başlığı');
+
+  for (const format of CARD_FORMATS) {
+    await draw(
+      format,
+      <RevisionCardImage card={card} format={format} {...COMMON} />
+    );
+  }
+});
 
 test('sekizden fazla kayitli zincir de cizilir', async () => {
   /* Ornek satir ve sayaca dusen yol — ayri bir yerlesim dali. */

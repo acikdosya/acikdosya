@@ -151,7 +151,7 @@
     "term_verified": "Doğrulama tarihi",
     "termBody_verified": "Kaydın en son ne zaman kontrol edildiği. Altı ay sonra \"bu sayı nereden geldi\" sorusunun cevabı bu alandır.",
     "recordUnits": "Birim alan adının içinde taşınır, ayrı bir alan değildir. Metre ile milimetreyi karıştırmak bu yüzden mümkün değil.",
-    "recordMissing": "Veri yoksa tire konur ve ekran okuyucuya \"veri yok\" denir. Eksik veri dördüncü bir güven durumu değildir; kaydın orada boş olduğunu söyler.",
+    "recordMissing": "Veri yoksa tire konur ve ekran okuyucuya \"veri yok\" denir. Eksik veri dördüncü bir güven durumu değildir; kaydın orada boş olduğunu söyler. Kaynağın değeri açıklamadığını söylediği alan da böyle gösterilir: “açıklanmadı” bir değer değil, değerin yokluğudur.",
     "conflictHeading": "Çelişkiyi neden gizlemiyoruz",
     "conflictIntro": "Açık kaynak veriler birbiriyle ayrışır. Tek bir değeri seçip diğerini silmek, okuyucunun göremediği bir editoryal karar vermek demektir. Bunun yerine hepsi aynı hücrede alt alta durur ve her biri kendi kaynağını taşır.",
     "conflictPick": "Ölçekli siluet ve 3B model gibi tek bir sayı alabilen yerlerde en güvenilir değer kullanılır: resmî, yoksa basın, o da yoksa tahmin. Bu seçim görüntüyü etkiler, kaydı değil — tablo hepsini göstermeye devam eder.",
@@ -342,7 +342,9 @@
   "RevisionLog": {
     "from": "eski değer",
     "removed": "kayıt yok",
-    "to": "yeni değer"
+    "to": "yeni değer",
+    "section_timeline": "Program takvimi",
+    "section_source": "Kaynak"
   },
   "ScaleSilhouette": {
     "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",

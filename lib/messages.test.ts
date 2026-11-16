@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {test} from 'node:test';
 import en from '../messages/en.json';
 import tr from '../messages/tr.json';
+import {revisionSectionKeys} from './cards/revision';
 import {templateKey} from './cards/templates';
 import {
   KIND_MESSAGE_KEY,
@@ -100,6 +101,22 @@ test('her olcum alaninin etiketi var', () => {
       assert.ok(
         bundle.Specs[key],
         `${name}: Specs.${key} eksik`
+      );
+    }
+  }
+});
+
+test('duzeltme defterindeki her bolum anahtarinin etiketi var', () => {
+  /*
+   * Bolum anahtari ceviri bulamazsa next-intl anahtarin kendisini basar:
+   * defterde "RevisionLog.section_timeline" yazar. Eskiden `source`
+   * kaydi iki dilde ham anahtar olarak ciziliyordu.
+   */
+  for (const [name, bundle] of bundles) {
+    for (const key of revisionSectionKeys) {
+      assert.ok(
+        bundle.RevisionLog[`section_${key}`],
+        `${name}: RevisionLog.section_${key} eksik`
       );
     }
   }

@@ -24,6 +24,11 @@ Kaynak türünü doğru işaretleyin. Kurumun kendi açıklaması `official`.
 Haber sitesinin "resmî kaynaklara göre" demesi `press`'tir, `official`
 değil. Bağımsız değerlendirme `estimate`'tir.
 
+Bir değerin açıklanmadığını bildirmek de değerlidir, ama değer olarak
+girilmez: "açıklanmadı", "bilinmiyor" gibi bir ifade alana yazılmaz, alan
+boş kalır ve sayfa tire gösterir. Şema bunu dize olarak yakalamıyor;
+incelemede bakılır.
+
 ## Çelişen değer nasıl işlenir
 
 Yeni değer eskisiyle çelişiyorsa **eskisi silinmez**. Her ikisi de

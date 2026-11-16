@@ -43,7 +43,19 @@ export type RevisionCard = {
 export type RevisionField =
   | {kind: 'spec'; key: SpecKey}
   | {kind: 'attribute'; key: AttributeKey}
+  | {kind: 'section'; key: RevisionSectionKey}
   | {kind: 'text'; value: string};
+
+/**
+ * Olcum ya da ozellik olmayan ama bilinen bolum anahtarlari.
+ *
+ * Tek liste burada; defter (components/revision-log) ve kart ayni cozumu
+ * `revisionFieldLabel` uzerinden kullanir. Eskiden ikisi de yalniz olcum
+ * ve ozellik anahtarini taniyordu ve TAYFUN'un `source` kaydi iki dilde
+ * ham Ingilizce anahtar olarak ciziliyordu.
+ */
+export const revisionSectionKeys = ['timeline', 'source'] as const;
+export type RevisionSectionKey = (typeof revisionSectionKeys)[number];
 
 export function revisionField(field: string): RevisionField {
   if ((specKeys as readonly string[]).includes(field)) {
@@ -52,7 +64,36 @@ export function revisionField(field: string): RevisionField {
   if ((attributeKeys as readonly string[]).includes(field)) {
     return {kind: 'attribute', key: field as AttributeKey};
   }
+  if ((revisionSectionKeys as readonly string[]).includes(field)) {
+    return {kind: 'section', key: field as RevisionSectionKey};
+  }
   return {kind: 'text', value: field};
+}
+
+/** Uc ceviri kaynagi: olcum adlari, ozellik adlari, defterin kendi paketi. */
+export type RevisionFieldTranslators = {
+  tSpec: (key: string) => string;
+  tAttribute: (key: string) => string;
+  /** `RevisionLog` paketi; bolum adlari `section_<anahtar>` anahtarinda. */
+  tLog: (key: string) => string;
+};
+
+/** Duzeltilen alanin okuyucunun dilindeki adi. */
+export function revisionFieldLabel(
+  field: string,
+  {tSpec, tAttribute, tLog}: RevisionFieldTranslators
+): string {
+  const resolved = revisionField(field);
+  switch (resolved.kind) {
+    case 'spec':
+      return tSpec(resolved.key);
+    case 'attribute':
+      return tAttribute(resolved.key);
+    case 'section':
+      return tLog(`section_${resolved.key}`);
+    case 'text':
+      return resolved.value;
+  }
 }
 
 export function revisionCard(
