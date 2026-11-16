@@ -299,6 +299,11 @@ Turf eklenmez.
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.
 Yükseltmeden önce haritanın gerçekten çizildiği doğrulanmalı.
 
+Alt sınır 5.24.1: atıf temizleyicisindeki XSS (GHSA-jrc7-96c5-q579) bu sürüme
+geri taşındı. Danışma notu yalnız 6.4.1'i düzeltilmiş saydığı için `pnpm audit`
+5.x'i kritik olarak işaretlemeyi sürdürür; bu uyarı sabitlemeyi kaldırmanın
+gerekçesi değildir.
+
 ## Keşfedilebilirlik
 
 `/robots.txt` ve `/sitemap.xml` kök seviyede üretilir. Site haritası her sayfanın

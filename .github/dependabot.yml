@@ -20,8 +20,30 @@ updates:
       # tarayicida ac ve altligin gercekten cizildigini dogrula. Dogrulama
       # yapilmadan kural kaldirilirsa her hafta ayni bozuk PR geri gelir.
       # Ayrintisi README "Surum kisiti" basliginda.
+      #
+      # `pnpm audit` 5.x'i kritik XSS (GHSA-jrc7-96c5-q579) icin hala
+      # isaretler: danisma notu yalniz 6.4.1'i duzeltilmis sayiyor. Duzeltme
+      # 5.24.1'e geri tasindi; uyari bu sabitlemeyi kaldirma gerekcesi degil.
       - dependency-name: "maplibre-gl"
         update-types: ["version-update:semver-major"]
+
+      # @types/node calisma zamaninin major surumunu izler: Dockerfile ve CI
+      # Node 22. Daha yeni tipler Node 22'de olmayan API'leri var gosterir ve
+      # typecheck bunu yakalamaz — hata yayinda, calisma aninda cikar.
+      # Calisma zamani yukseltilince bu kural ve paket birlikte yukselir.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+    # Birlikte surumlenen paketler tek PR'da gelir. Ayri gelince biri
+    # digerinin gerisinde kaliyordu: next eslint-config-next'siz, core
+    # @gltf-transform eklentilerinden ayri yukseltiliyordu.
+    groups:
+      next:
+        patterns: ["next", "eslint-config-next", "@next/*"]
+      gltf-transform:
+        patterns: ["@gltf-transform/*"]
+      react:
+        patterns: ["react", "react-dom", "@types/react", "@types/react-dom"]
 
   # CI adimlarindaki action surumleri de eskir; bakimsiz birakilirsa
   # workflow bir gun uyari, sonra hata verir.
