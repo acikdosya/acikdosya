@@ -56,20 +56,10 @@ sunulabilir ve yabancı basında bağlamından koparılamaz.
 Her sayısal alan bir **dizi**dir, çünkü açık kaynak veriler birbiriyle çelişir.
 Tek değer seçip diğerini gizlemek bu projede hata sayılır.
 
-```ts
-type Confidence = 'official' | 'press' | 'estimate';
-
-interface LocalizedText { tr: string; en: string }   // AR ileride opsiyonel alan olarak
-
-interface Measurement {
-  value: number;
-  operator?: '>' | '<' | '≤' | '≥' | '~';
-  confidence: Confidence;
-  source: LocalizedText; // insan okuyabilir kaynak adı, EN okuyucu ikincil hedef kitle
-  source_url?: string;
-  verified_at: string;   // ISO tarih — 6 ay sonra "bu nereden geldi" sorusunun cevabı
-}
-```
+Ölçümün alanları `lib/schema.ts` içindeki `measurementSchema`'dadır; burada
+kopyası tutulmaz. Güven seviyesi üç değerden biridir: `official`, `press`,
+`estimate`. `verified_at` zorunludur — 6 ay sonra "bu nereden geldi"
+sorusunun cevabı.
 
 Kurallar:
 - `confidence` alanı olmayan sayı UI'a **çıkmaz**. İstisnası yok.
@@ -357,77 +347,10 @@ Prototipte oturmuş palet — koru:
 
 ## 7. Dizin yapısı
 
-```
-app/[locale]/             # sayfalar
-  kart/<şablon>/route.tsx # paylaşım kartları — sorgu çözer, çizimi lib/cards'a verir
-components/
-  scale-silhouette/       # ölçek şeması — parça listesinin ortografik izdüşümü
-    card-geometry.ts      # karışık sınıf tek çarpanda — kart yerleşimi
-  model-provenance/       # biçim kaydı: her oranın kökeni, §9
-  measure-gap/            # ölçü verisi olmayan varyantın açık kaydı
-  spec-table/             # kaynaklı veri tablosu + güven rozetleri
-  range-envelope/         # MapLibre menzil zarfı
-  range-scale/            # menzil zarfı çizilemeyen sistemde mesafe cetveli
-  timeline/
-  revision-log/           # duzeltme defteri — timeline'dan ayri ve daha sade
-  origin-chain/           # köken kaydı: tek belge, onu aktaran N yayın — §3
-  model-viewer/           # R3F, dinamik import
-content/
-  systems/*.json          # tayfun, atmaca, akinci, siper
-  assets.json             # görsel lisans kaydı
-lib/
-  geo.ts                  # jeodezik daire, mesafe
-  hero.ts                 # ana sayfa panelinin konusu — işaretçi, sonra geri çekilme
-  geometry/               # parça kiti ve ürün tanımları — bkz. §9
-    parts.ts              # altı ilkel: body, pod, panel, disc, strut, boom
-    panel.ts              # yüzey istasyonları: veçhe, kalınlık, kök ve uç eğrisi
-    ratio.ts              # oran + köken beyanı; three ve zod İÇE AKTARMAZ
-    ratio.schema.ts       # kökenin zod şeması — yalnız test ve doğrulama
-    product.ts            # ürün tanımı: parça listesi + oran tablosu
-    registry.ts           # sistem/varyant → ürün; sisteme düşüş açık, varsayılana DÜŞMEZ
-    coverage.ts           # kategori → model durumu, derlemede exhaustive
-    axial.ts              # eksenel gövde topolojisi (füze ailesi)
-    winged.ts             # kanatlı hava aracı topolojisi
-    tayfun.ts atmaca.ts akinci.ts   # ürün başına oran tabloları
-    siper-urun-1.ts siper-urun-2.ts # varyant başına — iki varyant iki biçim
-    build3d.ts            # parça listesi → THREE.Group
-    project2d.ts          # parça listesi → ortografik SVG; three İÇE AKTARMAZ
-    parts-for.ts          # sistem → parça listesi, three'siz yol
-    framing.ts            # kamera kadrajı — sahneden ayrı, sınanabilir
-    model.ts result.ts    # ortak sözleşme ve giriş noktası
-    measurements.ts       # ölçü seçimi; kategori eşlemesi varsayılansız
-  measurement/
-    divergence.ts         # iki ölçüm ıraksıyor mu — aralık hesabı, §3
-    divergence.test.ts    # birim testleri; pnpm test
-    labels.ts             # durum adı ↔ mesaj anahtarı, tek kaynak
-  cards/                  # paylaşım kartları — dört şablon
-    params.ts             # sorgu çözümü; tanımsız değer varsayılana DÜŞMEZ
-    frame.tsx             # kart kabuğu: sabit üst/alt şerit, rozet ve etiket
-    render.tsx            # fontlar, yanıt başlıkları, sade çeviri sözleşmesi
-    <konu>.ts             # veri seçimi — source-chain, value-scope, scale, revision
-    <konu>-card.tsx       # çizim; veriden ayrı ki çeviri bağlamı olmadan sınansın
-    cards.test.tsx        # dördü de gerçekten çiziliyor mu — satori sessiz düşer
-    png.ts                # test için küçük PNG çözücü; uygulama içe aktarmaz
-  revisions.ts            # defter ile tablo tutuyor mu — derlemede sınanır, §3
-  format.ts               # sayı, tarih, ölçüm ve düzeltme değeri biçimlendirme
-  messages.test.ts        # mesaj paketi ile kod arasındaki sözleşme
-  schema.ts               # zod şemaları — build'de içeriği doğrula
-  brand.ts                # sembol geometrisi ve §10 oranları, tek kaynak
-  tokens.ts               # paletin JS kopyası — CSS değişkeni okuyamayanlar için
-  og.tsx                  # paylaşım görselleri ve ikonlar, next/og
-  structured-data.ts      # Article + Dataset JSON-LD, sayfadan türer
-  urls.ts                 # kanonik adres, hreflang, OG adresi — tek kaynak
-deploy/
-  nginx/acikdosya.org.conf  # vhost, kurulum adımları başında — bkz. §11
-scripts/
-  validate-content.ts     # şema + defter bütünlüğü; prebuild'e bağlı
-  derive-og-font.py       # OG için statik font sürümleri — satori woff2 okumaz
-  deploy.sh               # yerelde derle, sunucuya aktar, yenile
-reference/                # dondurulmuş prototipler — shipped kod değil
-  prototype.html          # çalışan tek dosya prototip, davranış referansı
-  model-prototype.html    # 3D davranış referansı
-  design/                 # Claude Design çıktısı — yerleşim referansı, kod değil
-```
+Ağaç burada tutulmuyor: dizin `ls` ile, her dosyanın işi ve sınırı kendi
+başlık yorumunda okunur (örneğin `lib/geometry/ratio.ts` neyi içe aktarmadığını
+kendisi yazar). Elle tutulan ağaç koddan geri kalıyordu. `reference/`
+altındakiler dondurulmuş prototip ve tasarım çıktısıdır, shipped kod değil.
 
 ---
 
@@ -451,17 +374,10 @@ kaynağı bilinmeyen geometri tüm iddiayı çürütür.
 Bir ürünün biçimi iki şeyden ibarettir: hangi **ölçülere** dayandığı ve hangi
 **oranları** taşıdığı. Parça listesi bu ikisinden türer (`lib/geometry/product.ts`).
 Ölçü verisi değişirse mesh değişir. Ölçü verisi ya da ürün tanımı yoksa model
-üretilmez — varsayılan bir geometriye düşülmez.
-
-Parça kiti altı ilkelden oluşur: `body`, `pod`, `panel`, `disc`, `strut`, `boom`.
-Kit `three` içe aktarmaz; parçalar metre cinsinden saf biçim tanımıdır. İki tüketici
-onu okur: `build3d.ts` sahneyi kurar, `project2d.ts` ortografik SVG üretir. **İki
-boyutlu şema ile üç boyutlu model aynı listeden türediği için ayrışamazlar.**
-
-Yeni bir ürün eklemek bir ürün tanımı dosyası ve `registry.ts` içinde bir satırdır.
-Tip dalı açılmaz: "füze mi uçak mı" sorusu bu katmanda sorulmaz, bir ürün hangi
-parçaları kuruyorsa odur. Çift kirişli, V kuyruklu ve çok yüzeyli düzenler aynı
-kitle ifade edilir.
+üretilmez — varsayılan bir geometriye düşülmez. İki boyutlu şema ile üç boyutlu
+model aynı parça listesinden türer, ayrışamazlar. Parça kitinin kuruluşu ve yüzey
+üretimi `lib/geometry/CLAUDE.md` içinde; görüntüleyici kararları
+`components/model-viewer/CLAUDE.md` içinde.
 
 Blender yalnızca yayımlanmış fotoğraflardan çıkarılabilen dış detaylar için kullanılır
 (kanatçık profili, taşıyıcı araç). Bu tür varlıklar `content/assets.json`'a kaydedilir.
@@ -469,17 +385,8 @@ Blender yalnızca yayımlanmış fotoğraflardan çıkarılabilen dış detaylar
 ### Şematik, fotogerçekçi değil
 
 Mat gri yüzey, ince kontur çizgileri, ölçü çizgileri. Fotogerçekçi doku ve render
-yapılmaz — sahip olmadığımız bir doğruluk iddiası anlamına gelir.
-
-Şematik olmak "kabaca" demek değildir. Yüzeyler düz plaka değil, veçheyle birlikte
-incelen lofting yüzeylerdir; kesit yuvarlak hücum kenarı ve sivri firar kenarı taşır.
-Belirli bir kanat profili İDDİA EDİLMEZ — düz plaka da hiçbir uçakta bulunmayan bir
-biçimdir, yani "daha şematik" değil yalnızca daha yanlıştır.
-
-Eşli yüzeyler (iki kanat, iki stabilize) DÖNDÜRÜLEREK değil merkez düzlemde
-YANSITILARAK üretilir. Dönüş açıklığı doğru yöne taşır ama "yukarı" yönünü ters
-çevirir; düz bir plakada görünmeyen bu hata, kanat ucu kıvrımı eklenince bir kanadı
-aşağı baktırır.
+yapılmaz — sahip olmadığımız bir doğruluk iddiası anlamına gelir. Şematik olmak
+"kabaca" demek değildir ve belirli bir kanat profili İDDİA EDİLMEZ.
 
 ### Kesit ve iç görünüm yasak
 
@@ -527,16 +434,9 @@ Kaynak görsel depoya GİRMEZ. Alınan şey görüntü değil, orandır; kaydı
 ### Annotation şeması
 
 Konum mutlak koordinat değil, bir **parça üzerinde** orandır — ölçüler güncellenince
-etiket yerinde kalır.
-
-    interface Annotation {
-      id: string;
-      part: string;       // parça kimliği: 'body', 'wing-1', 'fin', 'nacelle-1-a'
-      t: number;          // parça üzerinde oran, 0 = baş, 1 = son
-      angle?: number;     // radyal açı, derece — yalnız dönel gövdede anlamlı
-      label: { tr: string; en: string };
-      confidence: Confidence;
-    }
+etiket yerinde kalır. Tip `lib/schema.ts` içinde: `part` parça kimliği, `t`
+parça üzerinde 0–1 oran, `angle` yalnız dönel gövdede, etiket kendi
+`confidence` değerini taşır.
 
 Parça kimliği zorunludur: varsayılan olarak gövdeye düşmek, etiketi sessizce yanlış
 yere koymak olurdu. Etiketin gösterdiği parçanın gerçekten üretildiği derleme
@@ -544,18 +444,6 @@ zamanında sınanır (`scripts/validate-content.ts`) — şema yalnızca kimliğ
 doğrulayabilir, var olup olmadığını doğrulayamaz.
 
 ### Teknik
-
-| Konu | Karar |
-|---|---|
-| Runtime | three.js + @react-three/fiber + @react-three/drei |
-| Yükleme | `next/dynamic` + `ssr:false` + IntersectionObserver; bölüme gelmeden yüklenmez |
-| Hotspot | drei `<Html occlude>` — DOM elemanı, yani çevrilebilir ve erişilebilir |
-| Segment | parça sınıfı başına ayrı: gövde mobil 48 / masaüstü 72, disk ve çubuk daha düşük |
-| Fallback | WebGL yoksa `ScaleSilhouette` — aynı parça listesinin ortografik izdüşümü |
-| Görünüş | genel görünüm, ön görünüş ve etiket başına odak; kamera konumu elle yazılmaz |
-| Bellek | R3F unmount'ta `dispose()` çağrılır — geometri ve materyal sızdırmaz |
-| Hareket | `prefers-reduced-motion` ise autoRotate kapalı, `frameloop="demand"` |
-| AR | `scripts/bake-glb.mjs` build'de GLB pişirir, ARCore Scene Viewer intent'i onu kullanır |
 
 Model dekoratiftir; hiçbir bilgi yalnızca 3D içinde bulunmaz. Ekran okuyucu
 kullanıcısı aynı bilgiye spec tablosundan erişir.
@@ -624,6 +512,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 | Konteyner | `acikdosya-app`, yalnızca loopback, bellek sınırı 512 MB |
 | Sertifika | Let's Encrypt, `acikdosya.org` + `www`, certbot otomatik yeniler |
 
+Dağıtım, geri dönüş, harita paketi ve ölçüm yığınının işletimi
+`.claude/skills/deploy/SKILL.md` içinde. Bu bölümde kalanlar her oturumda
+geçerli kısıtlardır.
+
 ### Defter ayrı dosyada — depo public
 
 Port numarası, kurulum dizini ve makinenin kimlerle paylaşıldığı depoda
@@ -664,57 +556,10 @@ geçerlidir.
 - `/etc/letsencrypt` altındaki verileri silme. Sertifikalar oradan yenileniyor
   ve Let's Encrypt haftalık oran sınırı uyguluyor.
 
-### Dosyalar
-
-| Dosya | İş |
-|---|---|
-| `Dockerfile` | üç aşamalı, node:22-alpine, standalone çıktı, kök değil |
-| `compose.yaml` | yalnızca uygulama, loopback'e yayın, bellek sınırı |
-| `deploy/nginx/acikdosya.org.conf` | vhost; port yer tutucu, kurulum adımları defterde |
-| `deploy/RUNBOOK.example.md` | defterin iskeleti; doldurulmuşu `deploy/RUNBOOK.md`, git'te değil |
-| `scripts/deploy.sh` | yerelde derle, aktar, yenile, sağlık kontrolü |
-| `.env.production.example` | `.env.deploy` için örnek, gerçeği git'te değil |
-
-### Güncelleme
-
-```
-./scripts/deploy.sh
-```
-
-Yerelde derler, iki etiketi (sürüm ve `latest`) sunucuya aktarır, konteyneri
-yeniler, loopback'ten sağlık kontrolü yapar. nginx'e dokunmaz. Yaklaşık üç
-dakika.
-
-Geri dönüş sunucuda duran sürüm etiketleriyle yapılır:
-
-```
-docker image ls acikdosya
-docker tag acikdosya:<eski-sürüm> acikdosya:latest
-cd "$DEPLOY_DIR" && docker compose up -d
-```
-
-### Derleme zamanında gömülenler
-
-`NEXT_PUBLIC_SITE_URL` ve `NEXT_PUBLIC_CONTACT_EMAIL` imaja gömülür.
-Canonical, hreflang, OG ve AR adresleri ilkinden türer. Değiştirmek
-konteyneri yeniden başlatmakla olmaz, imaj yeniden derlenir.
-
-### İletişim
-
-Düzeltme kanalı: **info@acikdosya.org**. Hakkında sayfası bu adresi
-gösteriyor. Varsayılan `lib/config.ts` içinde duruyor ki derleme argümanı
-geçilmemiş bir imajda da adres kaybolmasın; `NEXT_PUBLIC_CONTACT_EMAIL`
-ile ezilir.
-
 ### Harita paketi
 
-Altlık kendi sunucumuzdan geliyor (10.09.2026'dan beri). `pnpm build:tiles`
-Protomaps günlük planet yapısından Türkiye ve çevresini çıkarır; çıktı
-`public/tiles/` altında ~66 MB ve git'te durmaz.
-
-Paket **imaja girmez**: sunucuda kurulum dizininin altında durur ve
-konteynere salt okunur bağlanır (`compose.yaml`). `scripts/deploy.sh`
-`build.json` özetini karşılaştırır, yalnızca değiştiyse gönderir.
+Altlık kendi sunucumuzdan geliyor; paket imajın dışında durur. Üretimi ve
+gönderimi deploy becerisinde.
 
 **Yapma:**
 - Üçüncü taraf tile servisine dönme. Ziyaretçinin IP adresi dışarı gitmez.
@@ -728,17 +573,8 @@ konteynere salt okunur bağlanır (`compose.yaml`). `scripts/deploy.sh`
 
 ### Ölçüm
 
-Kendi sunucumuzda Umami + Postgres, `deploy/analytics/compose.yaml`.
-Kurulum adımları `deploy/RUNBOOK.md` içinde; **yığın `deploy.sh` ile
-başlatılmaz**, yalnızca dosyası güncellenir. Sırları sunucudaki `.env`
-dosyasında durur.
-
-| | |
-|---|---|
-| Konteyner | `acikdosya-umami`, yalnızca loopback, bellek sınırı 512 MB |
-| Veritabanı | `acikdosya-umami-db`, yalnızca yığının iç ağında, 256 MB |
-| Ağ | `acikdosya-net`, uygulama konteyneriyle ortak |
-| Yönetim | ssh tüneli, internete kapalı |
+Kendi sunucumuzda Umami + Postgres; yığının düzeni ve kurulumu deploy
+becerisinde.
 
 Ziyaretçinin gördüğü tek adres `acikdosya.org/veri`: `next.config.ts`
 içindeki yeniden yazım orayı konteyner ağındaki Umami'ye vekilliyor.
