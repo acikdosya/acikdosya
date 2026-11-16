@@ -9,7 +9,7 @@ Bu dosya projenin kalıcı bağlamıdır. Her oturumda geçerlidir. Bir karar bu
 
 **Ne:** Az sayıda Türk savunma sanayii sistemini derinlemesine anlatan,
 animasyonlu ve interaktif bir dijital dosya. "İnteraktif müze vitrini."
-Yayında üç dosya var: TAYFUN, ATMACA, AKINCI.
+Yayında dört dosya var: TAYFUN, ATMACA, AKINCI, SİPER.
 
 **Ne değil:**
 - Ansiklopedi/veri tabanı değil. 300 ürünlük katalog kurmuyoruz — bu alanda
@@ -101,16 +101,56 @@ Kaynak belirsizliği kendisi yazıyorsa ölçüme `uncertainty` alanı eklenir
 kılar**; açık uçlu operatörle ya da aralıklı kayıtla birlikte yazılamaz, şema
 orada reddeder. Bugün hiçbir kayıtta dolu değil.
 
-### Tekrar zinciri — henüz yok, yeri belli
+### Kıyas eksenleri — iki sayı ne zaman kıyaslanmaz
 
-Bir iddianın kaç yayında tekrarlandığını ve hepsinin tek bir kökene
-dayandığını göstermek için şemada alan yok. Geldiğinde **ölçüme değil
-kaynağa** eklenecek: tekrarlanan şey iddia değil, belgedir. Kaynak zaten
-kimlikli bir varlık (`lib/cards/params.ts` sourceKey).
+Hassasiyet bandı "bu iki sayı ayrışıyor mu" sorusunu cevaplar. Ondan önce
+sorulan soru: bu ikisi aynı cetvele konabilir mi? Üç eksen var ve üçü de
+aynı değilse aralık hesabı hiç çalışmaz (`lib/measurement/divergence.ts`):
 
-Bu alan dolmadan "N yayın tek kaynağı tekrarlıyor" cümlesi hiçbir yerde
-kurulamaz — ne kartta, ne gönderide (§5.10). Paylaşım kartı bugün ters
-yönde çalışıyor: tek belge, ona dayanan N değer.
+- `scope` — değer **nasıl** elde edildi: `beyan`, `test`, `olcum`, `tahmin`.
+- `object` — **neyi** ölçüyor: `fuze`, `sistem`, `atici`. Bileşik sistemler
+  için. SİPER'de ROKETSAN'ın "100+ km" füze menzili ile ASELSAN'ın "70+ km"
+  sistem önleme menzili aynı sayı ailesinde görünür ama aynı şeyi ölçmez.
+- `variant_id` — hangi varyantı tarif ediyor.
+
+Bir eksen iki tarafta dolu ve farklıysa çift "farklı kapsam" olarak
+gösterilir, "çelişki" denmez. Eksen yalnız bir tarafta doluysa çift
+`belirsiz` işaretlenir: tek taraflı bilgi bir fark değildir. İkisi bir
+aradaysa bilinen fark önce gelir. Hiçbir kaydında `object` bulunmayan
+dosyada eksen görünmez; sonuçlar eksen eklenmeden öncekiyle aynıdır.
+
+Bileşik dosyada her sayısal kayıt nesnesini beyan eder; beyansız kayıt
+dosyanın ana nesnesine sessizce atanmaz. Hangi boyutun uzunluk olduğunu
+söylemeyen bir kaynak uzunluk alanına yazılmaz — SİPER kanisterinin
+ölçüleri bu yüzden dosyada yok.
+
+`stated_at` kıyas ekseni değildir: aynı kapsamdaki iki beyan farklı
+tarihlerde de çelişebilir ve o çelişki görünmelidir. Daha yeni bir
+beyanın eskisini geçersiz kılması (supersession) henüz tasarlanmadı.
+
+Kurallar: `openspec/specs/measurement-object-scope/spec.md`.
+
+### Tekrar zinciri — köken kaydı
+
+Bir iddianın kaç yayında tekrarlandığı ve hepsinin tek bir kökene
+dayandığı sistem dosyasındaki `origins` dizisinde durur. Kayıt **ölçüme
+değil kökene** bağlıdır: tekrarlanan şey iddia değil, belgedir. Ölçümler
+ve takvim olayları kökeni `origin_id` ile gösterir; aynı köken birden çok
+değeri besliyorsa tek kayıt tutulur.
+
+- Sayaç alanı yoktur; tekrar sayısı adlandırılmış yayın listesinden türer.
+- Boş tekrar listesi yazılamaz: sıfır tekrar denetlenmemiş bir iddiadır.
+- Kaydın yokluğu tekrarın yokluğu değildir. Köken kaydı olmayan değer
+  için "tekrarlanmadı" denmez.
+- Yayıncının kendi yazısını tekrarı bağımsız dolaşım sayılmaz.
+
+"N yayın tek kaynağı tekrarlıyor" cümlesi yalnız bir köken kaydından
+kurulur — sayfada, kartta, gönderide (§5.10) aynı. Bugün kayıt yalnız
+SİPER'de. Sayfada `components/origin-chain` çizer: tek belge, onu
+aktaran N yayın. Paylaşım kartı (`kaynak-zinciri`) ters yönü anlatıyor:
+tek belge, ona dayanan N değer.
+
+Kurallar: `openspec/specs/source-repeat-chain/spec.md`.
 
 ### Ana sayfa panelinin konusu
 
@@ -130,6 +170,29 @@ editoryal bir yerde duruyor.
 - İşaretlenen alan gerçekten ıraksıyor olmalı. Panelin birinci katmanı ıraksama
   anlatır; gösterecek bir şey yoksa işaretçi yanıltır, derleme düşer.
 - İşaretçi yoksa `lib/hero.ts`'teki sıralı geri çekilme devreye girer.
+
+### Menzil halkasının alanı
+
+Halkayı hangi alanın çizdiği de **içerikte** yazar:
+
+```jsonc
+"range_ring": {"field": "intercept_range_km", "object": "sistem"}
+```
+
+Önceki kural "İHA değilse `range_km` çiz" idi; yeni bir kategori halkayı
+kendiliğinden açıyordu. Halka bir yarıçap iddiasıdır — "buradan her yöne
+şu kadar" — ve o iddia kategoriden çıkarılamaz.
+
+- Kayıt yoksa halka çizilmez. Menzil taşıyıp kaydı olmayan dosya derlemede
+  uyarı verir, hata değil: yarıçap iddiası taşımayan değer için doğru
+  karar budur (AKINCI'nın operasyonel menzili). Değer gizlenmez, mesafe
+  cetvelinde (`range-scale`) gösterilir.
+- Hava savunma sisteminde halka sistem önleme menzilinden çizilir. Füze
+  menzili tek yön erişimdir; `range_km` seçilirse derleme düşer.
+- Aynı alanda iki nesnenin kaydı varsa `object` gerekir; yazılmazsa
+  alandaki bütün kayıtlar çizilir.
+
+Kurallar: `openspec/specs/range-envelope/spec.md`.
 
 ### Düzeltme kaydı
 
@@ -307,9 +370,10 @@ components/
   range-scale/            # menzil zarfı çizilemeyen sistemde mesafe cetveli
   timeline/
   revision-log/           # duzeltme defteri — timeline'dan ayri ve daha sade
+  origin-chain/           # köken kaydı: tek belge, onu aktaran N yayın — §3
   model-viewer/           # R3F, dinamik import
 content/
-  systems/*.json          # tayfun, atmaca, akinci
+  systems/*.json          # tayfun, atmaca, akinci, siper
   assets.json             # görsel lisans kaydı
 lib/
   geo.ts                  # jeodezik daire, mesafe
@@ -320,11 +384,12 @@ lib/
     ratio.ts              # oran + köken beyanı; three ve zod İÇE AKTARMAZ
     ratio.schema.ts       # kökenin zod şeması — yalnız test ve doğrulama
     product.ts            # ürün tanımı: parça listesi + oran tablosu
-    registry.ts           # slug → ürün; tanımsız slug varsayılana DÜŞMEZ
+    registry.ts           # sistem/varyant → ürün; sisteme düşüş açık, varsayılana DÜŞMEZ
     coverage.ts           # kategori → model durumu, derlemede exhaustive
     axial.ts              # eksenel gövde topolojisi (füze ailesi)
     winged.ts             # kanatlı hava aracı topolojisi
     tayfun.ts atmaca.ts akinci.ts   # ürün başına oran tabloları
+    siper-urun-1.ts siper-urun-2.ts # varyant başına — iki varyant iki biçim
     build3d.ts            # parça listesi → THREE.Group
     project2d.ts          # parça listesi → ortografik SVG; three İÇE AKTARMAZ
     parts-for.ts          # sistem → parça listesi, three'siz yol
@@ -695,8 +760,8 @@ eklerken oraya yazılır; bileşenlere serpiştirilmiş dize kullanılmaz.
 ### Yayındaki eksikler
 
 1. **Düzeltme defteri tutuluyor ama iki dosyada.** TAYFUN'da on, AKINCI'da
-   üç kayıt var; ATMACA'da henüz düzeltme yapılmadı, dizi boş duruyor ve
-   sayfada bölüm çizilmiyor. Kayıtların çoğu `text` kolunda duruyor: eski
+   üç kayıt var; ATMACA ve SİPER'de henüz düzeltme yapılmadı ve sayfada
+   bölüm çizilmiyor. Kayıtların çoğu `text` kolunda duruyor: eski
    değerler varyant ya da güven niteleyicisi taşıyor ve sayıya çevrilemez.
    Yalnız ölçüm koluna düşen kayıtlar dosyayla karşılaştırılıyor (§3).
 2. **Harita kapsaması bölgesel.** Referans nokta paketin dışına taşınamaz
