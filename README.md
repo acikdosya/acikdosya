@@ -3,7 +3,7 @@
 [![CI](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml/badge.svg)](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml)
 
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
-dijital dosya. Yayında: https://acikdosya.org — şu anda üç sistem: TAYFUN, ATMACA ve AKINCI.
+dijital dosya. Yayında: https://acikdosya.org — şu anda dört sistem: TAYFUN, ATMACA, AKINCI ve SİPER.
 
 Projenin kalıcı bağlamı ve pazarlık dışı editoryal kuralları [CLAUDE.md](./CLAUDE.md)
 dosyasındadır. Bir karar o dosyayla çelişiyorsa önce konuşulur.
@@ -40,7 +40,7 @@ Türkçe varsayılan ve öneksiz, İngilizce önekli. Rota adları da çevrilir.
 | `/yontem` | `/en/method` |
 | `/hakkinda` | `/en/about` |
 
-Yayında üç sistem var: `tayfun`, `atmaca`, `akinci`.
+Yayında dört sistem var: `tayfun`, `atmaca`, `akinci`, `siper`.
 
 Kök adres tarayıcı diline bakmaz, her zaman Türkçe açılır. Paylaşılan link herkeste
 aynı görünsün diye dil algılama kapalıdır.
@@ -123,7 +123,7 @@ Panelin konusu içerikte işaretlenir, kod seçmez:
 En fazla bir dosya işaretlenebilir ve işaretlenen alan gerçekten ıraksıyor
 olmalı — ikisini de `pnpm validate:content` sınar. İşaretçi yoksa
 `lib/hero.ts`'teki sıralı geri çekilme devreye girer: ıraksama, son düzeltme
-kaydı, köken zinciri.
+kaydı, tek değerin tam kaydı.
 
 **Bir sayının kaynağını bulamıyorsan alanı boş bırak.** Placeholder sayı üretmek bu
 projedeki en tehlikeli hatadır. Eksik alanı `_todo` dizisine yaz:
@@ -182,9 +182,14 @@ bizim dosyamızın tarihini anlatır. Kayıt yoksa bölüm hiç çizilmez — bo
 2. Yeni bir kategori gerekiyorsa `lib/schema.ts` içindeki `categorySchema` enumuna ekle.
    Bilinçli karar olsun diye enum dar tutuluyor.
 3. Kategoriye göre özel davranışları gözden geçir:
-   - Füzelerde `range_km` zorunludur ve menzil zarfı çizilir.
-   - İHA'larda (`insansiz-hava-araci`) menzil zarfı ve 3D model üretilmez;
-     `wingspan_m` gibi uçak ölçüleri kullanılır.
+   - İHA (`insansiz-hava-araci`) dışındaki kategorilerde en az bir varyantta
+     `range_km` zorunludur. İHA'larda `wingspan_m` gibi uçak ölçüleri kullanılır.
+   - Menzil halkası kategoriden açılmaz: hangi alanın çizdiği `range_ring`
+     kaydında yazar (CLAUDE.md §3). Kayıt yoksa halka çizilmez, değer mesafe
+     cetvelinde kalır. Hava savunmasında halka `range_km` alanından çizilemez.
+   - 3D model ve ölçek şeması için `lib/geometry/coverage.ts` içinde kategori
+     satırı, bir ürün tanımı ve `registry.ts` içinde bir satır gerekir
+     (CLAUDE.md §9). Ürün tanımı yoksa model üretilmez.
 4. `pnpm validate:content` çalıştır.
 
 Sayfa `generateStaticParams` ile kendiliğinden üretilir.
@@ -280,10 +285,12 @@ Arşivin adı yapı tarihini taşır, yani içeriği değişince adresi de deği
 nginx ve Caddy karşılıkları `deploy/nginx/acikdosya.org.conf` sonunda örnek olarak
 duruyor — kurulu değil.
 
-Menzil halkaları `range_km` verisinden türer, kodda sabit değer yoktur. Halkalar
-büyük daire yöntemiyle çizilir; Turf eklenmez. Menzil zarfı yalnızca füze
-kategorilerinde (`balistik-fuze`, `seyir-fuzesi`) çizilir; `insansiz-hava-araci`
-kategorisi için çizilmez.
+Menzil halkaları ölçüm verisinden türer, kodda sabit değer yoktur. Halkayı hangi
+alanın çizdiği içerikteki `range_ring` kaydında yazar, kategori karar vermez:
+TAYFUN ve ATMACA `range_km`, SİPER sistem önleme menzili (`intercept_range_km`)
+ile çizilir; AKINCI'da kayıt yok, operasyonel menzil mesafe cetvelinde
+(`components/range-scale/`) durur. Halkalar büyük daire yöntemiyle çizilir;
+Turf eklenmez.
 
 **Sürüm kısıtı:** `maplibre-gl` 5.x'te sabitlenmiştir. 6.9 sürümünde harita kuruluyor
 ancak hiçbir kaynak yüklenmiyor, `load` olayı hiç gelmiyor ve konsola hata düşmüyor.
@@ -380,12 +387,13 @@ kartın dolaşım biçimi: görsel ekran görüntüsü olarak bağlamından kopa
 Birkaç kural tasarımdan değil veriden gelir:
 
 - **Kaynak zinciri ters yönde çalışır.** Claude Design şablonu "bir iddia, N
-  yayın, hepsinin dayandığı tek kaynak" diyordu; şemamızda bir kaydı başka bir
-  yayına bağlayan alan yok ve bugünkü veride aynı alanın değerleri zaten ayrı
-  kaynaklardan geliyor. Olmayan bir bağ uydurulmaz (§5.7). Gerçek olan tersi:
-  ATMACA kataloğu beş değeri, BAYKAR ürün sayfası dokuz değeri tek başına
-  taşıyor. Kart bunu gösterir; okuyucunun gördüğü şey aynıdır — bir kaynak
-  düşerse ne kadarının düştüğü.
+  yayın, hepsinin dayandığı tek kaynak" diyordu. O yön artık şemada var —
+  köken kaydı, `origins` (CLAUDE.md §3) — ama yalnız SİPER'de dolu ve sayfada
+  `components/origin-chain/` olarak çizilir; kart onu kullanmaz. Kayıt olmayan
+  dosyada bağ uydurulmaz (§5.7). Kartın gösterdiği, her dosyada gerçek olan
+  tersi: ATMACA kataloğu beş değeri, BAYKAR ürün sayfası dokuz değeri tek
+  başına taşıyor. Okuyucunun gördüğü şey aynıdır — bir kaynak düşerse ne
+  kadarının düştüğü.
 - **Değer-kapsam kartının durumu hesaptan gelir.** Başlık her zaman nötrdür ama
   durum adı `groupDivergence()` ne dönerse odur ve gerektiğinde "çelişki" yazar.
   Bugünkü veride iki alan çelişki döndürüyor: ATMACA kütlesi ve harp başlığı

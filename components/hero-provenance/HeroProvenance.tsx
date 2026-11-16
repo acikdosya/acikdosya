@@ -9,7 +9,7 @@ import {UnitMark} from '@/components/unit-mark/UnitMark';
 import styles from './HeroProvenance.module.css';
 
 /**
- * Hero'nun ucuncu katmani: tek bir degerin tam koken zinciri — lib/hero.ts.
+ * Hero'nun ucuncu katmani: tek bir degerin tam kaydi — lib/hero.ts.
  *
  * Ne iraksama ne duzeltme varsa gosterilecek sey kalmiyor gibi gorunur; oysa
  * kalir. Bu projenin iddiasi zaten tek bir sayiyi kaynagi, kapsami ve

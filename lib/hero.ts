@@ -10,7 +10,7 @@ import {
 import {findDivergence, markedDivergence, type Divergence} from './stats';
 
 /**
- * Ana sayfa hero panelinin konusu — CLAUDE.md §5.7.
+ * Ana sayfa hero panelinin konusu — CLAUDE.md §3 (isaretci), §4 (hareket).
  *
  * Panel eskiden tek bir kosula bagliydi: dosyada iraksayan bir alan varsa
  * cizilir, yoksa hero yarim kalirdi. Bu, sayfanin en gorunur bolumunu
@@ -18,7 +18,7 @@ import {findDivergence, markedDivergence, type Divergence} from './stats';
  * hareket anini da goturuyordu.
  *
  * Simdi sirali geri cekilme var. Ucu de GERCEK veriden okunur; farazi
- * ornek satir uretilmez:
+ * ornek satir uretilmez (CLAUDE.md §5.7):
  *
  *  0. isaretli alan  Icerikte `hero` isaretcisi varsa panel onu anlatir.
  *                    Konu artik bir siralama kuralinin ciktisi degil,
@@ -26,8 +26,10 @@ import {findDivergence, markedDivergence, type Divergence} from './stats';
  *  1. iraksama       Ayni alanda ayrisan degerler. Yontemi en iyi bu anlatir.
  *  2. son duzeltme   Yayimlanmis bir degeri neden degistirdigimiz. Dosyanin
  *                    kendi tarihi — iraksama yoksa gosterilecek en guclu sey.
- *  3. koken zinciri  Tek bir degerin tam kaydi: deger, guven, kapsam,
- *                    kaynak, dogrulama tarihi. Her zaman vardir.
+ *  3. tam kayit      Tek bir degerin tam kaydi: deger, guven, kapsam,
+ *                    kaynak, dogrulama tarihi. Her zaman vardir. "Koken
+ *                    zinciri" denmez: o ad origins kaydinin (tek belge,
+ *                    onu aktaran N yayin — components/origin-chain).
  *
  * Hicbiri yoksa (dosyada tek bir olcum bile yoksa) panel cizilmez.
  */

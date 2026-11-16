@@ -827,12 +827,20 @@ export const systemSchema = z
     origins: z.array(originSchema).optional(),
     timeline: z.array(timelineEventSchema),
     /**
-     * Duzeltme gecmisi. Alan yoksa da olur; bos dizi de gecerlidir ve
-     * ikisi de ayni anlama gelir: henuz duzeltme yapilmadi. Sayfa o
-     * durumda bolumu hic cizmez — bos bir "Duzeltme gecmisi" basligi,
-     * kaydin tutulmadigi izlenimi verir.
+     * Duzeltme gecmisi. Henuz duzeltme yapilmadiysa alan HIC yazilmaz;
+     * bos dizi reddedilir (CLAUDE.md §3: duzeltme yoksa dizi de yoktur).
+     * Eskiden iki yazim da gecerliydi ve ayni anlama geliyordu; kural bir
+     * dosyada tutuldu, otekinde tutulmadi. Sayfa kayit yoksa bolumu hic
+     * cizmez — bos bir "Duzeltme gecmisi" basligi, kaydin tutulmadigi
+     * izlenimi verir.
      */
-    revisions: z.array(revisionSchema).optional(),
+    revisions: z
+      .array(revisionSchema)
+      .min(1, {
+        error:
+          'bos revisions yazilmaz — duzeltme yoksa alan hic bulunmaz (CLAUDE.md §3)'
+      })
+      .optional(),
     disclaimer: localizedTextSchema,
     _todo: todoSchema.optional()
   })

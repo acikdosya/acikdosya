@@ -284,8 +284,8 @@ Prototipte oturmuş palet — koru:
 - Sayfa başına TEK orkestre edilmiş hareket anı. Ana sayfada bu an, hero
   panelinin rozetiyle belirmesidir — yöntemi gösteren hareket odur. Panelin
   konusu içerikteki `hero` işaretçisinden gelir (§3); işaretçi yoksa üç
-  katmanlı geri çekilme devreye girer (ıraksama, son düzeltme kaydı, köken
-  zinciri; `lib/hero.ts`) ve hangisi çizilirse hareket ona bağlanır. Kareler `globals.css` içinde
+  katmanlı geri çekilme devreye girer (ıraksama, son düzeltme kaydı, tek
+  değerin tam kaydı; `lib/hero.ts`) ve hangisi çizilirse hareket ona bağlanır. Kareler `globals.css` içinde
   tek yerde (`hero-panel`, `hero-reveal`, `hero-lead`); panel başına
   animasyon yazılmaz, yoksa kural sessizce ikiye çıkar. Kademeli giriş
   kaskadları (n öğe, artan gecikme) scroll'da da sayfa yüklemesinde de

@@ -50,7 +50,7 @@ export default async function HomePage({params}: Props) {
 
   /*
    * Hero paneli veri kosuluna rehin degil: sirali geri cekilme var —
-   * iraksama, yoksa son duzeltme, yoksa tek bir degerin koken zinciri
+   * iraksama, yoksa son duzeltme, yoksa tek bir degerin tam kaydi
    * (lib/hero.ts). Ucu de gercek dosyadan okunur, farazi ornek uretilmez
    * (CLAUDE.md §5.7).
    */

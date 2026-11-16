@@ -559,7 +559,6 @@
     "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
     "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
     "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",
-    "ikinci sistem eklenene kadar kategori enumu tek degerli",
     "Blok-4 gövdesi fuar fotoğraflarında dönel değil, sırtı çıkıntılı bir biçim gösteriyor; model onu şimdilik TAYFUN'un dairesel gövdesiyle çiziyor. Ortografik bir kaynak bulunana kadar Blok-4'e ayrı bir ürün tanımı yazılmadı."
   ]
 }
