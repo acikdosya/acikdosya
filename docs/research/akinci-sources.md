@@ -114,7 +114,8 @@ Henüz yok.
 - [ ] A/B/C varyantlarına özgü kaynaklı veri olup olmadığını araştır; yoksa varyant satırları bilgi boşluğu notuyla bırak.
 - [ ] Dış görünüş / siluet için yayımlanmış, lisansı açık referans araştır (fotoğraf, teknik çizim, üretici broşürü).
 - [ ] `status` alanı için kaynaklı takvim olayı belirle.
-- [ ] Üretici sayfasının üçüncü taraf arşiv kopyasını al (Internet Archive / archive.today).
+- [x] Üretici sayfasının üçüncü taraf arşiv kopyasını al. Wayback 02.09.2026 kaydı `archive_url` olarak eklendi (16.11.2026); dokuz kaydın değerlerinin hepsi kopyada geçiyor.
+- [ ] Üretici broşürünün arşiv kopyası: Wayback'te kaydı yok (16.11.2026). Yeni kopya `source_sha256` ile tutmalı.
 
 ### Açık karar noktaları (kullanıcı onayı gerekebilir)
 

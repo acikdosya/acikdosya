@@ -186,6 +186,7 @@
             },
             "source_url": "https://www.navalnews.com/naval-news/2021/02/video-turkeys-new-atmaca-missile-aces-latest-tests-achieves-ioc",
             "accessed_at": "2026-09-11",
+            "archive_url": "https://web.archive.org/web/20251228195200/https://www.navalnews.com/naval-news/2021/02/video-turkeys-new-atmaca-missile-aces-latest-tests-achieves-ioc",
             "verified_at": "2026-09-11"
           }
         ]
@@ -222,6 +223,7 @@
           },
           "source_url": "https://www.trtworld.com/turkiye/atmacas-first-test-firing-with-turkish-turbojet-engine-hits-target-17303637",
           "accessed_at": "2026-09-11",
+          "archive_url": "https://web.archive.org/web/20250420034626/https://www.trtworld.com/turkiye/atmacas-first-test-firing-with-turkish-turbojet-engine-hits-target-17303637",
           "verified_at": "2026-09-11"
         }
       },
@@ -420,7 +422,7 @@
     "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
   },
   "_todo": [
-    "ROKETSAN web/PDF sayfalarinin ucuncu taraf arsiv kopyasi alinacak.",
+    "ROKETSAN web sayfasi ve PDF katalogunun arsiv kopyasi yok: roketsan.com.tr Wayback Machine'den haric tutulmus (16.11.2026 kontrolu); archive.today bu agdan erisilemedi. savunmasanayi.org'daki iki haberin (2019, 2020) Wayback'te hic kaydi yok. Naval News ve TRT World kayitlarinin arsiv kopyasi eklendi.",
     "PDF'nin gercek yayinlanma tarihi/surumu dogrulanacak.",
     "Dış görünüş oranları ROKETSAN 2024 kataloğundaki üst görünüş çiziminden ölçüldü (11.09.2026); çizim ortografiklik sınavından geçti, yöntem lib/geometry/atmaca.ts içinde. Kalınlık üst görünüşte okunamıyor, seçilmiş kaldı; yan görünüş çizimi bulunursa ölçülebilir.",
     "Kanat ve kanatçık setinin yuvarlanma açısı (+ mi X mi) üst görünüşten okunamıyor; dört yüzey simetrik varsayıldı."

@@ -555,7 +555,7 @@
     "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
   },
   "_todo": [
-    "urun kartinin ucuncu taraf arsiv kopyasi (archive_url) alinamadi: Internet Archive 11.09.2026'da kapaliydi. Belge ozeti (source_sha256) kayitta duruyor, arsiv adresi sonra eklenecek.",
+    "urun kartinin ucuncu taraf arsiv kopyasi (archive_url) yok: roketsan.com.tr Wayback Machine'den haric tutulmus ('This URL has been excluded', 16.11.2026 kontrolu); archive.today bu agdan erisilemedi. Belge ozeti (source_sha256) kayitta duruyor; baska bir agdan kopya alinirsa baytlari ozetle tutmali, tutmazsa okudugumuz belge degildir ve eklenmez.",
     "supersession: ayni kapsamdaki daha yeni bir beyanin eskisini gecersiz kilmasi ileride gerekebilir. Bugun stated_at kiyaslanabilirlik kararina girmiyor, yalnizca gorunuyor. Simdi tasarlanmadi.",
     "timeline olaylarinin kaynak adi ve source_url bilgisi eksik",
     "BLOK-4 duyurusu tarihinin gun hassasiyeti dogrulanmali — kaynak Temmuz 2025 diyor",

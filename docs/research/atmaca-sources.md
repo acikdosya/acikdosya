@@ -86,7 +86,7 @@
   - Platformlar: su üstü, denizaltı, muharip uçak, taktik tekerlekli kara platformları, sabit lançer
 - **Belge sürümü:** URL'de `2024` klasörü ve `1726595374` damgası var; PDF metadata'sında CreationDate/ModDate yok; içerikte basım tarihi görülmedi.
 - **SHA-256:** `c7163fec0439b99cce3d7b6bc6d44a634261c5a630e62397c3d6032c4270fbb4`
-- **Arşiv URL'si:** _todo — Internet Archive / archive.today kopyası aranacak_
+- **Arşiv URL'si:** yok — roketsan.com.tr Wayback Machine'den hariç tutulmuş ("This URL has been excluded", 16.11.2026 kontrolü); archive.today bu ağdan erişilemedi. Başka bir ağdan kopya alınırsa yukarıdaki özetle tutmalı.
 - **Açık sorular:**
   - PDF'deki tek uzunluk, web'deki aralığın üst sınırı mı? Yoksa farklı bir konfigürasyon mu?
   - `750 kg` ile `< 750 kg` matematiksel olarak ayrışır; aynı konfigürasyon için kaynaklar çelişiyor gibi görünür.
@@ -111,7 +111,7 @@
   - Platformlar: naval platforms, submarine platforms, 5th gen fighter jet, tactical wheeled land platforms, fixed launcher
 - **Belge sürümü:** Türkçe PDF ile aynı görünüm; farklı zaman damgası (`1726595873`).
 - **SHA-256:** `2c70cdd3335e11574c45b0604d5464807ec581f96e0e5265b0e10c44cc6c2680`
-- **Arşiv URL'si:** _todo_
+- **Arşiv URL'si:** yok — aynı alan adı, Wayback'ten hariç tutulmuş (16.11.2026 kontrolü).
 - **Karar:** Türkçe PDF ile aynı kaynak grubunda; İngilizce terminoloji çeviri için kullanılabilir, bağımsız bir kaynak değil.
 
 ## 5. Savunma Sanayi — TCG Kınalıada test atışı
@@ -295,7 +295,7 @@ Henüz yok.
 
 ### Açık kalanlar
 
-- [ ] ROKETSAN web/PDF sayfalarının üçüncü taraf arşiv kopyasını al (Internet Archive / archive.today).
+- [ ] ROKETSAN web/PDF sayfalarının üçüncü taraf arşiv kopyasını al. Wayback alan adını hariç tutuyor (16.11.2026); archive.today başka bir ağdan denenecek. Naval News ve TRT World kayıtlarının Wayback kopyası eklendi; savunmasanayi.org'daki iki haberin hiç kaydı yok.
 - [ ] PDF'nin gerçek yayımlanma tarihi/sürümünü doğrula; metadata yok, içerikte basım tarihi aranacak.
 - [ ] Web sayfasındaki uzunluk aralığının (4,3–5,2 m) hangi konfigürasyonları kapsadığını açıklığa kavuştur.
 - [ ] Web `< 750 kg` ile PDF `750 kg` arasındaki ilişkiyi konfigürasyon ayrımıyla çöz veya açık çelişki olarak kaydet; şimdilik `revisions` boş, çünkü gerçekleşmiş bir düzeltme kaydı yok.

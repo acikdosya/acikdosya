@@ -47,6 +47,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -61,6 +62,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -79,6 +81,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -93,6 +96,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -107,6 +111,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -126,6 +131,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -144,6 +150,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -158,6 +165,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ],
@@ -214,6 +222,7 @@
         },
         "source_url": "https://baykartech.com/tr/uav/bayraktar-akinci/",
         "accessed_at": "2026-09-11",
+        "archive_url": "https://web.archive.org/web/20260902232014/https://baykartech.com/tr/uav/bayraktar-akinci/",
         "verified_at": "2026-09-11"
       }
     ]
@@ -478,7 +487,7 @@
     "Servis tavanı (40.000 ft) ile ürün sayfası banner'ındaki maksimum irtifa (45.118 ft) arasındaki ilişki açıklığa kavuşturulacak; broşürde 45.118 ft geçmiyor.",
     "A/B/C varyantlarına özgü kaynaklı ölçüler eklenecek.",
     "3B modelin dış oranları üreticinin yayımladığı görsellerden ölçüldü (11.09.2026); yöntem ve hangi oranın ölçülüp hangisinin seçildiği lib/geometry/akinci.ts içinde. Üst görünüş karesi bulunmadığı için kanat ok açısı hâlâ seçilmiş değer; temiz bir arka görünüş bulunursa yatay stabilize veçhesi de ölçülebilir.",
-    "Üretici broşürünün üçüncü taraf arşiv kopyası alınacak (archive_url).",
+    "Üretici broşürünün (18 Şubat 2026 sürümü) Wayback'te hiç kaydı yok (16.11.2026 kontrolü). Yeni bir kopya alınırsa baytları kayıttaki source_sha256 ile tutmalı; tutmazsa okuduğumuz belge değildir ve eklenmez. Ürün sayfasının arşiv kopyası eklendi: 02.09.2026 kaydı, sayfaya dayanan dokuz kaydın değerlerinin hepsi kopyada geçiyor.",
     "Yük istasyonları çıplak pilon olarak modelleniyor; taşınan mühimmatın biçimi çizilmiyor çünkü hiçbir mühimmat için kaynaklı ölçü kaydımız yok (CLAUDE.md §5.4, §5.7). Mühimmat ölçüleri kaynaklanırsa ayrı bir sistem dosyası olarak eklenir, AKINCI'nin modeline iliştirilmez.",
     "Gövde kesit oranı (1,28) ön görünüşten okundu ama gövdenin üst kenarı kanat kökü omuz şişmesinin altında kalıyor; okunan yükseklik bir üst sınır. Temiz bir yan veya arka görünüş bulunursa oran ölçülebilir.",
     "Pervane kanat sayısı (5) render'dan sayıldı; motor varyantına göre değişip değişmediği doğrulanacak.",
