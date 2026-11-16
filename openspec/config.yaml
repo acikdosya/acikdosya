@@ -1,32 +1,63 @@
 schema: spec-driven
 
-# Project context (optional)
-# This is shown to AI when creating artifacts.
-# Add your tech stack, conventions, style guides, domain knowledge, etc.
-# Example:
-#   context: |
-#     Tech stack: TypeScript, React, Node.js
-#     We use conventional commits
-#     Domain: e-commerce platform
+# Kural metinleri burada KOPYALANMAZ: kalici kaynak CLAUDE.md, ikinci bir
+# kopya drift uretir (CLAUDE.md §3). Bu dosya yalniz o kaynaga yonlendirir
+# ve OpenSpec artifact'larina ozgu calisma bicimini yazar. Dosya sayisi,
+# spec listesi gibi zamanla degisen sayimlar bilerek yazilmadi.
 
-# Per-artifact rules (optional)
-# Add custom rules for specific artifacts.
-# Example:
-#   rules:
-#     proposal:
-#       - Keep proposals under 500 words
-#       - Always include a "Non-goals" section
-#     tasks:
-#       - Break tasks into chunks of max 2 hours
+context: |
+  Açık Dosya (acikdosya.org): az sayıda Türk savunma sanayii sistemini
+  kaynaklı, animasyonlu ve etkileşimli anlatan teknik dosya. Ayrışma
+  genişlikte değil derinlikte. Yayındaki dosyalar content/systems/*.json.
 
-# Per-operation guidance (optional)
-# Add advisory guidance for how apply and archive work should be conducted.
-# This is separate from artifact rules above.
-# Example:
-#   operations:
-#     apply:
-#       guidance:
-#         - Keep test summaries concise
-#     archive:
-#       guidance:
-#         - Summarize the archive outcome before finishing
+  Bağlayıcı kurallar CLAUDE.md'de. Bir değişiklik oradaki bir kuralla
+  çelişiyorsa artifact yazmayı durdur ve sor; kuralı sessizce değiştirme.
+  En sık dokunulan bölümler: §3 veri sözleşmesi (her sayısal alan dizi,
+  güven seviyesi zorunlu, hassasiyet bandı, kıyas eksenleri, köken kaydı,
+  düzeltme defteri), §5 editoryal sınırlar (hedef dili yok, uydurma sayı
+  yok), §9 parametrik 3D ve oran kökeni, §11 paylaşımlı sunucu.
+
+  Yığın: Next.js App Router (eğitim verisinden farklı bir sürüm; kod
+  yazmadan önce node_modules/next/dist/docs), TypeScript, zod 4 (tek şema
+  lib/schema.ts), next-intl (TR varsayılan, EN zorunlu), MapLibre +
+  PMTiles, three + R3F, testler node --test.
+
+  Doğrulama: pnpm typecheck, pnpm lint, pnpm test, pnpm validate:content
+  (sonuncusu prebuild'e bağlı; şemadan geçmeyen içerik derlenmez).
+
+  Artifact metni Türkçe. Şablonun başlıkları (Why, What Changes,
+  Requirement, Scenario, WHEN/THEN) olduğu gibi kalır. Dosya yolu, alan
+  adı ve kod tanımlayıcısı aynen yazılır. Değişiklik adı İngilizce
+  kebab-case.
+
+rules:
+  proposal:
+    - 'Gerekçe somut olsun: hangi dosya, hangi kayıt, kaç değer. "Daha iyi olur" gerekçe değildir.'
+    - Değişikliğin dokunduğu CLAUDE.md bölümlerini numarasıyla yaz (§3, §5.7 gibi).
+    - Yayındaki dosyaların sayfada görünen davranışı değişiyorsa neyin değiştiğini yaz; değişmiyorsa bunu da açıkça söyle.
+    - Kapsam dışını (Non-goals) ayrı yaz.
+  specs:
+    - Yeni yetenek açmadan önce openspec/specs/ altındaki mevcut yeteneklere bak; uyan varsa onu değiştir.
+    - Gereklilik metni Türkçe, bağlayıcılık parantez içinde (MUST), (MUST NOT).
+    - Her gereklilikte en az bir senaryo. Veri kuralında "içerik doğrulaması bunu reddeder" senaryosu tercih edilir.
+    - Senaryoda kaynaksız sayı kullanma; örnek gerekiyorsa içerikte zaten kayıtlı bir değeri kullan.
+  design:
+    - Her karar numaralı; reddedilen seçeneği ve nedenini birlikte yaz.
+    - Şema değişiyorsa göç yolunu ve yayındaki dosyalarda gerileme olmadığının nasıl sınanacağını yaz.
+    - Ana sayfa işaretçisi (hero), menzil halkası (range_ring), paylaşım kartları veya yapısal veri etkileniyorsa ayrıca belirt.
+  tasks:
+    - 'Her görev bir dosya yolu ve bir doğrulama komutu taşır: "...; `pnpm test` geçsin".'
+    - İçerik görevinde kaynağı bulunamayan sayı _todo'ya yazılır ve alan boş kalır; yer tutucu sayı görevi yazılmaz (CLAUDE.md §5.7).
+    - CLAUDE.md veya README'de karşılığı olan bir kural değişiyorsa o belgenin güncellenmesi ayrı bir görevdir.
+    - 'Son grup doğrulamadır: pnpm typecheck, pnpm lint, pnpm test, pnpm validate:content.'
+
+operations:
+  apply:
+    guidance:
+      - Her görev grubundan sonra pnpm typecheck ve pnpm lint çalıştır (CLAUDE.md §8).
+      - Kaynağı bulunamayan sayı üretme; alanı boş bırak, _todo'ya yaz ve raporla (CLAUDE.md §5.7).
+      - 'Commit, push ve deploy yalnız istendiğinde. Commit mesajı Türkçe, ASCII, "tür: özet" biçiminde.'
+  archive:
+    guidance:
+      - Arşivlemeden önce CLAUDE.md ve README'yi değişiklikle karşılaştır. En sık eskiyen yerler dosya sayısı, dizin listesi ve "henüz yok" diyen cümleler.
+      - Arşiv özeti hangi ana spec'lerin değiştiğini listelesin.
