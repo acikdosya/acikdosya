@@ -392,7 +392,12 @@
     "tailPositionT": "Kuyruk yüzeyi konumu",
     "tailChordRatio": "Kuyruk yüzeyi kök veçhesi",
     "tailTaper": "Kuyruk yüzeyi incelmesi",
-    "tailSweepDeg": "Kuyruk yüzeyi ok açısı"
+    "tailSweepDeg": "Kuyruk yüzeyi ok açısı",
+    "tailThicknessRatio": "Kuyruk yüzeyi kalınlığı",
+    "bodyShoulderWidthRatio": "Gövde kesiti omuz eni",
+    "bodyFloorWidthRatio": "Gövde kesiti taban eni",
+    "bodyLowerCornerRatio": "Gövde kesiti alt köşe payı",
+    "wingFairingRampRatio": "Kanat-gövde kaplaması uç payı"
   },
   "RevisionLog": {
     "from": "eski değer",

@@ -78,13 +78,17 @@ Gövde ile göbek konisi ayrı okundu. Yan karelerde gri gövdenin üst çizgisi
 
 Kiriş kanat hücum kenarında küt bitmiyor: ön ucu sivrilerek kanada karışıyor (0_5, 0_6). Uç hücum kenarında; incelmenin başladığı yer gölge sınırı, siluet değil, bu yüzden kaplama boyu (~0,32 m) seçildi. Kaplama kirişin ilk kesitine teğet bir parabol; kiriş çizgisi, yarıçapı ve eğimi değişmedi.
 
+Gövde kesiti ve kanat-gövde kaplaması bir oran değil bir biçim; kökenleri yine oran tablosunda kayıtlı. Kesitin üst yarısı (omuz eni 0,755) ve tabanı (0,95) ön görünüşten okuma, aradaki alt köşe seçilmiş. Kaplamanın veçhe boyunca uç payları (%30, çeyrek elips) seçilmiş; kesitin taban köşesi ve kanat içindeki üst kenarı da.
+
 Sırt kaplaması, hava girişi ve egzoz diskleri kaldırıldı: karelerde bunlar dışa taşan biçim değil, gövdedeki açıklıklar; şematik gri yüzeyde gösterilemezler. Yerine karelerde görülen iki dış biçim eklendi: kanadın alt yüzeyini gövde tabanına bağlayan V kaplama ve burun altındaki yassı kaplama.
 
 Kanat ucu kesik: karelerde veçhe uca kadar korunuyor. AKINCI'dan gelen kapanma kuralı (son %7'de veçhe ve kalınlık sıfıra) TB2'de ucu sivriltiyordu ve 45° karelerinde uç 24 px içeride kalıyordu; kaldırıldı, uç artık karelerdeki ucun 1–2 px yakınında. Kanat tek yüzey: ayrı aileron şeridi ve çizim boşluğu kaldırıldı, karelerde yalnız panel çizgisi var. Kanat altındaki dört yük istasyonu çizilmiyor: karelerde mühimmat yüklü ve mühimmat modellenmediği için istasyon da çizilmedi; sayfada biçim kaydında yazılı.
 
-Ters V kuyruk karelerde tek parça: iki yüzey tepede keskine yakın bir sırtla birleşiyor (arka görünüşte tepe satırı 6 px). Önceki sürümde iki eğik levhanın uçları merkezi yarım kalınlık geçip çapraz kesişiyordu. Yarılar artık yatay açıklıklı, kesitleri dikey; son kesitleri merkez düzleminde birebir aynı, gönye ile birleşiyor. Tepenin dış çizgisi okunan 234 px'te kaldı. Bedeli: dikey kök kesiti kirişin altına eskisinden ~5 cm fazla sarkıyor (yan görünüş 0,917 → 0,912). Karelerde kuyruk kiriş ucundaki dikey bir çıkıntıya oturuyor; o çıkıntı çizilmedi.
+Ters V kuyruk karelerde tek parça: iki yüzey tepede keskine yakın bir sırtla birleşiyor (arka görünüşte tepe satırı 6 px). Önceki sürümde iki eğik levhanın uçları merkezi yarım kalınlık geçip çapraz kesişiyordu. Yarılar artık yatay açıklıklı, kesitleri dikey; son kesitleri merkez düzleminde birebir aynı, gönye ile birleşiyor. Tepenin dış çizgisi okunan 234 px'te kaldı.
 
-Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,83'e çıktı (yan görünüş 0,50 → 0,91, ön görünüş 0,19 → 0,77). Pilonlar kaldırılınca ortalama 0,839'dan 0,834'e indi: karelerde pilonlar ve yükler var. Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
+Kuyruk kökü kirişin üstünde bitiyor: yan karelerde kök altında hiçbir şey yok. Yüzeyin alt çizgisi kirişin kuyruk veçhesi ortasındaki merkez yüksekliğinde kesiliyor (yeni sayı değil, okunan kiriş çizgisi). Arka görünüşte kiriş ucundaki dik şerit ayrı bir parça değil, uçtan görülen kirişin kendisi. Kuyruk kalınlığı artık kendi okuması: arka görünüşte 45° bacak yatayda 17–20 px, yüzeye dik 12–14 px, veçheye oranı ~0,125 (kanadın 0,16'sından ince; önceden kanadınkini paylaşıyordu).
+
+Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,84'e çıktı (yan görünüş 0,50 → 0,92, ön görünüş 0,19 → 0,77). Pilonlar kaldırılınca ortalama 0,839'dan 0,834'e indi (karelerde pilonlar ve yükler var); kuyruk kökü ve kalınlığı düzeltilince 0,837. Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
 
 ### Kit değişiklikleri
 

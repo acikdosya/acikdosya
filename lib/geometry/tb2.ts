@@ -110,6 +110,31 @@ export const TB2 = defineProduct({
       'Gövde eni ön görünüşte kanadın üstünde 87–90 px, tabanda 89 px; açıklığa (1798 px) oranı yaklaşık 0,051. 420–470 px arası kanat-gövde kaplamasının arkasında, orada okunamıyor.',
       'The fuselage reads 87–90 px wide above the wing and 89 px at the floor in front view, about 0.051 of the 1798 px span. Between 420 and 470 px it is hidden behind the wing-body fairing.'
     ),
+    /*
+     * Kesit profili bir oran değil bir biçim; dizinin tamamı BODY_SECTION
+     * içinde. Kökeni aşağıdaki üç kayıtta, testler dizinin bu sayıları
+     * taşıdığını sınar.
+     */
+    bodyShoulderWidthRatio: observed(
+      0.755,
+      'lateral',
+      FRONT,
+      'Kesitin üst yarısı ön görünüşteki satır genişliklerinden: tepede dar, omuzda yuvarlanan bir sırt (362 → 380 px arasında yarım en 0 → 0,76). Yarım derinliğin %69,5’inde yarım en 0,755. Profilin tamamı lib/geometry/tb2.ts içindeki BODY_SECTION dizisinde; biçim olduğu için oran tablosunda tek sayı olarak duramıyor, kökeni bu kayıtta.',
+      'The upper half of the section comes from row widths in the front view: narrow at the top, a ridge rounding off at the shoulder (half-width 0 → 0.76 between 362 and 380 px). At 69.5 percent of the half-depth the half-width is 0.755. The whole profile lives in the BODY_SECTION array in lib/geometry/tb2.ts; being a shape rather than a ratio it cannot sit in the table as one number, so its origin is recorded here.'
+    ),
+    bodyFloorWidthRatio: observed(
+      0.95,
+      'lateral',
+      FRONT,
+      'Kesitin tabanı ön görünüşte düz: taban satırında (480 px) yarım en 0,95. Dizide tabanın 1 px üstünde 0,90–0,96.',
+      'The section floor is flat in the front view: on the floor row (480 px) the half-width is 0.95. In the array it is 0.90–0.96 within 1 px of the floor.'
+    ),
+    bodyLowerCornerRatio: chosen(0.14, {
+      note: {
+        tr: 'Kesitin alt yarısı kanat-gövde kaplamasının arkasında kalıyor; yalnız taban okunuyor. Arası seçildi: düz yanlar ve yarım derinliğin alttaki %14’ünde yuvarlatılmış köşe.',
+        en: 'The lower half of the section hides behind the wing-body fairing; only the floor can be read. The part between was chosen: straight sides and a corner rounded over the lowest 14 percent of the half-depth.'
+      }
+    }),
     noseTipDropRatio: observed(
       0.0422,
       'vertical',
@@ -236,8 +261,8 @@ export const TB2 = defineProduct({
     ),
     wingThicknessRatio: chosen(0.16, {
       note: {
-        tr: 'Ön görünüşteki kanat bandı yerel veçheye bölününce 0,12–0,18 çıkıyor; bant hücum açısını ve kamburluğu da içerdiği için profil kalınlığı ayrılamıyor. Bandı en iyi örten değer seçildi (sekiz karede 0,12 ile 0,18 arasında en iyisi); belirli bir profil iddiası yok. Kuyruk yüzeyleri de bunu kullanır.',
-        en: 'The front-view wing band divided by local chord gives 0.12–0.18; the band also contains incidence and camber, so airfoil thickness cannot be separated. The value that best covers the band was chosen (best of 0.12–0.18 across eight frames); no specific airfoil is claimed. The tail surfaces use it too.'
+        tr: 'Ön görünüşteki kanat bandı yerel veçheye bölününce 0,12–0,18 çıkıyor; bant hücum açısını ve kamburluğu da içerdiği için profil kalınlığı ayrılamıyor. Bandı en iyi örten değer seçildi (sekiz karede 0,12 ile 0,18 arasında en iyisi); belirli bir profil iddiası yok.',
+        en: 'The front-view wing band divided by local chord gives 0.12–0.18; the band also contains incidence and camber, so airfoil thickness cannot be separated. The value that best covers the band was chosen (best of 0.12–0.18 across eight frames); no specific airfoil is claimed.'
       }
     }),
     filletRatio: chosen(0.7, {
@@ -253,6 +278,12 @@ export const TB2 = defineProduct({
       'Kanat alt yüzeyi gövde tabanına geniş bir V kaplamayla iniyor: alt kenar ön görünüşte ±160 px’ten (440 px yükseklik) gövde yanına (±49 px, 475 px) düz bir çizgi.',
       'The wing underside meets the fuselage floor through a broad V fairing: in front view its lower edge runs in a straight line from ±160 px (at 440 px height) to the fuselage side (±49 px, 475 px).'
     ),
+    wingFairingRampRatio: chosen(0.3, {
+      note: {
+        tr: 'Kaplamanın veçhe boyunca biçimi karelerde dış yüklerin ve iniş takımının arkasında kalıyor. Öndeki ve arkadaki %30’luk bölümde çeyrek elipsle kanadın veçhe düzlemine kapandığı seçildi; arası tam derinlikte. Kesitin taban köşesindeki yuvarlatma ve kanadın içinde kalan üst kenarı da seçildi.',
+        en: 'The chordwise shape of the fairing is hidden behind the stores and landing gear in the frames. It was chosen to close onto the wing chord plane with a quarter ellipse over the front and rear 30 percent, full depth in between. The rounding at the floor corner of the section and its upper edge inside the wing were chosen too.'
+      }
+    }),
 
     /* ------------------------------------------------------------ kiriş */
     boomOffsetRatio: observed(
@@ -360,6 +391,13 @@ export const TB2 = defineProduct({
       FRONT,
       'Kuyruk yüzeyinin orta çizgisi ön görünüşte kiriş hizasına uzatıldığında gövde orta çizgisinin 21 px üstünde. Bu kökten 45° ile merkezde buluşan iki yüzeyin tepesi 234 px’e düşüyor; karede tepe 234 px.',
       'Extended to the boom station in front view, the tail-surface centreline sits 21 px above the fuselage mid-line. Two surfaces rising from there at 45 degrees and meeting at the centre top out at 234 px; the frame shows the apex at 234 px.'
+    ),
+    tailThicknessRatio: observed(
+      0.125,
+      'vertical',
+      REAR,
+      'Arka görünüşte 45° eğik kuyruk bacağı yatayda 17–20 px geniş (ön görünüşte aynı); yüzeye dik kalınlık bunun 1/√2’si, 12–14 px. Yerel veçheye oranı tepeye yakın 0,126, köke yakın 0,128. Bant hücum açısını da içerdiği için bir üst sınır; kanadın 0,16’sından ince.',
+      'In the rear view the 45 degree tail leg is 17–20 px wide horizontally (the same in the front view); the thickness normal to the surface is 1/√2 of that, 12–14 px. Against the local chord that is 0.126 near the apex and 0.128 near the root. The band also contains incidence, so it is an upper bound; thinner than the wing’s 0.16.'
     ),
 
     /* ---------------------------------------------------------- pervane */
@@ -711,16 +749,18 @@ export const TB2 = defineProduct({
       {v: fairingRoof, w: 0}
     ];
     // Uçlar kanadın veçhe düzleminde bir noktaya kapanır; açık halka kalmaz.
-    const fairingStations: LatheStation[] = [
-      [0, 0],
-      [0.06, 0.55],
-      [0.15, 0.85],
-      [0.3, 1],
-      [0.7, 1],
-      [0.85, 0.8],
-      [0.95, 0.5],
-      [1, 0]
-    ].map(([k, r]) => ({y: wingChord * k, radius: Math.max(fairingReach * r, 0.0005)}));
+    const ramp = ratios.wingFairingRampRatio;
+    const fairingDepth = (k: number) => {
+      const edge = Math.min(k, 1 - k);
+      if (edge >= ramp) return 1;
+      const q = 1 - edge / ramp;
+      return Math.sqrt(Math.max(0, 1 - q * q));
+    };
+    // Örnekler eğrinin olduğu uç paylarında sıklaşır.
+    const fairingStations: LatheStation[] = [0, 0.2, 0.5, 1]
+      .map((share) => share * ramp)
+      .concat([1 - ramp, 1 - ramp * 0.5, 1 - ramp * 0.2, 1])
+      .map((k) => ({y: wingChord * k, radius: Math.max(fairingReach * fairingDepth(k), 0.0005)}));
     parts.push({
       kind: 'pod',
       id: 'wing-fairing',
@@ -800,23 +840,49 @@ export const TB2 = defineProduct({
      * kalır, okunan 234 px.
      */
     const tailLength = boomZ / Math.cos(tailAngle);
-    const tailStations = Array.from({length: 9}, (_, index) => {
-      const span = (boomZ * index) / 8;
+    const tailRootX = L * ratios.tailRootHeightRatio;
+    const tailY = L * ratios.tailPositionT;
+    /*
+     * Kök kirişin üstünde biter. Yüzeyin alt çizgisi, okunan orta çizgiden
+     * yarım kalınlık aşağıda, kiriş istasyonunda kirişin altına iniyordu;
+     * yan karelerde kuyruk kökünün altında hiçbir şey yok. Alt çizgi kirişin
+     * kuyruk veçhesi ortasındaki merkez yüksekliğinde kesilir — yeni sayı
+     * değil, okunan kiriş çizgisi.
+     */
+    const boomCentreAtTail =
+      boomX + (boomLift * (tailY + tailChord / 2 - boomStartY)) / boomLength;
+    const tailHalfThickness = (span: number) => {
       const along = span / Math.cos(tailAngle);
       const chord = tailChord * (1 + (ratios.tailTaper - 1) * (along / tailLength));
+      return {along, chord, half: (chord * ratios.tailThicknessRatio) / Math.cos(tailAngle) / 2};
+    };
+    // Alt çizginin kesildiği açıklık: orta çizgi − yarım kalınlık = kiriş merkezi.
+    let clipSpan = 0;
+    for (let k = 0; k < 40; k++) {
+      const {half} = tailHalfThickness(clipSpan);
+      clipSpan = Math.max(0, boomCentreAtTail - tailRootX + half) / Math.tan(tailAngle);
+    }
+    const tailSpans = Array.from({length: 9}, (_, index) => (boomZ * index) / 8);
+    if (clipSpan > 0 && clipSpan < boomZ) tailSpans.push(clipSpan);
+    tailSpans.sort((a, b) => a - b);
+    const tailStations = tailSpans.map((span) => {
+      const {along, chord, half} = tailHalfThickness(span);
+      const middle = span * Math.tan(tailAngle);
+      const top = middle + half;
+      const bottom = Math.max(middle - half, boomCentreAtTail - tailRootX);
       return {
         span,
-        rise: span * Math.tan(tailAngle),
+        rise: (top + bottom) / 2,
         offset: along * tailSweep,
         chord,
-        thickness: (chord * ratios.wingThicknessRatio) / Math.cos(tailAngle)
+        thickness: Math.max(top - bottom, 0)
       };
     });
     for (const mirror of [false, true]) {
       parts.push({
         kind: 'panel',
         id: mirror ? 'tail-2' : 'tail-1',
-        root: vec3(L * ratios.tailRootHeightRatio, L * ratios.tailPositionT, boomZ),
+        root: vec3(tailRootX, tailY, boomZ),
         angleDeg: 90,
         mirror,
         stations: tailStations,

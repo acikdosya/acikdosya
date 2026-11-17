@@ -392,7 +392,12 @@
     "tailPositionT": "Tail surface position",
     "tailChordRatio": "Tail surface root chord",
     "tailTaper": "Tail surface taper",
-    "tailSweepDeg": "Tail surface sweep"
+    "tailSweepDeg": "Tail surface sweep",
+    "tailThicknessRatio": "Tail surface thickness",
+    "bodyShoulderWidthRatio": "Fuselage section shoulder width",
+    "bodyFloorWidthRatio": "Fuselage section floor width",
+    "bodyLowerCornerRatio": "Fuselage section lower corner",
+    "wingFairingRampRatio": "Wing-body fairing end taper"
   },
   "RevisionLog": {
     "from": "previous value",

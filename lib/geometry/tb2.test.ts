@@ -190,6 +190,53 @@ test('çift kiriş ve tepede birleşen ters V kuyruk', () => {
   }
 });
 
+test('kuyruk kökü kirişin üstünde: alt yüzey kirişin altına sarkmaz', () => {
+  const list = parts();
+  const tail = panel(list, 'tail-1');
+  const boom = list.find((part): part is BoomPart => part.id === 'boom-1');
+  assert.ok(boom);
+  // Kirişin kuyruk veçhesi boyunca en alçak merkez yüksekliği.
+  const lowestCentre = (y: number) =>
+    boom.start.x + ((boom.endLift ?? 0) * (y - boom.start.y)) / boom.length;
+  const root = tail.stations[0];
+  const bottom = tail.root.x + root.rise - root.thickness / 2;
+  assert.ok(bottom >= lowestCentre(tail.root.y) - 1e-9, `kök ${bottom} m, kiriş merkezi ${lowestCentre(tail.root.y)} m`);
+  // Kalınlık kuyruğun kendi okumasından: yüzeye dik kalınlık / veçhe.
+  const mid = tail.stations[Math.floor(tail.stations.length / 2)];
+  const normal = mid.thickness * Math.cos((RATIOS.tailAngleDeg * Math.PI) / 180);
+  assert.ok(Math.abs(normal / mid.chord - RATIOS.tailThicknessRatio) < 1e-9);
+});
+
+test('gövde kesiti dizisi kayıtlı okumaları taşır', () => {
+  const section = body(parts()).spec.section;
+  assert.ok(section);
+  assert.ok(
+    section.some((p) => Math.abs(p.v - 0.695) < 1e-9 && Math.abs(p.w - RATIOS.bodyShoulderWidthRatio) < 1e-9),
+    'omuz eni dizide yok'
+  );
+  assert.ok(
+    section.some((p) => p.v <= -0.95 && Math.abs(p.w - RATIOS.bodyFloorWidthRatio) <= 0.02),
+    'taban eni dizide yok'
+  );
+  // Düz yanlar alt köşenin başladığı yere kadar iner.
+  const cornerTop = -1 + RATIOS.bodyLowerCornerRatio;
+  assert.ok(section.some((p) => Math.abs(p.v - cornerTop) < 1e-9 && p.w >= 0.99));
+});
+
+test('kanat-gövde kaplaması seçilen uç payında tam derinliğe ulaşır', () => {
+  const fairing = parts().find((part) => part.id === 'wing-fairing');
+  assert.ok(fairing?.kind === 'pod');
+  const stations = fairing.spec.stations;
+  const chord = DIMS.length_m * RATIOS.wingChordRatio;
+  const full = Math.max(...stations.map((s) => s.radius));
+  for (const s of stations) {
+    const k = s.y / chord;
+    const inside = k >= RATIOS.wingFairingRampRatio - 1e-9 && k <= 1 - RATIOS.wingFairingRampRatio + 1e-9;
+    if (inside) assert.ok(Math.abs(s.radius - full) < 1e-9, `${k} tam derinlikte değil`);
+    else assert.ok(s.radius < full, `${k} uç payında daralmıyor`);
+  }
+});
+
 test('ters V tek parça: iki yarı merkezde gönyeyle birleşir, kesişmez', () => {
   const list = parts();
   const [one, two] = ['tail-1', 'tail-2'].map((id) => panel(list, id));
