@@ -6,6 +6,8 @@ import {
   boomEnd,
   discBladeRings,
   panelPointToFrame,
+  panelSection,
+  partAnchor,
   partsBounds,
   vec3,
   type BodyPart,
@@ -183,8 +185,33 @@ test('çift kiriş ve tepede birleşen ters V kuyruk', () => {
     const root = rootOf(tail);
     const tip = tipOf(tail);
     assert.ok(tip.x > root.x + 0.8, `${id} yukarı çıkmıyor`);
-    // Merkez düzleminde birleşir: uç merkezden yarım kalınlıktan fazla taşmaz.
-    assert.ok(Math.abs(tip.z) < 0.06, `${id} merkezde birleşmiyor (z=${tip.z})`);
+    // Merkez düzleminde biter; taşma ya da boşluk yok.
+    assert.ok(Math.abs(tip.z) < 1e-9, `${id} merkezde bitmiyor (z=${tip.z})`);
+  }
+});
+
+test('ters V tek parça: iki yarı merkezde gönyeyle birleşir, kesişmez', () => {
+  const list = parts();
+  const [one, two] = ['tail-1', 'tail-2'].map((id) => panel(list, id));
+  const ringAt = (part: PanelPart) =>
+    panelSection(part.stations[part.stations.length - 1]).map((point) =>
+      panelPointToFrame(part, point)
+    );
+  const a = ringAt(one);
+  const b = ringAt(two);
+  // Son kesitler aynı dikey düzlemde ve noktası noktasına aynı.
+  for (const point of [...a, ...b]) assert.ok(Math.abs(point.z) < 1e-9, 'son kesit merkez düzleminde değil');
+  for (let i = 0; i < a.length; i++) {
+    assert.ok(Math.abs(a[i].x - b[i].x) < 1e-9 && Math.abs(a[i].y - b[i].y) < 1e-9, 'iki yarının ucu örtüşmüyor');
+  }
+  // Hiçbir kesit merkez düzlemini geçmez.
+  for (const part of [one, two]) {
+    const side = Math.sign(rootOf(part).z);
+    for (const station of part.stations) {
+      for (const point of panelSection(station).map((p) => panelPointToFrame(part, p))) {
+        assert.ok(point.z * side > -1e-9, `${part.id} merkez düzlemini geçiyor`);
+      }
+    }
   }
 });
 
@@ -290,7 +317,33 @@ test('burun takımı: tekerlek bağlantının hafifçe önünde, ikinci destekli
   const leg = list.find((part) => part.id === 'gear-nose');
   assert.ok(leg?.kind === 'strut');
   assert.ok(leg.to.y < leg.from.y, 'burun tekerleği bağlantının önünde değil');
-  assert.ok(list.some((part) => part.id === 'gear-nose-drag'), 'burun destek çubuğu yok');
+
+  // Destek havada kalmaz: üstte gövde tabanına, altta bacağın üzerine bağlanır.
+  const brace = list.find((part) => part.id === 'gear-nose-drag');
+  assert.ok(brace?.kind === 'strut', 'burun destek çubuğu yok');
+  const H = (DIMS.length_m * RATIOS.bodyDepthRatio) / 2;
+  const fairingEnd = DIMS.length_m * (RATIOS.ventralFairingPositionT + RATIOS.ventralFairingLengthRatio);
+  if (brace.from.y > fairingEnd) {
+    assert.ok(Math.abs(brace.from.x + H) < 1e-9, 'destek üst ucu gövde tabanında değil');
+  }
+  const k = (brace.to.x - leg.from.x) / (leg.to.x - leg.from.x);
+  assert.ok(k > 0 && k < 1, 'destek alt ucu bacağın boyunda değil');
+  assert.ok(Math.abs(leg.from.y + (leg.to.y - leg.from.y) * k - brace.to.y) < 1e-9, 'destek alt ucu bacakta değil');
+});
+
+test('etiket çapaları parçanın görünen yerinde', () => {
+  const list = parts();
+  const H = (DIMS.length_m * RATIOS.bodyDepthRatio) / 2;
+  // Taret gövdenin altında asılı: çapa gövde tabanının altında kalmalı.
+  const turret = list.find((part) => part.id === 'sensor-turret');
+  assert.ok(turret);
+  assert.ok(partAnchor(turret, 0.5, 180).x < -H, 'taret etiketi gövdenin içinde');
+  // Pervane kanatları yatay park ediyor: çapa kanat boyunca, göbeğin yanında.
+  const propeller = list.find((part) => part.id === 'propeller');
+  assert.ok(propeller?.kind === 'disc');
+  const anchor = partAnchor(propeller, 0.6);
+  assert.ok(Math.abs(Math.abs(anchor.z) - propeller.radius * 0.6) < 1e-9, 'pervane etiketi kanat boyunca değil');
+  assert.ok(Math.abs(anchor.x - propeller.center.x) < propeller.thickness * 2, 'pervane etiketi göbeğin üstünde havada');
 });
 
 test('kanat tek yüzey ve ucu kesik: sivrilmez, ayrı kontrol yüzeyi yok', () => {

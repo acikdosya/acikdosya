@@ -82,7 +82,9 @@ Sırt kaplaması, hava girişi ve egzoz diskleri kaldırıldı: karelerde bunlar
 
 Kanat ucu kesik: karelerde veçhe uca kadar korunuyor. AKINCI'dan gelen kapanma kuralı (son %7'de veçhe ve kalınlık sıfıra) TB2'de ucu sivriltiyordu ve 45° karelerinde uç 24 px içeride kalıyordu; kaldırıldı, uç artık karelerdeki ucun 1–2 px yakınında. Kanat tek yüzey: ayrı aileron şeridi ve çizim boşluğu kaldırıldı, karelerde yalnız panel çizgisi var. Kanat altındaki dört yük istasyonu çizilmiyor: karelerde mühimmat yüklü ve mühimmat modellenmediği için istasyon da çizilmedi; sayfada biçim kaydında yazılı.
 
-Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,83'e çıktı (yan görünüş 0,50 → 0,92, ön görünüş 0,19 → 0,77). Pilonlar kaldırılınca ortalama 0,839'dan 0,834'e indi: karelerde pilonlar ve yükler var. Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
+Ters V kuyruk karelerde tek parça: iki yüzey tepede keskine yakın bir sırtla birleşiyor (arka görünüşte tepe satırı 6 px). Önceki sürümde iki eğik levhanın uçları merkezi yarım kalınlık geçip çapraz kesişiyordu. Yarılar artık yatay açıklıklı, kesitleri dikey; son kesitleri merkez düzleminde birebir aynı, gönye ile birleşiyor. Tepenin dış çizgisi okunan 234 px'te kaldı. Bedeli: dikey kök kesiti kirişin altına eskisinden ~5 cm fazla sarkıyor (yan görünüş 0,917 → 0,912). Karelerde kuyruk kiriş ucundaki dikey bir çıkıntıya oturuyor; o çıkıntı çizilmedi.
+
+Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,83'e çıktı (yan görünüş 0,50 → 0,91, ön görünüş 0,19 → 0,77). Pilonlar kaldırılınca ortalama 0,839'dan 0,834'e indi: karelerde pilonlar ve yükler var. Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
 
 ### Kit değişiklikleri
 

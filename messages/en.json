@@ -388,7 +388,11 @@
     "bodyEndWidthRatio": "Fuselage end width",
     "spinnerRadiusRatio": "Spinner radius",
     "spinnerLengthRatio": "Spinner length",
-    "spinnerShapeExponent": "Spinner curve exponent"
+    "spinnerShapeExponent": "Spinner curve exponent",
+    "tailPositionT": "Tail surface position",
+    "tailChordRatio": "Tail surface root chord",
+    "tailTaper": "Tail surface taper",
+    "tailSweepDeg": "Tail surface sweep"
   },
   "RevisionLog": {
     "from": "previous value",

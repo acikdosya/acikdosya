@@ -480,6 +480,7 @@
           "id": "sensor",
           "part": "sensor-turret",
           "t": 0.5,
+          "angle": 180,
           "label": {
             "tr": "Sensör tareti",
             "en": "Sensor turret"
@@ -517,12 +518,29 @@
     {
       "date": "2014",
       "title": {
-        "tr": "İlk tam otomatik uçuş ve envantere giriş",
-        "en": "First fully automatic flight and entry into inventory"
+        "tr": "İlk tam otomatik uçuş",
+        "en": "First fully automatic flight"
       },
       "body": {
-        "tr": "TB2 ilk tam otomatik uçuş testini gerçekleştirdi ve aynı yıl Türk Silahlı Kuvvetleri envanterine girdi.",
-        "en": "TB2 completed its first fully automatic flight test and entered the Turkish Armed Forces inventory in the same year."
+        "tr": "TB2 ilk tam otomatik uçuş testini gerçekleştirdi.",
+        "en": "TB2 completed its first fully automatic flight test."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı, 26 Şubat 2024",
+        "en": "Anadolu Agency, 26 Feb 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-sihalardaki-bayrak-tasiyicisi-bayraktar-tb2/"
+    },
+    {
+      "date": "2014",
+      "title": {
+        "tr": "Türk Silahlı Kuvvetleri envanterine giriş",
+        "en": "Entry into the Turkish Armed Forces inventory"
+      },
+      "body": {
+        "tr": "TB2 Türk Silahlı Kuvvetleri envanterine girdi.",
+        "en": "TB2 entered the Turkish Armed Forces inventory."
       },
       "confidence": "official",
       "source": {
@@ -550,6 +568,7 @@
     },
     {
       "date": "2024-12-10",
+      "date_kind": "announcement",
       "title": {
         "tr": "Bir milyon uçuş saati",
         "en": "One million flight hours"

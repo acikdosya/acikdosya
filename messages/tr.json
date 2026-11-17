@@ -388,7 +388,11 @@
     "bodyEndWidthRatio": "Gövde sonu eni",
     "spinnerRadiusRatio": "Göbek konisi yarıçapı",
     "spinnerLengthRatio": "Göbek konisi boyu",
-    "spinnerShapeExponent": "Göbek konisi eğri üssü"
+    "spinnerShapeExponent": "Göbek konisi eğri üssü",
+    "tailPositionT": "Kuyruk yüzeyi konumu",
+    "tailChordRatio": "Kuyruk yüzeyi kök veçhesi",
+    "tailTaper": "Kuyruk yüzeyi incelmesi",
+    "tailSweepDeg": "Kuyruk yüzeyi ok açısı"
   },
   "RevisionLog": {
     "from": "eski değer",

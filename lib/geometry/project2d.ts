@@ -184,17 +184,38 @@ function latheOutline(
     const profile = part.spec.section;
 
     if (profile && profile.length > 1) {
-      /*
-       * Uctan gorunus: her istasyonun kesiti kendi yaricapi, carpani ve
-       * kaymasiyla; siluet bunlarin disbukey zarfi. Kesitler disbukey
-       * oldugu icin tek tek dogru; birlesimleri ancak biri otekini
-       * tasmadan sariyorsa disbukey kalir — TB2'de oyle, her kesit en
-       * genis kesitin icinde.
-       */
       const ring: Array<{v: number; w: number}> = [
         ...profile,
         ...profile.slice(1, -1).reverse().map((p) => ({v: p.v, w: -p.w}))
       ];
+
+      /*
+       * Kayma ve carpan yoksa butun kesitler en genis kesitin icinde ve
+       * siluet o kesitin KENDISI — icbukey profil (AKINCI'nin alt
+       * yarisindaki daralma) oldugu gibi kalir. Zarf burada profili
+       * duzlestirirdi.
+       */
+      const uniform = part.spec.stations.every(
+        (station) =>
+          (station.lift ?? 0) === 0 &&
+          (station.upperScale ?? 1) === 1 &&
+          (station.lowerScale ?? 1) === 1
+      );
+      if (uniform) {
+        const radius = Math.max(...part.spec.stations.map((s) => s.radius));
+        return ring.map((point) =>
+          project(
+            add(add(part.origin, local.u, point.v * radius), local.v, point.w * radius),
+            basis
+          )
+        );
+      }
+
+      /*
+       * Kayan ya da carpanli kesitler: her istasyonun kesiti kendi
+       * yaricapi, carpani ve kaymasiyla; siluet bunlarin disbukey zarfi.
+       * Kesitler birbirini tasmadan sariyorsa dogru — TB2'de oyle.
+       */
       const points: Point2[] = [];
       for (const station of part.spec.stations) {
         const centre = add(
@@ -234,6 +255,29 @@ function latheOutline(
       });
     }
     return points;
+  }
+
+  /*
+   * Eksen ekranda dikey duruyorsa (dikey parca yandan ya da onden)
+   * kesit yatay eksene tasinir. Onceki surum her zaman dikeye tasiyordu;
+   * TB2'nin dikey taret kuresi sifir genislikte bir cizgiye iniyordu.
+   */
+  const axisAlongV =
+    Math.abs(dot(local.axis, basis.v)) > Math.abs(dot(local.axis, basis.u));
+  if (axisAlongV) {
+    // Ekranda +u yonune kesitin hangi yarisi bakiyor.
+    const plus: 1 | -1 = dot(local.u, basis.u) >= 0 ? 1 : -1;
+    const right: Point2[] = [];
+    const left: Point2[] = [];
+    for (const station of part.spec.stations) {
+      const centre = project(
+        add(add(part.origin, local.axis, station.y), local.u, station.lift ?? 0),
+        basis
+      );
+      right.push({u: centre.u + pushU(station.radius, plus, station), v: centre.v});
+      left.push({u: centre.u - pushU(station.radius, plus === 1 ? -1 : 1, station), v: centre.v});
+    }
+    return [...right, ...left.reverse()];
   }
 
   const upper: Point2[] = [];

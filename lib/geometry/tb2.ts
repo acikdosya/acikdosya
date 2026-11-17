@@ -319,28 +319,28 @@ export const TB2 = defineProduct({
     }),
 
     /* ----------------------------------------------------------- kuyruk */
-    finPositionT: observed(
+    tailPositionT: observed(
       0.8606,
       'along',
       SIDE,
       'Kuyruk yüzeylerinin kök hücum kenarı burundan %86 geride.',
       'The tail-surface root leading edge sits 86 percent aft of the nose.'
     ),
-    finChordRatio: observed(
+    tailChordRatio: observed(
       0.1267,
       'along',
       SIDE,
       'Kuyruk yüzeyi kök veçhesi yan görünüşte 120 px (yaklaşık 0,81 m).',
       'The tail-surface root chord reads 120 px in side view (about 0.81 m).'
     ),
-    finTaper: observed(
+    tailTaper: observed(
       0.75,
       'along',
       SIDE,
       'Tepedeki veçhe 90 px; kök veçhesinin %75’i.',
       'The chord at the apex is 90 px, 75 percent of the root chord.'
     ),
-    finSweepDeg: observed(
+    tailSweepDeg: observed(
       3.1,
       'along',
       SIDE,
@@ -780,28 +780,44 @@ export const TB2 = defineProduct({
     }
 
     /* ----------------------------------------------------------- kuyruk */
-    const finChord = L * ratios.finChordRatio;
+    const tailChord = L * ratios.tailChordRatio;
     const tailAngle = (ratios.tailAngleDeg * Math.PI) / 180;
-    const tailThickness = finChord * ratios.finTaper * ratios.wingThicknessRatio;
+    const tailSweep = Math.tan((ratios.tailSweepDeg * Math.PI) / 180);
     /*
-     * İki yüzey merkezde birleşir: açıklık kiriş aralığından türer. Uçlar
-     * kapatılmaz ve yarım kalınlık kadar uzatılır, yoksa tepede iki
-     * kapanan ucun arasında bir çentik kalırdı.
+     * Ters V tek parça görünür: iki yarı merkez düzleminde gönye ile
+     * birleşir. Yarılar yatay açıklıklı yüzeylerdir; kesitler dikey
+     * düzlemdedir ve yükseklik 45° ile kiriş aralığından türer. İki yarının
+     * son kesiti merkez düzleminde birebir aynı, araya ne boşluk ne
+     * kesişme girer.
+     *
+     * Önceki sürüm iki eğik yüzeyi uçları merkezi yarım kalınlık geçecek
+     * şekilde üst üste bindiriyordu: tepede iki kesik uç çapraz kesişiyor,
+     * kuyruk iki ayrı levha gibi okunuyordu.
+     *
+     * Veçhe, incelme ve ok açısı yüzey boyunca ölçülür (yatay açıklık
+     * değil). Dikey kesitte görünen kalınlık normal kalınlığın 1/cos'u;
+     * yüzeye dik kalınlık eskisiyle aynı. Tepenin dış çizgisi de aynı
+     * kalır, okunan 234 px.
      */
-    const tailStations = wingStations({
-      span: boomZ / Math.cos(tailAngle) + tailThickness / 2,
-      rootChord: finChord,
-      tipChord: finChord * ratios.finTaper,
-      sweepDeg: ratios.finSweepDeg,
-      thicknessRatio: ratios.wingThicknessRatio,
-      closeTip: false
+    const tailLength = boomZ / Math.cos(tailAngle);
+    const tailStations = Array.from({length: 9}, (_, index) => {
+      const span = (boomZ * index) / 8;
+      const along = span / Math.cos(tailAngle);
+      const chord = tailChord * (1 + (ratios.tailTaper - 1) * (along / tailLength));
+      return {
+        span,
+        rise: span * Math.tan(tailAngle),
+        offset: along * tailSweep,
+        chord,
+        thickness: (chord * ratios.wingThicknessRatio) / Math.cos(tailAngle)
+      };
     });
     for (const mirror of [false, true]) {
       parts.push({
         kind: 'panel',
         id: mirror ? 'tail-2' : 'tail-1',
-        root: vec3(L * ratios.tailRootHeightRatio, L * ratios.finPositionT, boomZ),
-        angleDeg: ratios.tailAngleDeg,
+        root: vec3(L * ratios.tailRootHeightRatio, L * ratios.tailPositionT, boomZ),
+        angleDeg: 90,
         mirror,
         stations: tailStations,
         rootFillet: 0
@@ -975,20 +991,32 @@ export const TB2 = defineProduct({
       const noseRadius = (L * ratios.noseWheelDiameterRatio) / 2;
       const noseAxleY = L * ratios.noseGearPositionT;
       const noseTopY = noseAxleY + L * ratios.noseGearRakeRatio;
+      // Bacak burun altı kaplamasının altına bağlanır; kaplama o noktada tam derinlikte.
       const noseTopX = -H - ventralDepth;
+      const noseAxleX = groundX + noseRadius;
+      /*
+       * İkinci destek: üstte gövde tabanına (kaplamanın bittiği yerin
+       * gerisinde), altta bacağın tekerlek üstü hizasına bağlanır. Önceki
+       * sürüm üst ucu kaplama derinliğinde bırakıyordu — kaplama orada
+       * bitmişti ve uç havada kalıyordu.
+       */
+      const braceTopY = noseTopY + L * ratios.noseDragStrutRatio;
+      const braceTopX = braceTopY > ventralY + ventralLength ? -H : noseTopX;
+      const wheelTopX = groundX + 2 * noseRadius;
+      const along = (wheelTopX - noseTopX) / (noseAxleX - noseTopX);
       parts.push(
         {
           kind: 'strut',
           id: 'gear-nose',
           from: vec3(noseTopX, noseTopY, 0),
-          to: vec3(groundX + noseRadius, noseAxleY, 0),
+          to: vec3(noseAxleX, noseAxleY, 0),
           radius: strutRadius
         },
         {
           kind: 'strut',
           id: 'gear-nose-drag',
-          from: vec3(noseTopX, noseTopY + L * ratios.noseDragStrutRatio, 0),
-          to: vec3(groundX + noseRadius * 2.2, noseAxleY + L * 0.002, 0),
+          from: vec3(braceTopX, braceTopY, 0),
+          to: vec3(wheelTopX, noseTopY + (noseAxleY - noseTopY) * along, 0),
           radius: strutRadius * 0.65
         }
       );

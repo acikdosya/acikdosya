@@ -680,8 +680,15 @@ export function partExtent(part: Part): {from: Vec3; to: Vec3} {
       };
     }
     case 'disc': {
-      const {u} = frame(part.orientation);
-      return {from: part.center, to: add(part.center, u, part.radius)};
+      /*
+       * Ilk kanat boyunca. Onceki surum hep yerel dikeyi (u) kullaniyordu;
+       * TB2'nin kanatlari yatay park ettigi icin etiket bos havada, gobegin
+       * 0,57 m ustunde kaliyordu.
+       */
+      const {u, v} = frame(part.orientation);
+      const phase = ((part.bladePhaseDeg ?? 0) * Math.PI) / 180;
+      const direction = add(add(vec3(), u, Math.cos(phase)), v, Math.sin(phase));
+      return {from: part.center, to: add(part.center, direction, part.radius)};
     }
     case 'strut':
       return {from: part.from, to: part.to};
