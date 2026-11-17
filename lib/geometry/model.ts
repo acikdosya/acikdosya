@@ -36,12 +36,12 @@ export function frameFromParts(parts: readonly Part[]): ModelFrame {
   const bounds = partsBounds(parts);
   const body = primaryBody(parts);
 
-  const L = body
-    ? Math.abs(
-        (body.spec.stations[body.spec.stations.length - 1]?.y ?? 0) -
-          (body.spec.stations[0]?.y ?? 0)
-      )
-    : bounds.max.y - bounds.min.y;
+  /*
+   * Uzunluk eksen boyu uzanimdir, govdenin boyu degil: yayimlanan
+   * uzunluk burundan en arka noktaya olculur. TB2'de govde pervanede
+   * biter ve kuyrugu kirisler tasir; govde boyu kadraji kisaltirdi.
+   */
+  const L = bounds.max.y - bounds.min.y;
 
   const R = body
     ? bodyRadiusOf(body)

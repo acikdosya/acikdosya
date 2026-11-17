@@ -3,7 +3,7 @@
 [![CI](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml/badge.svg)](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml)
 
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
-dijital dosya. Yayında: https://acikdosya.org — şu anda dört sistem: TAYFUN, ATMACA, AKINCI ve SİPER.
+dijital dosya. Yayında: https://acikdosya.org — şu anda beş sistem: TAYFUN, ATMACA, AKINCI, SİPER ve Bayraktar TB2.
 
 Projenin kalıcı bağlamı ve pazarlık dışı editoryal kuralları [CLAUDE.md](./CLAUDE.md)
 dosyasındadır. Bir karar o dosyayla çelişiyorsa önce konuşulur.
@@ -40,7 +40,7 @@ Türkçe varsayılan ve öneksiz, İngilizce önekli. Rota adları da çevrilir.
 | `/yontem` | `/en/method` |
 | `/hakkinda` | `/en/about` |
 
-Yayında dört sistem var: `tayfun`, `atmaca`, `akinci`, `siper`.
+Yayında beş sistem var: `tayfun`, `atmaca`, `akinci`, `siper`, `tb2`.
 
 Kök adres tarayıcı diline bakmaz, her zaman Türkçe açılır. Paylaşılan link herkeste
 aynı görünsün diye dil algılama kapalıdır.

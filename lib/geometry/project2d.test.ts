@@ -8,6 +8,7 @@ import {partsBounds} from './parts';
 import {buildParts} from './product';
 import {projectBounds, projectParts, type ViewAxis} from './project2d';
 import {TAYFUN} from './tayfun';
+import {TB2} from './tb2';
 
 /**
  * Izdusum ile uc boyutlu model ayni parca listesinden turuyor; sinir
@@ -18,7 +19,9 @@ import {TAYFUN} from './tayfun';
 const CASES = [
   {label: 'TAYFUN', product: TAYFUN, dims: {length_m: 6.5, diameter_mm: 610}},
   {label: 'ATMACA', product: ATMACA, dims: {length_m: 4.3, diameter_mm: 370}},
-  {label: 'AKINCI', product: AKINCI, dims: {length_m: 12.3, wingspan_m: 20}}
+  {label: 'AKINCI', product: AKINCI, dims: {length_m: 12.3, wingspan_m: 20}},
+  // Istasyon kaymasi, ust/alt carpani ve egik kiris: sema bunlari da tasimali.
+  {label: 'TB2', product: TB2, dims: {length_m: 6.4, wingspan_m: 12, height_m: 2.2}}
 ] as const;
 
 const AXES: ViewAxis[] = ['front', 'side', 'top'];

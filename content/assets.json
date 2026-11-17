@@ -401,6 +401,42 @@
       "notes": "AKINCI dış profil oranları. Yapısal ölçü değildir. 11.09.2026'da izdüşüm sınavı yapıldı: üreticinin ön görünüş render'ı perspektif olduğu için yalnızca kanat düzlemi derinliğindeki üç oran 'measured' kaldı; yan görünüş ve 360° karelerinden okunanlar 'reading' oldu, yani kaynak ve tarih duruyor ama sınav yapılmadı. Görsellerin kendisi depoya girmez; alınan şey görüntü değil orandır."
     },
     {
+      "id": "geometry-parametric-tb2",
+      "file": "lib/geometry/tb2.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-11-17",
+      "used_in": [
+        "lib/geometry/registry.ts"
+      ],
+      "notes": "Bayraktar TB2 dış profili ve oranları. Ölçek güncel ürün sayfasındaki kaynaklı boyutlardan gelir; KeyShotXR karelerinden okunan oranlar 'reading', görülemeyen ayrıntılar 'chosen'. 17.11.2026'da kareler piksel düzeyinde yeniden okundu: gövde %60'ta küt bitiyor, arkasında paraboloit göbek konisi; kuyruğu kirişler taşıyor; kanat orta-alçak, 4,9° dihedral. Pervane kanadı düz firar kenarlı, uca incelen ve 19° açılı loft yüzey; kiriş ön ucu kanat hücum kenarında sivrilen kaplamayla biter. Sabit kamerayla siluet örtüşmesi dokuz karede ortalama 0,39'dan 0,84'e çıktı (karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez). İzdüşüm sınavı yapılmadı. Hazır model veya kaynak görsel repoya alınmadı; mühimmat geometrisi üretilmez."
+    },
+    {
+      "id": "tb2-turntable-refs",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://cdn.baykartech.com/static/assets/libs/keyshotxr/img/bayraktar-tb2/0_4.png",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-11-17",
+      "used_in": [],
+      "notes": "BAYKAR ürün sayfasındaki KeyShotXR gösterisinin 16 PNG karesi (1920×800, saydam zemin). GLB/GLTF veya başka bir geometri dosyası değildir. Okumalar 0_0, 0_2, 0_4, 0_8 ve 0_12 karelerinden; 0_5 ve 0_6 kiriş kökü için bakıldı. Zıt yönlerden alınan kare çiftleri birbirinin aynası (%0,4 içinde) — gösteri ortografik ve yatay kamerayla çekilmiş görünüyor; kayıtta yaklaşık 0,26° yatış var. Aynı gösterinin kareleri olduğu için bu, §9'daki izdüşüm sınavı sayılmadı; oranlar 'reading'. Görsellerin kendisi repoya kopyalanmadı ve yayımlanmadı."
+    },
+    {
       "id": "atmaca-catalogue-ref",
       "file": null,
       "kind": "reference",

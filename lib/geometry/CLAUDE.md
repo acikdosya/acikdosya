@@ -20,7 +20,9 @@ kitle ifade edilir.
 Şematik olmak "kabaca" demek değildir. Yüzeyler düz plaka değil, veçheyle birlikte
 incelen lofting yüzeylerdir; kesit yuvarlak hücum kenarı ve sivri firar kenarı taşır.
 Belirli bir kanat profili İDDİA EDİLMEZ — düz plaka da hiçbir uçakta bulunmayan bir
-biçimdir, yani "daha şematik" değil yalnızca daha yanlıştır.
+biçimdir, yani "daha şematik" değil yalnızca daha yanlıştır. Pervane kanadı da
+`DiscPart.blade` verilince aynı kesitle loft edilir; halkalar `discBladeRings`
+içinde tek yerde üretilir. Verilmezse kanat eski kutu biçiminde kalır.
 
 Eşli yüzeyler (iki kanat, iki stabilize) DÖNDÜRÜLEREK değil merkez düzlemde
 YANSITILARAK üretilir. Dönüş açıklığı doğru yöne taşır ama "yukarı" yönünü ters
