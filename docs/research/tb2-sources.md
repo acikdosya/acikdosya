@@ -80,7 +80,9 @@ Kiriş kanat hücum kenarında küt bitmiyor: ön ucu sivrilerek kanada karış�
 
 Sırt kaplaması, hava girişi ve egzoz diskleri kaldırıldı: karelerde bunlar dışa taşan biçim değil, gövdedeki açıklıklar; şematik gri yüzeyde gösterilemezler. Yerine karelerde görülen iki dış biçim eklendi: kanadın alt yüzeyini gövde tabanına bağlayan V kaplama ve burun altındaki yassı kaplama.
 
-Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,84'e çıktı (yan görünüş 0,50 → 0,91, ön görünüş 0,19 → 0,77; pervane kanadından sonra ön 0,77, arka 0,77). Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
+Kanat ucu kesik: karelerde veçhe uca kadar korunuyor. AKINCI'dan gelen kapanma kuralı (son %7'de veçhe ve kalınlık sıfıra) TB2'de ucu sivriltiyordu ve 45° karelerinde uç 24 px içeride kalıyordu; kaldırıldı, uç artık karelerdeki ucun 1–2 px yakınında. Kanat tek yüzey: ayrı aileron şeridi ve çizim boşluğu kaldırıldı, karelerde yalnız panel çizgisi var. Kanat altındaki dört yük istasyonu çizilmiyor: karelerde mühimmat yüklü ve mühimmat modellenmediği için istasyon da çizilmedi; sayfada biçim kaydında yazılı.
+
+Doğrulama sabit kamerayla yapıldı: model, karelerdeki ortografik kameraya yerleştirme uydurulmadan izdüşürüldü ve siluet örtüşmesi ölçüldü. Dokuz karede ortalama örtüşme 0,39'dan 0,83'e çıktı (yan görünüş 0,50 → 0,92, ön görünüş 0,19 → 0,77). Pilonlar kaldırılınca ortalama 0,839'dan 0,834'e indi: karelerde pilonlar ve yükler var. Karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez. Okuma ölçeği, ara ölçümler ve araç betikleri depoya alınmadı.
 
 ### Kit değişiklikleri
 

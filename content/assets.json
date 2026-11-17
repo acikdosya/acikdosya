@@ -417,7 +417,7 @@
       "used_in": [
         "lib/geometry/registry.ts"
       ],
-      "notes": "Bayraktar TB2 dış profili ve oranları. Ölçek güncel ürün sayfasındaki kaynaklı boyutlardan gelir; KeyShotXR karelerinden okunan oranlar 'reading', görülemeyen ayrıntılar 'chosen'. 17.11.2026'da kareler piksel düzeyinde yeniden okundu: gövde %60'ta küt bitiyor, arkasında paraboloit göbek konisi; kuyruğu kirişler taşıyor; kanat orta-alçak, 4,9° dihedral. Pervane kanadı düz firar kenarlı, uca incelen ve 19° açılı loft yüzey; kiriş ön ucu kanat hücum kenarında sivrilen kaplamayla biter. Sabit kamerayla siluet örtüşmesi dokuz karede ortalama 0,39'dan 0,84'e çıktı (karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez). İzdüşüm sınavı yapılmadı. Hazır model veya kaynak görsel repoya alınmadı; mühimmat geometrisi üretilmez."
+      "notes": "Bayraktar TB2 dış profili ve oranları. Ölçek güncel ürün sayfasındaki kaynaklı boyutlardan gelir; KeyShotXR karelerinden okunan oranlar 'reading', görülemeyen ayrıntılar 'chosen'. 17.11.2026'da kareler piksel düzeyinde yeniden okundu: gövde %60'ta küt bitiyor, arkasında paraboloit göbek konisi; kuyruğu kirişler taşıyor; kanat orta-alçak, 4,9° dihedral. Pervane kanadı düz firar kenarlı, uca incelen ve 19° açılı loft yüzey; kiriş ön ucu kanat hücum kenarında sivrilen kaplamayla biter. Kanat ucu kesik, kanat tek yüzey; yük istasyonları çizilmiyor (karelerde mühimmat yüklü). Sabit kamerayla siluet örtüşmesi dokuz karede ortalama 0,39'dan 0,83'e çıktı (karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez). İzdüşüm sınavı yapılmadı. Hazır model veya kaynak görsel repoya alınmadı; mühimmat geometrisi üretilmez."
     },
     {
       "id": "tb2-turntable-refs",

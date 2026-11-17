@@ -43,8 +43,8 @@ function observed(
 }
 
 const COUNT_CHECK = {
-  tr: 'Sayım izdüşümden bağımsızdır: kamera açısı kiriş, pervane kanadı veya pilon sayısını değiştirmez.',
-  en: 'A count is projection-independent: camera angle does not change the number of booms, propeller blades, or pylons.'
+  tr: 'Sayım izdüşümden bağımsızdır: kamera açısı kiriş veya pervane kanadı sayısını değiştirmez.',
+  en: 'A count is projection-independent: camera angle does not change the number of booms or propeller blades.'
 };
 
 /**
@@ -88,6 +88,10 @@ export const TB2 = defineProduct({
     {
       tr: 'Burun ucundaki ince prob çizilmedi. Modelin uzunluğu burun ucundan kuyruk kirişinin ucuna kadardır ve probu içermez: üreticinin döner gösterisindeki karelerde, kanat açıklığından kurulan ölçekle, prob hariç uzunluk yayımlanan iki uzunluk değerine de prob dahil uzunluktan daha yakın.',
       en: 'The thin probe on the nose tip is not drawn. The model’s length runs from the nose tip to the end of the tail boom and excludes the probe: in the frames of the manufacturer’s turntable view, scaled from the wingspan, the length without the probe is closer to both published length values than the length with it.'
+    },
+    {
+      tr: 'Kanat altındaki dört yük istasyonu çizilmedi. Karelerde istasyonlar mühimmat yüklü görünüyor; taşınan mühimmat modellenmediği için istasyonlar da çizilmedi.',
+      en: 'The four underwing load stations are not drawn. In the frames they carry stores; since carried stores are not modelled, the stations are left out too.'
     }
   ],
   ratios: {
@@ -206,8 +210,8 @@ export const TB2 = defineProduct({
       0.61,
       'along',
       OBLIQUE,
-      'Uç veçhesi 45° karelerinde 75–83 px, yan görünüşte 79 px; kök veçhesine oranı 0,61.',
-      'The tip chord reads 75–83 px in the 45° frames and 79 px in side view, 0.61 of the root chord.'
+      'Uç veçhesi 45° karelerinde 75–83 px, yan görünüşte 79 px; kök veçhesine oranı 0,61. Uç kesik: veçhe uca kadar korunuyor, kanat sivrilmiyor.',
+      'The tip chord reads 75–83 px in the 45° frames and 79 px in side view, 0.61 of the root chord. The tip is cut square: the chord holds to the end and the wing does not taper to a point.'
     ),
     wingSweepDeg: observed(
       4.1,
@@ -249,25 +253,6 @@ export const TB2 = defineProduct({
       'Kanat alt yüzeyi gövde tabanına geniş bir V kaplamayla iniyor: alt kenar ön görünüşte ±160 px’ten (440 px yükseklik) gövde yanına (±49 px, 475 px) düz bir çizgi.',
       'The wing underside meets the fuselage floor through a broad V fairing: in front view its lower edge runs in a straight line from ±160 px (at 440 px height) to the fuselage side (±49 px, 475 px).'
     ),
-    aileronStartRatio: observed(
-      0.62,
-      'lateral',
-      REAR,
-      'Dış kanat kontrol yüzeyi ayrımı açıklığın yaklaşık %62’sinden başlıyor; iç kanat bölümü tek yüzey olarak kalıyor.',
-      'The outer control-surface division begins at approximately 62 percent of the span, leaving the inboard wing as one surface.'
-    ),
-    aileronChordShare: chosen(0.28, {
-      note: {
-        tr: 'Aileronun yerel veçhedeki payı kaynak karelerden güvenilir ölçülemiyor; firar kenarının %28’i şematik ayrım için seçildi.',
-        en: 'The aileron share of local chord cannot be measured reliably; 28 percent of the trailing edge was chosen for the schematic division.'
-      }
-    }),
-    controlSurfaceGapRatio: chosen(0.004, {
-      note: {
-        tr: 'Ana kanat ile aileron arasındaki görünür ayrım yaklaşık 5 mm çizim boşluğu olarak seçildi; üretim toleransı veya gerçek boşluk iddiası değildir.',
-        en: 'The visible division uses an approximately 5 mm drawing gap; it is not a production tolerance or a claim about the real mechanical clearance.'
-      }
-    }),
 
     /* ------------------------------------------------------------ kiriş */
     boomOffsetRatio: observed(
@@ -594,47 +579,6 @@ export const TB2 = defineProduct({
       'The nose wheel is smaller than the mains: 35 px in the front view.'
     ),
 
-    /* ------------------------------------------------------------ pilon */
-    pylonSpanInnerRatio: observed(
-      0.2314,
-      'lateral',
-      FRONT,
-      'İç istasyonlar ön görünüşte merkezden ±208 px; yarım açıklığın %23’ü.',
-      'The inner stations sit ±208 px from the centre in the front view, 23 percent of the half-span.'
-    ),
-    pylonSpanOuterRatio: observed(
-      0.2937,
-      'lateral',
-      FRONT,
-      'Dış istasyonlar ön görünüşte merkezden ±264 px; yarım açıklığın %29’u.',
-      'The outer stations sit ±264 px from the centre in the front view, 29 percent of the half-span.'
-    ),
-    pylonLengthRatio: observed(
-      0.02,
-      'vertical',
-      FRONT,
-      'Pilon kanat alt yüzeyinden asılı yükün üstüne 19 px iniyor; yalnız çıplak istasyon çizilir.',
-      'The pylon drops 19 px from the wing underside to the top of the hung store; only the bare station is drawn.'
-    ),
-    pylonRadiusRatio: observed(
-      0.0063,
-      'lateral',
-      FRONT,
-      'Pilon gövdesi ön görünüşte 12 px genişliğinde.',
-      'The pylon body reads 12 px wide in the front view.'
-    ),
-    pylonChordRatio: chosen(0.4, {
-      note: {
-        tr: 'Pilonun veçhe boyunca konumu dış yüklerin arkasında kalıyor; yerel veçhenin %40’ı seçildi.',
-        en: 'The pylon’s chordwise position is hidden behind the stores; 40 percent of local chord was chosen.'
-      }
-    }),
-    pylonChordLengthRatio: chosen(0.047, {
-      note: {
-        tr: 'Pilonun veçhe boyu dış yüklerin arkasında kalıyor; yaklaşık 0,3 m seçildi.',
-        en: 'The pylon length along the chord is hidden behind the stores; about 0.3 m was chosen.'
-      }
-    })
   },
   build({dims, extra, ratios}): Part[] {
     const L = dims.length_m;
@@ -722,7 +666,6 @@ export const TB2 = defineProduct({
     const wingY = L * ratios.wingPositionT;
     const wingChord = L * ratios.wingChordRatio;
     const dihedral = (ratios.wingDihedralDeg * Math.PI) / 180;
-    const sweep = Math.tan((ratios.wingSweepDeg * Math.PI) / 180);
     /*
      * Panel açıklığı dihedral eğimi boyunca ölçülür; yayımlanan açıklık
      * yatay. 4,9°'de fark 4 cm — 12 m'lik ölçüyü sessizce kısaltırdı.
@@ -733,65 +676,21 @@ export const TB2 = defineProduct({
       rootChord: wingChord,
       tipChord: wingChord * ratios.wingTaper,
       sweepDeg: ratios.wingSweepDeg,
-      thicknessRatio: ratios.wingThicknessRatio
+      thicknessRatio: ratios.wingThicknessRatio,
+      // Uç kesik: karelerde veçhe uca kadar korunuyor, sivrilmiyor.
+      closeTip: false
     });
-    const aileronStart = panelSpan * ratios.aileronStartRatio;
-    const controlGap = wingChord * ratios.controlSurfaceGapRatio;
-    const mainWing = wingProfile.map((station) => ({
-      ...station,
-      chord:
-        station.chord *
-        (station.span > aileronStart ? 1 - ratios.aileronChordShare : 1)
-    }));
-    const aileron = wingProfile
-      .filter((station) => station.span > aileronStart)
-      .map((station) => {
-        const chord = Math.max(0, station.chord * ratios.aileronChordShare - controlGap);
-        return {
-          ...station,
-          offset:
-            chord > 0
-              ? station.offset + station.chord * (1 - ratios.aileronChordShare) + controlGap
-              : station.offset,
-          chord,
-          thickness: station.thickness * 0.85
-        };
-      });
-
     for (const mirror of [false, true]) {
-      const root = vec3(wingX, wingY, 0);
-      const angleDeg = 90 - ratios.wingDihedralDeg;
       parts.push({
         kind: 'panel',
         id: mirror ? 'wing-2' : 'wing-1',
-        root,
-        angleDeg,
+        root: vec3(wingX, wingY, 0),
+        angleDeg: 90 - ratios.wingDihedralDeg,
         mirror,
-        stations: mainWing,
+        stations: wingProfile,
         rootFillet: wingChord * ratios.wingThicknessRatio * ratios.filletRatio
       });
-      parts.push({
-        kind: 'panel',
-        id: mirror ? 'aileron-2' : 'aileron-1',
-        root,
-        angleDeg,
-        mirror,
-        stations: aileron,
-        rootFillet: 0
-      });
     }
-
-    /** Kanadın verilen yanal konumdaki yerel veçhesi, hücum kenarı ve orta çizgi yüksekliği. */
-    const wingAt = (z: number) => {
-      const s = Math.abs(z) / Math.cos(dihedral);
-      const chord = wingChord + (wingChord * ratios.wingTaper - wingChord) * (s / panelSpan);
-      return {
-        leading: wingY + s * sweep,
-        chord,
-        height: wingX + Math.abs(z) * Math.tan(dihedral),
-        thickness: chord * ratios.wingThicknessRatio
-      };
-    };
 
     /*
      * Kanat-gövde kaplaması. Ön görünüşte kanadın alt yüzeyi gövde
@@ -1045,40 +944,6 @@ export const TB2 = defineProduct({
         ]
       }
     });
-
-    /* ------------------------------------------------------------ pilon */
-    const pylonDrop = L * ratios.pylonLengthRatio;
-    const pylonHalfWidth = L * ratios.pylonRadiusRatio;
-    const pylonLength = L * ratios.pylonChordLengthRatio;
-    for (const [index, spanRatio] of [
-      ratios.pylonSpanInnerRatio,
-      ratios.pylonSpanOuterRatio
-    ].entries()) {
-      for (const side of [1, -1]) {
-        const z = halfSpan * spanRatio * side;
-        const local = wingAt(z);
-        const underside = local.height - local.thickness * 0.4;
-        const startY = local.leading + local.chord * ratios.pylonChordRatio - pylonLength / 2;
-        parts.push({
-          kind: 'pod',
-          id: `pylon-${index + 1}-${side > 0 ? 'a' : 'b'}`,
-          orientation: 'along',
-          // Üst kenar kanadın içinde, alt kenar okunan sarkma kadar aşağıda.
-          origin: vec3(underside + local.thickness * 0.1 - pylonDrop / 2, startY, z),
-          spec: {
-            aspect: (pylonDrop / 2 + local.thickness * 0.1) / pylonHalfWidth,
-            stations: [
-              {y: 0, radius: 0.0005},
-              {y: 0, radius: pylonHalfWidth * 0.4},
-              {y: pylonLength * 0.2, radius: pylonHalfWidth},
-              {y: pylonLength * 0.75, radius: pylonHalfWidth},
-              {y: pylonLength, radius: pylonHalfWidth * 0.3},
-              {y: pylonLength, radius: 0.0005}
-            ]
-          }
-        });
-      }
-    }
 
     /* ------------------------------------------------------ iniş takımı */
     const publishedHeight = extra.height_m;

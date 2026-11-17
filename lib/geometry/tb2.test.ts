@@ -262,12 +262,12 @@ test('dış parçalar var, mühimmat geometrisi yok', () => {
     'sensor-window',
     'gear-nose',
     'gear-main-a',
-    'wheel-nose',
-    'pylon-1-a'
+    'wheel-nose'
   ]) {
     assert.ok(ids.includes(required), `${required} yok`);
   }
-  assert.equal(ids.filter((id) => id.startsWith('pylon-')).length, 4);
+  // Yük istasyonları çizilmez: karelerde mühimmat yüklü (sayfada yazılı).
+  assert.ok(!ids.some((id) => id.startsWith('pylon-')));
   assert.ok(!ids.some((id) => /store|muhimmat|bomb|missile/i.test(id)));
 });
 
@@ -293,20 +293,15 @@ test('burun takımı: tekerlek bağlantının hafifçe önünde, ikinci destekli
   assert.ok(list.some((part) => part.id === 'gear-nose-drag'), 'burun destek çubuğu yok');
 });
 
-test('aileronlar yalnız dış kanatta ve ana yüzeyden çizim boşluğuyla ayrılır', () => {
+test('kanat tek yüzey ve ucu kesik: sivrilmez, ayrı kontrol yüzeyi yok', () => {
   const list = parts();
-  for (const suffix of ['1', '2']) {
-    const wing = panel(list, `wing-${suffix}`);
-    const aileron = panel(list, `aileron-${suffix}`);
-    assert.ok(aileron.stations.length > 3);
-    assert.ok(aileron.stations[0].span >= (DIMS.wingspan_m / 2) * RATIOS.aileronStartRatio);
-
-    for (const station of aileron.stations) {
-      if (station.chord === 0) continue;
-      const main = wing.stations.find((candidate) => candidate.span === station.span);
-      assert.ok(main);
-      assert.ok(station.offset > main.offset + main.chord, 'aileron ana kanatla çakışıyor');
-    }
+  assert.ok(!list.some((part) => part.id.startsWith('aileron-')), 'ayrı aileron çiziliyor');
+  for (const id of ['wing-1', 'wing-2']) {
+    const stations = panel(list, id).stations;
+    const tip = stations[stations.length - 1];
+    const tipChord = DIMS.length_m * RATIOS.wingChordRatio * RATIOS.wingTaper;
+    assert.ok(Math.abs(tip.chord - tipChord) < 1e-9, `${id} ucu sivriliyor`);
+    assert.ok(tip.thickness > 0, `${id} ucu kapanıyor`);
   }
 });
 

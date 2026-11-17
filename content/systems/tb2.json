@@ -447,16 +447,6 @@
           "confidence": "official"
         },
         {
-          "id": "aileron",
-          "part": "aileron-1",
-          "t": 0.5,
-          "label": {
-            "tr": "Aileron",
-            "en": "Aileron"
-          },
-          "confidence": "official"
-        },
-        {
           "id": "kuyruk-kirisi",
           "part": "boom-1",
           "t": 0.58,
@@ -584,6 +574,6 @@
     "Urun sayfasindaki 18+ saat ile banner'daki 20+ saat ifadelerinin ve 20.000 ft servis tavani ile banner'daki 22.000 ft maksimum irtifanin iliskisi uretici tarafindan aciklanmamis; ayri kayitlar olarak korunuyor.",
     "27 saat 3 dakikalik rekor bir test olayidir; dayaniklilik beyaniyla ayni kapsamda bir olcume donusturulmedi.",
     "Haberlesme menzili operasyonel menzil veya gorev yaricapi olarak yorumlanmadi; menzil halkasi cizilmiyor.",
-    "Yuk istasyonlari yalnizca ciplak pilon olarak modelleniyor; kaynakli olcu kaydi olmayan muhimmat geometrisi uretilmiyor."
+    "Yuk istasyonlari cizilmiyor: karelerde muhimmat yuklu, muhimmat modellenmedigi icin istasyon da cizilmedi; sayfada bicim kaydinda yazili."
   ]
 }
