@@ -116,15 +116,22 @@ function loftGeometry(rings: readonly Vec3[][], capTip: boolean): THREE.BufferGe
    * bir cizgiye kapaniyor, orada kapak gerekmiyor; kok ise govdenin
    * icinde kaliyor ama yine de kapatiliyor, yoksa ic yuzey gorunur.
    */
+  /*
+   * Sarim disa bakmali: malzeme yalniz on yuzu cizer. Kesit ust yuzeyden
+   * hucumdan firara, alttan geri doner; kokte (0, j, j+1) -x'e, ucta
+   * ters sarim +x'e bakar. Onceki sarim ikisini de ice ceviriyordu —
+   * kok govdeye gomulu kaldikca gorunmedi, TB2'nin kirise oturan kuyruk
+   * kokunde ve kesik uclarinda delik olarak goruldu.
+   */
   for (let j = 1; j < ring - 1; j++) {
-    indices.push(0, j + 1, j);
+    indices.push(0, j, j + 1);
   }
 
   // Uc kapagi; ters sarim.
   if (capTip) {
     const base = (rings.length - 1) * ring;
     for (let j = 1; j < ring - 1; j++) {
-      indices.push(base, base + j, base + j + 1);
+      indices.push(base, base + j + 1, base + j);
     }
   }
 
