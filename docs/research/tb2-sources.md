@@ -55,7 +55,7 @@ Model `lib/geometry/tb2.ts` içinde, mevcut parça kitinden üretilir. 17 Kasım
 - Ölçek: yan görünüşte (0_4) burun ucundan kiriş ucuna 947 px, ön görünüşte (0_8) kanat açıklığı 1798 px. Ön görünüşte yükseklik 329 px; açıklık ölçeğiyle 2,196 m, yayımlanan 2,2 m ile uyumlu.
 - Zıt yönlerden alınan kare çiftleri birbirinin aynası: ön↔arka %0,39, 45° çiftleri %0,2–0,3 piksel farkla. Perspektif kamerada yakın ve uzak parçalar farklı büyüklükte çıkacağı için bu, gösterinin ortografik ve yatay kamerayla çekildiğini gösteriyor. Aynı gösterinin kareleri olduğu için §9'daki izdüşüm sınavı yerine geçirilmedi; oranlar `reading` kaldı. Karar sahibinde.
 - Kayıtta yaklaşık 0,26° yatış var: ön görünüşte sağ kanat ucu 8 px yukarıda, fark açıklıkla doğrusal büyüyor. Dihedral iki yanın ortalamasından okundu.
-- Burun ucundaki ince prob (~0,4 m) modellenmedi. Prob hariç uzunluk 947 px, dahil 1009 px; yayımlanan 6,4 m'ye prob hariç ölçü daha yakın.
+- Burun ucundaki ince prob (~0,4 m) modellenmedi; sayfada biçim kaydının başında yazılı (`TB2.omitted`, §9). Prob hariç uzunluk 947 px, dahil 1009 px; açıklık ölçeğiyle 6,32 ve 6,73 m. Yayımlanan iki uzunluğa (6,4 ve 6,5 m) prob hariç ölçü daha yakın.
 
 ### Önceki sürümden düzeltilenler
 

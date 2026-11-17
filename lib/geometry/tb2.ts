@@ -84,6 +84,12 @@ export const TB2 = defineProduct({
   category: 'insansiz-hava-araci',
   requires: ['length_m', 'wingspan_m'],
   dimensionOffsetRatio: 3.2,
+  omitted: [
+    {
+      tr: 'Burun ucundaki ince prob çizilmedi. Modelin uzunluğu burun ucundan kuyruk kirişinin ucuna kadardır ve probu içermez: üreticinin döner gösterisindeki karelerde, kanat açıklığından kurulan ölçekle, prob hariç uzunluk yayımlanan iki uzunluk değerine de prob dahil uzunluktan daha yakın.',
+      en: 'The thin probe on the nose tip is not drawn. The model’s length runs from the nose tip to the end of the tail boom and excludes the probe: in the frames of the manufacturer’s turntable view, scaled from the wingspan, the length without the probe is closer to both published length values than the length with it.'
+    }
+  ],
   ratios: {
     /* ------------------------------------------------------------ gövde */
     bodyDepthRatio: observed(

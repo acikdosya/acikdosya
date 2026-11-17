@@ -271,6 +271,14 @@ test('dış parçalar var, mühimmat geometrisi yok', () => {
   assert.ok(!ids.some((id) => /store|muhimmat|bomb|missile/i.test(id)));
 });
 
+test('çizilmeyen burun probu sayfada yazılı (§9)', () => {
+  const notes = TB2.omitted ?? [];
+  assert.ok(notes.some((note) => note.tr.includes('prob') && note.en.includes('probe')));
+  // Prob gerçekten çizilmiyor: burun ucunun önünde parça yok.
+  const bounds = partsBounds(parts());
+  assert.ok(Math.abs(bounds.min.y) < 1e-9, 'burun ucunun önünde bir parça var');
+});
+
 test('yükseklik verisi yoksa iniş takımı uydurulmaz', () => {
   const list = parts({length_m: 6.4, wingspan_m: 12});
   assert.ok(!list.some((part) => part.id.startsWith('gear-') || part.id.startsWith('wheel-')));

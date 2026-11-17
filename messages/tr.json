@@ -197,7 +197,8 @@
     "sourceLabel": "kaynak",
     "seenLabel": "görüldü",
     "checkLabel": "izdüşüm sınavı",
-    "summary": "{measured} ölçülmüş · {reading} okuma · {chosen} seçilmiş"
+    "summary": "{measured} ölçülmüş · {reading} okuma · {chosen} seçilmiş",
+    "omittedLabel": "Çizilmeyen dış parçalar"
   },
   "ModelViewer": {
     "ar": "Kendi ortamında gör",

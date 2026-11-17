@@ -11,6 +11,8 @@ onu okur: `build3d.ts` sahneyi kurar, `project2d.ts` ortografik SVG üretir. **�
 boyutlu şema ile üç boyutlu model aynı listeden türediği için ayrışamazlar.**
 
 Yeni bir ürün eklemek bir ürün tanımı dosyası ve `registry.ts` içinde bir satırdır.
+Kaynakta görünüp çizilmeyen dış parçalar ürün tanımının `omitted` listesine
+yazılır; sayfa onları biçim kaydında gösterir (kök CLAUDE.md §9).
 Tip dalı açılmaz: "füze mi uçak mı" sorusu bu katmanda sorulmaz, bir ürün hangi
 parçaları kuruyorsa odur. Çift kirişli, V kuyruklu ve çok yüzeyli düzenler aynı
 kitle ifade edilir.

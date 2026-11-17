@@ -197,7 +197,8 @@
     "sourceLabel": "source",
     "seenLabel": "seen",
     "checkLabel": "projection check",
-    "summary": "{measured} measured · {reading} reading · {chosen} chosen"
+    "summary": "{measured} measured · {reading} reading · {chosen} chosen",
+    "omittedLabel": "External parts not drawn"
   },
   "ModelViewer": {
     "ar": "View in your space",
