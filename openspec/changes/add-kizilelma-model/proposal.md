@@ -19,8 +19,10 @@ vardır ya yoktur.
   etiket çapası oradan okur. Tek profilli ürünlerin çıktısı bayt bayt aynı.
 - **Ürün:** `lib/geometry/kizilelma.ts` — gövde, kanat, kanard, dışa yatık çift
   kuyruk, iniş takımı. Oranlar köken beyanıyla (§9): karelerden okunanlar
-  `reading`, görülemeyenler `chosen`. Kanat kök veteri ve hücum kenarı oku `chosen`
-  (kamera yukarıdan bakmıyor; AKINCI emsali).
+  `reading`, görülemeyenler `chosen`. Kamera yukarıdan bakmadığı için planform
+  silüetten okunamıyor: kanat ve kanard hücum kenarları 0_7 karesindeki kenar
+  çizgilerinden `reading` (kanadınki bir varsayıma dayanıyor, notunda yazılı),
+  firar kenarları `chosen`.
 - **Yükseklik:** takım boyu yayımlanan 3,5 m'den türer (TB2 emsali). Karelerde
   yükseklik 3,69 m (+%5,4); dış uyum dikeyde düşüyor, uyuşmazlık kayda geçer
   (`model-provenance`).

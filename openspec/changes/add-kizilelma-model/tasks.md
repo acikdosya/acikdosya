@@ -7,19 +7,19 @@
 
 ## 2. KIZILELMA ürünü
 
-- [ ] 2.1 Karelerden okuma: yan profil, kesitler, uç köşeleri, kanard, kuyruk, takım; sonuçlar `docs/research/kizilelma-sources.md`'ye; `pnpm lint` geçsin
-- [ ] 2.2 `lib/geometry/kizilelma.ts` ve `registry.ts`; oranlar köken beyanıyla, `omitted`; `pnpm typecheck` geçsin
-- [ ] 2.3 `messages/*.json` `RatioLabels`; `pnpm test` geçsin
-- [ ] 2.4 `lib/geometry/kizilelma.test.ts`: oranların parçalarda karşılığı, yükseklik, köken; `pnpm test` geçsin
-- [ ] 2.5 Sabit kamerayla siluet örtüşmesi (18 kare) ölçülür ve nota yazılır
+- [x] 2.1 Karelerden okuma: yan profil, kesitler, uç köşeleri, kanard, kuyruk, takım; sonuçlar `docs/research/kizilelma-sources.md`'ye; `pnpm lint` geçsin
+- [x] 2.2 `lib/geometry/kizilelma.ts` ve `registry.ts`; oranlar köken beyanıyla, `omitted`; `pnpm typecheck` geçsin
+- [x] 2.3 `messages/*.json` `RatioLabels`; `pnpm test` geçsin
+- [x] 2.4 `lib/geometry/kizilelma.test.ts`: oranların parçalarda karşılığı, yükseklik, köken; `pnpm test` geçsin
+- [x] 2.5 Sabit kamerayla siluet örtüşmesi (18 kare) ölçülür ve nota yazılır
 
 ## 3. İçerik ve kayıt
 
-- [ ] 3.1 `content/systems/kizilelma.json` etiketleri; `pnpm validate:content` geçsin
-- [ ] 3.2 `content/assets.json` `geometry-parametric-kizilelma`; `pnpm validate:content` geçsin
-- [ ] 3.3 `lib/geometry/CLAUDE.md` anahtar kesit paragrafı; `pnpm lint` geçsin
+- [x] 3.1 `content/systems/kizilelma.json` etiketleri; `pnpm validate:content` geçsin
+- [x] 3.2 `content/assets.json` `geometry-parametric-kizilelma`; `pnpm validate:content` geçsin
+- [x] 3.3 `lib/geometry/CLAUDE.md` anahtar kesit paragrafı; `pnpm lint` geçsin
 
 ## 4. Doğrulama
 
-- [ ] 4.1 `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm validate:content` geçsin
-- [ ] 4.2 `pnpm bake:models` < 3 MB; `pnpm build`; sayfa TR/EN tarayıcıda (model, şema, köken kaydı)
+- [x] 4.1 `pnpm typecheck`, `pnpm lint`, `pnpm test`, `pnpm validate:content` geçsin
+- [x] 4.2 `pnpm bake:models` < 3 MB; `pnpm build`; sayfa TR/EN tarayıcıda (model, şema, köken kaydı)

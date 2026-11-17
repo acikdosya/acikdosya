@@ -30,6 +30,13 @@ kesitleri zarftan; uç köşeleri karelerin uç noktalarından üçgenleme (bir 
 iki karede, farkı ≤ 7 px). Kanat planformu zarftan okunamaz: yatay kamera, 20°
 aralıklı dokuz doğrultu hücum kenarı içbükeyliğini oymuyor.
 
+**6a. Yüzey kökü gövde yanında.** Kanat ve kanardın kökü orta çizgide değil,
+gövde yanının biraz içinde (yarım enin 0,9'u). Ok açılı bir yüzeyin gövde içindeki
+hücum kenarı buruna doğru uzanır; şema yalnız dış hat çizdiği için o gizli kenar
+gövdenin içinde bir üçgen olarak görünüyordu ve kanard burnun yanında başlıyormuş
+gibi okunuyordu. *Reddedilen:* şemada gövdeyi dolgulu çizmek — beş dosyanın
+şemasını değiştirir.
+
 **6. Yükseklik.** Takım boyu yayımlanan yükseklikten türer (TB2). Karelerdeki
 takım 0,19 m uzun; fark biçim kaydında ve araştırma notunda.
 

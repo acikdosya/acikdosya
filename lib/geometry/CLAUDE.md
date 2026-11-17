@@ -30,3 +30,13 @@ Eşli yüzeyler (iki kanat, iki stabilize) DÖNDÜRÜLEREK değil merkez düzlem
 YANSITILARAK üretilir. Dönüş açıklığı doğru yöne taşır ama "yukarı" yönünü ters
 çevirir; düz bir plakada görünmeyen bu hata, kanat ucu kıvrımı eklenince bir kanadı
 aşağı baktırır.
+
+## Gövde kesiti
+
+Gövde tek profil (`LatheSpec.section`) ya da istasyon başına anahtar kesit
+(`LatheStation.section`) taşır; ikisi birlikte yazılamaz. Anahtar kesitler aynı
+nokta sayısını taşır ve i. nokta hepsinde aynı kenarı gösterir; ara istasyonlar
+nokta nokta doğrusal geçiştir. Yeniden örnekleme yapılmaz, köşe yuvarlanırdı.
+Profil ve uzanım `stationSections` / `stationExtents` içinde tek yerde kurulur;
+model, şema, sınır ve etiket çapası oradan okur. Anahtar kesitli gövdenin ön
+görünüşü istasyon halkalarının dışbükey zarfıdır.
