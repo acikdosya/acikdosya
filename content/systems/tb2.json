@@ -1,0 +1,598 @@
+{
+  "$schema_version": "0.1",
+  "id": "tb2",
+  "slug": "tb2",
+  "name": {
+    "tr": "Bayraktar TB2",
+    "en": "Bayraktar TB2"
+  },
+  "category": "insansiz-hava-araci",
+  "manufacturer": [
+    {
+      "id": "baykar",
+      "name": "BAYKAR"
+    }
+  ],
+  "status": "envanterde",
+  "summary": {
+    "tr": "BAYKAR'ın orta irtifa–uzun havada kalış sınıfı insansız hava aracı ailesi.",
+    "en": "BAYKAR's medium-altitude, long-endurance unmanned aerial vehicle family."
+  },
+  "variants": [
+    {
+      "id": "tb2",
+      "label": "TB2",
+      "introduced": 2014,
+      "specs": {
+        "length_m": [
+          {
+            "value": 6.4,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 6.5,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 tarihli broşürdeki değer; hangi varyanta uygulandığı belirtilmemiş.",
+              "en": "Value from the 2019 brochure; its variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "wingspan_m": [
+          {
+            "value": 12,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 12,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 tarihli broşürdeki değer; hangi varyanta uygulandığı belirtilmemiş.",
+              "en": "Value from the 2019 brochure; its variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "height_m": [
+          {
+            "value": 2.2,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "İniş takımı ve ölçüm konfigürasyonu sayfada belirtilmemiş.",
+              "en": "Landing gear and measurement configuration are not stated on the page."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "mtow_kg": [
+          {
+            "value": 700,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 650,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 tarihli broşürdeki değer; hangi varyanta uygulandığı belirtilmemiş.",
+              "en": "Value from the 2019 brochure; its variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "payload_kg": [
+          {
+            "value": 150,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 140,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 broşüründe 55 kg gimbal kamera + 85 kg harici yük toplamı.",
+              "en": "The 2019 brochure states 55 kg gimbal camera + 85 kg external stores."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "endurance_h": [
+          {
+            "value": 18,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik özellikler tablosundaki '18+ saat' ifadesi.",
+              "en": "The technical specifications table states '18+ hours'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 20,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfanın üst görselindeki '20+ Saat Havada Kalış' ifadesi; teknik tablodan farklı.",
+              "en": "The page banner states '20+ Hours in Air', unlike the technical table."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 24,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 tarihli broşürdeki değer; hangi varyanta uygulandığı belirtilmemiş.",
+              "en": "Value from the 2019 brochure; its variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "service_ceiling_ft": [
+          {
+            "value": 20000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik özellikler tablosundaki servis tavanı.",
+              "en": "Service ceiling from the technical specifications table."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 22000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfanın üst bandındaki 'Maksimum İrtifa 22.000 Feet'; servis tavanıyla ilişkisi açıklanmamış.",
+              "en": "The page banner states 'Max Altitude 22,000 Feet'; its relationship to service ceiling is not explained."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 25000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 broşüründeki 'Absolute Ceiling' değeri; varyant kapsamı belirtilmemiş.",
+              "en": "The 2019 brochure's 'Absolute Ceiling'; variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "operating_altitude_ft": [
+          {
+            "value": 16000,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 18000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 tarihli broşürdeki değer; hangi varyanta uygulandığı belirtilmemiş.",
+              "en": "Value from the 2019 brochure; its variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "cruise_speed_ktas": [
+          {
+            "value": 90,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "max_speed_ktas": [
+          {
+            "value": 110,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+              "en": "BAYKAR Bayraktar TB2 product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 116,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "2019 broşüründe 16.000 ft için verilen azami hız; varyant kapsamı belirtilmemiş.",
+              "en": "Maximum speed at 16,000 ft in the 2019 brochure; variant applicability is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar TB2UAS ürün broşürü",
+              "en": "BAYKAR Bayraktar TB2UAS product brochure"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/sy7JH9hB9upCek920ObOU7SOc2ihH9gr.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 22 Kasım 2019, değiştirme 25 Kasım 2019",
+              "en": "PDF metadata: created 22 November 2019, modified 25 November 2019"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "d1380e679c20c480ec3c73f722f706b3ddc332df30655e1712877a99bf6a4e0f",
+            "verified_at": "2026-11-17"
+          }
+        ]
+      },
+      "attributes": {
+        "power_system": {
+          "value": {
+            "tr": "100 bg içten yanmalı motor",
+            "en": "100 hp internal combustion engine"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+            "en": "BAYKAR Bayraktar TB2 product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        },
+        "communications": {
+          "value": {
+            "tr": "Görüş hattı ve görüş hattı ötesi (LOS ve BLOS)",
+            "en": "Line of sight and beyond line of sight (LOS and BLOS)"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+            "en": "BAYKAR Bayraktar TB2 product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        },
+        "variant_names": {
+          "value": {
+            "tr": "TB2-A, TB2-B, TB2-C ve TB2-D",
+            "en": "TB2-A, TB2-B, TB2-C and TB2-D"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar TB2 ürün sayfası",
+            "en": "BAYKAR Bayraktar TB2 product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-tb2/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        }
+      },
+      "annotations": [
+        {
+          "id": "burun",
+          "part": "body",
+          "t": 0.08,
+          "angle": 90,
+          "label": {
+            "tr": "Burun bölümü",
+            "en": "Nose section"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kanat",
+          "part": "wing-1",
+          "t": 0.55,
+          "label": {
+            "tr": "Kanat",
+            "en": "Wing"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kuyruk-kirisi",
+          "part": "boom-1",
+          "t": 0.58,
+          "label": {
+            "tr": "Kuyruk kirişi",
+            "en": "Tail boom"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "ters-v-kuyruk",
+          "part": "tail-1",
+          "t": 0.55,
+          "label": {
+            "tr": "Ters V kuyruk",
+            "en": "Inverted-V tail"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "pervane",
+          "part": "propeller",
+          "t": 0.6,
+          "label": {
+            "tr": "İtici pervane",
+            "en": "Pusher propeller"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "sensor",
+          "part": "sensor-turret",
+          "t": 0.5,
+          "angle": 180,
+          "label": {
+            "tr": "Sensör tareti",
+            "en": "Sensor turret"
+          },
+          "confidence": "official"
+        }
+      ],
+      "_todo": [
+        "TB2-A/B/C/D adlari uretici sayfasinda geciyor ama varyanta ozgu olcu kaydi yok; genel TB2 beyanlari bu varyantlara otomatik atanmadi.",
+        "2019 brosurundeki seyir hizi '70 knots' olarak yazili; cruise_speed_ktas alanina birim degistirilerek eklenmedi.",
+        "2019 brosurundeki >150 km haberlesme menzili ve 2024 Anadolu Ajansi yazisindaki 300 km haberlesme menzili operational_range_km alanina yazilmadi; haberlesme menzili icin ayri sema alani yok.",
+        "TB2T-AI ayri bir gelistirme olarak duyuruldu; mevcut TB2-A/B/C/D kayitlariyla birlestirilmedi.",
+        "3B model oranlari KeyShotXR karelerinden okundu ancak izdusum sinavi yapilmadi; bu yuzden oranlar 'reading', gorulmeyen ayrintilar 'chosen'. Zit yonlerden alinan kare ciftleri birbirinin aynasi (%0,4 icinde), yani gosteri ortografik gorunuyor; ayni gosterinin kareleri oldugu icin sinav sayilmadi, karar bekliyor. Kaynak kareler repoya alinmadi."
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2012",
+      "title": {
+        "tr": "Geliştirme ve üretim sürecinin başlangıcı",
+        "en": "Development and production process begins"
+      },
+      "body": {
+        "tr": "Bayraktar TB2'ye yönelik taktik İHA projesinin geliştirme ve üretim süreci başladı.",
+        "en": "The tactical UAV development and production process for Bayraktar TB2 began."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı, 26 Şubat 2024",
+        "en": "Anadolu Agency, 26 Feb 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-sihalardaki-bayrak-tasiyicisi-bayraktar-tb2/"
+    },
+    {
+      "date": "2014",
+      "title": {
+        "tr": "İlk tam otomatik uçuş",
+        "en": "First fully automatic flight"
+      },
+      "body": {
+        "tr": "TB2 ilk tam otomatik uçuş testini gerçekleştirdi.",
+        "en": "TB2 completed its first fully automatic flight test."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı, 26 Şubat 2024",
+        "en": "Anadolu Agency, 26 Feb 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-sihalardaki-bayrak-tasiyicisi-bayraktar-tb2/"
+    },
+    {
+      "date": "2014",
+      "title": {
+        "tr": "Türk Silahlı Kuvvetleri envanterine giriş",
+        "en": "Entry into the Turkish Armed Forces inventory"
+      },
+      "body": {
+        "tr": "TB2 Türk Silahlı Kuvvetleri envanterine girdi.",
+        "en": "TB2 entered the Turkish Armed Forces inventory."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 10 Aralık 2024",
+        "en": "BAYKAR press bulletin, 10 Dec 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-ilk-milli-sihasi-bayraktar-tb2-1-milyon-ucus-saatini-asti/"
+    },
+    {
+      "date": "2019-07-16",
+      "title": {
+        "tr": "27 saat 3 dakikalık uçuş rekoru",
+        "en": "27-hour 3-minute flight record"
+      },
+      "body": {
+        "tr": "Kuveyt'teki demo uçuşunda yüksek sıcaklık ve kum fırtınası koşullarında 27 saat 3 dakika kesintisiz uçtu.",
+        "en": "Flew continuously for 27 hours 3 minutes during a demonstration flight in Kuwait under high temperature and sandstorm conditions."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 10 Aralık 2024",
+        "en": "BAYKAR press bulletin, 10 Dec 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-ilk-milli-sihasi-bayraktar-tb2-1-milyon-ucus-saatini-asti/"
+    },
+    {
+      "date": "2024-12-10",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Bir milyon uçuş saati",
+        "en": "One million flight hours"
+      },
+      "body": {
+        "tr": "BAYKAR, TB2 filosunun toplam uçuş süresinin bir milyon saati aştığını duyurdu.",
+        "en": "BAYKAR announced that the TB2 fleet had exceeded one million flight hours."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 10 Aralık 2024",
+        "en": "BAYKAR press bulletin, 10 Dec 2024"
+      },
+      "source_url": "https://baykartech.com/tr/press/turkiyenin-ilk-milli-sihasi-bayraktar-tb2-1-milyon-ucus-saatini-asti/"
+    }
+  ],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
+  },
+  "_todo": [
+    "Urun sayfasindaki 18+ saat ile banner'daki 20+ saat ifadelerinin ve 20.000 ft servis tavani ile banner'daki 22.000 ft maksimum irtifanin iliskisi uretici tarafindan aciklanmamis; ayri kayitlar olarak korunuyor.",
+    "27 saat 3 dakikalik rekor bir test olayidir; dayaniklilik beyaniyla ayni kapsamda bir olcume donusturulmedi.",
+    "Haberlesme menzili operasyonel menzil veya gorev yaricapi olarak yorumlanmadi; menzil halkasi cizilmiyor.",
+    "Yuk istasyonlari cizilmiyor: karelerde muhimmat yuklu, muhimmat modellenmedigi icin istasyon da cizilmedi; sayfada bicim kaydinda yazili."
+  ]
+}

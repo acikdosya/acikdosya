@@ -1,9 +1,11 @@
 import * as THREE from 'three';
 import {
   bodyRadiusOf,
+  discBladeRings,
   panelSection,
   partsBounds,
   primaryBody,
+  type Vec3,
   type LatheSpec,
   type Bounds,
   type DiscPart,
@@ -77,7 +79,19 @@ export interface BuildOptions {
  * yerindeki sert kose ve dikey basamak da kalkti.
  */
 function panelGeometry(part: PanelPart): THREE.BufferGeometry {
-  const rings = part.stations.map(panelSection);
+  // Uc kapagi — yalniz kapanmayan uclarda (closeTip: false).
+  const last = part.stations[part.stations.length - 1];
+  return loftGeometry(
+    part.stations.map(panelSection),
+    Boolean(last && last.thickness > 0 && last.chord > 0)
+  );
+}
+
+/**
+ * Esit uzunluklu kesit halkalarini dortgen seritle baglar. Yuzeyler ve
+ * pervane kanatlari ayni yoldan gecer.
+ */
+function loftGeometry(rings: readonly Vec3[][], capTip: boolean): THREE.BufferGeometry {
   const ring = rings[0]?.length ?? 0;
   const positions: number[] = [];
   const indices: number[] = [];
@@ -102,8 +116,23 @@ function panelGeometry(part: PanelPart): THREE.BufferGeometry {
    * bir cizgiye kapaniyor, orada kapak gerekmiyor; kok ise govdenin
    * icinde kaliyor ama yine de kapatiliyor, yoksa ic yuzey gorunur.
    */
+  /*
+   * Sarim disa bakmali: malzeme yalniz on yuzu cizer. Kesit ust yuzeyden
+   * hucumdan firara, alttan geri doner; kokte (0, j, j+1) -x'e, ucta
+   * ters sarim +x'e bakar. Onceki sarim ikisini de ice ceviriyordu —
+   * kok govdeye gomulu kaldikca gorunmedi, TB2'nin kirise oturan kuyruk
+   * kokunde ve kesik uclarinda delik olarak goruldu.
+   */
   for (let j = 1; j < ring - 1; j++) {
-    indices.push(0, j + 1, j);
+    indices.push(0, j, j + 1);
+  }
+
+  // Uc kapagi; ters sarim.
+  if (capTip) {
+    const base = (rings.length - 1) * ring;
+    for (let j = 1; j < ring - 1; j++) {
+      indices.push(base, base + j + 1, base + j);
+    }
   }
 
   const geometry = new THREE.BufferGeometry();
@@ -123,6 +152,17 @@ function panelGeometry(part: PanelPart): THREE.BufferGeometry {
  * altin degerleri bu yuzden degismez.
  */
 function circularGeometry(spec: LatheSpec, segments: number) {
+  /*
+   * Dönel yol istasyon başına dikey çarpanı ve kaymayı taşıyamaz.
+   * Sessizce yok saymak, şemayla modeli ayrıştırırdı; reddedilir.
+   */
+  if (
+    spec.stations.some(
+      (s) => s.lift !== undefined || s.upperScale !== undefined || s.lowerScale !== undefined
+    )
+  ) {
+    throw new Error('lift/upperScale/lowerScale yalnız kesit profili olan gövdede kullanılır');
+  }
   const points = spec.stations.map(
     (station) => new THREE.Vector2(Math.max(station.radius, 0.0005), station.y)
   );
@@ -157,7 +197,13 @@ function sectionGeometry(spec: LatheSpec, segments: number) {
   for (const station of spec.stations) {
     const radius = Math.max(station.radius, 0.0005);
     for (const point of ring) {
-      positions.push(point.u * radius, station.y, point.w * radius);
+      const verticalScale =
+        point.u >= 0 ? (station.upperScale ?? 1) : (station.lowerScale ?? 1);
+      positions.push(
+        (station.lift ?? 0) + point.u * radius * verticalScale,
+        station.y,
+        point.w * radius
+      );
     }
   }
 
@@ -285,8 +331,9 @@ class Builder {
   /**
    * Pervane: gobek ve kanatlar.
    *
-   * Sematik kalir — kanat profili cizilmez, cunku kanat kesitine dair
-   * kaynakli verimiz yok. Asil bilgi disk yaricapi.
+   * Sematik kalir — belirli bir kanat profili cizilmez, cunku kanat
+   * kesitine dair kaynakli verimiz yok. `blade` verilmisse kanat
+   * yuzeylerle ayni genel kesitle loft edilir; verilmemisse kutu.
    */
   addDisc(part: DiscPart) {
     const hub = this.own(
@@ -303,6 +350,17 @@ class Builder {
     hub.translate(part.center.x, part.center.y, part.center.z);
     this.addSolid(hub, 24);
 
+    if (part.blade) {
+      for (const rings of discBladeRings(part)) {
+        const last = part.blade.stations[part.blade.stations.length - 1];
+        this.addSolid(
+          this.own(loftGeometry(rings, Boolean(last && last.thickness > 0 && last.chord > 0))),
+          24
+        );
+      }
+      return;
+    }
+
     for (let i = 0; i < part.bladeCount; i++) {
       const blade = this.own(
         new THREE.BoxGeometry(
@@ -315,8 +373,10 @@ class Builder {
       const pivot = new THREE.Group();
       pivot.position.set(part.center.x, part.center.y, part.center.z);
       pivot.rotation.set(0, 0, 0);
-      const spin = (i * 2 * Math.PI) / part.bladeCount;
-      if (part.orientation === 'along') pivot.rotation.y = spin;
+      const spin =
+        ((part.bladePhaseDeg ?? 0) * Math.PI) / 180 + (i * 2 * Math.PI) / part.bladeCount;
+      // 'along'da +Y etrafındaki dönüş +X'i -Z'ye taşır; şemayla aynı yön için eksi.
+      if (part.orientation === 'along') pivot.rotation.y = -spin;
       else if (part.orientation === 'lateral') pivot.rotation.z = spin;
       else pivot.rotation.x = spin;
       this.addSolid(blade, 24, pivot);
@@ -355,12 +415,26 @@ class Builder {
   addBoom(part: BoomPart) {
     const geometry = this.own(
       new THREE.CylinderGeometry(
-        part.radius,
+        part.endRadius ?? part.radius,
         part.radius,
         part.length,
         this.segments.small
       )
     );
+    geometry.scale(part.aspect ?? 1, 1, 1);
+    /*
+     * Eğim bir kayma (shear) olarak uygulanır, dönüş olarak değil: kesitler
+     * gövde eksenine dik kalır ve iki boyutlu izdüşümle aynı tanımı taşır.
+     */
+    const lift = part.endLift ?? 0;
+    if (lift !== 0) {
+      const position = geometry.attributes.position;
+      for (let i = 0; i < position.count; i++) {
+        const along = position.getY(i) / part.length + 0.5;
+        position.setX(i, position.getX(i) + lift * along);
+      }
+      geometry.computeVertexNormals();
+    }
     geometry.translate(
       part.start.x,
       part.start.y + part.length / 2,
@@ -432,13 +506,19 @@ export function buildGroup(
 
   const offsetRatio = options.dimensionOffsetRatio ?? 2.4;
   const body = primaryBody(parts);
+  const bounds = partsBounds(parts);
   if (body && offsetRatio > 0) {
     // Anma yaricapi: yerel omuz sismesi cizgiyi disari itmemeli.
     const radius = bodyRadiusOf(body);
-    const stations = body.spec.stations;
+    /*
+     * Cizgi yayimlanan uzunlugu gosterir, o da burundan en arka noktaya
+     * olculur — govdenin bittigi yere degil. TB2'de govde pervanede
+     * biter, kuyrugu kirisler tasir; cizgi govdeye baglansa uzunlugun
+     * ucte ikisini gosterirdi.
+     */
     builder.addDimensionLine(
-      body.origin.y + (stations[0]?.y ?? 0),
-      body.origin.y + (stations[stations.length - 1]?.y ?? 0),
+      bounds.min.y,
+      bounds.max.y,
       -radius * offsetRatio,
       radius * 0.25
     );
@@ -447,7 +527,7 @@ export function buildGroup(
   return {
     group: builder.group,
     parts,
-    bounds: partsBounds(parts),
+    bounds,
     dispose: builder.dispose
   };
 }

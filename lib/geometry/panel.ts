@@ -71,6 +71,12 @@ export interface WingStationSpec {
   tip?: TipBlend;
   /** Govde baglantisi. Yoksa yuzey kokten duz cikar. */
   root?: RootBlend;
+  /**
+   * Ucun kapanmasi; varsayilan acik. Ucu baska bir yuzeye birlesen
+   * yuzeyde kapatilmaz — TB2'nin iki kuyruk yuzeyi tepede birlesiyor ve
+   * kapanan iki uc orada bir centik birakirdi.
+   */
+  closeTip?: boolean;
   /** Aciklik boyunca ornekleme adimi. Bicim degil cozunurluk. */
   steps?: number;
 }
@@ -97,7 +103,8 @@ export function wingStations(spec: WingStationSpec): PanelStation[] {
   const tipReach = spec.tip ? spec.span * spec.tip.reachRatio : 0;
   const tipRise = spec.tip ? spec.span * spec.tip.riseRatio : 0;
   const blendFrom = spec.span - tipReach;
-  const closeFrom = spec.span * (1 - CLOSE_RATIO);
+  const closeFrom =
+    spec.closeTip === false ? spec.span : spec.span * (1 - CLOSE_RATIO);
   const rootReach = spec.root ? spec.span * spec.root.reachRatio : 0;
   const rootDrop = spec.root ? spec.span * spec.root.dropRatio : 0;
 
@@ -170,7 +177,8 @@ export function wingStations(spec: WingStationSpec): PanelStation[] {
     );
   }
 
-  const outerSteps = spec.tip ? steps * 2 : steps;
+  // Kapanmayan ve kivrilmayan uc: duz bolum uca kadar gider.
+  const outerSteps = straightTo < spec.span ? (spec.tip ? steps * 2 : steps) : 0;
   for (let i = 1; i <= outerSteps; i++) {
     const x = straightTo + (i / outerSteps) * (spec.span - straightTo);
     stations.push(station(x, closeFactor(x)));

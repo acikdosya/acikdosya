@@ -1,7 +1,7 @@
 import type {Part} from './parts';
 import type {RatioTable, ValueTable} from './ratio';
 import {ratioValues} from './ratio';
-import type {Category} from '../schema';
+import type {Category, LocalizedText} from '../schema';
 
 /**
  * Urun tanimi — bir sistemin bicimi.
@@ -76,6 +76,16 @@ export interface ProductDefinition<
    * uzaga iter. Verilmezse 2,4.
    */
   dimensionOffsetRatio?: number;
+  /**
+   * Kaynakta gorunen ama cizilmeyen dis parcalar (CLAUDE.md §9:
+   * "Modellenmeyen parcalar sayfada acikca yazilir").
+   *
+   * Kategori notu butun urunlerde ortak olani soyler — kesit yok,
+   * muhimmat yok. Bu liste URUNE ozgu olani tasir: TB2'nin burun probu
+   * AKINCI'nin sayfasinda yazmamali. Bicim kaydinda, oranlarin ustunde
+   * cizilir.
+   */
+  omitted?: readonly LocalizedText[];
   build(input: BuildInput<R, K>): Part[];
 }
 

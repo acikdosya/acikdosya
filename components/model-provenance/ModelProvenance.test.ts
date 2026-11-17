@@ -42,6 +42,22 @@ test('kullanilmayan etiket birikmiyor', () => {
   assert.deepEqual(stale, [], 'hicbir urunun tasimadigi etiketler');
 });
 
+test('cizilmeyen parca notlari iki dilde dolu, basligi paketlerde var', () => {
+  for (const [name, bundle] of [
+    ['tr', tr],
+    ['en', en]
+  ] as const) {
+    const block = (bundle as Record<string, Record<string, string>>).ModelProvenance;
+    assert.ok(block.omittedLabel, `${name}: omittedLabel yok`);
+  }
+  for (const product of allProducts()) {
+    for (const item of product.omitted ?? []) {
+      assert.ok(item.tr.trim().length > 0, `${product.slug}: tr notu bos`);
+      assert.ok(item.en.trim().length > 0, `${product.slug}: en notu bos`);
+    }
+  }
+});
+
 test('uc koken durumunun da metni var', () => {
   for (const [name, bundle] of [
     ['tr', tr],

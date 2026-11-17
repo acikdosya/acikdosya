@@ -1,10 +1,13 @@
 import {
+  boomEnd,
+  discBladeRings,
   panelPointToFrame,
   panelSection,
   sectionExtent,
   vec3,
   type BoomPart,
   type DiscPart,
+  type LatheStation,
   type Part,
   type PanelPart,
   type StrutPart,
@@ -161,19 +164,23 @@ function latheOutline(
   /*
    * Kesitin ekran eksenlerine katkisi. `local.u` kesitin DIKEY ekseni,
    * `local.v` yatay ekseni. Profil simetrik olmadigi icin yukari ve
-   * asagi ayri ayri tasinir — govde oval degil, damla bicimli.
+   * asagi ayri ayri tasinir — govde oval degil, damla bicimli. Istasyonun
+   * ust/alt carpani da burada uygulanir; uc boyutlu sahne onu kullaniyor,
+   * sema kullanmazsa iki katman ayrisirdi.
    */
-  const pushU = (r: number, sign: 1 | -1) =>
-    Math.abs(dot(local.u, basis.u)) * r * (sign > 0 ? extent.up : extent.down) +
+  const reach = (r: number, sign: 1 | -1, station?: LatheStation) =>
+    r *
+    (sign > 0
+      ? extent.up * (station?.upperScale ?? 1)
+      : extent.down * (station?.lowerScale ?? 1));
+  const pushU = (r: number, sign: 1 | -1, station?: LatheStation) =>
+    Math.abs(dot(local.u, basis.u)) * reach(r, sign, station) +
     Math.abs(dot(local.v, basis.u)) * r * extent.width;
-  const pushV = (r: number, sign: 1 | -1) =>
-    Math.abs(dot(local.u, basis.v)) * r * (sign > 0 ? extent.up : extent.down) +
+  const pushV = (r: number, sign: 1 | -1, station?: LatheStation) =>
+    Math.abs(dot(local.u, basis.v)) * reach(r, sign, station) +
     Math.abs(dot(local.v, basis.v)) * r * extent.width;
 
   if (endOn) {
-    // Uctan gorunus: kesit profilinin kendisi.
-    const radius = Math.max(...part.spec.stations.map((s) => s.radius));
-    const centre = project(part.origin, basis);
     const profile = part.spec.section;
 
     if (profile && profile.length > 1) {
@@ -181,17 +188,62 @@ function latheOutline(
         ...profile,
         ...profile.slice(1, -1).reverse().map((p) => ({v: p.v, w: -p.w}))
       ];
-      return ring.map((point) => {
-        const up = local.u;
-        const side = local.v;
-        const offset = add(
-          add(part.origin, up, point.v * radius),
-          side,
-          point.w * radius
+
+      /*
+       * Kayma ve carpan yoksa butun kesitler en genis kesitin icinde ve
+       * siluet o kesitin KENDISI — icbukey profil (AKINCI'nin alt
+       * yarisindaki daralma) oldugu gibi kalir. Zarf burada profili
+       * duzlestirirdi.
+       */
+      const uniform = part.spec.stations.every(
+        (station) =>
+          (station.lift ?? 0) === 0 &&
+          (station.upperScale ?? 1) === 1 &&
+          (station.lowerScale ?? 1) === 1
+      );
+      if (uniform) {
+        const radius = Math.max(...part.spec.stations.map((s) => s.radius));
+        return ring.map((point) =>
+          project(
+            add(add(part.origin, local.u, point.v * radius), local.v, point.w * radius),
+            basis
+          )
         );
-        return project(offset, basis);
-      });
+      }
+
+      /*
+       * Kayan ya da carpanli kesitler: her istasyonun kesiti kendi
+       * yaricapi, carpani ve kaymasiyla; siluet bunlarin disbukey zarfi.
+       * Kesitler birbirini tasmadan sariyorsa dogru — TB2'de oyle.
+       */
+      const points: Point2[] = [];
+      for (const station of part.spec.stations) {
+        const centre = add(
+          add(part.origin, local.axis, station.y),
+          local.u,
+          station.lift ?? 0
+        );
+        for (const point of ring) {
+          const scale =
+            point.v >= 0 ? (station.upperScale ?? 1) : (station.lowerScale ?? 1);
+          points.push(
+            project(
+              add(
+                add(centre, local.u, point.v * station.radius * scale),
+                local.v,
+                point.w * station.radius
+              ),
+              basis
+            )
+          );
+        }
+      }
+      return hull(points);
     }
+
+    // Profilsiz donel govde: en genis istasyonun elipsi.
+    const radius = Math.max(...part.spec.stations.map((s) => s.radius));
+    const centre = project(part.origin, basis);
 
     const points: Point2[] = [];
     for (let i = 0; i < ELLIPSE_STEPS; i++) {
@@ -205,12 +257,38 @@ function latheOutline(
     return points;
   }
 
+  /*
+   * Eksen ekranda dikey duruyorsa (dikey parca yandan ya da onden)
+   * kesit yatay eksene tasinir. Onceki surum her zaman dikeye tasiyordu;
+   * TB2'nin dikey taret kuresi sifir genislikte bir cizgiye iniyordu.
+   */
+  const axisAlongV =
+    Math.abs(dot(local.axis, basis.v)) > Math.abs(dot(local.axis, basis.u));
+  if (axisAlongV) {
+    // Ekranda +u yonune kesitin hangi yarisi bakiyor.
+    const plus: 1 | -1 = dot(local.u, basis.u) >= 0 ? 1 : -1;
+    const right: Point2[] = [];
+    const left: Point2[] = [];
+    for (const station of part.spec.stations) {
+      const centre = project(
+        add(add(part.origin, local.axis, station.y), local.u, station.lift ?? 0),
+        basis
+      );
+      right.push({u: centre.u + pushU(station.radius, plus, station), v: centre.v});
+      left.push({u: centre.u - pushU(station.radius, plus === 1 ? -1 : 1, station), v: centre.v});
+    }
+    return [...right, ...left.reverse()];
+  }
+
   const upper: Point2[] = [];
   const lower: Point2[] = [];
   for (const station of part.spec.stations) {
-    const centre = project(add(part.origin, local.axis, station.y), basis);
-    upper.push({u: centre.u, v: centre.v - pushV(station.radius, 1)});
-    lower.push({u: centre.u, v: centre.v + pushV(station.radius, -1)});
+    const centre = project(
+      add(add(part.origin, local.axis, station.y), local.u, station.lift ?? 0),
+      basis
+    );
+    upper.push({u: centre.u, v: centre.v - pushV(station.radius, 1, station)});
+    lower.push({u: centre.u, v: centre.v + pushV(station.radius, -1, station)});
   }
   return [...upper, ...lower.reverse()];
 }
@@ -269,10 +347,20 @@ function discPolygons(part: DiscPart, basis: Basis): Point2[][] {
   }
   polygons.push(hub);
 
+  // Yuzeyli kanat: 3B ile ayni halkalarin zarfi. Planform disbukey.
+  if (part.blade) {
+    for (const rings of discBladeRings(part)) {
+      polygons.push(hull(rings.flat().map((point) => project(point, basis))));
+    }
+    return polygons;
+  }
+
   // Kanatlar: gobekten uca uzanan ince dortgenler.
   const halfChord = part.bladeChord / 2 / Math.max(part.radius, 1e-9);
   for (let i = 0; i < part.bladeCount; i++) {
-    const angle = (i / Math.max(part.bladeCount, 1)) * Math.PI * 2;
+    const angle =
+      ((part.bladePhaseDeg ?? 0) * Math.PI) / 180 +
+      (i / Math.max(part.bladeCount, 1)) * Math.PI * 2;
     polygons.push([
       at(part.hubRadius, angle - halfChord, half),
       at(part.radius, angle - halfChord * 0.45, half),
@@ -338,12 +426,27 @@ function strutPoints(part: StrutPart): Vec3[] {
   return capsulePoints(part.from, part.to, part.radius);
 }
 
+/**
+ * Kirisin izdusum noktalari: iki uctaki kesit, kendi yaricapi ve en/boy
+ * oraniyla. Kesitler govde eksenine dik — uc boyutlu sahnedeki kayma
+ * (shear) ile ayni tanim. Arka uc daralmasi ve egim de burada.
+ */
 function boomPoints(part: BoomPart): Vec3[] {
-  return capsulePoints(
-    part.start,
-    add(part.start, vec3(0, 1, 0), part.length),
-    part.radius
-  );
+  const aspect = part.aspect ?? 1;
+  const points: Vec3[] = [];
+  const steps = 16;
+  for (const [centre, radius] of [
+    [part.start, part.radius],
+    [boomEnd(part), part.endRadius ?? part.radius]
+  ] as const) {
+    for (let i = 0; i < steps; i++) {
+      const angle = (i / steps) * Math.PI * 2;
+      points.push(
+        add(centre, vec3(Math.cos(angle) * radius * aspect, 0, Math.sin(angle) * radius))
+      );
+    }
+  }
+  return points;
 }
 
 /** Tek parcanin izdusum yolu. */

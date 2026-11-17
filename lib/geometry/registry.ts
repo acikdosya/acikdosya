@@ -4,6 +4,7 @@ import type {AnyProduct} from './product';
 import {SIPER_URUN_1} from './siper-urun-1';
 import {SIPER_URUN_2} from './siper-urun-2';
 import {TAYFUN} from './tayfun';
+import {TB2} from './tb2';
 
 /** "<sistem>/<varyant>" — tek yerde kurulur, iki tarafta ayni yazilsin. */
 export function variantKey(systemSlug: string, variantId: string): string {
@@ -33,6 +34,7 @@ const PRODUCTS = new Map<string, AnyProduct>([
   ['tayfun', TAYFUN as AnyProduct],
   ['atmaca', ATMACA as AnyProduct],
   ['akinci', AKINCI as AnyProduct],
+  ['tb2', TB2 as AnyProduct],
   /*
    * SIPER iki varyanti AYRI tanim tasiyor: Urun-1'de ayrilabilir itici ve
    * orta kanat, Urun-2'de govde boyu strake. Uretici cizimi ikisini acikca

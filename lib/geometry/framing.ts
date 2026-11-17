@@ -82,7 +82,13 @@ export function goalFor(
 
     return {
       target: new THREE.Vector3(0, 0, 0),
-      position: new THREE.Vector3(0, height, distance)
+      // Burun ve yandan üç çeyrek görünüm: kanat ve kuyruk topolojisi
+      // tam yan karedeki gibi tek çizgiye dönüşmez.
+      position: new THREE.Vector3(
+        distance * 0.45,
+        height,
+        distance * Math.sqrt(1 - 0.45 ** 2)
+      )
     };
   }
 

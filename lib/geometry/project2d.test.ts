@@ -8,6 +8,7 @@ import {partsBounds} from './parts';
 import {buildParts} from './product';
 import {projectBounds, projectParts, type ViewAxis} from './project2d';
 import {TAYFUN} from './tayfun';
+import {TB2} from './tb2';
 
 /**
  * Izdusum ile uc boyutlu model ayni parca listesinden turuyor; sinir
@@ -18,7 +19,9 @@ import {TAYFUN} from './tayfun';
 const CASES = [
   {label: 'TAYFUN', product: TAYFUN, dims: {length_m: 6.5, diameter_mm: 610}},
   {label: 'ATMACA', product: ATMACA, dims: {length_m: 4.3, diameter_mm: 370}},
-  {label: 'AKINCI', product: AKINCI, dims: {length_m: 12.3, wingspan_m: 20}}
+  {label: 'AKINCI', product: AKINCI, dims: {length_m: 12.3, wingspan_m: 20}},
+  // Istasyon kaymasi, ust/alt carpani ve egik kiris: sema bunlari da tasimali.
+  {label: 'TB2', product: TB2, dims: {length_m: 6.4, wingspan_m: 12, height_m: 2.2}}
 ] as const;
 
 const AXES: ViewAxis[] = ['front', 'side', 'top'];
@@ -149,4 +152,30 @@ test('kanat acikligi olculen degeri asmaz', () => {
     const span = axis === 'front' ? flat.maxU - flat.minU : flat.maxV - flat.minV;
     assert.ok(span <= 20.01, `${axis} acikligi ${span}`);
   }
+});
+
+test('dikey parca yandan ve onden genisligini korur', () => {
+  // TB2'nin taret kuresi ilk dikey pod; onceki surumde sifir genislikte cizgiydi.
+  const parts = buildParts(TB2, {length_m: 6.4, wingspan_m: 12, height_m: 2.2});
+  assert.ok(parts);
+  const turret = parts.find((part) => part.id === 'sensor-turret');
+  assert.ok(turret);
+  for (const axis of ['front', 'side'] as const) {
+    const flat = projectBounds([turret], axis);
+    assert.ok(flat);
+    const width = flat.maxU - flat.minU;
+    const height = flat.maxV - flat.minV;
+    assert.ok(width > height * 0.9, `${axis}: taret ${width} genislikte, ${height} yukseklikte`);
+  }
+});
+
+test('kaymasiz govdenin uctan gorunusu profilin kendisi — icbukey kalir', () => {
+  // AKINCI'nin olculen kesiti alt yarida iceri girer; zarf bunu duzlestirirdi.
+  const parts = buildParts(AKINCI, {length_m: 12.3, wingspan_m: 20});
+  assert.ok(parts);
+  const body = parts.find((part) => part.kind === 'body');
+  assert.ok(body?.kind === 'body' && body.spec.section);
+  const outline = projectParts([body], 'front')[0];
+  const points = outline.path.split(' L ').length;
+  assert.equal(points, body.spec.section.length * 2 - 2);
 });

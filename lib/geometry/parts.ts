@@ -43,6 +43,20 @@ export interface LatheStation {
   y: number;
   /** Yaricap, metre. */
   radius: number;
+  /** Kesit profilinin üst yarısı için yerel çarpan; varsayılan 1. */
+  upperScale?: number;
+  /** Kesit profilinin alt yarısı için yerel çarpan; varsayılan 1. */
+  lowerScale?: number;
+  /**
+   * Kesit merkezinin yerel dikey eksende (u) kayması, metre; varsayılan 0.
+   *
+   * Gövde ekseni her zaman düz değil: TB2'nin burnu üst çizginin epey
+   * altında bitiyor, arka gövde ise pervane göbeğine doğru yükseliyor.
+   * Yalnız üst ve alt çarpanla bu ifade edilemez — burun ucunda yarıçap
+   * sıfıra gider ve çarpanın taşıyacağı bir uzanım kalmaz. Yalnız kesit
+   * profili olan gövdede uygulanır (build3d dönel yolda reddeder).
+   */
+  lift?: number;
 }
 
 /**
@@ -181,8 +195,33 @@ export interface DiscPart {
   radius: number;
   hubRadius: number;
   bladeCount: number;
+  /**
+   * Ilk kanadin acisi, derece; 0 yerel dikey eksen (u). Bir bicim degil,
+   * bir durus: kaynak gorselin park durusuyla ayni cizilsin diye.
+   */
+  bladePhaseDeg?: number;
   bladeChord: number;
   thickness: number;
+  /** Verilirse kanatlar kutu değil, yüzeylerle aynı lofting ile kurulur. */
+  blade?: DiscBlade;
+}
+
+/**
+ * Pervane kanadının yüzeyi.
+ *
+ * Kesit `panelSection`: yuvarlak hücum kenarı, sivri firar kenarı,
+ * simetrik. Kutu kanat hiçbir pervanede bulunmayan bir biçimdi; belirli
+ * bir profil yine İDDİA EDİLMEZ (§9), kamburluk ve burulma çizilmez.
+ *
+ * Yerel çerçeve: `span` göbek ekseninden yarıçap, `offset` hücum
+ * kenarının hatve ekseninden veçhe yönünde uzaklığı, `rise` kullanılmaz.
+ * Veçhe yönü (hücumdan firara) önce disk düzleminde, kanat açısının
+ * ARTTIĞI teğet yönündedir; sonra `angleDeg` kadar disk normaline (+eksen)
+ * yatırılır. Pozitif açıda firar kenarı +eksen tarafına düşer.
+ */
+export interface DiscBlade {
+  stations: PanelStation[];
+  angleDeg: number;
 }
 
 /** Cubuk: inis takimi bacagi, pilon. Iki ucu cerceve koordinatinda. */
@@ -207,6 +246,18 @@ export interface BoomPart {
   start: Vec3;
   length: number;
   radius: number;
+  /** Arka uç yarıçapı; verilmezse ön uçla aynı. */
+  endRadius?: number;
+  /** Dikey yarıçapın yatay yarıçapa oranı; 1 dairesel kesit. */
+  aspect?: number;
+  /**
+   * Arka ucun ön uca göre dikey (+X) kayması, metre; varsayılan 0.
+   *
+   * Kesitler gövde eksenine dik kalır, kiriş yalnız eğilir. TB2'nin
+   * kirişi kanattan kuyruğa doğru hafifçe yükseliyor; yatay bir kiriş
+   * ya kanada ya kuyruk köküne oturmazdı.
+   */
+  endLift?: number;
 }
 
 export type Part =
@@ -347,14 +398,25 @@ function latheBounds(part: PlacedLathe, into: Bounds): Bounds {
   const extent = sectionExtent(part.spec);
 
   for (const station of part.spec.stations) {
-    const center = add(part.origin, axis, station.y);
+    const center = add(add(part.origin, axis, station.y), u, station.lift ?? 0);
     const rv = station.radius * extent.width;
 
     for (const sv of [-1, 1]) {
-      growBounds(into, add(add(center, u, station.radius * extent.up), v, rv * sv));
       growBounds(
         into,
-        add(add(center, u, -station.radius * extent.down), v, rv * sv)
+        add(
+          add(center, u, station.radius * extent.up * (station.upperScale ?? 1)),
+          v,
+          rv * sv
+        )
+      );
+      growBounds(
+        into,
+        add(
+          add(center, u, -station.radius * extent.down * (station.lowerScale ?? 1)),
+          v,
+          rv * sv
+        )
       );
     }
   }
@@ -424,6 +486,50 @@ export function panelSection(station: PanelStation): Vec3[] {
   return points;
 }
 
+/**
+ * Pervane kanatlarının istasyon halkaları, çerçeve koordinatında:
+ * [kanat][istasyon][nokta]. `blade` yoksa boş.
+ *
+ * Üç tüketici aynı halkayı okur — build3d loft eder, project2d zarfını
+ * alır, sınır kutusu büyür — ki kanat iki katmanda ayrışamasın.
+ */
+export function discBladeRings(part: DiscPart): Vec3[][][] {
+  if (!part.blade || part.bladeCount <= 0) return [];
+  const {axis, u, v} = frame(part.orientation);
+  const angle = (part.blade.angleDeg * Math.PI) / 180;
+  const blades: Vec3[][][] = [];
+
+  for (let i = 0; i < part.bladeCount; i++) {
+    const spin =
+      ((part.bladePhaseDeg ?? 0) * Math.PI) / 180 + (i * 2 * Math.PI) / part.bladeCount;
+    const radialDir = add(add(vec3(), u, Math.cos(spin)), v, Math.sin(spin));
+    const tangent = add(add(vec3(), u, -Math.sin(spin)), v, Math.cos(spin));
+    const chordDir = add(add(vec3(), tangent, Math.cos(angle)), axis, Math.sin(angle));
+    /*
+     * Kalınlık yönü radyal × veçhe: yerel (açıklık, veçhe, kalınlık) üçlüsü
+     * yüzeylerdeki gibi sağ elli kalır, loft sarımı dışa bakar.
+     */
+    const normal = vec3(
+      radialDir.y * chordDir.z - radialDir.z * chordDir.y,
+      radialDir.z * chordDir.x - radialDir.x * chordDir.z,
+      radialDir.x * chordDir.y - radialDir.y * chordDir.x
+    );
+
+    blades.push(
+      part.blade.stations.map((station) =>
+        panelSection(station).map((local) =>
+          add(
+            add(add(part.center, radialDir, local.x), chordDir, local.y),
+            normal,
+            local.z
+          )
+        )
+      )
+    );
+  }
+  return blades;
+}
+
 /** Butun istasyonlarin kontur noktalari — sinir ve izdusum bunu okur. */
 function panelPoints(part: PanelPart): Vec3[] {
   const points = part.stations.flatMap(panelSection);
@@ -478,6 +584,10 @@ function discBounds(part: DiscPart, into: Bounds): Bounds {
       }
     }
   }
+  // Açılı kanat disk kalınlığının dışına taşabilir.
+  for (const blade of discBladeRings(part)) {
+    for (const ring of blade) for (const point of ring) growBounds(into, point);
+  }
   return into;
 }
 
@@ -505,13 +615,24 @@ export function partBounds(part: Part, into: Bounds = emptyBounds()): Bounds {
       return discBounds(part, into);
     case 'strut':
       return capsuleBounds(part.from, part.to, part.radius, into);
-    case 'boom':
-      return capsuleBounds(
-        part.start,
-        add(part.start, vec3(0, 1, 0), part.length),
-        part.radius,
-        into
-      );
+    case 'boom': {
+      const aspect = part.aspect ?? 1;
+      for (const [point, radius] of [
+        [part.start, part.radius],
+        [boomEnd(part), part.endRadius ?? part.radius]
+      ] as const) {
+        // Düz kapaklı silindir: eksen boyunca uçlar taşmaz, kapsül değil.
+        growBounds(
+          into,
+          vec3(point.x - radius * aspect, point.y, point.z - radius)
+        );
+        growBounds(
+          into,
+          vec3(point.x + radius * aspect, point.y, point.z + radius)
+        );
+      }
+      return into;
+    }
   }
 }
 
@@ -559,35 +680,52 @@ export function partExtent(part: Part): {from: Vec3; to: Vec3} {
       };
     }
     case 'disc': {
-      const {u} = frame(part.orientation);
-      return {from: part.center, to: add(part.center, u, part.radius)};
+      /*
+       * Ilk kanat boyunca. Onceki surum hep yerel dikeyi (u) kullaniyordu;
+       * TB2'nin kanatlari yatay park ettigi icin etiket bos havada, gobegin
+       * 0,57 m ustunde kaliyordu.
+       */
+      const {u, v} = frame(part.orientation);
+      const phase = ((part.bladePhaseDeg ?? 0) * Math.PI) / 180;
+      const direction = add(add(vec3(), u, Math.cos(phase)), v, Math.sin(phase));
+      return {from: part.center, to: add(part.center, direction, part.radius)};
     }
     case 'strut':
       return {from: part.from, to: part.to};
     case 'boom':
-      return {
-        from: part.start,
-        to: add(part.start, vec3(0, 1, 0), part.length)
-      };
+      return {from: part.start, to: boomEnd(part)};
   }
+}
+
+/** Kirişin arka ucu: eksen boyunca uzunluk, üstüne dikey kayma. */
+export function boomEnd(part: BoomPart): Vec3 {
+  return add(
+    add(part.start, vec3(0, 1, 0), part.length),
+    vec3(1, 0, 0),
+    part.endLift ?? 0
+  );
+}
+
+/** Dönel parçanın t oranına en yakın istasyonu. */
+function stationAt(part: BodyPart | PodPart, t: number): LatheStation | undefined {
+  const stations = part.spec.stations;
+  if (stations.length === 0) return undefined;
+  const first = stations[0].y;
+  const last = stations[stations.length - 1].y;
+  const y = first + (last - first) * t;
+  let best = stations[0];
+  for (const station of stations) {
+    if (Math.abs(station.y - y) < Math.abs(best.y - y)) best = station;
+  }
+  return best;
 }
 
 /** Parcanin o noktadaki yaricapi — etiket ofseti bunu kullanir. */
 function radiusAt(part: Part, t: number): number {
   switch (part.kind) {
     case 'body':
-    case 'pod': {
-      const stations = part.spec.stations;
-      if (stations.length === 0) return 0;
-      const first = stations[0].y;
-      const last = stations[stations.length - 1].y;
-      const y = first + (last - first) * t;
-      let best = stations[0];
-      for (const station of stations) {
-        if (Math.abs(station.y - y) < Math.abs(best.y - y)) best = station;
-      }
-      return best.radius;
-    }
+    case 'pod':
+      return stationAt(part, t)?.radius ?? 0;
     case 'panel':
       // Etiket ofseti: kok kalinligi, yuzeyin kendi olcegi.
       return part.stations[0]?.thickness ?? 0;
@@ -625,10 +763,18 @@ export function partAnchor(
   if ((part.kind === 'body' || part.kind === 'pod') && angleDeg !== undefined) {
     const {u, v} = frame(part.orientation);
     const extent = sectionExtent(part.spec);
+    const station = stationAt(part, t);
     const a = (angleDeg * Math.PI) / 180;
     const cos = Math.cos(a);
+    const scale =
+      cos >= 0 ? (station?.upperScale ?? 1) : (station?.lowerScale ?? 1);
     return add(
-      add(base, u, cos * radius * (cos >= 0 ? extent.up : extent.down)),
+      add(
+        base,
+        u,
+        (station?.lift ?? 0) +
+          cos * radius * scale * (cos >= 0 ? extent.up : extent.down)
+      ),
       v,
       Math.sin(a) * radius * extent.width
     );

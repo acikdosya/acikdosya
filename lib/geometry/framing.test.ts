@@ -101,3 +101,10 @@ test('kanat acikligi govdeden uzunsa kadraj acikliga gore kurulur', () => {
   const seen = halfExtents(goal.position.distanceTo(goal.target));
   assert.ok(seen.width >= akinci.reach, 'kanat ucu kesiliyor');
 });
+
+test('genel gorunum burun ve yandan uc ceyrek aci verir', () => {
+  const goal = goalFor(akinci, {kind: 'overview'}, undefined, FOV, ASPECT);
+  assert.ok(goal.position.x > 0, 'burun tarafi kadrajda yok');
+  assert.ok(goal.position.z > 0, 'yan taraf kadrajda yok');
+  assert.ok(goal.position.y > 0, 'ust yuzeyler kadrajda yok');
+});

@@ -111,6 +111,23 @@ function ProvenanceBlock({
         })}
       </p>
 
+      {/*
+        Cizilmeyen dis parcalar (CLAUDE.md §9). Orana degil parcaya ait;
+        koken isareti tasimaz.
+      */}
+      {product.omitted && product.omitted.length > 0 ? (
+        <div className={styles.omitted}>
+          <p className={styles.omittedLabel}>{t('omittedLabel')}</p>
+          <ul className={styles.omittedList}>
+            {product.omitted.map((item) => (
+              <li key={item.tr} className={styles.omittedItem}>
+                {item[locale]}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
       <dl className={styles.list}>
         {sorted.map(([key, ratio]) => (
           <div key={key} className={styles.row}>

@@ -9,7 +9,7 @@ Bu dosya projenin kalıcı bağlamıdır. Her oturumda geçerlidir. Bir karar bu
 
 **Ne:** Az sayıda Türk savunma sanayii sistemini derinlemesine anlatan,
 animasyonlu ve interaktif bir dijital dosya. "İnteraktif müze vitrini."
-Yayında dört dosya var: TAYFUN, ATMACA, AKINCI, SİPER.
+Yayında beş dosya var: TAYFUN, ATMACA, AKINCI, SİPER, Bayraktar TB2.
 
 **Ne değil:**
 - Ansiklopedi/veri tabanı değil. 300 ürünlük katalog kurmuyoruz — bu alanda
