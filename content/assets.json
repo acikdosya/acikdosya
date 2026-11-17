@@ -420,6 +420,25 @@
       "notes": "Bayraktar TB2 dış profili ve oranları. Ölçek güncel ürün sayfasındaki kaynaklı boyutlardan gelir; KeyShotXR karelerinden okunan oranlar 'reading', görülemeyen ayrıntılar 'chosen'. 17.11.2026'da kareler piksel düzeyinde yeniden okundu: gövde %60'ta küt bitiyor, arkasında paraboloit göbek konisi; kuyruğu kirişler taşıyor; kanat orta-alçak, 4,9° dihedral. Pervane kanadı düz firar kenarlı, uca incelen ve 19° açılı loft yüzey; kiriş ön ucu kanat hücum kenarında sivrilen kaplamayla biter. Kanat ucu kesik, kanat tek yüzey; yük istasyonları çizilmiyor (karelerde mühimmat yüklü). Ters V kuyruk tek parça, kökü kirişin üstünde. Sabit kamerayla siluet örtüşmesi dokuz karede ortalama 0,39'dan 0,84'e çıktı (karelerdeki dış yükler modellenmediği için tam örtüşme beklenmez). İzdüşüm sınavı yapılmadı. Hazır model veya kaynak görsel repoya alınmadı; mühimmat geometrisi üretilmez."
     },
     {
+      "id": "geometry-parametric-kizilelma",
+      "file": "lib/geometry/kizilelma.ts",
+      "kind": "3d",
+      "origin": "own",
+      "presence": "committed",
+      "license": "All rights reserved — kendi çalışmamız",
+      "author": "Açık Dosya",
+      "source_url": null,
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": true,
+      "modifications_allowed": true,
+      "acquired_at": "2026-11-17",
+      "used_in": [
+        "lib/geometry/registry.ts"
+      ],
+      "notes": "Bayraktar KIZILELMA dış profili ve oranları. Ölçek güncel ürün sayfasındaki boyutlardan (14,5 m, 10 m, 3,5 m). KeyShotXR'ın 18 karesinden görsel zarf kuruldu (zarfın karelere geri izdüşümünde örtüşme 0,955–0,984: ortografik, yatay, 20° adım); gövde kesitleri istasyon başına anahtar kesit olarak bu zarftan. Uç köşeleri karelerin uç noktalarından üçgenlendi. Kanat ve kanard planformu silüetten okunamıyor: hücum kenarları 0_7 karesindeki parlak kenar çizgilerinden 'reading' (varsayımı notunda), firar kenarları 'chosen'. Takım yayımlanan yükseklikten türer; karelerde yükseklik %4,6 fazla. Sabit kamerayla 18 karede ortalama siluet örtüşmesi 0,889 (takım hariç 0,939). İzdüşüm sınavı yapılmadı; oranlar 'reading' ve 'chosen'. Hazır model veya kaynak görsel repoya alınmadı; mühimmat geometrisi üretilmez."
+    },
+    {
       "id": "tb2-turntable-refs",
       "file": null,
       "kind": "reference",
@@ -451,7 +470,7 @@
       "modifications_allowed": false,
       "acquired_at": "2026-11-17",
       "used_in": [],
-      "notes": "BAYKAR KIZILELMA ürün sayfasındaki KeyShotXR gösterisinin 18 PNG karesi (1919×1199, saydam zemin, 20° adım; 0_0 arka, 0_9 ön). GLB/GLTF veya başka bir geometri dosyası değildir (REA, 17.11.2026). Yerel kopyalar CDN'deki karelerle bayt düzeyinde aynı (0_0, 0_4, 0_9 sha256 karşılaştırması). Ön ve arka görünüşün siluetleri birbirinin aynası (örtüşme 0,9998, 9 px): gösteri ortografik ve yatay kamerayla çekilmiş görünüyor; aynı gösterinin kareleri olduğu için §9'daki izdüşüm sınavı sayılmadı. Kanat açıklığı 1014 px; bu ölçekle yükseklik 3,69 m (yayımlanan 3,5 m). Model ikinci adımda; görsellerin kendisi repoya kopyalanmadı ve yayımlanmadı."
+      "notes": "BAYKAR KIZILELMA ürün sayfasındaki KeyShotXR gösterisinin 18 PNG karesi (1919×1199, saydam zemin, 20° adım; 0_0 arka, 0_9 ön). GLB/GLTF veya başka bir geometri dosyası değildir (REA, 17.11.2026). Yerel kopyalar CDN'deki karelerle bayt düzeyinde aynı (0_0, 0_4, 0_9 sha256 karşılaştırması). Ön ve arka görünüşün siluetleri birbirinin aynası (örtüşme 0,9998, 9 px): gösteri ortografik ve yatay kamerayla çekilmiş görünüyor; aynı gösterinin kareleri olduğu için §9'daki izdüşüm sınavı sayılmadı. Kanat açıklığı 1014 px; bu ölçekle yükseklik 3,69 m (yayımlanan 3,5 m). Okumalar lib/geometry/kizilelma.ts içinde; 18 karenin hepsi görsel zarfa girdi. Görsellerin kendisi repoya kopyalanmadı ve yayımlanmadı."
     },
     {
       "id": "atmaca-catalogue-ref",

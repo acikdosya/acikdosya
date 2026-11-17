@@ -3,7 +3,8 @@ import {
   discBladeRings,
   panelPointToFrame,
   panelSection,
-  sectionExtent,
+  stationExtents,
+  stationSections,
   vec3,
   type BoomPart,
   type DiscPart,
@@ -159,7 +160,15 @@ function latheOutline(
 ): Point2[] {
   const local = localFrame(part.orientation);
   const endOn = Math.abs(dot(local.axis, basis.normal)) > 0.999;
-  const extent = sectionExtent(part.spec);
+  /*
+   * Uzanim ISTASYON BASINA: anahtar kesitli govdede burun ile lule ayni
+   * profili tasimaz. Tek profilli govdede hepsi ayni deger (stationExtents).
+   */
+  const extents = stationExtents(part.spec);
+  const extentOf = (station?: LatheStation) => {
+    const index = station ? part.spec.stations.indexOf(station) : -1;
+    return extents[index >= 0 ? index : 0];
+  };
 
   /*
    * Kesitin ekran eksenlerine katkisi. `local.u` kesitin DIKEY ekseni,
@@ -171,23 +180,25 @@ function latheOutline(
   const reach = (r: number, sign: 1 | -1, station?: LatheStation) =>
     r *
     (sign > 0
-      ? extent.up * (station?.upperScale ?? 1)
-      : extent.down * (station?.lowerScale ?? 1));
+      ? extentOf(station).up * (station?.upperScale ?? 1)
+      : extentOf(station).down * (station?.lowerScale ?? 1));
   const pushU = (r: number, sign: 1 | -1, station?: LatheStation) =>
     Math.abs(dot(local.u, basis.u)) * reach(r, sign, station) +
-    Math.abs(dot(local.v, basis.u)) * r * extent.width;
+    Math.abs(dot(local.v, basis.u)) * r * extentOf(station).width;
   const pushV = (r: number, sign: 1 | -1, station?: LatheStation) =>
     Math.abs(dot(local.u, basis.v)) * reach(r, sign, station) +
-    Math.abs(dot(local.v, basis.v)) * r * extent.width;
+    Math.abs(dot(local.v, basis.v)) * r * extentOf(station).width;
 
   if (endOn) {
-    const profile = part.spec.section;
+    const sections = stationSections(part.spec);
 
-    if (profile && profile.length > 1) {
-      const ring: Array<{v: number; w: number}> = [
+    if (sections && sections[0].length > 1) {
+      const ringOf = (profile: readonly {v: number; w: number}[]) => [
         ...profile,
         ...profile.slice(1, -1).reverse().map((p) => ({v: p.v, w: -p.w}))
       ];
+      const ring = ringOf(sections[0]);
+      const keyed = part.spec.stations.some((s) => s.section !== undefined);
 
       /*
        * Kayma ve carpan yoksa butun kesitler en genis kesitin icinde ve
@@ -195,12 +206,14 @@ function latheOutline(
        * yarisindaki daralma) oldugu gibi kalir. Zarf burada profili
        * duzlestirirdi.
        */
-      const uniform = part.spec.stations.every(
+      const uniform =
+        !keyed &&
+        part.spec.stations.every(
         (station) =>
           (station.lift ?? 0) === 0 &&
           (station.upperScale ?? 1) === 1 &&
           (station.lowerScale ?? 1) === 1
-      );
+        );
       if (uniform) {
         const radius = Math.max(...part.spec.stations.map((s) => s.radius));
         return ring.map((point) =>
@@ -217,13 +230,13 @@ function latheOutline(
        * Kesitler birbirini tasmadan sariyorsa dogru — TB2'de oyle.
        */
       const points: Point2[] = [];
-      for (const station of part.spec.stations) {
+      for (const [index, station] of part.spec.stations.entries()) {
         const centre = add(
           add(part.origin, local.axis, station.y),
           local.u,
           station.lift ?? 0
         );
-        for (const point of ring) {
+        for (const point of ringOf(sections[index])) {
           const scale =
             point.v >= 0 ? (station.upperScale ?? 1) : (station.lowerScale ?? 1);
           points.push(

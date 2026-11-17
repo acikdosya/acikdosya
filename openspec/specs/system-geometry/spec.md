@@ -57,6 +57,12 @@ Gövde **tek çapla sınırlanmamalıdır** (MUST NOT). Bir bölümü ötekinden
 gövdeler — ayrılabilir itici taşıyan füzeler gibi — kademe ve geçiş bölgesiyle
 birlikte aynı tanımla ifade edilebilmelidir.
 
+Gövde **tek kesit biçimiyle de sınırlanmamalıdır** (MUST NOT). Kesiti eksen boyunca
+biçim değiştiren gövde — köşeli bir burundan yuvarlak bir lüleye geçen gibi — anahtar
+kesitler ve aralarındaki geçişle aynı tanımdan türetilmelidir (MUST). Geçiş, kesitin
+köşesini yuvarlamamalıdır (MUST NOT): köşe, kesitin taşıdığı bilgidir. Üç boyutlu
+model, iki boyutlu şema ve sınır kutusu aynı geçişi okumalıdır (MUST).
+
 #### Scenario: Farklı kuyruk topolojisi
 
 - **WHEN** çift kirişli ve V kuyruklu bir hava aracı için ürün tanımı yazılır
@@ -87,6 +93,19 @@ birlikte aynı tanımla ifade edilebilmelidir.
 - **WHEN** burun, ayrı bir radom bölümü taşıyorsa
 - **THEN** bölüm sınırı oran tablosunda bir istasyon olarak durur ve ortografik
   izdüşümde de görünür
+
+#### Scenario: Kesiti biçim değiştiren gövde
+
+- **WHEN** bir gövdenin burnu köşeli, arka ucu yuvarlak kesit taşıyor
+- **THEN** iki kesit anahtar olarak tanımlanır, aradaki istasyonlar onların geçişidir;
+  köşe geçiş boyunca köşe olarak kalır ve model ile şema aynı kesitleri çizer
+
+#### Scenario: Geçersiz anahtar kesit
+
+- **WHEN** anahtar kesitler farklı nokta sayısı taşıyor ya da gövde hem tek profil
+  hem anahtar kesit tanımlıyor
+- **THEN** parça listesi kurulmaz ve hata hangi kuralın bozulduğunu söyler
+
 ### Requirement: Sınır ve kadraj parça listesinden türetilir
 
 Modelin sınır kutusu ve kamera kadrajı parça listesinden türetilmelidir (MUST). Sahne

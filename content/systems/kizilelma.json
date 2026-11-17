@@ -614,6 +614,59 @@
           "verified_at": "2026-11-17"
         }
       },
+      "annotations": [
+        {
+          "id": "burun",
+          "part": "body",
+          "t": 0.05,
+          "angle": 90,
+          "label": {
+            "tr": "Köşeli burun",
+            "en": "Chined nose"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kanard",
+          "part": "canard-1",
+          "t": 0.55,
+          "label": {
+            "tr": "Kanard",
+            "en": "Canard"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kanat",
+          "part": "wing-1",
+          "t": 0.6,
+          "label": {
+            "tr": "Kanat",
+            "en": "Wing"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "kuyruk",
+          "part": "tail-1",
+          "t": 0.6,
+          "label": {
+            "tr": "Dışa yatık dikey kuyruk",
+            "en": "Canted vertical tail"
+          },
+          "confidence": "official"
+        },
+        {
+          "id": "lule",
+          "part": "nozzle",
+          "t": 0.5,
+          "label": {
+            "tr": "Lüle",
+            "en": "Nozzle"
+          },
+          "confidence": "official"
+        }
+      ],
       "_todo": [
         "KIZILELMA-A/B/CA/CB/D adlari uretici sayfasinda geciyor ama varyanta ozgu olcu kaydi yok; genel beyanlar bu varyantlara otomatik atanmadi.",
         "Uretici sayfasi 'Gelismis Ozellikler' altinda kisa pistli ucak gemilerinden kalkis ve inis kabiliyetini sayiyor; ayni sayfanin genel bilgiler metni bu yonde 'calismalarin surdurulmekte' oldugunu soyluyor. Ozellik olarak yazilmadi.",

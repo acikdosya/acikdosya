@@ -1,5 +1,6 @@
 import {AKINCI} from './akinci';
 import {ATMACA} from './atmaca';
+import {KIZILELMA} from './kizilelma';
 import type {AnyProduct} from './product';
 import {SIPER_URUN_1} from './siper-urun-1';
 import {SIPER_URUN_2} from './siper-urun-2';
@@ -35,6 +36,7 @@ const PRODUCTS = new Map<string, AnyProduct>([
   ['atmaca', ATMACA as AnyProduct],
   ['akinci', AKINCI as AnyProduct],
   ['tb2', TB2 as AnyProduct],
+  ['kizilelma', KIZILELMA as AnyProduct],
   /*
    * SIPER iki varyanti AYRI tanim tasiyor: Urun-1'de ayrilabilir itici ve
    * orta kanat, Urun-2'de govde boyu strake. Uretici cizimi ikisini acikca

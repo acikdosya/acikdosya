@@ -2,11 +2,14 @@ import * as THREE from 'three';
 import {
   bodyRadiusOf,
   discBladeRings,
+  isSectioned,
   panelSection,
   partsBounds,
   primaryBody,
+  stationSections,
   type Vec3,
   type LatheSpec,
+  type SectionPoint,
   type Bounds,
   type DiscPart,
   type PanelPart,
@@ -182,21 +185,30 @@ function circularGeometry(spec: LatheSpec, segments: number) {
  * hali.
  */
 function sectionGeometry(spec: LatheSpec, segments: number) {
-  const profile = spec.section ?? [];
+  /*
+   * Istasyon basina profil: tek profilli govdede hepsi ayni, anahtar
+   * kesitli govdede ara istasyonlar gecis (parts.ts stationSections).
+   * Nokta sayisi her istasyonda ayni oldugu icin halkalar dogrudan
+   * birlesir.
+   */
+  const sections = stationSections(spec) ?? [];
   // Kapali kesit: alttan uste sag kenar, sonra ustten alta sol kenar.
-  const ring: Array<{u: number; w: number}> = [];
-  for (const point of profile) ring.push({u: point.v, w: point.w});
-  for (let i = profile.length - 2; i >= 1; i--) {
-    ring.push({u: profile[i].v, w: -profile[i].w});
-  }
+  const ringOf = (profile: readonly SectionPoint[]) => {
+    const ring: Array<{u: number; w: number}> = [];
+    for (const point of profile) ring.push({u: point.v, w: point.w});
+    for (let i = profile.length - 2; i >= 1; i--) {
+      ring.push({u: profile[i].v, w: -profile[i].w});
+    }
+    return ring;
+  };
 
   const positions: number[] = [];
   const indices: number[] = [];
-  const count = ring.length;
+  const count = sections.length > 0 ? ringOf(sections[0]).length : 0;
 
-  for (const station of spec.stations) {
+  for (const [index, station] of spec.stations.entries()) {
     const radius = Math.max(station.radius, 0.0005);
-    for (const point of ring) {
+    for (const point of ringOf(sections[index])) {
       const verticalScale =
         point.u >= 0 ? (station.upperScale ?? 1) : (station.lowerScale ?? 1);
       positions.push(
@@ -275,7 +287,7 @@ class Builder {
 
   addLathe(part: Extract<Part, {kind: 'body' | 'pod'}>) {
     const geometry = this.own(
-      part.spec.section
+      isSectioned(part.spec)
         ? sectionGeometry(part.spec, this.segments.body)
         : circularGeometry(part.spec, this.segments.body)
     );

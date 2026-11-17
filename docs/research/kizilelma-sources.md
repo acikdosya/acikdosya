@@ -118,31 +118,71 @@ teslimatları bu yıl yapmayı hedefliyoruz" sözü ve Baykar'ın anlaşmayı "t
 yurt içi teslimatlar tamamlanana kadar" beklettiği. İkincisi teslimat olmuş gibi
 okunuyor, birincisi henüz olmadığını söylüyor; takvime yazılmadı.
 
-## Karelerden ilk okumalar
+## Parametrik model
 
-Model ikinci adımda. Bu okumalar onun başlangıç noktası; hiçbiri içeriğe sayı olarak
-girmedi.
+Model `lib/geometry/kizilelma.ts` içinde, parça kitinden üretilir. Hazır model
+kullanılmadı; kaynak görseller depoya alınmadı.
+
+### Okuma düzeni
 
 - **Kareler.** 1919×1199 RGBA, saydam zemin, 20° adım: 0_0 arka, 0_9 ön. Tam yan
   görünüş yok, en yakınları 0_4 (80°) ve 0_5 (100°).
-- **Kamera.** Ön ve arka siluet birbirinin aynası (örtüşme 0,9998, 9 px): kamera
-  ortografik ve yatay. Aynı gösterinin kareleri olduğu için §9'daki izdüşüm sınavı
-  sayılmadı. k ile 18−k kare çiftleri ayna simetrik (0,989–0,995).
-- **Dönme ekseni.** Ekseni gövde ortasından yana ~0,6 m kayık (ön ve arka görünüşte
-  orta çizgi 897,5 ve 1020,5 px, görüntü merkezi 959 px). Okumada düzeltilecek.
-- **Ölçek.** Kanat açıklığı 1014 px ≈ 10 m, yani 101,4 px/m.
-- **Uzunluk.** 80° ve 100° karelerindeki burun ucundan 14,5–14,65 m çıkıyor; yayımlanan
-  14,5 m ile uyumlu. Alt sınır, en arka noktanın orta çizgide olup olmadığına bağlı.
-- **Yükseklik: 374–375 px, 3,69 m; yayımlanan 3,5 m (+%5,4).** Modelin dikey ölçüsü
-  tablodaki değerle örtüşmeyecek; sebebi model sayfasında yazılacak (§9).
-- **Planform.** Kamera hiç yukarıdan bakmıyor, kanat ve kanard planformu görünmüyor.
-  Ok açısı birden çok azimuttan uç noktalarının üçgenlenmesiyle çıkarılacak.
-- **Dış biçim.** Köşeli (chine) burun, burun altında iki yan hava alığı, alığın
-  yanında alçak kanard, ince orta kanat, dışa yatık çift dikey kuyruk, tek yuvarlak
-  lüle, üç tekerli iniş takımı. Karelerde dış yük yok.
-- **Parça kiti.** Gövde kesiti boyunca değişiyor: elmas burun, alıklı geniş orta
-  gövde, yuvarlak lüle. `LatheSpec.section` bugün tek profil taşıyor; istasyon başına
-  profil gerekecek. Kanard, kanat, yatık kuyruk ve takım mevcut `panel`, `strut` ve
-  `pod` ile ifade edilebilir.
+- **Görsel zarf.** 18 karenin silüetinden kuruldu: her karede silüete düşmeyen
+  hacim oyuldu, 2 px voksel. Zarf her kareye geri izdüşürüldüğünde örtüşme
+  0,955–0,984. Bu, kameranın ortografik ve yatay olduğunu, adımın tam 20° ve dönme
+  ekseninin 959. sütunda olduğunu gösteriyor. Eksen gövde ortasından yana ~61,5 px
+  kayık: ön ve arka görünüşte orta çizgi 897,5 ve 1020,5 px. Aynı gösterinin
+  kareleri olduğu için §9'daki izdüşüm sınavı sayılmadı; oranlar `reading` ve
+  `chosen`.
+- **Ölçek.** Burun ucundan en arka noktaya 1482 px, kanat açıklığı 1013 px; uzunluk
+  oranı 1,463, yayımlanan 1,45. Boyuna ve dikey oranlar 1482'ye, yanal oranlar
+  açıklığa bölünür. Dikey referans 561. satır: en derin kesitin (sırt 490, taban
+  632) ortası.
+- **Yükseklik.** Karelerde 374 px: uzunluk ölçeğiyle 3,66 m (+%4,6), açıklık
+  ölçeğiyle 3,69 m (+%5,4); yayımlanan 3,5 m. Dikeyde dış uyum düşüyor. Takım boyu
+  yayımlanan yükseklikten türer (TB2 emsali); bacaklar karelerdekinden 0,16 m kısa.
+  Sayfada biçim kaydının başında yazılı.
+
+### Okunanlar
+
+- **Gövde.** Zarfın dikey kesitlerinden istasyon istasyon: sırt kubbesi, köşe (chine)
+  rafı, hava alıklarını içeren düz tabanlı alt gövde. Burunda kutu daralıp kesit
+  elmasa döner; arkada kubbe lüleye doğru daralır. Her istasyon kendi anahtar
+  kesitini taşır (dokuz nokta, i. nokta hep aynı kenar). Zarf kesitlerinde kanat
+  kökü ve kuyruklardan kalan ince "hayalet" bantlar var; kademe satırları bu yüzden
+  ±4 px belirsiz. Burun bölgesindeki enler zarfın 20°'lik kenarı, yani üst sınır.
+- **Kanat.** Uç köşeleri üçgenlendi: hücum kenarı 1066 px (iki kare arasında 1,3 px
+  fark), firar kenarı 1168–1175 px (dört kare). Orta düzlem 570. satırda ve açıklık
+  boyunca düz, dihedral yok; kalınlık 24 → 4 px. Planform silüetten okunamıyor.
+  Hücum kenarı 0_7 karesinde gövdeye u ≈ −64 px'te giren açık renkli bir çizgi
+  (aynası 0_11 ile 4 px içinde). Giriş noktası köşe yarım eninde (126 px) varsayılınca
+  ok 44,5° çıkıyor. Firar kenarı düz seçildi.
+- **Kanard.** 544–551. satırlar, uçlar ±256 px, uç hücum kenarı 523–527 px. Hücum
+  kenarı 0_7 karesindeki parlak çizgiden okundu, 52°. Uç veteri ve firar kenarı
+  seçildi: firar köşesi kuyruk kökleriyle aynı satırlarda kalıyor.
+- **Kuyruk.** Uç köşeleri 1275–1276 / 1403–1404 px, 386–392. satırlar. Kökü 545.
+  satırda köşe rafında, ±138 px. İlk okuma kökü yan izdüşümden 520. satırda
+  başlatıyordu; o satırın altı kubbenin arkasında kalıyor ve 0_2 karesinde kök ile
+  gövde arasında boşluk bırakıyordu, düzeltildi. Dışa yatıklık 29°, yüzey
+  düzleminde hücum kenarı oku 27,5°.
+- **Lüle ve arka uzantı.** Lülenin koyu içi arka görünüşte 548–596. satırlar. Gövde
+  1432 px'te biter; lülenin altında ince bir yatay uzantı uzunluğun sonuna kadar
+  gider (598–606. satırlar, ±80 px).
+- **Takım.** Burun tekeri 341 px, ana tekerlekler 899 px ve ±146,5 px; çaplar 38 ve
+  58 px.
+
+### Doğrulama
+
+Model, karelerin sabit kamerasına izdüşürüldü; yerleştirme uydurulmadı. 18 karede
+ortalama silüet örtüşmesi **0,889**, takım hariç (640. satırın üstü) **0,939**. Yan
+görünüşlerde 0,93, ön ve arka görünüşte 0,79. Kalan farklar:
+
+- **Açık takım kapakları.** Çizilmedi; burun altındaki trapez ve ön görünüşteki
+  çapraz çizgiler bunlar.
+- **Takım boyu.** Bilerek kısaltıldı (yükseklik farkı).
+- **Kanard ve kuyruk kenarları.** Birkaç piksellik şeritler.
+
+Kubbe omzu için daha sivri iki biçim denendi, örtüşme değişmedi (0,939–0,940);
+elips kaldı.
 
 Okuma betikleri ve ara ölçümler depoya alınmadı.
