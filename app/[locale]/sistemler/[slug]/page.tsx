@@ -203,6 +203,7 @@ export default async function SystemPage({params}: Props) {
     specGroups(system).some(
       (group) =>
         group.specs.operational_range_km !== undefined ||
+        group.specs.combat_radius_nm !== undefined ||
         group.specs.range_km !== undefined
     );
   /* Halka yatay uzanimi cizer; dosyada irtifa varsa bunu lejant soyler. */

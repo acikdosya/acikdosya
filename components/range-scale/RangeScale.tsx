@@ -6,6 +6,7 @@ import {specGroups} from '@/lib/measurement/groups';
 import type {Measurement, SpecKey, System} from '@/lib/schema';
 import {axisPath, layoutRangeScale, QUARTER_MERIDIAN_KM} from './geometry';
 import styles from './RangeScale.module.css';
+import {captionKeys, RANGE_KEYS, scaleKm, valueLabel} from './values';
 
 /**
  * Menzil beyaninin mesafe cetveli — menzil zarfinin haritasiz karsiligi.
@@ -17,11 +18,9 @@ import styles from './RangeScale.module.css';
  * Client JS yok; geometri sunucuda veriden uretiliyor.
  */
 
-/** Cetvele girecek alanlar, gosterim sirasiyla. */
-const RANGE_KEYS: SpecKey[] = ['operational_range_km', 'range_km'];
-
 type Row = {
   id: string;
+  key: SpecKey;
   label: string;
   fieldLabel: string;
   measurement: Measurement;
@@ -45,6 +44,7 @@ export function RangeScale({
       if (!list) continue;
       rows.push({
         id: `${group.id}-${key}`,
+        key,
         label:
           group.kind === 'family' ? tTable('familyLabel') : group.label,
         fieldLabel: tSpecs(key),
@@ -58,7 +58,7 @@ export function RangeScale({
       id: row.id,
       label: row.label,
       fieldLabel: row.fieldLabel,
-      km: row.measurement.value
+      km: scaleKm(row.key, row.measurement.value)
     }))
   );
   if (!layout) return null;
@@ -86,23 +86,28 @@ export function RangeScale({
           />
         ) : null}
 
-        {layout.bars.map((bar) => (
-          <g key={bar.id}>
-            <text className={styles.label} x={bar.x1} y={bar.labelY}>
-              {bar.fieldLabel}
-            </text>
-            <rect
-              className={styles.bar}
-              x={bar.x1}
-              y={bar.y}
-              width={Math.max(bar.x2 - bar.x1, 1)}
-              height={bar.height}
-            />
-            <text className={styles.value} x={bar.valueX} y={bar.valueY}>
-              {t('kmLabel', {value: formatNumber(bar.km, locale)})}
-            </text>
-          </g>
-        ))}
+        {layout.bars.map((bar) => {
+          const row = byId.get(bar.id);
+          return (
+            <g key={bar.id}>
+              <text className={styles.label} x={bar.x1} y={bar.labelY}>
+                {bar.fieldLabel}
+              </text>
+              <rect
+                className={styles.bar}
+                x={bar.x1}
+                y={bar.y}
+                width={Math.max(bar.x2 - bar.x1, 1)}
+                height={bar.height}
+              />
+              <text className={styles.value} x={bar.valueX} y={bar.valueY}>
+                {row
+                  ? valueLabel(row.key, row.measurement.value, locale)
+                  : null}
+              </text>
+            </g>
+          );
+        })}
 
         <path className={styles.axis} d={axisPath(layout)} />
 
@@ -143,7 +148,11 @@ export function RangeScale({
               <span className={styles.noteHead}>
                 {row.label} · {row.fieldLabel}{' '}
                 <span className={styles.noteValue}>
-                  {formatValue(row.measurement, locale)} km
+                  {valueLabel(
+                    row.key,
+                    formatValue(row.measurement, locale),
+                    locale
+                  )}
                 </span>
                 <ConfidenceBadge confidence={row.measurement.confidence} />
               </span>
@@ -155,7 +164,12 @@ export function RangeScale({
         })}
       </ul>
 
-      <figcaption className={styles.caption}>{t('caption')}</figcaption>
+      <figcaption className={styles.caption}>
+        {captionKeys(rows.map((row) => row.key))
+          .map((key) => t(key))
+          .join(' ')}
+      </figcaption>
     </figure>
   );
 }
+

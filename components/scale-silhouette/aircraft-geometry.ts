@@ -71,6 +71,26 @@ export type AircraftItem = {
   parts?: readonly Part[];
 };
 
+/**
+ * Cizimde ne var — ekran okuyucuya soylenen sey.
+ *
+ * Dis hat yalniz parca listesi olan ogede cizilir; olmayan ogede ust ve
+ * on gorunus kesikli olcu zarfidir (layoutAircrafts). Etiket bunu
+ * kendisi bilmezse modelsiz bir dosyada "dis hat" der, ekranda ise bir
+ * kutu durur. Gorunen altyazi zaten iki durumu da anlatiyor; ekran
+ * okuyucu da cizilen seyi duymali.
+ */
+export type AircraftDrawingKind = 'outline' | 'envelope' | 'mixed';
+
+export function aircraftDrawingKind(
+  items: readonly Pick<AircraftItem, 'parts'>[]
+): AircraftDrawingKind {
+  const outlined = items.filter((item) => item.parts !== undefined).length;
+  if (outlined === items.length) return 'outline';
+  if (outlined === 0) return 'envelope';
+  return 'mixed';
+}
+
 /** Kesikli olcu zarfi — dis hat degil, sinir kutusu. */
 export type Envelope = {
   x: number;

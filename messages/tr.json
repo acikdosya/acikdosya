@@ -237,8 +237,8 @@
   },
   "RangeScale": {
     "caption": "Mesafe cetveli — yayımlanmış menzil beyanı yer ölçeğine göre çizilir. Harita üzerinde halka çizilmez: halka bir yarıçap iddiasıdır, bu değer ise üreticinin kendi terimidir.",
+    "captionRadius": "Mesafe cetveli — yayımlanmış görev yarıçapı yer ölçeğine göre çizilir. Harita üzerinde halka çizilmez: üretici görev profilini (yük, yedek yakıt, irtifa) yazmıyor; halka bu sayıyı her yöne koşulsuz geçerli bir mesafe olarak okuturdu.",
     "ariaLabel": "{names} için mesafe cetveli, ekvatordan kutba {reference} kilometrelik yer ölçüsüne göre",
-    "kmLabel": "{value} km",
     "axisUnit": "bin km",
     "reference": "ekvatordan kutba {value} km"
   },
@@ -409,6 +409,8 @@
   "ScaleSilhouette": {
     "ariaLabel": "{names} siluetleri, {height} metrelik insan figürüne göre ölçekli",
     "ariaLabelAircraft": "{names} için ölçek şeması: üst ve ön görünüşte dış hat, {height} metrelik insan figürüne göre ölçekli",
+    "ariaLabelAircraftEnvelope": "{names} için ölçek şeması: üst ve ön görünüşte kesikli ölçü zarfı, {height} metrelik insan figürüne göre ölçekli",
+    "ariaLabelAircraftMixed": "Ölçek şeması, üst ve ön görünüş: {outlined} için dış hat, {enveloped} için kesikli ölçü zarfı; {height} metrelik insan figürüne göre ölçekli",
     "caption": "Ölçekli karşılaştırma — şematik görseller yayımlanmış boyut verilerinden türetilmiştir, teknik çizim değildir.",
     "captionAircraft": "Ölçekli karşılaştırma — dış hat, üç boyutlu modelle aynı parça listesinin ortografik izdüşümüdür; ölçek yayımlanmış uzunluk, kanat açıklığı ve yükseklikten gelir. Oran tablosu olmayan bir sistem için kontur çizilmez, yerine kesikli ölçü zarfı çizilir.",
     "familyLabel": "Aile düzeyindeki beyanlar",
@@ -448,7 +450,10 @@
     "operating_altitude_ft": "Operasyonel irtifa",
     "cruise_speed_ktas": "Seyir hızı",
     "max_speed_ktas": "Azami hız",
+    "cruise_speed_mach": "Seyir hızı",
+    "max_speed_mach": "Azami hız",
     "operational_range_km": "Operasyonel menzil",
+    "combat_radius_nm": "Görev yarıçapı",
     "intercept_range_km": "Sistem önleme menzili",
     "intercept_altitude_km": "Önleme irtifası",
     "azimuth_coverage_deg": "Yanca kapsama",
