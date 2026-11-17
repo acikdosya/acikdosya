@@ -57,6 +57,21 @@ export interface LatheStation {
    * profili olan gövdede uygulanır (build3d dönel yolda reddeder).
    */
   lift?: number;
+  /**
+   * Bu istasyonun kesit profili — ANAHTAR kesit.
+   *
+   * Gövde kesiti her zaman eksen boyunca aynı biçimi taşımaz: KIZILELMA'nın
+   * burnu köşeli bir elmas, orta gövdesi hava alıklı ve yassı, arkası
+   * yuvarlak lüle. Tek profil ile çarpan bunu ifade edemez — köşe ya
+   * vardır ya yoktur. Anahtar kesitler arasındaki istasyonlar nokta nokta
+   * doğrusal geçişle kurulur (`stationSections`).
+   *
+   * Bütün anahtar kesitler AYNI nokta sayısını taşır ve i. nokta hepsinde
+   * aynı kenarı gösterir (alt orta, köşe, üst orta...). Yeniden örnekleme
+   * yapılmaz: yay boyu örneklemesi köşeyi yuvarlardı. Gövde düzeyindeki
+   * `LatheSpec.section` ile birlikte yazılamaz.
+   */
+  section?: SectionPoint[];
 }
 
 /**
@@ -356,22 +371,14 @@ function add(a: Vec3, b: Vec3, scale = 1): Vec3 {
  * `u` ekseni kesitin DIKEY yariçapini tasir (aspect burada uygulanir),
  * `v` yatay yaricapi. Donel gövdede ikisi esittir.
  */
-/**
- * Kesitin dikey uzanimi ve en genis noktasi, yarim en birimiyle.
- * Profil yoksa elips: iki yona da `aspect`.
- */
-export function sectionExtent(spec: LatheSpec): {
-  up: number;
-  down: number;
-  width: number;
-} {
-  if (!spec.section || spec.section.length === 0) {
-    return {up: spec.aspect, down: spec.aspect, width: 1};
-  }
+export type SectionExtent = {up: number; down: number; width: number};
+
+/** Tek profilin dikey uzanimi ve en genis noktasi, yarim en birimiyle. */
+function profileExtent(profile: readonly SectionPoint[]): SectionExtent {
   let up = -Infinity;
   let down = -Infinity;
   let width = 0;
-  for (const point of spec.section) {
+  for (const point of profile) {
     up = Math.max(up, point.v);
     down = Math.max(down, -point.v);
     width = Math.max(width, point.w);
@@ -379,8 +386,104 @@ export function sectionExtent(spec: LatheSpec): {
   return {up, down, width};
 }
 
+/** Istasyonlardan en az biri anahtar kesit tasiyor mu. */
+function hasStationSections(spec: LatheSpec): boolean {
+  return spec.stations.some((station) => station.section !== undefined);
+}
+
+/** Govde kesit profiliyle mi kuruluyor — tek profil ya da anahtar kesitler. */
+export function isSectioned(spec: LatheSpec): boolean {
+  return (spec.section?.length ?? 0) > 0 || hasStationSections(spec);
+}
+
+/**
+ * Her istasyonun kesit profili; profilsiz (dairesel/eliptik) govdede
+ * undefined.
+ *
+ * Tek profil varsa hepsi o profildir — mevcut urunlerin yolu, degismez.
+ * Anahtar kesit varsa ara istasyonlar iki komsu anahtarin nokta nokta
+ * dogrusal gecisidir; ilk anahtardan once ve sonuncudan sonra en yakin
+ * anahtar tasinir. Model, sema, sinir ve etiket capasi profili buradan
+ * okur: gecis tek yerde kurulur ki iki katman ayrisamasin.
+ */
+export function stationSections(
+  spec: LatheSpec
+): SectionPoint[][] | undefined {
+  if (!hasStationSections(spec)) {
+    const profile = spec.section;
+    if (!profile || profile.length === 0) return undefined;
+    return spec.stations.map(() => profile);
+  }
+  if (spec.section && spec.section.length > 0) {
+    throw new Error(
+      'govde duzeyindeki section ile istasyon kesitleri birlikte yazilamaz'
+    );
+  }
+
+  const keys = spec.stations
+    .map((station, index) => ({index, y: station.y, section: station.section}))
+    .filter(
+      (key): key is {index: number; y: number; section: SectionPoint[]} =>
+        key.section !== undefined
+    );
+  const count = keys[0].section.length;
+  if (keys.some((key) => key.section.length !== count)) {
+    throw new Error(
+      'anahtar kesitler ayni nokta sayisini tasimali — nokta i her kesitte ayni kenari gosterir'
+    );
+  }
+
+  return spec.stations.map((station, index) => {
+    if (station.section) return station.section;
+    const next = keys.findIndex((key) => key.index > index);
+    if (next === -1) return keys[keys.length - 1].section;
+    if (next === 0) return keys[0].section;
+    const a = keys[next - 1];
+    const b = keys[next];
+    const span = b.y - a.y;
+    const f = span === 0 ? 0 : (station.y - a.y) / span;
+    return a.section.map((point, i) => ({
+      v: point.v + (b.section[i].v - point.v) * f,
+      w: point.w + (b.section[i].w - point.w) * f
+    }));
+  });
+}
+
+/**
+ * Her istasyonun kesit uzanimi. Profilsiz govdede elips: iki yona da
+ * `aspect`, en 1.
+ */
+export function stationExtents(spec: LatheSpec): SectionExtent[] {
+  const sections = stationSections(spec);
+  if (!sections) {
+    const ellipse = {up: spec.aspect, down: spec.aspect, width: 1};
+    return spec.stations.map(() => ellipse);
+  }
+  return sections.map(profileExtent);
+}
+
+/**
+ * Kesitin dikey uzanimi ve en genis noktasi, yarim en birimiyle — TEK
+ * profilli govde icin. Profil yoksa elips: iki yona da `aspect`.
+ *
+ * Anahtar kesitli govdede tek bir uzanim yoktur; istasyon basina
+ * `stationExtents` kullanilir.
+ */
+export function sectionExtent(spec: LatheSpec): SectionExtent {
+  if (hasStationSections(spec)) {
+    throw new Error('anahtar kesitli govdede uzanim istasyon basina okunur');
+  }
+  if (!spec.section || spec.section.length === 0) {
+    return {up: spec.aspect, down: spec.aspect, width: 1};
+  }
+  return profileExtent(spec.section);
+}
+
 /** Profilin verilen yarim genislikteki ALT yuzey konumu. Baglanti noktalari icin. */
 export function sectionLowerAt(spec: LatheSpec, w: number): number {
+  if (hasStationSections(spec)) {
+    throw new Error('anahtar kesitli govdede alt yuzey istasyon basina okunur');
+  }
   if (!spec.section || spec.section.length === 0) {
     // Elips: v = -aspect * sqrt(1 - w²)
     return -spec.aspect * Math.sqrt(Math.max(0, 1 - w * w));
@@ -395,9 +498,10 @@ export function sectionLowerAt(spec: LatheSpec, w: number): number {
 
 function latheBounds(part: PlacedLathe, into: Bounds): Bounds {
   const {axis, u, v} = frame(part.orientation);
-  const extent = sectionExtent(part.spec);
+  const extents = stationExtents(part.spec);
 
-  for (const station of part.spec.stations) {
+  for (const [index, station] of part.spec.stations.entries()) {
+    const extent = extents[index];
     const center = add(add(part.origin, axis, station.y), u, station.lift ?? 0);
     const rv = station.radius * extent.width;
 
@@ -762,8 +866,12 @@ export function partAnchor(
 
   if ((part.kind === 'body' || part.kind === 'pod') && angleDeg !== undefined) {
     const {u, v} = frame(part.orientation);
-    const extent = sectionExtent(part.spec);
     const station = stationAt(part, t);
+    const index = station ? part.spec.stations.indexOf(station) : -1;
+    const extent =
+      index >= 0
+        ? stationExtents(part.spec)[index]
+        : {up: part.spec.aspect, down: part.spec.aspect, width: 1};
     const a = (angleDeg * Math.PI) / 180;
     const cos = Math.cos(a);
     const scale =
