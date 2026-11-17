@@ -23,10 +23,19 @@ export type SpecUnit =
   | 'ft'
   | 'h'
   | 'ktas'
+  | 'mach'
+  | 'nm'
   | 'count'
   | 'deg';
 
-type Dimension = 'uzunluk' | 'kutle' | 'sure' | 'hiz' | 'sayi' | 'aci';
+type Dimension =
+  | 'uzunluk'
+  | 'kutle'
+  | 'sure'
+  | 'hiz'
+  | 'mach'
+  | 'sayi'
+  | 'aci';
 
 /**
  * Taban birim: uzunluk metre, kutle kilogram.
@@ -44,6 +53,14 @@ const UNITS: Record<SpecUnit, {dimension: Dimension; toBase: number}> = {
   ft: {dimension: 'uzunluk', toBase: 0.3048},
   h: {dimension: 'sure', toBase: 1},
   ktas: {dimension: 'hiz', toBase: 1},
+  /*
+   * Mach bir hiz degil, hizin yerel ses hizina orani. KTAS'a cevirmek
+   * irtifa ister; kaynak yazmiyorsa cevrilemez. Bu yuzden 'hiz'
+   * boyutuna konmaz: iki alan sessizce kiyaslanmasin.
+   */
+  mach: {dimension: 'mach', toBase: 1},
+  /* Deniz mili tanim geregi tam 1852 m — yaklasik bir carpan degil. */
+  nm: {dimension: 'uzunluk', toBase: 1852},
   /*
    * Sayim ve aci BIRIMSIZ buyukluklerdir: donusum carpani yok, taban
    * kendileridir. Tabloda durmalarinin sebebi kiyas: "izleme kapasitesi
@@ -256,6 +273,27 @@ function unitOf(unit: SpecUnit) {
   const entry = UNITS[unit];
   if (!entry) throw new Error(`bilinmeyen birim: ${unit}`);
   return entry;
+}
+
+/**
+ * Degeri ayni boyuttaki baska bir birime cevirir.
+ *
+ * Carpan tablodan gelir, cagirana yazdirilmaz: deniz milini kilometreye
+ * ceviren mesafe cetveli 1,852'yi kendi icinde tutsaydi, tablo ile
+ * cetvel ayri ayri yanilabilirdi. Boyut ayriysa hata atar — Mach'i
+ * KTAS'a cevirmek irtifa ister ve burada sessizce yapilmaz.
+ */
+export function convertValue(
+  value: number,
+  from: SpecUnit,
+  to: SpecUnit
+): number {
+  const a = unitOf(from);
+  const b = unitOf(to);
+  if (a.dimension !== b.dimension) {
+    throw new Error(`farkli boyut cevrilmez: ${from} -> ${to}`);
+  }
+  return (value * a.toBase) / b.toBase;
 }
 
 /** Olcumu taban birime tasinmis aralik olarak verir. */

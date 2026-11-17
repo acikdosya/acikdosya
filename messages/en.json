@@ -237,8 +237,8 @@
   },
   "RangeScale": {
     "caption": "Distance scale — the published range statement is drawn against the scale of the Earth. No ring is drawn on a map: a ring asserts a radius, while this value is the manufacturer's own term.",
+    "captionRadius": "Distance scale — the published combat radius is drawn against the scale of the Earth. No ring is drawn on a map: the manufacturer does not state the mission profile (payload, fuel reserve, altitude), and a ring would read the figure as an unconditional distance in every direction.",
     "ariaLabel": "Distance scale for {names}, against the {reference} km from equator to pole",
-    "kmLabel": "{value} km",
     "axisUnit": "thousand km",
     "reference": "{value} km, equator to pole"
   },
@@ -409,6 +409,8 @@
   "ScaleSilhouette": {
     "ariaLabel": "Silhouettes of {names}, scaled against a {height} m human figure",
     "ariaLabelAircraft": "Scale drawing for {names}: outlines in top and front view, scaled against a {height} metre human figure",
+    "ariaLabelAircraftEnvelope": "Scale drawing for {names}: dashed measurement envelopes in top and front view, scaled against a {height} metre human figure",
+    "ariaLabelAircraftMixed": "Scale drawing in top and front view: outlines for {outlined}, dashed measurement envelopes for {enveloped}; scaled against a {height} metre human figure",
     "caption": "Scaled comparison — schematic drawings are derived from published dimensions, not technical drawings.",
     "captionAircraft": "Scale comparison — the outline is an orthographic projection of the same part list that builds the 3D model, scaled from the published length, wingspan and height. A system with no ratio table gets no outline, only a dashed measurement envelope.",
     "familyLabel": "Family-level statements",
@@ -448,7 +450,10 @@
     "operating_altitude_ft": "Operational altitude",
     "cruise_speed_ktas": "Cruise speed",
     "max_speed_ktas": "Maximum speed",
+    "cruise_speed_mach": "Cruise speed",
+    "max_speed_mach": "Maximum speed",
     "operational_range_km": "Operational range",
+    "combat_radius_nm": "Combat radius",
     "intercept_range_km": "System intercept range",
     "intercept_altitude_km": "Intercept altitude",
     "azimuth_coverage_deg": "Azimuth coverage",

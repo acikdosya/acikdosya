@@ -4,6 +4,7 @@ import {
   comparability,
   compareIntervals,
   comparePair,
+  convertValue,
   decimalPlaces,
   fieldDivergence,
   toInterval,
@@ -609,4 +610,13 @@ test('ayni boyuttaki iki sayim kiyaslanir', () => {
     fieldDivergence([m({value: 10}), m({value: 20})], 'count')?.kind,
     'celiski'
   );
+});
+
+test('deniz mili kilometreye tablodaki tam carpanla cevrilir', () => {
+  assert.equal(convertValue(500, 'nm', 'km'), 926);
+  assert.equal(convertValue(926, 'km', 'nm'), 500);
+});
+
+test('Mach baska bir hiz birimine cevrilmez — irtifa ister', () => {
+  assert.throws(() => convertValue(0.9, 'mach', 'ktas'), /farkli boyut/);
 });

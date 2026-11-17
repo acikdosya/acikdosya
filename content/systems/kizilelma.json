@@ -1,0 +1,814 @@
+{
+  "$schema_version": "0.1",
+  "id": "kizilelma",
+  "slug": "kizilelma",
+  "name": {
+    "tr": "Bayraktar KIZILELMA",
+    "en": "Bayraktar KIZILELMA"
+  },
+  "category": "insansiz-hava-araci",
+  "manufacturer": [
+    {
+      "id": "baykar",
+      "name": "BAYKAR"
+    }
+  ],
+  "status": "seri-uretim",
+  "summary": {
+    "tr": "BAYKAR'ın turbofan motorlu insansız savaş uçağı.",
+    "en": "BAYKAR's turbofan-powered unmanned fighter aircraft."
+  },
+  "variants": [
+    {
+      "id": "kizilelma",
+      "label": "KIZILELMA",
+      "specs": {
+        "length_m": [
+          {
+            "value": 14.5,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 14.5,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "wingspan_m": [
+          {
+            "value": 10,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 10,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "height_m": [
+          {
+            "value": 3.5,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 3.5,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "mtow_kg": [
+          {
+            "value": 8500,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik tabloda 8500 kg; sayfa başlığındaki '8.5 Ton Maksimum Kalkış Ağırlığı' ifadesiyle aynı değer.",
+              "en": "8500 kg in the technical table; the same value as the page banner's '8.5 Tons Maximum Take-Off Weight'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 8500,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Broşürde 'Tasarım Maksimum Kalkış Ağırlığı' olarak yazılı; Şubat 2026 sürümünde 'Tasarım' sözcüğü yok.",
+              "en": "Labelled 'Design MTOW' in the brochure; the February 2026 edition does not have the word 'Design'."
+            },
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 6000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfanın o dönemki sürümünde '6 Ton Maksimum Kalkış Ağırlığı'. Aynı dönemin BAYKAR bültenleri değeri hedef olarak veriyordu ('6 ton kalkış ağırlığına sahip olması hedefleniyor'). 15 Nisan 2023'ten itibaren 8,5 ton.",
+              "en": "The page then read '6 Tons Maximum Take-Off Weight'. BAYKAR releases of the same period gave it as a target ('targeted to have a 6-ton take-off weight'). 8.5 tons from 15 April 2023."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 25 Ekim 2022 – 30 Mart 2023",
+              "en": "Wayback Machine captures, 25 October 2022 – 30 March 2023"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20221025063544/https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "payload_kg": [
+          {
+            "value": 1500,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik tabloda 1500 kg; İngilizce sayfanın başlığında '1.5 Tons'.",
+              "en": "1500 kg in the technical table; the English page banner states '1.5 Tons'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 1500,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "endurance_h": [
+          {
+            "value": 3,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik özellikler tablosundaki '3+ saat' ifadesi.",
+              "en": "The technical specifications table states '3+ hours'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 3,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Broşürdeki '3+ saat' ifadesi.",
+              "en": "The brochure states '3+ hours'."
+            },
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 5,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfa başlığındaki '5 Saat Havada Kalış Süresi'. Ağustos 2024 kaydında aynı sayfanın teknik tablosu '4-5 saat' diyordu.",
+              "en": "The page banner's '5 Hours Endurance'. In the August 2024 capture the same page's technical table read '4-5 hours'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 25 Ekim 2022 – 11 Ağustos 2024 (sayfa başlığı; Mart 2023'e kadar bu eski adreste, sonra güncel adreste)",
+              "en": "Wayback Machine captures, 25 October 2022 – 11 August 2024 (page banner; at this earlier address until March 2023, then at the current address)"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20221025063544/https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 4,
+            "upper_value": 5,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik tablodaki '4-5 saat'; aynı sayfanın başlığı '5 Saat' diyordu.",
+              "en": "The technical table's '4-5 hours'; the same page's banner read '5 Hours'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "document_version": {
+              "tr": "Wayback Machine kaydı, 11 Ağustos 2024",
+              "en": "Wayback Machine capture, 11 August 2024"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20240811225923/https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 4,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "İngilizce sayfa başlığındaki '4+ Hours Endurance'; aynı sayfanın teknik tablosu '3+ hours' diyordu.",
+              "en": "The English page banner's '4+ Hours Endurance'; the same page's technical table read '3+ hours'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/en/uav/bayraktar-kizilelma/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 1 Ocak 2025 – 18 Ekim 2025 (İngilizce sayfa)",
+              "en": "Wayback Machine captures, 1 January 2025 – 18 October 2025 (English page)"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20250125165702/https://baykartech.com:443/en/uav/bayraktar-kizilelma/",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "service_ceiling_ft": [
+          {
+            "value": 40000,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 40000,
+            "operator": ">",
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Broşürdeki '40.000+ ft'; ürün sayfası '+' işaretsiz '40.000 feet' yazıyor.",
+              "en": "The brochure states '40,000+ ft'; the product page writes '40.000 feet' without the '+'."
+            },
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 45000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Teknik tablodaki 'Servis Tavanı 45.000 feet'. Sayfa 40.000 feet'e Ağustos–Eylül 2026 arasında geçti.",
+              "en": "The technical table's 'Service Ceiling 45.000 feet'. The page changed to 40.000 feet between August and September 2026."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 11 Ağustos 2024 – 18 Temmuz 2026",
+              "en": "Wayback Machine captures, 11 August 2024 – 18 July 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20260718113727/https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 45000,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR), Şubat 2026 sürümü",
+              "en": "BAYKAR KIZILELMA brochure (TR), February 2026 edition"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/qSPIXVS5hO9cw8cmXdshAqKWNeCCdGM0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma ve değiştirme 18 Şubat 2026",
+              "en": "PDF metadata: created and modified 18 February 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "2c0c8d1316c0cc2b9fa1e92044b0aaf711c1969ad59bc9b6689e095c183ee9f3",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "operating_altitude_ft": [
+          {
+            "value": 25000,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 25000,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 35000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfanın o dönemki sürümünde '35.000 Feet Operasyonel İrtifa'.",
+              "en": "The page then read '35.000 Feet Operational Altitude'."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 25 Ekim 2022 – 30 Mart 2023",
+              "en": "Wayback Machine captures, 25 October 2022 – 30 March 2023"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20221025063544/https://baykartech.com/tr/bayraktar-kizilelma-mius/",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 30000,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Sayfanın o dönemki sürümünde '30.000 Feet Operasyonel İrtifa'; Ocak 2025 kayıtlarında 25.000 feet.",
+              "en": "The page then read '30.000 Feet Operational Altitude'; 25.000 feet in the January 2025 captures."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası, önceki sürüm",
+              "en": "BAYKAR Bayraktar KIZILELMA product page, earlier version"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "document_version": {
+              "tr": "Wayback Machine kayıtları, 15 Nisan 2023 – 11 Ağustos 2024",
+              "en": "Wayback Machine captures, 15 April 2023 – 11 August 2024"
+            },
+            "accessed_at": "2026-11-17",
+            "archive_url": "https://web.archive.org/web/20230415204528/https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "cruise_speed_mach": [
+          {
+            "value": 0.6,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Kaynak Mach cinsinden veriyor ve irtifa belirtmiyor; KTAS'a çevrilmedi.",
+              "en": "The source gives Mach and no altitude; not converted to KTAS."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 0.6,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "max_speed_mach": [
+          {
+            "value": 0.9,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "Kaynak Mach cinsinden veriyor ve irtifa belirtmiyor; KTAS'a çevrilmedi.",
+              "en": "The source gives Mach and no altitude; not converted to KTAS."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 0.9,
+            "confidence": "official",
+            "scope": "beyan",
+            "source": {
+              "tr": "BAYKAR KIZILELMA broşürü (TR)",
+              "en": "BAYKAR KIZILELMA brochure (TR)"
+            },
+            "source_url": "https://cdn.baykartech.com/media/upload/userFormUpload/Xfy33FcNkq6AvteUTaQZK5XzNx5FZCC0.pdf",
+            "document_version": {
+              "tr": "PDF üstverisi: oluşturma 7 Ağustos 2026, değiştirme 9 Eylül 2026",
+              "en": "PDF metadata: created 7 August 2026, modified 9 September 2026"
+            },
+            "accessed_at": "2026-11-17",
+            "source_sha256": "8bbd66637dc7f78995c8cf3020ab7a6f6d226613f9de7cdbcbf6c3ff9eb39b76",
+            "verified_at": "2026-11-17"
+          },
+          {
+            "value": 0.8,
+            "confidence": "official",
+            "scope": "test",
+            "stated_at": "2026-01-19",
+            "context_note": {
+              "tr": "Performans test uçuşunda ulaşılan hız ('0,8 mach hızına ulaştı'). Bir test sonucu; azami hız beyanıyla aynı kapsamda değil.",
+              "en": "Speed reached in a performance test flight ('reached 0.8 Mach'). A test result, not the same scope as the maximum speed declaration."
+            },
+            "source": {
+              "tr": "SSB, Türk Savunma Sanayiinde Bu Hafta Neler Oldu?, 19 Ocak 2026",
+              "en": "SSB, weekly defence industry roundup, 19 January 2026"
+            },
+            "source_url": "https://www.ssb.gov.tr/haber/turk-savunma-sanayiinde-bu-hafta-neler-oldu-T5psuX",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          }
+        ],
+        "combat_radius_nm": [
+          {
+            "value": 500,
+            "confidence": "official",
+            "scope": "beyan",
+            "context_note": {
+              "tr": "'Temel uçuş performans kriterleri' bölümündeki '500 nm Görev Yarı Çapı' ifadesi; teknik tabloda yer almıyor. Görev profili (yük, yedek yakıt, irtifa) belirtilmemiş.",
+              "en": "From the 'Basic flight performance criteria' section ('500 nm Combat Radius'); not in the technical table. The mission profile (payload, fuel reserve, altitude) is not stated."
+            },
+            "source": {
+              "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+              "en": "BAYKAR Bayraktar KIZILELMA product page"
+            },
+            "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+            "accessed_at": "2026-11-17",
+            "verified_at": "2026-11-17"
+          }
+        ]
+      },
+      "attributes": {
+        "power_system": {
+          "value": {
+            "tr": "Turbofan motoru",
+            "en": "Turbofan engine"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+            "en": "BAYKAR Bayraktar KIZILELMA product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        },
+        "communications": {
+          "value": {
+            "tr": "Görüş hattı ve görüş hattı ötesi (LOS ve BLOS)",
+            "en": "Line of sight and beyond line of sight (LOS and BLOS)"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+            "en": "BAYKAR Bayraktar KIZILELMA product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        },
+        "variant_names": {
+          "value": {
+            "tr": "KIZILELMA-A, KIZILELMA-B, KIZILELMA-CA, KIZILELMA-CB ve KIZILELMA-D",
+            "en": "KIZILELMA-A, KIZILELMA-B, KIZILELMA-CA, KIZILELMA-CB and KIZILELMA-D"
+          },
+          "confidence": "official",
+          "source": {
+            "tr": "BAYKAR Bayraktar KIZILELMA ürün sayfası",
+            "en": "BAYKAR Bayraktar KIZILELMA product page"
+          },
+          "source_url": "https://baykartech.com/tr/uav/bayraktar-kizilelma/",
+          "accessed_at": "2026-11-17",
+          "verified_at": "2026-11-17"
+        }
+      },
+      "_todo": [
+        "KIZILELMA-A/B/CA/CB/D adlari uretici sayfasinda geciyor ama varyanta ozgu olcu kaydi yok; genel beyanlar bu varyantlara otomatik atanmadi.",
+        "Uretici sayfasi 'Gelismis Ozellikler' altinda kisa pistli ucak gemilerinden kalkis ve inis kabiliyetini sayiyor; ayni sayfanin genel bilgiler metni bu yonde 'calismalarin surdurulmekte' oldugunu soyluyor. Ozellik olarak yazilmadi.",
+        "Varyant adlari zamanla degisti: urun sayfasi Agustos 2024 - Temmuz 2026 'Subsonik, Transonik ve Supersonik', Subat 2026 brosuru 'KIZILELMA-A, -B, -C ve -D', Agustos 2026'dan itibaren sayfa ve brosur 'A, B, CA, CB ve D'. Ozellik alani tek deger tasidigi icin yalniz guncel ad listesi yazildi; gecmis docs/research/kizilelma-sources.md icinde."
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2021-07-20",
+      "title": {
+        "tr": "Kavramsal tasarım kamuoyuyla paylaşıldı",
+        "en": "Concept design made public"
+      },
+      "body": {
+        "tr": "Kavramsal tasarım çalışmaları kamuoyuyla ilk kez paylaşıldı.",
+        "en": "The conceptual design work was shared with the public for the first time."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 12 Mart 2022",
+        "en": "BAYKAR press release, 12 Mar 2022"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/turkiyenin-ilk-insansiz-muharip-savas-ucagi-bayraktar-KIZILELMA-mius-entegrasyon-hattina-girdi/"
+    },
+    {
+      "date": "2022-03-12",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Adı duyuruldu, ilk prototip entegrasyon hattında",
+        "en": "Name announced, first prototype on the integration line"
+      },
+      "body": {
+        "tr": "MİUS projesinin adının KIZILELMA olduğu duyuruldu; ilk prototipin üretim geliştirme modeli entegrasyon hattına girdi.",
+        "en": "The MİUS project was announced as KIZILELMA; the first prototype's production development model entered the integration line."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 12 Mart 2022",
+        "en": "BAYKAR press release, 12 Mar 2022"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/turkiyenin-ilk-insansiz-muharip-savas-ucagi-bayraktar-KIZILELMA-mius-entegrasyon-hattina-girdi/"
+    },
+    {
+      "date": "2022-09-17",
+      "announced_at": "2022-09-19",
+      "title": {
+        "tr": "İlk motor entegrasyon testi",
+        "en": "First engine integration test"
+      },
+      "body": {
+        "tr": "Birinci prototiple ilk motor entegrasyon testi tamamlandı.",
+        "en": "The first engine integration test was completed with the first prototype."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 19 Eylül 2022",
+        "en": "BAYKAR press release, 19 Sep 2022"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelmanin-ilk-motor-entegrasyon-testi-basariyla-tamamlandi/"
+    },
+    {
+      "date": "2022-11-14",
+      "announced_at": "2022-12-14",
+      "title": {
+        "tr": "İlk prototip üretim hattından çıktı",
+        "en": "First prototype leaves the production line"
+      },
+      "body": {
+        "tr": "TC-ÖZB kuyruk numaralı ilk prototip üretim hattından çıktı.",
+        "en": "The first prototype, tail number TC-ÖZB, left the production line."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 14 Aralık 2022",
+        "en": "BAYKAR press release, 14 Dec 2022"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelma-gokyuzuyle-bulustu/"
+    },
+    {
+      "date": "2022-12-14",
+      "title": {
+        "tr": "İlk uçuş",
+        "en": "First flight"
+      },
+      "body": {
+        "tr": "İlk prototip 14.59'da havalandı, 15.17'de indi; uçuş 18 dakika sürdü.",
+        "en": "The first prototype took off at 14:59 and landed at 15:17; the flight lasted 18 minutes."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 14 Aralık 2022",
+        "en": "BAYKAR press release, 14 Dec 2022"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelma-gokyuzuyle-bulustu/"
+    },
+    {
+      "date": "2023-04-24",
+      "title": {
+        "tr": "AKINCI ile ilk kol uçuşu",
+        "en": "First formation flight with AKINCI"
+      },
+      "body": {
+        "tr": "Çorlu'daki testte Bayraktar AKINCI ile kol uçuşu yapıldı.",
+        "en": "A formation flight with Bayraktar AKINCI was flown in a test at Çorlu."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 6 Haziran 2023",
+        "en": "BAYKAR press release, 6 Jun 2023"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelma-havacilik-tarihinde-ilkleri-basardi/"
+    },
+    {
+      "date": "2024-09-25",
+      "announced_at": "2024-09-26",
+      "title": {
+        "tr": "Üretim prototipinin ilk uçuşu",
+        "en": "Production prototype's first flight"
+      },
+      "body": {
+        "tr": "Üretim prototipi olan TC-ÖZB3 kuyruk numaralı üçüncü prototip ilk uçuş testini tamamladı.",
+        "en": "The third prototype, the production prototype with tail number TC-ÖZB3, completed its first flight test."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 26 Eylül 2024",
+        "en": "BAYKAR press release, 26 Sep 2024"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelmanin-uretim-prototipi-ilk-ucus-testini-basariyla-tamamladi/"
+    },
+    {
+      "date": "2025-10-08",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "Seri üretime geçildiği açıklandı",
+        "en": "Serial production announced as under way"
+      },
+      "body": {
+        "tr": "Testler sürerken seri üretim sürecine de geçildiği ve envantere girişin 2026 için hedeflendiği açıklandı. Seri üretimin başlangıç tarihi yazılmadı.",
+        "en": "It was announced that serial production had begun while testing continues, with inventory entry targeted for 2026. No start date for serial production was given."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 8 Ekim 2025",
+        "en": "BAYKAR press release, 8 Oct 2025"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelmadan-ilk-atista-tam-isabet/"
+    },
+    {
+      "date": "2025-12-27",
+      "announced_at": "2025-12-28",
+      "title": {
+        "tr": "İki KIZILELMA ile otonom kol uçuşu",
+        "en": "Autonomous formation flight of two KIZILELMA"
+      },
+      "body": {
+        "tr": "PT3 ve PT5 prototipleri otonom olarak yakın kol uçuşu yaptı.",
+        "en": "Prototypes PT3 and PT5 flew in close formation autonomously."
+      },
+      "confidence": "official",
+      "source": {
+        "tr": "BAYKAR basın bülteni, 28 Aralık 2025",
+        "en": "BAYKAR press release, 28 Dec 2025"
+      },
+      "source_url": "https://baykartech.com/tr/haberler/bayraktar-kizilelmadan-akilli-filo-otonomisi-ile-kol-ucusu/"
+    },
+    {
+      "date": "2026-05-09",
+      "date_kind": "announcement",
+      "title": {
+        "tr": "İlk ihracat anlaşması",
+        "en": "First export agreement"
+      },
+      "body": {
+        "tr": "Haluk Bayraktar, Endonezya ile 12 uçaklık ilk ihracat anlaşmasının imzalandığını ve teslimatların 2028'de başlamasının hedeflendiğini söyledi. BAYKAR'ın kendi sitesinde bu anlaşmaya dair bülten yok.",
+        "en": "Haluk Bayraktar said the first export agreement, for 12 aircraft to Indonesia, had been signed and that deliveries are targeted to begin in 2028. BAYKAR's own site has no release on the agreement."
+      },
+      "confidence": "press",
+      "source": {
+        "tr": "Anadolu Ajansı, 9 Mayıs 2026",
+        "en": "Anadolu Agency, 9 May 2026"
+      },
+      "source_url": "https://aa.com.tr/en/world/turkiye-s-baykar-aims-to-begin-first-serial-deliveries-of-unmanned-combat-aircraft-this-year-ceo-says/3932698"
+    }
+  ],
+  "disclaimer": {
+    "tr": "Bu sayfadaki veriler kamuya açık kaynaklardan derlenmiştir. Resmî bir yayın değildir ve üreticiyle bağı yoktur.",
+    "en": "Compiled from publicly available sources. Not an official publication and not affiliated with the manufacturer."
+  },
+  "_todo": [
+    "Gorev yaricapi (500 nm) menzil halkasi olarak cizilmiyor: gorev profili belirtilmemis; deger mesafe cetvelinde (specs/range-envelope).",
+    "Mach cinsinden hizlar KTAS alanlarina cevrilmedi; donusum irtifa ister ve kaynak irtifa yazmiyor.",
+    "Teslimat veya envantere giris icin resmi beyan bulunamadi (BAYKAR bultenleri 13.11.2026'ya, SSB haftalik ozetleri 16.11.2026'ya kadar tarandi). Durum 'seri-uretim'. Anadolu Ajansi 9 Mayis 2026 haberi ayni metinde hem 'ilk seri teslimatlar bu yil hedefleniyor' hem 'ilk yurt ici teslimatlar tamamlandiktan sonra' diyor; celiskili oldugu icin takvime yazilmadi.",
+    "Atis testleri ve AESA radarli ilk ucus takvime yazilmadi (CLAUDE.md §5.3, §5.4); seri uretim modeli S2'nin ucusu yalniz bir atis testi bulteninde geciyor.",
+    "Eski urun sayfasi surumleri Wayback Machine kayitlarindan okundu; degisikligin gunu bilinmiyor, document_version kayit araligini veriyor. Bu degerler stated_at tasimiyor: aciklamanin yapildigi gun bilinmiyor."
+  ]
+}

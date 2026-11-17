@@ -9,7 +9,8 @@ Bu dosya projenin kalıcı bağlamıdır. Her oturumda geçerlidir. Bir karar bu
 
 **Ne:** Az sayıda Türk savunma sanayii sistemini derinlemesine anlatan,
 animasyonlu ve interaktif bir dijital dosya. "İnteraktif müze vitrini."
-Yayında beş dosya var: TAYFUN, ATMACA, AKINCI, SİPER, Bayraktar TB2.
+Yayında altı dosya var: TAYFUN, ATMACA, AKINCI, SİPER, Bayraktar TB2,
+Bayraktar KIZILELMA.
 
 **Ne değil:**
 - Ansiklopedi/veri tabanı değil. 300 ürünlük katalog kurmuyoruz — bu alanda
@@ -189,6 +190,12 @@ kendiliğinden açıyordu. Halka bir yarıçap iddiasıdır — "buradan her yö
   menzili tek yön erişimdir; `range_km` seçilirse derleme düşer.
 - Aynı alanda iki nesnenin kaydı varsa `object` gerekir; yazılmazsa
   alandaki bütün kayıtlar çizilir.
+- Görev yarıçapı bir yarıçap beyanıdır, ama koşullarını (yük, yedek
+  yakıt, irtifa) yazmıyorsa halkaya çevrilmez: halka koşul taşıyamaz.
+  KIZILELMA'nın 500 nm'si böyle; cetvelde durur, altyazı sebebini söyler.
+- Cetvel kaynağın birimini korur. `combat_radius_nm` "500 NM" basılır;
+  çubuk boyu kilometre ölçeğine çevrilir ama çevrilmiş sayı (926)
+  sayfaya çıkmaz. Aynı gerekçeyle Mach KTAS'a çevrilmez: irtifa ister.
 
 Kurallar: `openspec/specs/range-envelope/spec.md`.
 

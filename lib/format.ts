@@ -29,7 +29,10 @@ export const SPEC_UNITS: Record<SpecKey, SpecUnit> = {
   operating_altitude_ft: 'ft',
   cruise_speed_ktas: 'ktas',
   max_speed_ktas: 'ktas',
+  cruise_speed_mach: 'mach',
+  max_speed_mach: 'mach',
   operational_range_km: 'km',
+  combat_radius_nm: 'nm',
   intercept_range_km: 'km',
   intercept_altitude_km: 'km',
   azimuth_coverage_deg: 'deg',
@@ -65,6 +68,17 @@ const UNIT_LABELS: Record<SpecUnit, string> = {
   ft: 'ft',
   h: 'h',
   ktas: 'ktas',
+  /*
+   * Mach sayidan SONRA basilir ("0,9 Mach"): kaynak boyle yaziyor ve
+   * birim etiketi her yerde sayinin arkasinda duruyor. Ozel ad,
+   * cevrilmez.
+   */
+  mach: 'Mach',
+  /*
+   * Deniz mili icin 'nm' BASILMAZ: SI'da nanometre simgesi. ICAO
+   * kisaltmasi NM kullanilir; kaynak 'nm' yaziyor, birim ayni.
+   */
+  nm: 'NM',
   count: '',
   deg: '°'
 };

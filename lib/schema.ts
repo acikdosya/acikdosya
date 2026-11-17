@@ -323,7 +323,25 @@ export const specKeys = [
   'operating_altitude_ft',
   'cruise_speed_ktas',
   'max_speed_ktas',
+  /*
+   * Mach cinsinden hiz AYRI alan. Mach -> KTAS donusumu irtifa ister
+   * (ses hizi sicaklikla degisir) ve kaynak irtifa yazmiyorsa donusum
+   * kaynagin soylemedigi bir sayi uretir. Iki alan kiyaslanmaz; birim
+   * tablosunda ayri boyuttalar (lib/measurement/divergence.ts).
+   */
+  'cruise_speed_mach',
+  'max_speed_mach',
   'operational_range_km',
+  /*
+   * Gorev yaricapi — kaynagin kendi birimiyle, deniz mili.
+   *
+   * `operational_range_km` ile ayni alan degil: o ureticinin
+   * "operasyonel menzil" terimi, bu bir yaricap beyani. Kilometreye
+   * cevrilip yazilmaz; donusum carpani birim tablosunda gorunur durur
+   * ve mesafe cetveli oradan okur. Halka bu alandan kendiliginden
+   * cizilmez (specs/range-envelope).
+   */
+  'combat_radius_nm',
   /*
    * SISTEM DUZEYI ALANLAR — bilesik sistemler icin.
    *
@@ -363,7 +381,10 @@ export const specsSchema = z.strictObject({
   operating_altitude_ft: measurementListSchema.optional(),
   cruise_speed_ktas: measurementListSchema.optional(),
   max_speed_ktas: measurementListSchema.optional(),
+  cruise_speed_mach: measurementListSchema.optional(),
+  max_speed_mach: measurementListSchema.optional(),
   operational_range_km: measurementListSchema.optional(),
+  combat_radius_nm: measurementListSchema.optional(),
   intercept_range_km: measurementListSchema.optional(),
   intercept_altitude_km: measurementListSchema.optional(),
   azimuth_coverage_deg: measurementListSchema.optional(),

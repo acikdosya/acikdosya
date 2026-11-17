@@ -437,6 +437,23 @@
       "notes": "BAYKAR ürün sayfasındaki KeyShotXR gösterisinin 16 PNG karesi (1920×800, saydam zemin). GLB/GLTF veya başka bir geometri dosyası değildir. Okumalar 0_0, 0_2, 0_4, 0_8 ve 0_12 karelerinden; 0_5 ve 0_6 kiriş kökü için bakıldı. Zıt yönlerden alınan kare çiftleri birbirinin aynası (%0,4 içinde) — gösteri ortografik ve yatay kamerayla çekilmiş görünüyor; kayıtta yaklaşık 0,26° yatış var. Aynı gösterinin kareleri olduğu için bu, §9'daki izdüşüm sınavı sayılmadı; oranlar 'reading'. Görsellerin kendisi repoya kopyalanmadı ve yayımlanmadı."
     },
     {
+      "id": "kizilelma-turntable-refs",
+      "file": null,
+      "kind": "reference",
+      "origin": "press-kit",
+      "presence": "absent",
+      "license": "Yalnızca görsel referans — dosya repoya girmedi",
+      "author": null,
+      "source_url": "https://cdn.baykartech.com/static/assets/libs/keyshotxr/img/bayraktar-kizilelma/0_4.png",
+      "attribution_required": false,
+      "attribution_text": null,
+      "commercial_use": false,
+      "modifications_allowed": false,
+      "acquired_at": "2026-11-17",
+      "used_in": [],
+      "notes": "BAYKAR KIZILELMA ürün sayfasındaki KeyShotXR gösterisinin 18 PNG karesi (1919×1199, saydam zemin, 20° adım; 0_0 arka, 0_9 ön). GLB/GLTF veya başka bir geometri dosyası değildir (REA, 17.11.2026). Yerel kopyalar CDN'deki karelerle bayt düzeyinde aynı (0_0, 0_4, 0_9 sha256 karşılaştırması). Ön ve arka görünüşün siluetleri birbirinin aynası (örtüşme 0,9998, 9 px): gösteri ortografik ve yatay kamerayla çekilmiş görünüyor; aynı gösterinin kareleri olduğu için §9'daki izdüşüm sınavı sayılmadı. Kanat açıklığı 1014 px; bu ölçekle yükseklik 3,69 m (yayımlanan 3,5 m). Model ikinci adımda; görsellerin kendisi repoya kopyalanmadı ve yayımlanmadı."
+    },
+    {
       "id": "atmaca-catalogue-ref",
       "file": null,
       "kind": "reference",

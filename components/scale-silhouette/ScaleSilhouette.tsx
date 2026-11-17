@@ -4,7 +4,11 @@ import {formatNumber} from '@/lib/format';
 import {selectMeasurements, systemKind} from '@/lib/geometry/measurements';
 import {partsForSystem} from '@/lib/geometry/parts-for';
 import type {System} from '@/lib/schema';
-import {HUMAN_HEIGHT_M, layoutAircrafts} from './aircraft-geometry';
+import {
+  aircraftDrawingKind,
+  HUMAN_HEIGHT_M,
+  layoutAircrafts
+} from './aircraft-geometry';
 import {layoutSilhouettes} from './geometry';
 import styles from './ScaleSilhouette.module.css';
 
@@ -212,15 +216,27 @@ function AircraftSilhouette({
   const layout = layoutAircrafts(items);
   if (!layout) return null;
 
+  const height = formatNumber(HUMAN_HEIGHT_M, locale);
+  const names = (list: typeof items) =>
+    list.map((item) => item.label).join(', ');
+  const drawing = aircraftDrawingKind(items);
+  const ariaLabel =
+    drawing === 'outline'
+      ? t('ariaLabelAircraft', {names: names(items), height})
+      : drawing === 'envelope'
+        ? t('ariaLabelAircraftEnvelope', {names: names(items), height})
+        : t('ariaLabelAircraftMixed', {
+            outlined: names(items.filter((item) => item.parts)),
+            enveloped: names(items.filter((item) => !item.parts)),
+            height
+          });
+
   return (
     <svg
       className={styles.svg}
       viewBox={`0 0 ${layout.width} ${layout.height}`}
       role="img"
-      aria-label={t('ariaLabelAircraft', {
-        names: items.map((item) => item.label).join(', '),
-        height: formatNumber(HUMAN_HEIGHT_M, locale)
-      })}
+      aria-label={ariaLabel}
     >
       <line
         className={styles.dimension}

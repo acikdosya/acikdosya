@@ -3,7 +3,7 @@
 [![CI](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml/badge.svg)](https://github.com/acikdosya/acikdosya/actions/workflows/ci.yml)
 
 Türk savunma sanayii sistemlerini derinlemesine anlatan, animasyonlu ve interaktif
-dijital dosya. Yayında: https://acikdosya.org — şu anda beş sistem: TAYFUN, ATMACA, AKINCI, SİPER ve Bayraktar TB2.
+dijital dosya. Yayında: https://acikdosya.org — şu anda altı sistem: TAYFUN, ATMACA, AKINCI, SİPER, Bayraktar TB2 ve Bayraktar KIZILELMA.
 
 Projenin kalıcı bağlamı ve pazarlık dışı editoryal kuralları [CLAUDE.md](./CLAUDE.md)
 dosyasındadır. Bir karar o dosyayla çelişiyorsa önce konuşulur.

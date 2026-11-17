@@ -142,7 +142,9 @@ for (const name of systemFiles) {
      * kayit yazilmasi unutulmus olabilir. Bu yuzden HATA DEGIL uyari —
      * halka cizmemek bir karar, sessiz kalmak degil.
      */
-    const rangeFields = specKeys.filter((key) => SPEC_UNITS[key] === 'km');
+    const rangeFields = specKeys.filter(
+      (key) => SPEC_UNITS[key] === 'km' || SPEC_UNITS[key] === 'nm'
+    );
     const carriesRange = [
       system.specs,
       ...system.variants.map((variant) => variant.specs)

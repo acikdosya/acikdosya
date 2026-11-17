@@ -3,6 +3,7 @@ import {test} from 'node:test';
 import {AKINCI as AKINCI_PRODUCT} from '@/lib/geometry/akinci';
 import {buildParts} from '@/lib/geometry/product';
 import {
+  aircraftDrawingKind,
   compactAircraftEnvelopes,
   layoutAircrafts,
   type AircraftItem
@@ -271,4 +272,12 @@ test('yukseklik verisi modele girmiyorsa on gorunus zarf kalir', () => {
     'kisa kontur yukseklik braketini yalanlar'
   );
   assert.ok(layout.rows[0].front, 'zarf cizilmeli');
+});
+
+test('cizim turu parca listesinden: dis hat, zarf ya da ikisi', () => {
+  const parts = buildParts(AKINCI_PRODUCT, DIMS);
+  assert.ok(parts, 'AKINCI parca listesi kurulmali');
+  assert.equal(aircraftDrawingKind([{parts}]), 'outline');
+  assert.equal(aircraftDrawingKind([{}]), 'envelope');
+  assert.equal(aircraftDrawingKind([{parts}, {}]), 'mixed');
 });
